@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+/* Self-Hosted Variable & Display WOFF2 Fonts with font-display: swap */
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/GeistMono-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Editorial New';
+  src: url('/fonts/Newsreader-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Editorial New';
+  src: url('/fonts/Newsreader-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Newsreader';
+  src: url('/fonts/Newsreader-Regular.woff2') format('woff2');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Newsreader';
+  src: url('/fonts/Newsreader-Italic.woff2') format('woff2');
+  font-weight: 200 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Instrument Serif';
+  src: url('/fonts/InstrumentSerif-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Instrument Serif';
+  src: url('/fonts/InstrumentSerif-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --font-editorial: 'PP Editorial New', 'Newsreader', 'Instrument Serif', 'Playfair Display', Georgia, serif;
+  --font-geist: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  font-family: var(--font-geist);
+  background-color: #060709;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-editorial {
+  font-family: var(--font-editorial);
+}
+
+.font-geist {
+  font-family: var(--font-geist);
+}
+
+/* Custom scrollbar hiding for clean horizontal carousel if needed */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Smooth continuous marquee for 100vw kinetic carousel text */
+@keyframes marquee-infinite {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-carousel {
+  display: flex;
+  width: max-content;
+  animation: marquee-infinite 32s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-carousel:hover {
+  animation-play-state: paused;
+}
+
+/* Subtle pulsating / rotating sunburst rays */
+@keyframes sunburst-pulse {
+  0%, 100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes sunburst-slow-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-sunburst {
+  animation: sunburst-pulse 10s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+.animate-sunburst-smooth {
+  animation: sunburst-slow-spin 90s linear infinite;
+  transform-origin: center center;
+}
