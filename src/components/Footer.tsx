@@ -9,7 +9,7 @@ import {
 import { useI18n } from '../i18n';
 
 export const Footer: React.FC = () => {
-  const { locale, t } = useI18n();
+  const { locale, t, selectLocale } = useI18n();
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -223,7 +223,11 @@ export const Footer: React.FC = () => {
                   <React.Fragment key={lang.code}>
                     <a
                       href={lang.href}
-                      className={`transition-colors ${
+                      onClick={(e) => {
+                        e.preventDefault();
+                        selectLocale(lang.code);
+                      }}
+                      className={`transition-colors cursor-pointer ${
                         locale === lang.code
                           ? 'text-[#9ce607] font-semibold'
                           : 'text-neutral-400 hover:text-white'

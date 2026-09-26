@@ -7,7 +7,7 @@ interface HeaderNavbarProps {
 }
 
 export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
-  const { locale, t } = useI18n();
+  const { locale, t, selectLocale } = useI18n();
   const [activeTab, setActiveTab] = useState<string>('');
 
   const navItems = [
@@ -108,7 +108,11 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
               <React.Fragment key={lang.code}>
                 <a
                   href={lang.href}
-                  className={`transition-colors ${
+                  onClick={(e) => {
+                    e.preventDefault();
+                    selectLocale(lang.code);
+                  }}
+                  className={`transition-colors cursor-pointer ${
                     locale === lang.code
                       ? 'text-[#9ce607] font-semibold'
                       : 'text-neutral-400 hover:text-white'

@@ -41,15 +41,36 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
           </p>
         </motion.div>
 
-        {/* Center Main 4-Line Headline with strong 3D shadow for contrast over 'creative' */}
+        {/* Center Main 4-Line Headline with dedicated dark shadow layer behind <h1> */}
         <div className="flex-1 max-w-4xl mx-auto px-2 relative z-20">
+          {/* Outer Ambient Black Shadow Layer behind <h1> */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-x-10 sm:-inset-x-24 -inset-y-8 sm:-inset-y-12 -z-10 rounded-full"
+            style={{
+              background:
+                'radial-gradient(ellipse 74% 70% at 50% 50%, rgba(0, 0, 0, 0.94) 0%, rgba(4, 5, 8, 0.84) 46%, rgba(4, 5, 8, 0.42) 74%, rgba(4, 5, 8, 0) 100%)',
+              filter: 'blur(24px)',
+            }}
+          />
+          {/* Inner Core Black Layer directly behind <h1> text */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-x-4 sm:-inset-x-10 -inset-y-3 sm:-inset-y-6 -z-10 rounded-[48px]"
+            style={{
+              background:
+                'radial-gradient(ellipse 64% 60% at 50% 50%, rgba(0, 0, 0, 0.9) 0%, rgba(2, 3, 5, 0.72) 56%, rgba(0, 0, 0, 0) 100%)',
+              filter: 'blur(14px)',
+            }}
+          />
+
           <h1
             id="hero-title-main"
             aria-label={`${t.hero.line1} ${t.hero.line2} ${t.hero.line3} ${t.hero.line4}`}
-            className="text-[28px] sm:text-[42px] md:text-[50px] lg:text-[56px] xl:text-[62px] leading-[1.12] sm:leading-[1.1]"
+            className="relative z-10 text-[28px] sm:text-[42px] md:text-[50px] lg:text-[56px] xl:text-[62px] leading-[1.12] sm:leading-[1.1] drop-shadow-[0_14px_32px_rgba(0,0,0,1)]"
             style={{
               textShadow:
-                '0 10px 30px rgba(0, 0, 0, 0.95), 0 4px 12px rgba(0, 0, 0, 0.85), 0 2px 4px rgba(0, 0, 0, 0.9)',
+                '0 16px 44px rgba(0, 0, 0, 1), 0 8px 22px rgba(0, 0, 0, 1), 0 3px 8px rgba(0, 0, 0, 1)',
             }}
           >
             {/* Line 1: White */}
@@ -85,7 +106,7 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
                 className={`block text-[#a8f300] ${bottomLinesClass}`}
                 style={{
                   textShadow:
-                    '0 10px 30px rgba(0, 0, 0, 0.95), 0 4px 12px rgba(0, 0, 0, 0.9), 0 0 30px rgba(168, 243, 0, 0.25)',
+                    '0 14px 36px rgba(0, 0, 0, 1), 0 5px 14px rgba(0, 0, 0, 0.98), 0 0 30px rgba(168, 243, 0, 0.28)',
                 }}
               >
                 {t.hero.line3}
@@ -101,7 +122,7 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
                 className={`block text-[#a8f300] ${bottomLinesClass}`}
                 style={{
                   textShadow:
-                    '0 10px 30px rgba(0, 0, 0, 0.95), 0 4px 12px rgba(0, 0, 0, 0.9), 0 0 30px rgba(168, 243, 0, 0.25)',
+                    '0 14px 36px rgba(0, 0, 0, 1), 0 5px 14px rgba(0, 0, 0, 0.98), 0 0 30px rgba(168, 243, 0, 0.28)',
                 }}
               >
                 {t.hero.line4}

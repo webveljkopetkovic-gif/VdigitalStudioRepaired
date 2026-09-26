@@ -25,13 +25,16 @@ export const ContactSection: React.FC = () => {
 
   const [fullName, setFullName] = useState('');
   const [contactInfo, setContactInfo] = useState('');
-  const [profession, setProfession] = useState(
-    t.contact.form.professionOptions[0] || 'Doctor'
-  );
+  const [professionIndex, setProfessionIndex] = useState(0);
   const [message, setMessage] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const profession =
+    t.contact.form.professionOptions[professionIndex] ||
+    t.contact.form.professionOptions[0] ||
+    'Doctor';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -260,14 +263,14 @@ export const ContactSection: React.FC = () => {
                       id="contact-profession"
                       name="profession"
                       required
-                      value={profession}
-                      onChange={(e) => setProfession(e.target.value)}
+                      value={professionIndex}
+                      onChange={(e) => setProfessionIndex(Number(e.target.value))}
                       className="w-full h-12 px-4 rounded-[12px] bg-[#090c0a]/90 border border-white/[0.12] focus:border-[#9ce607] text-[14px] font-geist text-white focus:outline-none transition-colors"
                     >
-                      {t.contact.form.professionOptions.map((option) => (
+                      {t.contact.form.professionOptions.map((option, idx) => (
                         <option
                           key={option}
-                          value={option}
+                          value={idx}
                           className="bg-[#0a0c09] text-white"
                         >
                           {option}

@@ -47,6 +47,8 @@ export const en = {
   painPoints: {
     label: 'Sound familiar?',
     heading: 'Great at what you do. Invisible online.',
+    headingMain: 'Great at what you do.',
+    headingItalic: 'Invisible online.',
     cards: [
       {
         id: 'empty-calendar',
