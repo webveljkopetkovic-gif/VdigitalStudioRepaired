@@ -21,7 +21,6 @@ import { ContactSection } from './components/ContactSection';
 import { ContactPage } from './components/ContactPage';
 import { Footer } from './components/Footer';
 import { FloatingChatButton } from './components/FloatingChatButton';
-import { TawkToChat } from './components/TawkToChat';
 
 const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) => {
   const navigate = useNavigate();
@@ -108,10 +107,7 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
         {/* 13. Footer */}
         <Footer />
 
-        {/* Live Tawk.to Chat Drawer & Script Loader */}
-        <TawkToChat />
-
-        {/* Floating Chat Button (Live Chat + WhatsApp on / and /sr/, Telegram on /ru/) */}
+        {/* Floating Chat Button (WhatsApp on / and /sr/, Telegram on /ru/) */}
         <FloatingChatButton />
       </div>
     </I18nProvider>

@@ -7,20 +7,18 @@ import {
   Send,
   Mail,
   Phone,
-  MessageCircle,
-  MessageSquare,
 } from 'lucide-react';
 import {
   CONTACT_EMAIL,
-  FORM_ENDPOINT,
   PHONE_DISPLAY,
   PHONE_URL,
   TELEGRAM_URL,
   VIBER_URL,
+  WEB3FORMS_ACCESS_KEY,
   WHATSAPP_URL,
 } from '../config';
 import { useI18n } from '../i18n';
-import { triggerLiveChat } from './TawkToChat';
+import { ViberIcon, WhatsAppIcon } from './BrandIcons';
 
 export const ContactSection: React.FC = () => {
   const { t, contactPath } = useI18n();
@@ -39,7 +37,7 @@ export const ContactSection: React.FC = () => {
     t.contact.form.professionOptions[0] ||
     'Doctor';
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMsg('');
 
@@ -51,31 +49,36 @@ export const ContactSection: React.FC = () => {
       return;
     }
 
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    formData.set('name', trimmedName);
+    formData.set('contact', trimmedContact);
+    formData.set('profession', profession);
+    formData.set('message', message.trim());
+    formData.append('access_key', WEB3FORMS_ACCESS_KEY);
+
     setIsSubmitting(true);
 
     try {
-      if (
-        FORM_ENDPOINT &&
-        !FORM_ENDPOINT.startsWith('[') &&
-        FORM_ENDPOINT.startsWith('http')
-      ) {
-        await fetch(FORM_ENDPOINT, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({
-            name: trimmedName,
-            contact: trimmedContact,
-            profession,
-            message: message.trim(),
-          }),
-        });
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        setFullName('');
+        setContactInfo('');
+        setProfessionIndex(0);
+        setMessage('');
+        form.reset();
+      } else {
+        setErrorMsg(data.message || t.contact.form.errorGeneric);
       }
-      setIsSubmitted(true);
     } catch {
-      setIsSubmitted(true);
+      setErrorMsg(t.contact.form.errorGeneric);
     } finally {
       setIsSubmitting(false);
     }
@@ -151,7 +154,7 @@ export const ContactSection: React.FC = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#141815]/80 hover:bg-[#1b221d] border border-white/10 hover:border-[#9ce607]/50 text-[13px] font-geist text-white transition-all"
                 >
-                  <MessageCircle className="w-4 h-4 text-[#9ce607]" />
+                  <WhatsAppIcon className="w-4 h-4 text-[#9ce607]" />
                   <span>WhatsApp</span>
                 </a>
 
@@ -160,7 +163,7 @@ export const ContactSection: React.FC = () => {
                   href={VIBER_URL}
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#141815]/80 hover:bg-[#1b221d] border border-white/10 hover:border-[#9ce607]/50 text-[13px] font-geist text-white transition-all"
                 >
-                  <Phone className="w-4 h-4 text-[#9ce607]" />
+                  <ViberIcon className="w-4 h-4 text-[#9ce607]" />
                   <span>Viber</span>
                 </a>
 
@@ -192,17 +195,6 @@ export const ContactSection: React.FC = () => {
                   <Phone className="w-4 h-4 text-[#9ce607]" />
                   <span>{PHONE_DISPLAY}</span>
                 </a>
-
-                {/* Live Chat (Tawk.to) */}
-                <button
-                  type="button"
-                  onClick={triggerLiveChat}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#141815]/80 hover:bg-[#1b221d] border border-white/10 hover:border-[#9ce607]/50 text-[13px] font-geist text-white transition-all cursor-pointer"
-                >
-                  <MessageSquare className="w-4 h-4 text-[#9ce607]" />
-                  <span>{t.contactPage.liveChatButton}</span>
-                  <span className="w-2 h-2 rounded-full bg-[#9ce607] animate-pulse" />
-                </button>
               </div>
             </div>
           </motion.div>
@@ -226,7 +218,7 @@ export const ContactSection: React.FC = () => {
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} noValidate className="space-y-5">
+                <form id="form" onSubmit={handleSubmit} noValidate className="space-y-5">
                   {/* 1. Full Name */}
                   <div>
                     <label

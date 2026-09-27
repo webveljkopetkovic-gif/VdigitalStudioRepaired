@@ -264,6 +264,7 @@ export const ru: Translations = {
       success: 'Спасибо! Мы свяжемся с вами в течение 24 часов.',
       privacy: 'Мы используем ваши данные только для связи по вашему запросу.',
       errorRequired: 'Пожалуйста, укажите ваше имя, контактные данные и сферу деятельности.',
+      errorGeneric: 'Что-то пошло не так. Пожалуйста, попробуйте ещё раз.',
     },
   },
   footer: {
@@ -292,12 +293,6 @@ export const ru: Translations = {
     prefilledMessage: 'Здравствуйте! Хочу записаться на бесплатный звонок с VDigital.',
     calendarFallback:
       'Календарь сейчас недоступен. Напишите нам, и мы вместе подберём время.',
-    liveChatButton: 'Онлайн-чат (Tawk.to)',
-    liveChatTitle: 'Онлайн-чат VDigital',
-    liveChatSubtitle: 'Обычно отвечаем за несколько минут',
-    liveChatWelcome: 'Здравствуйте! Расскажите коротко о вашей практике и задаче.',
-    liveChatPlaceholder: 'Напишите сообщение...',
-    liveChatSend: 'Отправить',
     socialsLabel: 'Соцсети',
   },
 };

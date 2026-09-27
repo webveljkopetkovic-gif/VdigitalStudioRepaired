@@ -262,6 +262,7 @@ export const en = {
       success: "Thank you! We'll get back to you within 24 hours.",
       privacy: 'We only use your details to contact you about your inquiry.',
       errorRequired: 'Please enter your full name, email or phone, and select what you do.',
+      errorGeneric: 'Something went wrong. Please try again.',
     },
   },
   footer: {
@@ -290,12 +291,6 @@ export const en = {
     prefilledMessage: "Hi VDigital, I'd like to book a free call.",
     calendarFallback:
       "The calendar isn't available right now. Message us and we'll find a time together.",
-    liveChatButton: 'Live chat (Tawk.to)',
-    liveChatTitle: 'VDigital Live Chat',
-    liveChatSubtitle: 'Typically replies in a few minutes',
-    liveChatWelcome: 'Hi! Tell us briefly about your practice and how we can help.',
-    liveChatPlaceholder: 'Write a message...',
-    liveChatSend: 'Send',
     socialsLabel: 'Follow us',
   },
 };

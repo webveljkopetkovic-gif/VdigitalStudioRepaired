@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Mail,
-  MessageCircle,
-  Phone,
   Send,
-  MessageSquare,
   CheckCircle2,
   AlertCircle,
   Loader2,
 } from 'lucide-react';
 import {
-  CAL_LINK,
   CONTACT_EMAIL,
   INSTAGRAM_URL,
   LINKEDIN_URL,
@@ -26,17 +22,8 @@ import { useI18n } from '../i18n';
 import { HeaderLogo } from './HeaderLogo';
 import { Footer } from './Footer';
 import { FloatingChatButton } from './FloatingChatButton';
-import { TawkToChat, triggerLiveChat } from './TawkToChat';
-
-declare global {
-  interface Window {
-    Cal?: ((...args: unknown[]) => void) & {
-      loaded?: boolean;
-      ns?: Record<string, unknown>;
-      q?: unknown[][];
-    };
-  }
-}
+import { ViberIcon, WhatsAppIcon } from './BrandIcons';
+import type { CalEmbedProps } from './CalEmbed';
 
 export const ContactPage: React.FC = () => {
   const { locale, t } = useI18n();
@@ -46,13 +33,38 @@ export const ContactPage: React.FC = () => {
   const [cbPhone, setCbPhone] = useState('');
   const [botcheck, setBotcheck] = useState(false);
   const [cbStatus, setCbStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [cbErrorMsg, setCbErrorMsg] = useState('');
 
-  // Cal.com embed state
-  const trimmedCalLink = CAL_LINK.trim().replace(/^https?:\/\/(app\.)?cal\.com\//, '');
-  const hasCalConfig = Boolean(trimmedCalLink);
-  const [calState, setCalState] = useState<'loading' | 'ready' | 'fallback'>(
-    hasCalConfig ? 'loading' : 'fallback'
+  // Cal.com client-only embed & 8s fallback state
+  // Initial state is always 'loading' so static prerender outputs the calendar skeleton
+  const [calState, setCalState] = useState<'loading' | 'ready' | 'fallback'>('loading');
+  const [ClientCalEmbed, setClientCalEmbed] = useState<React.ComponentType<CalEmbedProps> | null>(
+    null
   );
+  const settledRef = useRef(false);
+  const timerRef = useRef<number | null>(null);
+
+  const handleCalLoaded = useCallback(() => {
+    if (!settledRef.current) {
+      settledRef.current = true;
+      if (timerRef.current !== null) {
+        window.clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+      setCalState('ready');
+    }
+  }, []);
+
+  const handleCalError = useCallback(() => {
+    if (!settledRef.current) {
+      settledRef.current = true;
+      if (timerRef.current !== null) {
+        window.clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+      setCalState('fallback');
+    }
+  }, []);
 
   // Scroll to top when arriving on Contact page
   useEffect(() => {
@@ -61,155 +73,78 @@ export const ContactPage: React.FC = () => {
     }
   }, [locale]);
 
-  // Load Cal.com inline embed script ONLY on the contact pages when CAL_LINK is set
+  // Lazy-import CalEmbed ONLY in the browser after mount and enforce 8-second fallback timer
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (!hasCalConfig) {
-      setCalState('fallback');
-      return;
-    }
 
+    settledRef.current = false;
     setCalState('loading');
-    let settled = false;
 
-    const fallbackTimer = window.setTimeout(() => {
-      if (!settled) {
-        settled = true;
+    timerRef.current = window.setTimeout(() => {
+      if (!settledRef.current) {
+        settledRef.current = true;
         setCalState('fallback');
       }
     }, 8000);
 
-    // Initialize Cal.com embed snippet
-    (function (C: Window, A: string, L: string) {
-      const p = function (a: { q?: unknown[][] }, ar: unknown) {
-        a.q?.push(ar as unknown[]);
-      };
-      const d = C.document;
-      C.Cal =
-        C.Cal ||
-        Object.assign(
-          function (...args: unknown[]) {
-            const cal = C.Cal!;
-            const ar = args;
-            if (!cal.loaded) {
-              cal.ns = {};
-              cal.q = cal.q || [];
-              const script = d.createElement('script');
-              script.src = A;
-              script.async = true;
-              script.onerror = () => {
-                if (!settled) {
-                  settled = true;
-                  setCalState('fallback');
-                }
-              };
-              d.head.appendChild(script);
-              cal.loaded = true;
-            }
-            if (ar[0] === L) {
-              const api = function (...apiArgs: unknown[]) {
-                p(api as unknown as { q?: unknown[][] }, apiArgs);
-              };
-              const namespace = ar[1];
-              (api as unknown as { q: unknown[][] }).q =
-                (api as unknown as { q: unknown[][] }).q || [];
-              if (typeof namespace === 'string') {
-                cal.ns![namespace] = cal.ns![namespace] || api;
-                p(cal.ns![namespace] as { q?: unknown[][] }, ar);
-                p(cal, ['initNamespace', namespace]);
-              } else p(cal, ar);
-              return;
-            }
-            p(cal, ar);
-          },
-          { loaded: false, ns: {}, q: [] as unknown[][] }
-        );
-    })(window, 'https://app.cal.com/embed/embed.js', 'init');
-
-    try {
-      const container = document.getElementById('cal-inline-embed-container');
-      if (container) {
-        container.innerHTML = '';
-      }
-
-      const calLocale = locale === 'ru' ? 'ru' : locale === 'sr' ? 'sr' : 'en';
-
-      window.Cal?.('init', { origin: 'https://cal.com' });
-      window.Cal?.('inline', {
-        elementOrSelector: '#cal-inline-embed-container',
-        calLink: trimmedCalLink,
-        layout: 'month_view',
-        config: {
-          layout: 'month_view',
-          theme: 'dark',
-          locale: calLocale,
-        },
-      });
-      window.Cal?.('ui', {
-        theme: 'dark',
-        styles: { branding: { brandColor: '#b6ff00' } },
-        hideEventTypeDetails: false,
-        layout: 'month_view',
-      });
-      window.Cal?.('on', {
-        action: 'linkReady',
-        callback: () => {
-          if (!settled) {
-            settled = true;
-            window.clearTimeout(fallbackTimer);
-            setCalState('ready');
+    let active = true;
+    import('./CalEmbed')
+      .then((mod) => {
+        if (active) {
+          setClientCalEmbed(() => mod.CalEmbed || mod.default);
+        }
+      })
+      .catch(() => {
+        if (active && !settledRef.current) {
+          settledRef.current = true;
+          if (timerRef.current !== null) {
+            window.clearTimeout(timerRef.current);
+            timerRef.current = null;
           }
-        },
+          setCalState('fallback');
+        }
       });
-    } catch {
-      if (!settled) {
-        settled = true;
-        window.clearTimeout(fallbackTimer);
-        setCalState('fallback');
-      }
-    }
 
     return () => {
-      window.clearTimeout(fallbackTimer);
+      active = false;
+      if (timerRef.current !== null) {
+        window.clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
     };
-  }, [hasCalConfig, trimmedCalLink, locale]);
+  }, []);
 
-  const handleCallbackSubmit = async (e: React.FormEvent) => {
+  const handleCallbackSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const accessKey = WEB3FORMS_ACCESS_KEY.trim();
     if (!accessKey) return;
     if (botcheck) return;
     if (!cbName.trim() || !cbPhone.trim()) return;
 
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    formData.append('access_key', accessKey);
+
     setCbStatus('loading');
+    setCbErrorMsg('');
 
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          access_key: accessKey,
-          subject: `📞 Callback request · VDigital (${locale.toUpperCase()})`,
-          from_name: 'VDigital website',
-          name: cbName.trim(),
-          phone: cbPhone.trim(),
-          language: locale,
-          page_url: typeof window !== 'undefined' ? window.location.href : '',
-          botcheck,
-        }),
+        body: formData,
       });
-      const data = (await response.json()) as { success?: boolean };
-      if (response.ok && data.success !== false) {
+      const data = await response.json();
+      if (response.ok) {
         setCbStatus('success');
         setCbName('');
         setCbPhone('');
+        form.reset();
       } else {
+        setCbErrorMsg(data.message || t.contactPage.callbackError);
         setCbStatus('error');
       }
     } catch {
+      setCbErrorMsg(t.contactPage.callbackError);
       setCbStatus('error');
     }
   };
@@ -235,7 +170,7 @@ export const ContactPage: React.FC = () => {
     href: whatsappPrefilledHref,
     label: `WhatsApp: ${PHONE_DISPLAY}`,
     external: true,
-    icon: <MessageCircle className="w-3.5 h-3.5 text-[#b6ff00] shrink-0" />,
+    icon: <WhatsAppIcon className="w-3.5 h-3.5 text-[#b6ff00] shrink-0" />,
   };
 
   const viberItem = {
@@ -243,7 +178,7 @@ export const ContactPage: React.FC = () => {
     href: VIBER_URL,
     label: `Viber: ${PHONE_DISPLAY}`,
     external: false,
-    icon: <Phone className="w-3.5 h-3.5 text-[#b6ff00] shrink-0" />,
+    icon: <ViberIcon className="w-3.5 h-3.5 text-[#b6ff00] shrink-0" />,
   };
 
   const telegramItem = hasTelegramUsername
@@ -356,7 +291,7 @@ export const ContactPage: React.FC = () => {
               {t.contactPage.writeLabel}
             </div>
 
-            {/* 7. Contact links, one per row (~14px icon and ~14px text) + Live Tawk.to chat button */}
+            {/* 7. Contact links, one per row (~14px icon and ~14px text) */}
             <div className="mt-3.5 flex flex-col space-y-2.5 w-full">
               {contactLinks.map((item) => (
                 <a
@@ -370,22 +305,6 @@ export const ContactPage: React.FC = () => {
                   <span>{item.label}</span>
                 </a>
               ))}
-
-              {/* Live Tawk.to Button for live chatting */}
-              <button
-                type="button"
-                onClick={triggerLiveChat}
-                className="group inline-flex items-center gap-2.5 text-[14px] text-neutral-200 hover:text-[#b6ff00] transition-colors w-fit cursor-pointer pt-0.5"
-              >
-                <MessageSquare className="w-3.5 h-3.5 text-[#b6ff00] shrink-0" />
-                <span className="underline decoration-white/20 underline-offset-4 group-hover:decoration-[#b6ff00]">
-                  {t.contactPage.liveChatButton}
-                </span>
-                <span className="relative flex h-2 w-2 ml-0.5" aria-hidden="true">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#b6ff00] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#b6ff00]" />
-                </span>
-              </button>
             </div>
 
             {/* 8. Callback Form ("Or we call you") — hidden if WEB3FORMS_ACCESS_KEY is empty */}
@@ -396,6 +315,7 @@ export const ContactPage: React.FC = () => {
                 </div>
 
                 <form
+                  id="form"
                   onSubmit={handleCallbackSubmit}
                   className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2"
                 >
@@ -439,7 +359,11 @@ export const ContactPage: React.FC = () => {
                     {cbStatus === 'loading' && (
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />
                     )}
-                    <span>{t.contactPage.callbackButton}</span>
+                    <span>
+                      {cbStatus === 'loading'
+                        ? t.contact.form.submitting
+                        : t.contactPage.callbackButton}
+                    </span>
                   </button>
                 </form>
 
@@ -453,7 +377,7 @@ export const ContactPage: React.FC = () => {
                 {cbStatus === 'error' && (
                   <p className="mt-2.5 text-[12.5px] text-[#ff6b6b] flex items-center gap-1.5">
                     <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                    <span>{t.contactPage.callbackError}</span>
+                    <span>{cbErrorMsg || t.contactPage.callbackError}</span>
                   </p>
                 )}
               </div>
@@ -553,23 +477,26 @@ export const ContactPage: React.FC = () => {
           {/* =============================================================== */}
           {/* RIGHT COLUMN (~60%): CALENDAR CARD                              */}
           {/* =============================================================== */}
-          <div className="w-full rounded-[14px] bg-[#141416] border border-white/[0.06] p-5 sm:p-7 min-h-[620px] flex flex-col justify-between relative overflow-hidden">
-            {/* Cal.com Inline Container (rendered when CAL_LINK is configured) */}
-            {hasCalConfig && (
+          <div className="w-full rounded-[14px] bg-[#141416] border border-white/[0.06] p-5 sm:p-7 min-h-[700px] lg:min-h-[620px] flex flex-col justify-between relative overflow-hidden">
+            {/* Client-Only Cal.com Inline Embed (mounted only in browser after useEffect) */}
+            {ClientCalEmbed && calState !== 'fallback' && (
               <div
-                id="cal-inline-embed-container"
-                className={`w-full min-h-[580px] ${
-                  calState === 'ready' ? 'block' : 'hidden'
+                className={`w-full flex-1 min-h-[640px] lg:min-h-[564px] transition-opacity duration-200 ${
+                  calState === 'ready'
+                    ? 'opacity-100 relative z-10'
+                    : 'opacity-0 pointer-events-none absolute inset-5 sm:inset-7'
                 }`}
-              />
+              >
+                <ClientCalEmbed onLoaded={handleCalLoaded} onError={handleCalError} />
+              </div>
             )}
 
-            {/* Month-Calendar Skeleton while loading */}
+            {/* Month-Calendar Skeleton while loading (also rendered in static prerender HTML) */}
             {calState === 'loading' && (
               <div
                 aria-busy="true"
                 aria-label="Loading calendar"
-                className="w-full flex-1 flex flex-col justify-between space-y-6 animate-pulse"
+                className="w-full flex-1 flex flex-col justify-between space-y-6 animate-pulse relative z-20"
               >
                 {/* Top Event Header Skeleton */}
                 <div className="space-y-3">
@@ -665,7 +592,7 @@ export const ContactPage: React.FC = () => {
                       rel="noopener noreferrer"
                       className="w-full h-12 px-6 rounded-[10px] bg-[#b6ff00] hover:bg-[#c6ff26] text-[#0a0a0a] font-semibold text-[14.5px] flex items-center justify-center gap-2.5 transition-all duration-200 shadow-[0_6px_24px_rgba(182,255,0,0.22)] hover:scale-[1.01]"
                     >
-                      <MessageCircle className="w-4 h-4 stroke-[2.3]" />
+                      <WhatsAppIcon className="w-4 h-4 shrink-0" />
                       <span>WhatsApp · {PHONE_DISPLAY}</span>
                     </a>
 
@@ -674,7 +601,7 @@ export const ContactPage: React.FC = () => {
                       href={VIBER_URL}
                       className="w-full h-12 px-6 rounded-[10px] bg-[#1d1e22] hover:bg-[#25272c] border border-white/[0.08] hover:border-[#b6ff00]/50 text-white font-medium text-[14.5px] flex items-center justify-center gap-2.5 transition-all duration-200"
                     >
-                      <Phone className="w-4 h-4 text-[#b6ff00]" />
+                      <ViberIcon className="w-4 h-4 text-[#b6ff00] shrink-0" />
                       <span>Viber · {PHONE_DISPLAY}</span>
                     </a>
 
@@ -686,17 +613,6 @@ export const ContactPage: React.FC = () => {
                       <Mail className="w-4 h-4 text-[#b6ff00]" />
                       <span>{CONTACT_EMAIL}</span>
                     </a>
-
-                    {/* Large Live Tawk.to Chat Button */}
-                    <button
-                      type="button"
-                      onClick={triggerLiveChat}
-                      className="w-full h-12 px-6 rounded-[10px] bg-[#161912] hover:bg-[#1e2417] border border-[#b6ff00]/35 hover:border-[#b6ff00] text-white font-medium text-[14.5px] flex items-center justify-center gap-2.5 transition-all duration-200 cursor-pointer"
-                    >
-                      <MessageSquare className="w-4 h-4 text-[#b6ff00]" />
-                      <span>{t.contactPage.liveChatButton}</span>
-                      <span className="w-2 h-2 rounded-full bg-[#b6ff00] animate-pulse" />
-                    </button>
                   </div>
                 </div>
 
@@ -724,9 +640,6 @@ export const ContactPage: React.FC = () => {
 
       {/* Existing Site Footer */}
       <Footer />
-
-      {/* Live Tawk.to Chat Drawer & Script Loader */}
-      <TawkToChat />
 
       {/* Floating Chat Button */}
       <FloatingChatButton />

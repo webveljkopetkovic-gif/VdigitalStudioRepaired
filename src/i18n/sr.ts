@@ -264,6 +264,7 @@ export const sr: Translations = {
       success: 'Hvala vam! Javićemo vam se u roku od 24 sata.',
       privacy: 'Vaše podatke koristimo isključivo da vas kontaktiramo povodom vašeg upita.',
       errorRequired: 'Molimo unesite vaše ime, email ili telefon i izaberite čime se bavite.',
+      errorGeneric: 'Nešto nije u redu. Molimo pokušajte ponovo.',
     },
   },
   footer: {
@@ -292,12 +293,6 @@ export const sr: Translations = {
     prefilledMessage: 'Zdravo, želim da zakažem besplatan poziv sa VDigital timom.',
     calendarFallback:
       'Kalendar trenutno nije dostupan. Pišite nam i zajedno ćemo naći termin.',
-    liveChatButton: 'Live chat uživo (Tawk.to)',
-    liveChatTitle: 'VDigital Live Chat',
-    liveChatSubtitle: 'Obično odgovaramo za par minuta',
-    liveChatWelcome: 'Zdravo! Napišite nam ukratko čime se bavite i kako možemo da Vam pomognemo.',
-    liveChatPlaceholder: 'Napišite poruku...',
-    liveChatSend: 'Pošalji',
     socialsLabel: 'Društvene mreže',
   },
 };

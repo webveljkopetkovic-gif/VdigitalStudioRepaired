@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, CheckCircle2, ArrowRight } from 'lucide-react';
 import { ServiceItem } from '../types';
+import { WEB3FORMS_ACCESS_KEY } from '../config';
 
 interface GetStartedModalProps {
   service: ServiceItem | null;
@@ -10,14 +11,40 @@ interface GetStartedModalProps {
 export const GetStartedModal: React.FC<GetStartedModalProps> = ({ service, onClose }) => {
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
   if (!service) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email.trim()) {
-      setSubmitted(true);
+    if (!email.trim()) return;
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    formData.append('access_key', WEB3FORMS_ACCESS_KEY);
+    formData.append('service', service.title);
+
+    setIsSubmitting(true);
+    setErrorMsg('');
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setSubmitted(true);
+        form.reset();
+      } else {
+        setErrorMsg(data.message || 'Something went wrong. Please try again.');
+      }
+    } catch {
+      setErrorMsg('Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -81,6 +108,7 @@ export const GetStartedModal: React.FC<GetStartedModalProps> = ({ service, onClo
                 </label>
                 <input
                   type="email"
+                  name="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -95,6 +123,7 @@ export const GetStartedModal: React.FC<GetStartedModalProps> = ({ service, onClo
                 </label>
                 <input
                   type="text"
+                  name="company"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
                   placeholder="Acme Studios"
@@ -103,12 +132,19 @@ export const GetStartedModal: React.FC<GetStartedModalProps> = ({ service, onClo
               </div>
             </div>
 
+            {errorMsg && (
+              <p role="alert" className="text-xs text-[#ff6b6b] font-geist">
+                {errorMsg}
+              </p>
+            )}
+
             <div className="pt-3">
               <button
                 type="submit"
-                className="w-full py-3 px-6 rounded-full bg-white text-black hover:bg-neutral-200 font-semibold text-xs tracking-wide flex items-center justify-center gap-2 transition cursor-pointer"
+                disabled={isSubmitting}
+                className="w-full py-3 px-6 rounded-full bg-white text-black hover:bg-neutral-200 font-semibold text-xs tracking-wide flex items-center justify-center gap-2 transition cursor-pointer disabled:opacity-60"
               >
-                <span>Initiate Project Brief</span>
+                <span>{isSubmitting ? 'Sending...' : 'Initiate Project Brief'}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>

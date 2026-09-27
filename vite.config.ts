@@ -23,6 +23,11 @@ function prerenderPlugin(): Plugin {
 export default defineConfig(() => {
   return {
     plugins: [react(), tailwindcss(), prerenderPlugin()],
+    define: {
+      'process.env.WEB3FORMS_ACCESS_KEY': JSON.stringify(
+        process.env.WEB3FORMS_ACCESS_KEY || '8cae6776-aeee-436b-a022-349b42efa483'
+      ),
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
