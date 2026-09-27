@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import {
   Mail,
   Send,
-  CheckCircle2,
-  AlertCircle,
-  Loader2,
   ArrowUpRight,
 } from 'lucide-react';
 import {
   BOOKING_URL,
   CONTACT_EMAIL,
-  FORM_ENDPOINT,
   INSTAGRAM_URL,
   LINKEDIN_URL,
   PHONE_DISPLAY,
@@ -28,29 +23,7 @@ import { FloatingChatButton } from './FloatingChatButton';
 import { ViberIcon, WhatsAppIcon } from './BrandIcons';
 
 export const ContactPage: React.FC = () => {
-  const { locale, t, privacyPath } = useI18n();
-  const navigate = useNavigate();
-
-  // Callback form state ("Or we call you" in left column)
-  const [cbName, setCbName] = useState('');
-  const [cbPhone, setCbPhone] = useState('');
-  const [cbBotcheck, setCbBotcheck] = useState('');
-  const [cbStatus, setCbStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [cbErrorMsg, setCbErrorMsg] = useState('');
-
-  // Main contact form state (Right column card)
-  const [fullName, setFullName] = useState('');
-  const [contactInfo, setContactInfo] = useState('');
-  const [professionIndex, setProfessionIndex] = useState(0);
-  const [message, setMessage] = useState('');
-  const [botcheck, setBotcheck] = useState('');
-  const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [formErrorMsg, setFormErrorMsg] = useState('');
-
-  const profession =
-    t.contact.form.professionOptions[professionIndex] ||
-    t.contact.form.professionOptions[0] ||
-    'Doctor';
+  const { locale, t } = useI18n();
 
   // Scroll to top when arriving on Contact page
   useEffect(() => {
@@ -59,105 +32,66 @@ export const ContactPage: React.FC = () => {
     }
   }, [locale]);
 
-  const handleCallbackSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (cbBotcheck.trim().length > 0) {
-      setCbStatus('success');
-      return;
-    }
-    if (!cbName.trim() || !cbPhone.trim()) return;
+  // Initialize Cal.com inline embed ("vdigital/30min")
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
 
-    const form = e.currentTarget;
-    setCbStatus('loading');
-    setCbErrorMsg('');
-
-    try {
-      const response = await fetch(FORM_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: cbName.trim(),
-          contact: cbPhone.trim(),
-          profession: 'Callback request',
-          botcheck: cbBotcheck,
-          locale,
-          formType: 'callback',
-        }),
-      });
-      const data = await response.json().catch(() => ({}));
-      if (response.ok && data.ok !== false) {
-        setCbStatus('success');
-        setCbName('');
-        setCbPhone('');
-        form.reset();
-      } else {
-        setCbErrorMsg(data.message || t.contactPage.callbackError);
-        setCbStatus('error');
-      }
-    } catch {
-      setCbErrorMsg(t.contactPage.callbackError);
-      setCbStatus('error');
-    }
-  };
-
-  const handleMainFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setFormErrorMsg('');
-
-    if (botcheck.trim().length > 0) {
-      setFormStatus('success');
-      return;
+    const container = document.getElementById('my-cal-inline-30min');
+    if (container) {
+      container.innerHTML = '';
     }
 
-    const trimmedName = fullName.trim();
-    const trimmedContact = contactInfo.trim();
+    (function (C: any, A: string, L: string) {
+      const p = function (a: any, ar: any) {
+        a.q.push(ar);
+      };
+      const d = C.document;
+      C.Cal =
+        C.Cal ||
+        function () {
+          const cal = C.Cal;
+          const ar = arguments;
+          if (!cal.loaded) {
+            cal.ns = {};
+            cal.q = cal.q || [];
+            d.head.appendChild(d.createElement('script')).src = A;
+            cal.loaded = true;
+          }
+          if (ar[0] === L) {
+            const api: any = function () {
+              p(api, arguments);
+            };
+            const namespace = ar[1];
+            api.q = api.q || [];
+            if (typeof namespace === 'string') {
+              cal.ns[namespace] = cal.ns[namespace] || api;
+              p(cal.ns[namespace], ar);
+              p(cal, ['initNamespace', namespace]);
+            } else {
+              p(cal, ar);
+            }
+            return;
+          }
+          p(cal, ar);
+        };
+    })(window, 'https://app.cal.com/embed/embed.js', 'init');
 
-    if (!trimmedName || !trimmedContact || !profession) {
-      setFormErrorMsg(t.contact.form.errorRequired);
-      setFormStatus('error');
-      return;
-    }
+    const Cal = (window as any).Cal;
+    Cal('init', '30min', { origin: 'https://app.cal.com' });
+    Cal.config = Cal.config || {};
+    Cal.config.forwardQueryParams = true;
 
-    const form = e.currentTarget;
-    setFormStatus('loading');
+    Cal.ns['30min']('inline', {
+      elementOrSelector: '#my-cal-inline-30min',
+      config: { layout: 'month_view', useSlotsViewOnSmallScreen: 'true' },
+      calLink: 'vdigital/30min',
+    });
 
-    try {
-      const response = await fetch(FORM_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: trimmedName,
-          contact: trimmedContact,
-          profession,
-          message: message.trim(),
-          botcheck,
-          locale,
-          formType: 'inquiry',
-        }),
-      });
-
-      const data = await response.json().catch(() => ({}));
-
-      if (response.ok && data.ok !== false) {
-        setFormStatus('success');
-        setFullName('');
-        setContactInfo('');
-        setProfessionIndex(0);
-        setMessage('');
-        form.reset();
-      } else {
-        setFormErrorMsg(data.message || t.contact.form.errorGeneric);
-        setFormStatus('error');
-      }
-    } catch {
-      setFormErrorMsg(t.contact.form.errorGeneric);
-      setFormStatus('error');
-    }
-  };
+    Cal.ns['30min']('ui', {
+      hideEventTypeDetails: false,
+      layout: 'month_view',
+    });
+  }, []);
 
   const whatsappPrefilledHref = `${WHATSAPP_URL}?text=${encodeURIComponent(
     t.contactPage.prefilledMessage
@@ -236,9 +170,9 @@ export const ContactPage: React.FC = () => {
       {/* Existing Site Navbar */}
       <HeaderLogo />
 
-      {/* Main Content Container: max-width ~1100px, generous top padding below navbar */}
-      <main className="relative z-10 flex-1 w-full max-w-[1100px] mx-auto px-5 sm:px-8 pt-10 sm:pt-16 lg:pt-20 pb-20 sm:pb-28">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] gap-12 lg:gap-[64px] items-start">
+      {/* Main Content Container: generous top padding below navbar */}
+      <main className="relative z-10 flex-1 w-full max-w-[1280px] mx-auto px-5 sm:px-8 pt-10 sm:pt-16 lg:pt-20 pb-20 sm:pb-28">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,3.6fr)_minmax(0,6.4fr)] gap-12 lg:gap-12 xl:gap-[56px] items-start">
           {/* =============================================================== */}
           {/* LEFT COLUMN (~40%, sticky on desktop)                           */}
           {/* =============================================================== */}
@@ -330,100 +264,6 @@ export const ContactPage: React.FC = () => {
                   <span>{item.label}</span>
                 </a>
               ))}
-            </div>
-
-            {/* 8. Callback Form ("Or we call you") */}
-            <div className="mt-9 w-full max-w-[420px]">
-              <div className="text-[11px] uppercase tracking-[0.15em] text-neutral-400 font-medium mb-3">
-                {t.contactPage.callbackLabel}
-              </div>
-
-              <form
-                onSubmit={handleCallbackSubmit}
-                className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2"
-              >
-                {/* Honeypot hidden field */}
-                <div className="hidden" aria-hidden="true">
-                  <label htmlFor="cb-botcheck">Do not fill this field</label>
-                  <input
-                    id="cb-botcheck"
-                    type="text"
-                    name="botcheck"
-                    value={cbBotcheck}
-                    onChange={(e) => setCbBotcheck(e.target.value)}
-                    tabIndex={-1}
-                    autoComplete="off"
-                  />
-                </div>
-
-                <input
-                  type="text"
-                  name="name"
-                  required
-                  maxLength={120}
-                  value={cbName}
-                  onChange={(e) => setCbName(e.target.value)}
-                  placeholder={t.contactPage.callbackNamePlaceholder}
-                  aria-label={t.contactPage.callbackNamePlaceholder}
-                  className="flex-1 min-w-0 h-9 px-3 rounded-[8px] bg-[#141416] border border-white/[0.08] focus:border-[#b6ff00] text-[13px] text-white placeholder:text-neutral-500 focus:outline-none transition-colors"
-                />
-
-                <input
-                  type="tel"
-                  name="phone"
-                  required
-                  maxLength={60}
-                  value={cbPhone}
-                  onChange={(e) => setCbPhone(e.target.value)}
-                  placeholder={t.contactPage.callbackPhonePlaceholder}
-                  aria-label={t.contactPage.callbackPhonePlaceholder}
-                  className="flex-1 min-w-0 h-9 px-3 rounded-[8px] bg-[#141416] border border-white/[0.08] focus:border-[#b6ff00] text-[13px] text-white placeholder:text-neutral-500 focus:outline-none transition-colors"
-                />
-
-                <button
-                  type="submit"
-                  disabled={cbStatus === 'loading'}
-                  className="h-9 px-4 rounded-[8px] bg-[#b6ff00] hover:bg-[#c6ff26] text-[#0a0a0a] font-semibold text-[13px] whitespace-nowrap shrink-0 transition-colors cursor-pointer disabled:opacity-60 inline-flex items-center justify-center gap-1.5"
-                >
-                  {cbStatus === 'loading' && (
-                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                  )}
-                  <span>
-                    {cbStatus === 'loading'
-                      ? t.contact.form.submitting
-                      : t.contactPage.callbackButton}
-                  </span>
-                </button>
-              </form>
-
-              <p className="mt-2 text-[11.5px] text-neutral-500 leading-relaxed">
-                {t.contact.form.privacyAgreementPrefix}
-                <a
-                  href={privacyPath}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigate(privacyPath);
-                  }}
-                  className="text-neutral-400 hover:text-[#b6ff00] underline underline-offset-2 transition-colors"
-                >
-                  {t.contact.form.privacyAgreementLink}
-                </a>
-                {t.contact.form.privacyAgreementSuffix}
-              </p>
-
-              {cbStatus === 'success' && (
-                <p className="mt-2.5 text-[12.5px] text-[#b6ff00] flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
-                  <span>{t.contactPage.callbackSuccess}</span>
-                </p>
-              )}
-
-              {cbStatus === 'error' && (
-                <p className="mt-2.5 text-[12.5px] text-[#ff6b6b] flex items-center gap-1.5">
-                  <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                  <span>{cbErrorMsg || t.contactPage.callbackError}</span>
-                </p>
-              )}
             </div>
 
             {/* Social Icons Row (Instagram, TikTok, LinkedIn, Telegram) */}
@@ -553,169 +393,13 @@ export const ContactPage: React.FC = () => {
               )}
             </div>
 
-            {formStatus === 'success' ? (
-              <div className="py-12 flex flex-col items-center text-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-[#b6ff00] text-[#0a0c09] flex items-center justify-center shadow-[0_0_28px_rgba(182,255,0,0.35)]">
-                  <CheckCircle2 className="w-7 h-7 stroke-[2.2]" />
-                </div>
-                <p className="font-geist font-medium text-[18px] sm:text-[20px] text-white max-w-md">
-                  {t.contact.form.success}
-                </p>
-              </div>
-            ) : (
-              <form
-                id="form"
-                onSubmit={handleMainFormSubmit}
-                noValidate
-                className="space-y-4"
-              >
-                {/* Hidden Honeypot Field */}
-                <div className="hidden" aria-hidden="true">
-                  <label htmlFor="page-botcheck">Do not fill this field</label>
-                  <input
-                    id="page-botcheck"
-                    type="text"
-                    name="botcheck"
-                    value={botcheck}
-                    onChange={(e) => setBotcheck(e.target.value)}
-                    tabIndex={-1}
-                    autoComplete="off"
-                  />
-                </div>
-
-                {/* 1. Full Name */}
-                <div>
-                  <label
-                    htmlFor="page-full-name"
-                    className="block font-geist text-[13px] text-neutral-300 mb-1.5"
-                  >
-                    {t.contact.form.name} *
-                  </label>
-                  <input
-                    id="page-full-name"
-                    name="name"
-                    type="text"
-                    required
-                    maxLength={120}
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    placeholder={t.contact.form.name}
-                    className="w-full h-11 px-4 rounded-[10px] bg-[#0c0d10] border border-white/[0.1] focus:border-[#b6ff00] text-[14px] font-geist text-white placeholder:text-neutral-500 focus:outline-none transition-colors"
-                  />
-                </div>
-
-                {/* 2. Email or Phone */}
-                <div>
-                  <label
-                    htmlFor="page-email-phone"
-                    className="block font-geist text-[13px] text-neutral-300 mb-1.5"
-                  >
-                    {t.contact.form.contact} *
-                  </label>
-                  <input
-                    id="page-email-phone"
-                    name="contact"
-                    type="text"
-                    required
-                    maxLength={160}
-                    value={contactInfo}
-                    onChange={(e) => setContactInfo(e.target.value)}
-                    placeholder={t.contact.form.contact}
-                    className="w-full h-11 px-4 rounded-[10px] bg-[#0c0d10] border border-white/[0.1] focus:border-[#b6ff00] text-[14px] font-geist text-white placeholder:text-neutral-500 focus:outline-none transition-colors"
-                  />
-                </div>
-
-                {/* 3. What do you do? */}
-                <div>
-                  <label
-                    htmlFor="page-profession"
-                    className="block font-geist text-[13px] text-neutral-300 mb-1.5"
-                  >
-                    {t.contact.form.profession} *
-                  </label>
-                  <select
-                    id="page-profession"
-                    name="profession"
-                    required
-                    value={professionIndex}
-                    onChange={(e) => setProfessionIndex(Number(e.target.value))}
-                    className="w-full h-11 px-4 rounded-[10px] bg-[#0c0d10] border border-white/[0.1] focus:border-[#b6ff00] text-[14px] font-geist text-white focus:outline-none transition-colors"
-                  >
-                    {t.contact.form.professionOptions.map((option, idx) => (
-                      <option
-                        key={option}
-                        value={idx}
-                        className="bg-[#0c0d10] text-white"
-                      >
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* 4. Message (optional) */}
-                <div>
-                  <label
-                    htmlFor="page-message"
-                    className="block font-geist text-[13px] text-neutral-300 mb-1.5"
-                  >
-                    {t.contact.form.message}
-                  </label>
-                  <textarea
-                    id="page-message"
-                    name="message"
-                    rows={4}
-                    maxLength={2000}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder={t.contact.form.message}
-                    className="w-full p-4 rounded-[10px] bg-[#0c0d10] border border-white/[0.1] focus:border-[#b6ff00] text-[14px] font-geist text-white placeholder:text-neutral-500 focus:outline-none transition-colors resize-y"
-                  />
-                </div>
-
-                {formStatus === 'error' && formErrorMsg && (
-                  <p
-                    role="alert"
-                    className="text-[13px] font-geist text-[#ff6b6b] flex items-center gap-1.5"
-                  >
-                    <AlertCircle className="w-4 h-4 shrink-0" />
-                    <span>{formErrorMsg}</span>
-                  </p>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={formStatus === 'loading'}
-                  className="w-full h-12 px-6 rounded-[10px] bg-[#b6ff00] hover:bg-[#c6ff26] text-[#0a0a0a] font-semibold text-[14.5px] flex items-center justify-center gap-2 transition-all duration-200 shadow-[0_6px_24px_rgba(182,255,0,0.22)] cursor-pointer disabled:opacity-60"
-                >
-                  {formStatus === 'loading' && (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  )}
-                  <span>
-                    {formStatus === 'loading'
-                      ? t.contact.form.submitting
-                      : t.contact.form.submit}
-                  </span>
-                  <span aria-hidden="true">→</span>
-                </button>
-
-                <p className="text-[12px] font-geist text-neutral-400 text-center pt-1 leading-relaxed">
-                  {t.contact.form.privacy}{' '}
-                  {t.contact.form.privacyAgreementPrefix}
-                  <a
-                    href={privacyPath}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigate(privacyPath);
-                    }}
-                    className="text-neutral-300 hover:text-[#b6ff00] underline underline-offset-2 transition-colors"
-                  >
-                    {t.contact.form.privacyAgreementLink}
-                  </a>
-                  {t.contact.form.privacyAgreementSuffix}
-                </p>
-              </form>
-            )}
+            {/* Cal inline embed code begins */}
+            <div
+              id="my-cal-inline-30min"
+              style={{ width: '100%', height: '100%', overflow: 'scroll' }}
+              className="w-full min-h-[580px]"
+            />
+            {/* Cal inline embed code ends */}
 
             {/* Quick Direct Action Buttons Footer inside Card */}
             <div className="mt-7 pt-6 border-t border-white/[0.06]">

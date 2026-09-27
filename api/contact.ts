@@ -64,7 +64,7 @@ function stripHtml(input: unknown): string {
 
 function isValidEmailOrPhone(value: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-  const phoneRegex = /^[+]?[\d\s().-]{6,28}$/;
+  const phoneRegex = /^[+]?[\d\s()./-]{5,32}$/;
   const handleRegex = /^@[a-zA-Z0-9_.-]{3,64}$/;
   return emailRegex.test(value) || phoneRegex.test(value) || handleRegex.test(value);
 }
@@ -164,7 +164,11 @@ export default async function handler(req: any, res: any) {
     return res.end(JSON.stringify({ ok: false, message: msg.invalidContact }));
   }
 
-  const web3FormsKey = (process.env.WEB3FORMS_ACCESS_KEY || '').trim();
+  const web3FormsKey = (
+    process.env.WEB3FORMS_ACCESS_KEY ||
+    process.env.VITE_WEB3FORMS_ACCESS_KEY ||
+    ''
+  ).trim();
   const telegramBotToken = (process.env.TELEGRAM_BOT_TOKEN || '').trim();
   const telegramChatId = (process.env.TELEGRAM_CHAT_ID || '').trim();
 
@@ -178,28 +182,35 @@ export default async function handler(req: any, res: any) {
 
   if (web3FormsKey) {
     try {
-      const formData = new FormData();
-      formData.append('access_key', web3FormsKey);
-      formData.append(
-        'subject',
-        formType === 'callback'
-          ? `VDigital Callback Request — ${name}`
-          : `VDigital Inquiry — ${name} (${profession})`
-      );
-      formData.append('name', name);
-      formData.append('contact', contact);
-      formData.append('profession', profession);
+      const payload: Record<string, string> = {
+        access_key: web3FormsKey,
+        from_name: 'VDigital Website',
+        subject:
+          formType === 'callback'
+            ? `VDigital Callback Request ("Or we call you") — ${name} (${contact})`
+            : `VDigital Inquiry — ${name} (${profession})`,
+        name,
+        phone: contact,
+        contact,
+        profession,
+        form_type: formType === 'callback' ? 'Or we call you (Callback)' : 'Contact Inquiry',
+        locale: locale.toUpperCase(),
+      };
       if (message) {
-        formData.append('message', message);
+        payload.message = message;
       }
-      formData.append('locale', locale);
 
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
+      const result = await response.json().catch(() => null);
+      if (response.ok && (!result || result.success !== false)) {
         delivered = true;
       }
     } catch {
