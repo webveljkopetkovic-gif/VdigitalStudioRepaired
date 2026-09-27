@@ -68,6 +68,8 @@ export const FAQSection: React.FC = () => {
                   <button
                     type="button"
                     aria-expanded={isOpen}
+                    aria-controls={`faq-answer-${idx}`}
+                    id={`faq-question-${idx}`}
                     onClick={() => setOpenIndex(isOpen ? null : idx)}
                     className="w-full flex items-center justify-between gap-4 px-6 py-5 sm:px-7 sm:py-6 text-left cursor-pointer"
                   >
@@ -86,13 +88,20 @@ export const FAQSection: React.FC = () => {
                   </button>
                 </h3>
 
-                {isOpen && (
-                  <div className="px-6 pb-6 sm:px-7 sm:pb-7 pt-0">
-                    <p className="font-geist text-[14px] sm:text-[15.5px] leading-[1.65] text-[#d6dfd0] max-w-3xl">
-                      {item.a}
-                    </p>
-                  </div>
-                )}
+                <div
+                  id={`faq-answer-${idx}`}
+                  role="region"
+                  aria-labelledby={`faq-question-${idx}`}
+                  className={
+                    isOpen
+                      ? 'px-6 pb-6 sm:px-7 sm:pb-7 pt-0 block'
+                      : 'px-6 pb-6 sm:px-7 sm:pb-7 pt-0 hidden'
+                  }
+                >
+                  <p className="font-geist text-[14px] sm:text-[15.5px] leading-[1.65] text-[#d6dfd0] max-w-3xl">
+                    {item.a}
+                  </p>
+                </div>
               </div>
             );
           })}

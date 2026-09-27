@@ -1,13 +1,17 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Mail,
   Send,
   CheckCircle2,
   AlertCircle,
   Loader2,
+  ArrowUpRight,
 } from 'lucide-react';
 import {
+  BOOKING_URL,
   CONTACT_EMAIL,
+  FORM_ENDPOINT,
   INSTAGRAM_URL,
   LINKEDIN_URL,
   PHONE_DISPLAY,
@@ -15,7 +19,6 @@ import {
   TELEGRAM_USERNAME,
   TIKTOK_URL,
   VIBER_URL,
-  WEB3FORMS_ACCESS_KEY,
   WHATSAPP_URL,
 } from '../config';
 import { useI18n } from '../i18n';
@@ -23,48 +26,31 @@ import { HeaderLogo } from './HeaderLogo';
 import { Footer } from './Footer';
 import { FloatingChatButton } from './FloatingChatButton';
 import { ViberIcon, WhatsAppIcon } from './BrandIcons';
-import type { CalEmbedProps } from './CalEmbed';
 
 export const ContactPage: React.FC = () => {
-  const { locale, t } = useI18n();
+  const { locale, t, privacyPath } = useI18n();
+  const navigate = useNavigate();
 
-  // Callback form state (shown when WEB3FORMS_ACCESS_KEY is non-empty)
+  // Callback form state ("Or we call you" in left column)
   const [cbName, setCbName] = useState('');
   const [cbPhone, setCbPhone] = useState('');
-  const [botcheck, setBotcheck] = useState(false);
+  const [cbBotcheck, setCbBotcheck] = useState('');
   const [cbStatus, setCbStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [cbErrorMsg, setCbErrorMsg] = useState('');
 
-  // Cal.com client-only embed & 8s fallback state
-  // Initial state is always 'loading' so static prerender outputs the calendar skeleton
-  const [calState, setCalState] = useState<'loading' | 'ready' | 'fallback'>('loading');
-  const [ClientCalEmbed, setClientCalEmbed] = useState<React.ComponentType<CalEmbedProps> | null>(
-    null
-  );
-  const settledRef = useRef(false);
-  const timerRef = useRef<number | null>(null);
+  // Main contact form state (Right column card)
+  const [fullName, setFullName] = useState('');
+  const [contactInfo, setContactInfo] = useState('');
+  const [professionIndex, setProfessionIndex] = useState(0);
+  const [message, setMessage] = useState('');
+  const [botcheck, setBotcheck] = useState('');
+  const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [formErrorMsg, setFormErrorMsg] = useState('');
 
-  const handleCalLoaded = useCallback(() => {
-    if (!settledRef.current) {
-      settledRef.current = true;
-      if (timerRef.current !== null) {
-        window.clearTimeout(timerRef.current);
-        timerRef.current = null;
-      }
-      setCalState('ready');
-    }
-  }, []);
-
-  const handleCalError = useCallback(() => {
-    if (!settledRef.current) {
-      settledRef.current = true;
-      if (timerRef.current !== null) {
-        window.clearTimeout(timerRef.current);
-        timerRef.current = null;
-      }
-      setCalState('fallback');
-    }
-  }, []);
+  const profession =
+    t.contact.form.professionOptions[professionIndex] ||
+    t.contact.form.professionOptions[0] ||
+    'Doctor';
 
   // Scroll to top when arriving on Contact page
   useEffect(() => {
@@ -73,68 +59,35 @@ export const ContactPage: React.FC = () => {
     }
   }, [locale]);
 
-  // Lazy-import CalEmbed ONLY in the browser after mount and enforce 8-second fallback timer
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    settledRef.current = false;
-    setCalState('loading');
-
-    timerRef.current = window.setTimeout(() => {
-      if (!settledRef.current) {
-        settledRef.current = true;
-        setCalState('fallback');
-      }
-    }, 8000);
-
-    let active = true;
-    import('./CalEmbed')
-      .then((mod) => {
-        if (active) {
-          setClientCalEmbed(() => mod.CalEmbed || mod.default);
-        }
-      })
-      .catch(() => {
-        if (active && !settledRef.current) {
-          settledRef.current = true;
-          if (timerRef.current !== null) {
-            window.clearTimeout(timerRef.current);
-            timerRef.current = null;
-          }
-          setCalState('fallback');
-        }
-      });
-
-    return () => {
-      active = false;
-      if (timerRef.current !== null) {
-        window.clearTimeout(timerRef.current);
-        timerRef.current = null;
-      }
-    };
-  }, []);
-
   const handleCallbackSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const accessKey = WEB3FORMS_ACCESS_KEY.trim();
-    if (!accessKey) return;
-    if (botcheck) return;
+    if (cbBotcheck.trim().length > 0) {
+      setCbStatus('success');
+      return;
+    }
     if (!cbName.trim() || !cbPhone.trim()) return;
 
     const form = e.currentTarget;
-    const formData = new FormData(form);
-    formData.append('access_key', accessKey);
-
     setCbStatus('loading');
     setCbErrorMsg('');
 
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch(FORM_ENDPOINT, {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: cbName.trim(),
+          contact: cbPhone.trim(),
+          profession: 'Callback request',
+          botcheck: cbBotcheck,
+          locale,
+          formType: 'callback',
+        }),
       });
-      const data = await response.json();
-      if (response.ok) {
+      const data = await response.json().catch(() => ({}));
+      if (response.ok && data.ok !== false) {
         setCbStatus('success');
         setCbName('');
         setCbPhone('');
@@ -146,6 +99,63 @@ export const ContactPage: React.FC = () => {
     } catch {
       setCbErrorMsg(t.contactPage.callbackError);
       setCbStatus('error');
+    }
+  };
+
+  const handleMainFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormErrorMsg('');
+
+    if (botcheck.trim().length > 0) {
+      setFormStatus('success');
+      return;
+    }
+
+    const trimmedName = fullName.trim();
+    const trimmedContact = contactInfo.trim();
+
+    if (!trimmedName || !trimmedContact || !profession) {
+      setFormErrorMsg(t.contact.form.errorRequired);
+      setFormStatus('error');
+      return;
+    }
+
+    const form = e.currentTarget;
+    setFormStatus('loading');
+
+    try {
+      const response = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: trimmedName,
+          contact: trimmedContact,
+          profession,
+          message: message.trim(),
+          botcheck,
+          locale,
+          formType: 'inquiry',
+        }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (response.ok && data.ok !== false) {
+        setFormStatus('success');
+        setFullName('');
+        setContactInfo('');
+        setProfessionIndex(0);
+        setMessage('');
+        form.reset();
+      } else {
+        setFormErrorMsg(data.message || t.contact.form.errorGeneric);
+        setFormStatus('error');
+      }
+    } catch {
+      setFormErrorMsg(t.contact.form.errorGeneric);
+      setFormStatus('error');
     }
   };
 
@@ -181,39 +191,23 @@ export const ContactPage: React.FC = () => {
     icon: <ViberIcon className="w-3.5 h-3.5 text-[#b6ff00] shrink-0" />,
   };
 
-  const telegramItem = hasTelegramUsername
-    ? {
-        key: 'telegram',
-        href: `https://t.me/${TELEGRAM_USERNAME.trim()}`,
-        label: `Telegram: @${TELEGRAM_USERNAME.trim()}`,
-        external: true,
-        icon: <Send className="w-3.5 h-3.5 text-[#b6ff00] shrink-0" />,
-      }
-    : null;
+  const telegramItem = {
+    key: 'telegram',
+    href: telegramDirectHref,
+    label: hasTelegramUsername
+      ? `Telegram: @${TELEGRAM_USERNAME.trim()}`
+      : 'Telegram: @veljkopetkovic',
+    external: true,
+    icon: <Send className="w-3.5 h-3.5 text-[#b6ff00] shrink-0" />,
+  };
 
-  // On /ru/ show Telegram first (if configured); on / and /sr/ show Email first
+  // On /ru show Telegram first; on / and /sr show Email first
   const contactLinks =
     locale === 'ru'
-      ? [
-          ...(telegramItem ? [telegramItem] : []),
-          emailItem,
-          whatsappItem,
-          viberItem,
-        ]
-      : [
-          emailItem,
-          whatsappItem,
-          viberItem,
-          ...(telegramItem ? [telegramItem] : []),
-        ];
+      ? [telegramItem, emailItem, whatsappItem, viberItem]
+      : [emailItem, whatsappItem, viberItem, telegramItem];
 
-  const hasWeb3FormsKey = Boolean(WEB3FORMS_ACCESS_KEY.trim());
-
-  const steps = [
-    t.contactPage.step1,
-    t.contactPage.step2,
-    t.contactPage.step3,
-  ];
+  const hasBookingUrl = Boolean(BOOKING_URL.trim());
 
   return (
     <div className="min-h-screen w-full bg-[#060709] text-white selection:bg-[#b6ff00] selection:text-black relative flex flex-col overflow-x-clip font-geist">
@@ -274,16 +268,47 @@ export const ContactPage: React.FC = () => {
 
             {/* 5. Numbered list of 3 steps */}
             <ol className="mt-4 space-y-3.5">
-              {steps.map((stepText, idx) => (
-                <li key={idx} className="flex items-start gap-3">
-                  <span className="w-[18px] h-[18px] rounded-full border border-[#b6ff00] text-[#b6ff00] text-[10.5px] font-mono tabular-nums flex items-center justify-center shrink-0 mt-[2px]">
-                    {idx + 1}
-                  </span>
-                  <span className="text-[14px] leading-[1.5] text-neutral-200">
-                    {stepText}
-                  </span>
-                </li>
-              ))}
+              {/* Step 1: depends on BOOKING_URL */}
+              <li className="flex items-start gap-3">
+                <span className="w-[18px] h-[18px] rounded-full border border-[#b6ff00] text-[#b6ff00] text-[10.5px] font-mono tabular-nums flex items-center justify-center shrink-0 mt-[2px]">
+                  1
+                </span>
+                <span className="text-[14px] leading-[1.5] text-neutral-200">
+                  {hasBookingUrl ? (
+                    <a
+                      href={BOOKING_URL}
+                      target="_blank"
+                      rel="noopener"
+                      className="text-[#b6ff00] hover:underline inline-flex items-center gap-1"
+                    >
+                      <span>{t.contactPage.step1Booking}</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
+                    </a>
+                  ) : (
+                    t.contactPage.step1
+                  )}
+                </span>
+              </li>
+
+              {/* Step 2 */}
+              <li className="flex items-start gap-3">
+                <span className="w-[18px] h-[18px] rounded-full border border-[#b6ff00] text-[#b6ff00] text-[10.5px] font-mono tabular-nums flex items-center justify-center shrink-0 mt-[2px]">
+                  2
+                </span>
+                <span className="text-[14px] leading-[1.5] text-neutral-200">
+                  {t.contactPage.step2}
+                </span>
+              </li>
+
+              {/* Step 3 */}
+              <li className="flex items-start gap-3">
+                <span className="w-[18px] h-[18px] rounded-full border border-[#b6ff00] text-[#b6ff00] text-[10.5px] font-mono tabular-nums flex items-center justify-center shrink-0 mt-[2px]">
+                  3
+                </span>
+                <span className="text-[14px] leading-[1.5] text-neutral-200">
+                  {t.contactPage.step3}
+                </span>
+              </li>
             </ol>
 
             {/* 6. Small uppercase label "prefer to write" */}
@@ -307,81 +332,99 @@ export const ContactPage: React.FC = () => {
               ))}
             </div>
 
-            {/* 8. Callback Form ("Or we call you") — hidden if WEB3FORMS_ACCESS_KEY is empty */}
-            {hasWeb3FormsKey && (
-              <div className="mt-9 w-full max-w-[420px]">
-                <div className="text-[11px] uppercase tracking-[0.15em] text-neutral-400 font-medium mb-3">
-                  {t.contactPage.callbackLabel}
-                </div>
+            {/* 8. Callback Form ("Or we call you") */}
+            <div className="mt-9 w-full max-w-[420px]">
+              <div className="text-[11px] uppercase tracking-[0.15em] text-neutral-400 font-medium mb-3">
+                {t.contactPage.callbackLabel}
+              </div>
 
-                <form
-                  id="form"
-                  onSubmit={handleCallbackSubmit}
-                  className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2"
-                >
-                  {/* Honeypot hidden checkbox named "botcheck" */}
+              <form
+                onSubmit={handleCallbackSubmit}
+                className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2"
+              >
+                {/* Honeypot hidden field */}
+                <div className="hidden" aria-hidden="true">
+                  <label htmlFor="cb-botcheck">Do not fill this field</label>
                   <input
-                    type="checkbox"
+                    id="cb-botcheck"
+                    type="text"
                     name="botcheck"
-                    checked={botcheck}
-                    onChange={(e) => setBotcheck(e.target.checked)}
-                    className="hidden"
-                    style={{ display: 'none' }}
+                    value={cbBotcheck}
+                    onChange={(e) => setCbBotcheck(e.target.value)}
                     tabIndex={-1}
                     autoComplete="off"
                   />
+                </div>
 
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    value={cbName}
-                    onChange={(e) => setCbName(e.target.value)}
-                    placeholder={t.contactPage.callbackNamePlaceholder}
-                    className="flex-1 min-w-0 h-9 px-3 rounded-[8px] bg-[#141416] border border-white/[0.08] focus:border-[#b6ff00] text-[13px] text-white placeholder:text-neutral-500 focus:outline-none transition-colors"
-                  />
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  maxLength={120}
+                  value={cbName}
+                  onChange={(e) => setCbName(e.target.value)}
+                  placeholder={t.contactPage.callbackNamePlaceholder}
+                  aria-label={t.contactPage.callbackNamePlaceholder}
+                  className="flex-1 min-w-0 h-9 px-3 rounded-[8px] bg-[#141416] border border-white/[0.08] focus:border-[#b6ff00] text-[13px] text-white placeholder:text-neutral-500 focus:outline-none transition-colors"
+                />
 
-                  <input
-                    type="tel"
-                    name="phone"
-                    required
-                    value={cbPhone}
-                    onChange={(e) => setCbPhone(e.target.value)}
-                    placeholder={t.contactPage.callbackPhonePlaceholder}
-                    className="flex-1 min-w-0 h-9 px-3 rounded-[8px] bg-[#141416] border border-white/[0.08] focus:border-[#b6ff00] text-[13px] text-white placeholder:text-neutral-500 focus:outline-none transition-colors"
-                  />
+                <input
+                  type="tel"
+                  name="phone"
+                  required
+                  maxLength={60}
+                  value={cbPhone}
+                  onChange={(e) => setCbPhone(e.target.value)}
+                  placeholder={t.contactPage.callbackPhonePlaceholder}
+                  aria-label={t.contactPage.callbackPhonePlaceholder}
+                  className="flex-1 min-w-0 h-9 px-3 rounded-[8px] bg-[#141416] border border-white/[0.08] focus:border-[#b6ff00] text-[13px] text-white placeholder:text-neutral-500 focus:outline-none transition-colors"
+                />
 
-                  <button
-                    type="submit"
-                    disabled={cbStatus === 'loading'}
-                    className="h-9 px-4 rounded-[8px] bg-[#b6ff00] hover:bg-[#c6ff26] text-[#0a0a0a] font-semibold text-[13px] whitespace-nowrap shrink-0 transition-colors cursor-pointer disabled:opacity-60 inline-flex items-center justify-center gap-1.5"
-                  >
-                    {cbStatus === 'loading' && (
-                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                    )}
-                    <span>
-                      {cbStatus === 'loading'
-                        ? t.contact.form.submitting
-                        : t.contactPage.callbackButton}
-                    </span>
-                  </button>
-                </form>
+                <button
+                  type="submit"
+                  disabled={cbStatus === 'loading'}
+                  className="h-9 px-4 rounded-[8px] bg-[#b6ff00] hover:bg-[#c6ff26] text-[#0a0a0a] font-semibold text-[13px] whitespace-nowrap shrink-0 transition-colors cursor-pointer disabled:opacity-60 inline-flex items-center justify-center gap-1.5"
+                >
+                  {cbStatus === 'loading' && (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  )}
+                  <span>
+                    {cbStatus === 'loading'
+                      ? t.contact.form.submitting
+                      : t.contactPage.callbackButton}
+                  </span>
+                </button>
+              </form>
 
-                {cbStatus === 'success' && (
-                  <p className="mt-2.5 text-[12.5px] text-[#b6ff00] flex items-center gap-1.5">
-                    <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
-                    <span>{t.contactPage.callbackSuccess}</span>
-                  </p>
-                )}
+              <p className="mt-2 text-[11.5px] text-neutral-500 leading-relaxed">
+                {t.contact.form.privacyAgreementPrefix}
+                <a
+                  href={privacyPath}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate(privacyPath);
+                  }}
+                  className="text-neutral-400 hover:text-[#b6ff00] underline underline-offset-2 transition-colors"
+                >
+                  {t.contact.form.privacyAgreementLink}
+                </a>
+                {t.contact.form.privacyAgreementSuffix}
+              </p>
 
-                {cbStatus === 'error' && (
-                  <p className="mt-2.5 text-[12.5px] text-[#ff6b6b] flex items-center gap-1.5">
-                    <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                    <span>{cbErrorMsg || t.contactPage.callbackError}</span>
-                  </p>
-                )}
-              </div>
-            )}
+              {cbStatus === 'success' && (
+                <p className="mt-2.5 text-[12.5px] text-[#b6ff00] flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                  <span>{t.contactPage.callbackSuccess}</span>
+                </p>
+              )}
+
+              {cbStatus === 'error' && (
+                <p className="mt-2.5 text-[12.5px] text-[#ff6b6b] flex items-center gap-1.5">
+                  <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                  <span>{cbErrorMsg || t.contactPage.callbackError}</span>
+                </p>
+              )}
+            </div>
 
             {/* Social Icons Row (Instagram, TikTok, LinkedIn, Telegram) */}
             <div className="mt-9 pt-6 border-t border-white/[0.06] w-full max-w-[420px]">
@@ -475,165 +518,238 @@ export const ContactPage: React.FC = () => {
           </div>
 
           {/* =============================================================== */}
-          {/* RIGHT COLUMN (~60%): CALENDAR CARD                              */}
+          {/* RIGHT COLUMN (~60%): CONTACT FORM & DIRECT CHANNELS CARD        */}
           {/* =============================================================== */}
-          <div className="w-full rounded-[14px] bg-[#141416] border border-white/[0.06] p-5 sm:p-7 min-h-[700px] lg:min-h-[620px] flex flex-col justify-between relative overflow-hidden">
-            {/* Client-Only Cal.com Inline Embed (mounted only in browser after useEffect) */}
-            {ClientCalEmbed && calState !== 'fallback' && (
-              <div
-                className={`w-full flex-1 min-h-[640px] lg:min-h-[564px] transition-opacity duration-200 ${
-                  calState === 'ready'
-                    ? 'opacity-100 relative z-10'
-                    : 'opacity-0 pointer-events-none absolute inset-5 sm:inset-7'
-                }`}
-              >
-                <ClientCalEmbed onLoaded={handleCalLoaded} onError={handleCalError} />
+          <div
+            id="contact-page-form"
+            className="w-full rounded-[14px] bg-[#141416] border border-white/[0.06] p-5 sm:p-8 flex flex-col justify-between relative overflow-hidden"
+          >
+            {/* Card Header */}
+            <div className="border-b border-white/[0.06] pb-5 mb-6 flex items-center justify-between flex-wrap gap-4">
+              <div>
+                <div className="flex items-center gap-2.5 mb-2">
+                  <div className="w-6 h-6 rounded-full bg-[#0a0a0a] border border-[#b6ff00]/60 flex items-center justify-center text-[11px] font-bold text-[#b6ff00]">
+                    V
+                  </div>
+                  <span className="text-[13px] text-neutral-400 font-medium">
+                    VDigital
+                  </span>
+                </div>
+                <h2 className="text-[20px] sm:text-[22px] font-semibold text-white tracking-tight">
+                  {t.contact.heading}
+                </h2>
               </div>
-            )}
 
-            {/* Month-Calendar Skeleton while loading (also rendered in static prerender HTML) */}
-            {calState === 'loading' && (
-              <div
-                aria-busy="true"
-                aria-label="Loading calendar"
-                className="w-full flex-1 flex flex-col justify-between space-y-6 animate-pulse relative z-20"
-              >
-                {/* Top Event Header Skeleton */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-full bg-white/[0.08]" />
-                    <div className="h-3.5 w-28 rounded bg-white/[0.08]" />
-                  </div>
-                  <div className="h-6 w-56 rounded bg-white/[0.12]" />
-                  <div className="space-y-2 pt-1">
-                    <div className="h-3 w-full max-w-md rounded bg-white/[0.06]" />
-                    <div className="h-3 w-4/5 max-w-sm rounded bg-white/[0.06]" />
-                  </div>
-                  <div className="flex flex-wrap gap-4 pt-2">
-                    <div className="h-3.5 w-14 rounded bg-white/[0.07]" />
-                    <div className="h-3.5 w-24 rounded bg-white/[0.07]" />
-                    <div className="h-3.5 w-32 rounded bg-white/[0.07]" />
-                  </div>
-                </div>
-
-                {/* Month Header & Weekday Row */}
-                <div className="space-y-4 pt-4 border-t border-white/[0.06]">
-                  <div className="flex items-center justify-between">
-                    <div className="h-4 w-32 rounded bg-white/[0.1]" />
-                    <div className="flex gap-2">
-                      <div className="w-6 h-6 rounded bg-white/[0.06]" />
-                      <div className="w-6 h-6 rounded bg-white/[0.06]" />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-7 gap-2">
-                    {Array.from({ length: 7 }).map((_, i) => (
-                      <div
-                        key={`wd-${i}`}
-                        className="h-3 rounded bg-white/[0.05] mx-auto w-8"
-                      />
-                    ))}
-                  </div>
-                  {/* 5 Weeks x 7 Days Grid */}
-                  <div className="grid grid-cols-7 gap-2 pt-1">
-                    {Array.from({ length: 35 }).map((_, i) => (
-                      <div
-                        key={`day-${i}`}
-                        className={`h-12 sm:h-14 rounded-[8px] ${
-                          i % 3 === 0 || i % 5 === 0
-                            ? 'bg-white/[0.08]'
-                            : 'bg-white/[0.03]'
-                        }`}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Calendar Fallback (when CAL_LINK is empty OR embed hasn't loaded after 8s) */}
-            {calState === 'fallback' && (
-              <div className="w-full flex-1 flex flex-col justify-between">
-                {/* Visual Calendar Header Preview matching screenshot feel */}
-                <div className="border-b border-white/[0.06] pb-6">
-                  <div className="flex items-center gap-2.5 mb-3">
-                    <div className="w-6 h-6 rounded-full bg-[#0a0a0a] border border-[#b6ff00]/60 flex items-center justify-center text-[11px] font-bold text-[#b6ff00]">
-                      V
-                    </div>
-                    <span className="text-[13px] text-neutral-400 font-medium">
-                      VDigital
-                    </span>
-                  </div>
-
-                  <h2 className="text-[20px] sm:text-[22px] font-semibold text-white tracking-tight">
-                    Free strategy call · 30 min
-                  </h2>
-
-                  <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-4 text-[13px] text-neutral-400">
-                    <span className="inline-flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-[#b6ff00]" />
-                      30m
-                    </span>
-                    <span>Google Meet</span>
-                    <span>Europe/Belgrade</span>
-                  </div>
-                </div>
-
-                {/* Fallback Message + Large Direct Action Buttons */}
-                <div className="my-auto py-10 flex flex-col items-center text-center max-w-md mx-auto">
-                  <p className="text-[15px] sm:text-[16px] leading-[1.6] text-neutral-200 mb-7">
-                    {t.contactPage.calendarFallback}
-                  </p>
-
-                  <div className="w-full flex flex-col gap-3">
-                    {/* Large WhatsApp Button */}
-                    <a
-                      href={whatsappPrefilledHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full h-12 px-6 rounded-[10px] bg-[#b6ff00] hover:bg-[#c6ff26] text-[#0a0a0a] font-semibold text-[14.5px] flex items-center justify-center gap-2.5 transition-all duration-200 shadow-[0_6px_24px_rgba(182,255,0,0.22)] hover:scale-[1.01]"
-                    >
-                      <WhatsAppIcon className="w-4 h-4 shrink-0" />
-                      <span>WhatsApp · {PHONE_DISPLAY}</span>
-                    </a>
-
-                    {/* Large Viber Button */}
-                    <a
-                      href={VIBER_URL}
-                      className="w-full h-12 px-6 rounded-[10px] bg-[#1d1e22] hover:bg-[#25272c] border border-white/[0.08] hover:border-[#b6ff00]/50 text-white font-medium text-[14.5px] flex items-center justify-center gap-2.5 transition-all duration-200"
-                    >
-                      <ViberIcon className="w-4 h-4 text-[#b6ff00] shrink-0" />
-                      <span>Viber · {PHONE_DISPLAY}</span>
-                    </a>
-
-                    {/* Large Email Button */}
-                    <a
-                      href={`mailto:${CONTACT_EMAIL}`}
-                      className="w-full h-12 px-6 rounded-[10px] bg-[#1d1e22] hover:bg-[#25272c] border border-white/[0.08] hover:border-[#b6ff00]/50 text-white font-medium text-[14.5px] flex items-center justify-center gap-2.5 transition-all duration-200"
-                    >
-                      <Mail className="w-4 h-4 text-[#b6ff00]" />
-                      <span>{CONTACT_EMAIL}</span>
-                    </a>
-                  </div>
-                </div>
-
-                {/* Subtle decorative month grid footer inside fallback card */}
-                <div
-                  aria-hidden="true"
-                  className="grid grid-cols-7 gap-2 pt-4 border-t border-white/[0.05] opacity-35"
+              {hasBookingUrl && (
+                <a
+                  href={BOOKING_URL}
+                  target="_blank"
+                  rel="noopener"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-[8px] bg-[#b6ff00] hover:bg-[#c6ff26] text-[#0a0a0a] font-semibold text-[13px] transition-colors"
                 >
-                  {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map(
-                    (day) => (
-                      <div
-                        key={day}
-                        className="text-center text-[10px] font-mono text-neutral-500 tracking-wider"
-                      >
-                        {day}
-                      </div>
-                    )
-                  )}
+                  <span>{t.contactPage.step1Booking}</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </a>
+              )}
+            </div>
+
+            {formStatus === 'success' ? (
+              <div className="py-12 flex flex-col items-center text-center gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-[#b6ff00] text-[#0a0c09] flex items-center justify-center shadow-[0_0_28px_rgba(182,255,0,0.35)]">
+                  <CheckCircle2 className="w-7 h-7 stroke-[2.2]" />
                 </div>
+                <p className="font-geist font-medium text-[18px] sm:text-[20px] text-white max-w-md">
+                  {t.contact.form.success}
+                </p>
               </div>
+            ) : (
+              <form
+                id="form"
+                onSubmit={handleMainFormSubmit}
+                noValidate
+                className="space-y-4"
+              >
+                {/* Hidden Honeypot Field */}
+                <div className="hidden" aria-hidden="true">
+                  <label htmlFor="page-botcheck">Do not fill this field</label>
+                  <input
+                    id="page-botcheck"
+                    type="text"
+                    name="botcheck"
+                    value={botcheck}
+                    onChange={(e) => setBotcheck(e.target.value)}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
+
+                {/* 1. Full Name */}
+                <div>
+                  <label
+                    htmlFor="page-full-name"
+                    className="block font-geist text-[13px] text-neutral-300 mb-1.5"
+                  >
+                    {t.contact.form.name} *
+                  </label>
+                  <input
+                    id="page-full-name"
+                    name="name"
+                    type="text"
+                    required
+                    maxLength={120}
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    placeholder={t.contact.form.name}
+                    className="w-full h-11 px-4 rounded-[10px] bg-[#0c0d10] border border-white/[0.1] focus:border-[#b6ff00] text-[14px] font-geist text-white placeholder:text-neutral-500 focus:outline-none transition-colors"
+                  />
+                </div>
+
+                {/* 2. Email or Phone */}
+                <div>
+                  <label
+                    htmlFor="page-email-phone"
+                    className="block font-geist text-[13px] text-neutral-300 mb-1.5"
+                  >
+                    {t.contact.form.contact} *
+                  </label>
+                  <input
+                    id="page-email-phone"
+                    name="contact"
+                    type="text"
+                    required
+                    maxLength={160}
+                    value={contactInfo}
+                    onChange={(e) => setContactInfo(e.target.value)}
+                    placeholder={t.contact.form.contact}
+                    className="w-full h-11 px-4 rounded-[10px] bg-[#0c0d10] border border-white/[0.1] focus:border-[#b6ff00] text-[14px] font-geist text-white placeholder:text-neutral-500 focus:outline-none transition-colors"
+                  />
+                </div>
+
+                {/* 3. What do you do? */}
+                <div>
+                  <label
+                    htmlFor="page-profession"
+                    className="block font-geist text-[13px] text-neutral-300 mb-1.5"
+                  >
+                    {t.contact.form.profession} *
+                  </label>
+                  <select
+                    id="page-profession"
+                    name="profession"
+                    required
+                    value={professionIndex}
+                    onChange={(e) => setProfessionIndex(Number(e.target.value))}
+                    className="w-full h-11 px-4 rounded-[10px] bg-[#0c0d10] border border-white/[0.1] focus:border-[#b6ff00] text-[14px] font-geist text-white focus:outline-none transition-colors"
+                  >
+                    {t.contact.form.professionOptions.map((option, idx) => (
+                      <option
+                        key={option}
+                        value={idx}
+                        className="bg-[#0c0d10] text-white"
+                      >
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* 4. Message (optional) */}
+                <div>
+                  <label
+                    htmlFor="page-message"
+                    className="block font-geist text-[13px] text-neutral-300 mb-1.5"
+                  >
+                    {t.contact.form.message}
+                  </label>
+                  <textarea
+                    id="page-message"
+                    name="message"
+                    rows={4}
+                    maxLength={2000}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder={t.contact.form.message}
+                    className="w-full p-4 rounded-[10px] bg-[#0c0d10] border border-white/[0.1] focus:border-[#b6ff00] text-[14px] font-geist text-white placeholder:text-neutral-500 focus:outline-none transition-colors resize-y"
+                  />
+                </div>
+
+                {formStatus === 'error' && formErrorMsg && (
+                  <p
+                    role="alert"
+                    className="text-[13px] font-geist text-[#ff6b6b] flex items-center gap-1.5"
+                  >
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    <span>{formErrorMsg}</span>
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={formStatus === 'loading'}
+                  className="w-full h-12 px-6 rounded-[10px] bg-[#b6ff00] hover:bg-[#c6ff26] text-[#0a0a0a] font-semibold text-[14.5px] flex items-center justify-center gap-2 transition-all duration-200 shadow-[0_6px_24px_rgba(182,255,0,0.22)] cursor-pointer disabled:opacity-60"
+                >
+                  {formStatus === 'loading' && (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  )}
+                  <span>
+                    {formStatus === 'loading'
+                      ? t.contact.form.submitting
+                      : t.contact.form.submit}
+                  </span>
+                  <span aria-hidden="true">→</span>
+                </button>
+
+                <p className="text-[12px] font-geist text-neutral-400 text-center pt-1 leading-relaxed">
+                  {t.contact.form.privacy}{' '}
+                  {t.contact.form.privacyAgreementPrefix}
+                  <a
+                    href={privacyPath}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate(privacyPath);
+                    }}
+                    className="text-neutral-300 hover:text-[#b6ff00] underline underline-offset-2 transition-colors"
+                  >
+                    {t.contact.form.privacyAgreementLink}
+                  </a>
+                  {t.contact.form.privacyAgreementSuffix}
+                </p>
+              </form>
             )}
+
+            {/* Quick Direct Action Buttons Footer inside Card */}
+            <div className="mt-7 pt-6 border-t border-white/[0.06]">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                {/* WhatsApp Button */}
+                <a
+                  href={whatsappPrefilledHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-10 px-4 rounded-[8px] bg-[#1d1e22] hover:bg-[#25272c] border border-white/[0.08] hover:border-[#b6ff00]/50 text-white font-medium text-[13px] flex items-center justify-center gap-2 transition-all duration-200"
+                >
+                  <WhatsAppIcon className="w-4 h-4 text-[#b6ff00] shrink-0" />
+                  <span>WhatsApp</span>
+                </a>
+
+                {/* Viber Button */}
+                <a
+                  href={VIBER_URL}
+                  className="h-10 px-4 rounded-[8px] bg-[#1d1e22] hover:bg-[#25272c] border border-white/[0.08] hover:border-[#b6ff00]/50 text-white font-medium text-[13px] flex items-center justify-center gap-2 transition-all duration-200"
+                >
+                  <ViberIcon className="w-4 h-4 text-[#b6ff00] shrink-0" />
+                  <span>Viber</span>
+                </a>
+
+                {/* Email Button */}
+                <a
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  className="h-10 px-4 rounded-[8px] bg-[#1d1e22] hover:bg-[#25272c] border border-white/[0.08] hover:border-[#b6ff00]/50 text-white font-medium text-[13px] flex items-center justify-center gap-2 transition-all duration-200"
+                >
+                  <Mail className="w-4 h-4 text-[#b6ff00] shrink-0" />
+                  <span>{CONTACT_EMAIL}</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </main>

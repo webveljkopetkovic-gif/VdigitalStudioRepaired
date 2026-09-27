@@ -13,78 +13,120 @@ const ROUTE_SEO = {
     titleHtml: 'VDigital: Websites & Marketing for Doctors and Coaches',
     description:
       'We build websites, video content and marketing for doctors and health coaches. Strategy, ads and cold calling: a full client system in 3 weeks.',
-    isContact: false,
+    pageType: 'home',
   },
   sr: {
-    url: '/sr/',
+    url: '/sr',
     lang: 'sr',
     ogLocale: 'sr_RS',
-    canonical: 'https://vdigital.dev/sr/',
-    title: 'VDigital: Izrada sajta i marketing za lekare i coacheve',
-    titleHtml: 'VDigital: Izrada sajta i marketing za lekare i coacheve',
+    canonical: 'https://vdigital.dev/sr',
+    title: 'VDigital: Sajtovi i marketing za doktore i koučeve',
+    titleHtml: 'VDigital: Sajtovi i marketing za doktore i koučeve',
     description:
-      'Izrađujemo sajtove, video sadržaj i marketing za lekare i health coacheve. Strategija, reklame i cold calling: ceo sistem za klijente za 3 nedelje.',
-    isContact: false,
+      'Pravimo sajtove, video sadržaj i marketing za doktore i health koučeve. Strategija, reklame i hladni pozivi: ceo sistem za nove klijente za 3 nedelje.',
+    pageType: 'home',
   },
   ru: {
-    url: '/ru/',
+    url: '/ru',
     lang: 'ru',
     ogLocale: 'ru_RU',
-    canonical: 'https://vdigital.dev/ru/',
+    canonical: 'https://vdigital.dev/ru',
     title: 'VDigital: Сайты и маркетинг для врачей и коучей',
     titleHtml: 'VDigital: Сайты и маркетинг для врачей и коучей',
     description:
       'Создаём сайты, видео и маркетинг для врачей и коучей. Стратегия, реклама и холодные звонки: полная система привлечения клиентов за 3 недели.',
-    isContact: false,
+    pageType: 'home',
   },
   contactEn: {
-    url: '/contact/',
+    url: '/contact',
     lang: 'en',
     ogLocale: 'en_US',
-    canonical: 'https://vdigital.dev/contact/',
+    canonical: 'https://vdigital.dev/contact',
     title: 'Contact & Book a Free Call | VDigital',
     titleHtml: 'Contact & Book a Free Call | VDigital',
     description:
       'Book a free 30-minute call with VDigital, or reach us on WhatsApp, Viber, Telegram or email. We reply within 24 hours on working days.',
-    isContact: true,
+    pageType: 'contact',
   },
   contactSr: {
-    url: '/sr/kontakt/',
+    url: '/sr/kontakt',
     lang: 'sr',
     ogLocale: 'sr_RS',
-    canonical: 'https://vdigital.dev/sr/kontakt/',
+    canonical: 'https://vdigital.dev/sr/kontakt',
     title: 'Kontakt i besplatan poziv | VDigital',
     titleHtml: 'Kontakt i besplatan poziv | VDigital',
     description:
       'Zakažite besplatan poziv od 30 minuta sa VDigital timom ili nam pišite na WhatsApp, Viber, Telegram ili email. Odgovaramo u roku od 24 sata.',
-    isContact: true,
+    pageType: 'contact',
   },
   contactRu: {
-    url: '/ru/kontakty/',
+    url: '/ru/kontakty',
     lang: 'ru',
     ogLocale: 'ru_RU',
-    canonical: 'https://vdigital.dev/ru/kontakty/',
+    canonical: 'https://vdigital.dev/ru/kontakty',
     title: 'Контакты и бесплатная консультация | VDigital',
     titleHtml: 'Контакты и бесплатная консультация | VDigital',
     description:
       'Запишитесь на бесплатный 30-минутный звонок с VDigital или напишите нам в Telegram, WhatsApp, Viber или на email. Отвечаем в течение 24 часов.',
-    isContact: true,
+    pageType: 'contact',
+  },
+  privacyEn: {
+    url: '/privacy',
+    lang: 'en',
+    ogLocale: 'en_US',
+    canonical: 'https://vdigital.dev/privacy',
+    title: 'Privacy Policy | VDigital',
+    titleHtml: 'Privacy Policy | VDigital',
+    description:
+      'Learn how VDigital collects, uses and protects your personal data under the Serbian Law on Personal Data Protection (ZZPL) and GDPR.',
+    pageType: 'privacy',
+  },
+  privacySr: {
+    url: '/sr/privatnost',
+    lang: 'sr',
+    ogLocale: 'sr_RS',
+    canonical: 'https://vdigital.dev/sr/privatnost',
+    title: 'Politika privatnosti | VDigital',
+    titleHtml: 'Politika privatnosti | VDigital',
+    description:
+      'Saznajte kako VDigital prikuplja, koristi i štiti vaše podatke o ličnosti u skladu sa ZZPL i GDPR propisima.',
+    pageType: 'privacy',
+  },
+  privacyRu: {
+    url: '/ru/konfidencialnost',
+    lang: 'ru',
+    ogLocale: 'ru_RU',
+    canonical: 'https://vdigital.dev/ru/konfidencialnost',
+    title: 'Политика конфиденциальности | VDigital',
+    titleHtml: 'Политика конфиденциальности | VDigital',
+    description:
+      'Узнайте, как VDigital собирает, использует и защищает ваши персональные данные в соответствии с законом Сербии (ZZPL) и GDPR.',
+    pageType: 'privacy',
   },
 };
 
 function buildLocalizedHead(meta) {
-  const hreflangs = meta.isContact
-    ? `    <link rel="alternate" hreflang="en" href="https://vdigital.dev/contact/" />
-    <link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/kontakt/" />
-    <link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/kontakty/" />
-    <link rel="alternate" hreflang="x-default" href="https://vdigital.dev/contact/" />`
-    : `    <link rel="alternate" hreflang="en" href="https://vdigital.dev/" />
-    <link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/" />
-    <link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/" />
+  let hreflangs = '';
+  if (meta.pageType === 'contact') {
+    hreflangs = `    <link rel="alternate" hreflang="en" href="https://vdigital.dev/contact" />
+    <link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/kontakt" />
+    <link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/kontakty" />
+    <link rel="alternate" hreflang="x-default" href="https://vdigital.dev/contact" />`;
+  } else if (meta.pageType === 'privacy') {
+    hreflangs = `    <link rel="alternate" hreflang="en" href="https://vdigital.dev/privacy" />
+    <link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/privatnost" />
+    <link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/konfidencialnost" />
+    <link rel="alternate" hreflang="x-default" href="https://vdigital.dev/privacy" />`;
+  } else {
+    hreflangs = `    <link rel="alternate" hreflang="en" href="https://vdigital.dev/" />
+    <link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr" />
+    <link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru" />
     <link rel="alternate" hreflang="x-default" href="https://vdigital.dev/" />`;
+  }
 
-  const contactJsonLd = meta.isContact
-    ? `
+  const contactJsonLd =
+    meta.pageType === 'contact'
+      ? `
     <!-- Schema.org JSON-LD Structured Data (ContactPage) -->
     <script type="application/ld+json">
       {
@@ -96,13 +138,13 @@ function buildLocalizedHead(meta) {
         "mainEntity": {
           "@type": "ProfessionalService",
           "name": "VDigital",
-          "telephone": "+381659131103",
+          "telephone": "+381 65 913 1103",
           "email": "hello@vdigital.dev",
           "url": "https://vdigital.dev"
         }
       }
     </script>`
-    : '';
+      : '';
 
   return `<head>
     <meta charset="UTF-8" />
@@ -198,7 +240,7 @@ ${hreflangs}
         "@type": "WebSite",
         "name": "VDigital",
         "alternateName": ["VDigital Studio", "vdigital.dev"],
-        "url": "https://vdigital.dev/"
+        "url": "https://vdigital.dev"
       }
     </script>${contactJsonLd}`;
 }
@@ -271,6 +313,18 @@ export async function runPrerender() {
       {
         meta: ROUTE_SEO.contactRu,
         outFile: path.resolve(distDir, 'ru/kontakty/index.html'),
+      },
+      {
+        meta: ROUTE_SEO.privacyEn,
+        outFile: path.resolve(distDir, 'privacy/index.html'),
+      },
+      {
+        meta: ROUTE_SEO.privacySr,
+        outFile: path.resolve(distDir, 'sr/privatnost/index.html'),
+      },
+      {
+        meta: ROUTE_SEO.privacyRu,
+        outFile: path.resolve(distDir, 'ru/konfidencialnost/index.html'),
       },
     ];
 

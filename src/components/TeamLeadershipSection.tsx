@@ -17,7 +17,6 @@ interface TeamPhotoCardProps {
 }
 
 const TeamPhotoCard: React.FC<TeamPhotoCardProps> = ({ name, role, photo }) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const initials = getInitials(name);
 
@@ -33,10 +32,10 @@ const TeamPhotoCard: React.FC<TeamPhotoCardProps> = ({ name, role, photo }) => {
         aria-hidden="true"
       />
 
-      {/* Foreground Card Frame: Clean Initials Placeholder + Optional Real Photo */}
+      {/* Foreground Card Frame: Clean Initials Placeholder + Real Photo */}
       <div className="relative w-full h-full rounded-[28px] sm:rounded-[32px] overflow-hidden bg-[#121614] border border-white/20 shadow-2xl z-10 transition-transform duration-300 group-hover:-translate-y-1 flex items-center justify-center">
-        {/* Clean Initials Placeholder inside the card frame */}
-        {(!imageLoaded || imageError) && (
+        {/* Clean Initials Fallback inside the card frame */}
+        {imageError && (
           <div
             className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#192117] via-[#111512] to-[#0a0d0b] select-none"
             aria-label={name}
@@ -47,7 +46,7 @@ const TeamPhotoCard: React.FC<TeamPhotoCardProps> = ({ name, role, photo }) => {
           </div>
         )}
 
-        {/* Load photo from /public/team/member1.webp, member2.webp, member3.webp when present */}
+        {/* Team Member Photo */}
         {!imageError && (
           <img
             src={photo}
@@ -56,11 +55,8 @@ const TeamPhotoCard: React.FC<TeamPhotoCardProps> = ({ name, role, photo }) => {
             height={512}
             loading="lazy"
             decoding="async"
-            onLoad={() => setImageLoaded(true)}
             onError={() => setImageError(true)}
-            className={`absolute inset-0 w-full h-full object-cover object-top grayscale contrast-[1.08] transition-all duration-500 group-hover:scale-105 ${
-              imageLoaded ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}
+            className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-105"
           />
         )}
 

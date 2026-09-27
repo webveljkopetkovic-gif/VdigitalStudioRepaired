@@ -1,3 +1,13 @@
+export interface TeamMemberTranslation {
+  id: string;
+  name: string;
+  role: string;
+  text: string;
+  photo: string;
+  portfolioUrl?: string;
+  portfolioLabel?: string;
+}
+
 export const en = {
   lang: 'en' as const,
   navbar: {
@@ -166,23 +176,25 @@ export const en = {
         name: 'Veljko Petković',
         role: 'Founder · Full-Stack Developer',
         text: 'Builds websites, web apps and automations. Building for the web since 2020, with 30+ projects delivered.',
-        photo: '/team/member1.webp',
+        photo: 'https://res.cloudinary.com/qftxmdqk/image/upload/v1790538093/0-02-05-f183470000d46207901c57a6779b1ae4b5bcb6a53af07abd7b79e27c5aa1bed7_7799938c6034200e.jpg',
+        portfolioUrl: 'https://www.veljkopetkovic.com',
+        portfolioLabel: 'See my work →',
       },
       {
         id: 'member2',
         name: 'Velimir Nikolić',
         role: 'Video & Social Media',
         text: 'Films, edits and runs content that makes people stop scrolling and start trusting you.',
-        photo: '/team/member2.webp',
+        photo: 'https://res.cloudinary.com/qftxmdqk/image/upload/v1790538102/0-02-05-2f7f61b0f40e79c38060e9ab0a4dd6561d0f3d63bb587bd54585e26e23aaf8ed_89883eef4fc10efa.jpg',
       },
       {
         id: 'member3',
         name: 'Vuk Stefanović',
         role: 'Sales & Outreach',
         text: 'Handles cold calling and follow-ups, turning interest into booked appointments.',
-        photo: '/team/member3.webp',
+        photo: 'https://res.cloudinary.com/qftxmdqk/image/upload/v1790538098/0-02-05-9b7c3cb69d4c13555dde0c6d3378e91ad6d9ee5bcf9a62688fcc7af5d17c117d_b9e5c6a7a8e0c8e0.jpg',
       },
-    ],
+    ] as TeamMemberTranslation[],
   },
   founding: {
     label: 'Founding clients',
@@ -261,6 +273,9 @@ export const en = {
       submitting: 'Sending...',
       success: "Thank you! We'll get back to you within 24 hours.",
       privacy: 'We only use your details to contact you about your inquiry.',
+      privacyAgreementPrefix: 'By sending, you agree to our ',
+      privacyAgreementLink: 'Privacy Policy',
+      privacyAgreementSuffix: '.',
       errorRequired: 'Please enter your full name, email or phone, and select what you do.',
       errorGeneric: 'Something went wrong. Please try again.',
     },
@@ -269,6 +284,7 @@ export const en = {
     text: 'VDigital: websites, video and marketing for doctors, health coaches and experts.',
     location: 'Niš, Serbia · Working with clients worldwide',
     copyright: '© 2026 VDigital. All rights reserved.',
+    privacy: 'Privacy Policy',
   },
   contactPage: {
     label: 'Contact',
@@ -277,7 +293,8 @@ export const en = {
     intro:
       "Tell us about your practice, where new clients should be coming from and what's holding you back. We'll talk it through and show you what a useful next step could look like.",
     stepsLabel: 'What happens next',
-    step1: 'Pick a time that works for you.',
+    step1: 'Send us a short message or request a call.',
+    step1Booking: 'Pick a time that works for you.',
     step2: 'We talk through your practice, your clients and your goals.',
     step3:
       'You get a concrete plan, and we decide together whether working together makes sense.',
@@ -290,8 +307,45 @@ export const en = {
     callbackError: 'Something went wrong. Please message us on WhatsApp.',
     prefilledMessage: "Hi VDigital, I'd like to book a free call.",
     calendarFallback:
-      "The calendar isn't available right now. Message us and we'll find a time together.",
+      "Send us a short message below or reach out directly and we'll find a time together.",
     socialsLabel: 'Follow us',
+  },
+  privacyPage: {
+    label: 'Legal',
+    title: 'Privacy Policy',
+    lastUpdated: 'Last updated: September 2026',
+    intro:
+      'This Privacy Policy explains in plain language what personal data we collect when you contact VDigital, why we collect it, and what rights you have.',
+    sections: [
+      {
+        heading: '1. Who collects the data (Data Controller)',
+        body: 'VDigital, based in Niš, Republic of Serbia. For any privacy-related questions or requests, you can reach us directly at hello@vdigital.dev.',
+      },
+      {
+        heading: '2. What data we collect',
+        body: 'When you submit a contact or callback form on our website, we collect only the information you choose to provide: your name, your email address or phone number, your profession or area of work, and your message. We also store a single "lang" cookie to remember the visitor\'s language choice; it contains no personal data.',
+      },
+      {
+        heading: '3. Purpose of processing',
+        body: 'We use your information exclusively to reply to your inquiry, schedule a call you requested, or prepare a proposal for potential collaboration. We do not send unsolicited marketing newsletters and we never sell or rent your data.',
+      },
+      {
+        heading: '4. Legal basis',
+        body: 'We process your data based on your consent when submitting the form and to take steps at your request prior to entering into a contract, in accordance with the Serbian Law on Personal Data Protection (ZZPL) and the EU General Data Protection Regulation (GDPR) for visitors from the European Economic Area.',
+      },
+      {
+        heading: '5. Data retention period',
+        body: 'Inquiry messages are retained for up to 12 months after our last communication so we can follow up on your request, unless you ask us to delete them sooner or we enter into a formal collaboration.',
+      },
+      {
+        heading: '6. Third-party processors',
+        body: 'To host this website and deliver your form submission to our inbox, data is processed strictly as needed by: Vercel Inc. (website hosting and serverless API execution) and Web3Forms (form delivery service that forwards your inquiry to hello@vdigital.dev).',
+      },
+      {
+        heading: '7. Your rights',
+        body: 'You have the right to request access to your personal data, correction of inaccurate data, deletion of your data, or restriction of processing at any time by emailing hello@vdigital.dev. You also have the right to lodge a complaint with the Serbian Commissioner for Information of Public Importance and Personal Data Protection (Poverenik za informacije od javnog značaja i zaštitu podataka o ličnosti) or with your local data protection authority in the EU.',
+      },
+    ],
   },
 };
 

@@ -98,9 +98,11 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
           {/* ROW 1: "You heal, [Stethoscope] coach and change lives." */}
           <div className="flex flex-wrap items-center justify-center gap-x-2.5 sm:gap-x-4 md:gap-x-5 gap-y-2">
             {t.statement.words.row1.map((word, idx) => (
-              <motion.span key={`r1-${idx}`} variants={wordVariants} className="inline-block">
-                {word}
-              </motion.span>
+              <React.Fragment key={`r1-${idx}`}>
+                <motion.span variants={wordVariants} className="inline-block">
+                  {word}
+                </motion.span>{' '}
+              </React.Fragment>
             ))}
 
             {/* 1. Stethoscope Glowing Badge after "heal" */}
@@ -117,18 +119,22 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
             </motion.span>
 
             {t.statement.words.row1AfterHeal.map((word, idx) => (
-              <motion.span key={`r1b-${idx}`} variants={wordVariants} className="inline-block">
-                {word}
-              </motion.span>
+              <React.Fragment key={`r1b-${idx}`}>
+                <motion.span variants={wordVariants} className="inline-block">
+                  {word}
+                </motion.span>{' '}
+              </React.Fragment>
             ))}
           </div>
 
           {/* ROW 2: "We build the website, [Code] create the content [Video]" */}
           <div className="flex flex-wrap items-center justify-center gap-x-2.5 sm:gap-x-4 md:gap-x-5 gap-y-2 mt-2 sm:mt-3 lg:mt-4">
             {t.statement.words.row2.map((word, idx) => (
-              <motion.span key={`r2-${idx}`} variants={wordVariants} className="inline-block">
-                {word}
-              </motion.span>
+              <React.Fragment key={`r2-${idx}`}>
+                <motion.span variants={wordVariants} className="inline-block">
+                  {word}
+                </motion.span>{' '}
+              </React.Fragment>
             ))}
 
             {/* 2. Code </> Glowing Badge after "website" */}
@@ -157,9 +163,11 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
             </motion.span>
 
             {t.statement.words.row2AfterWebsite.map((word, idx) => (
-              <motion.span key={`r2b-${idx}`} variants={wordVariants} className="inline-block">
-                {word}
-              </motion.span>
+              <React.Fragment key={`r2b-${idx}`}>
+                <motion.span variants={wordVariants} className="inline-block">
+                  {word}
+                </motion.span>{' '}
+              </React.Fragment>
             ))}
 
             {/* 3. Video / Reels Glowing Magenta Badge after "content" */}
@@ -194,9 +202,11 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
           {/* ROW 3: "and make the calls [Phone] that bring new clients to your door." */}
           <div className="flex flex-wrap items-center justify-center gap-x-2.5 sm:gap-x-4 md:gap-x-5 gap-y-2 mt-2 sm:mt-3 lg:mt-4">
             {t.statement.words.row3.map((word, idx) => (
-              <motion.span key={`r3-${idx}`} variants={wordVariants} className="inline-block">
-                {word}
-              </motion.span>
+              <React.Fragment key={`r3-${idx}`}>
+                <motion.span variants={wordVariants} className="inline-block">
+                  {word}
+                </motion.span>{' '}
+              </React.Fragment>
             ))}
 
             {/* 4. Phone Glowing Lime Badge after "calls" */}
@@ -212,10 +222,13 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
               </span>
             </motion.span>
 
-            {t.statement.words.row3AfterCalls.map((word, idx) => (
-              <motion.span key={`r3b-${idx}`} variants={wordVariants} className="inline-block">
-                {word}
-              </motion.span>
+            {t.statement.words.row3AfterCalls.map((word, idx, arr) => (
+              <React.Fragment key={`r3b-${idx}`}>
+                <motion.span variants={wordVariants} className="inline-block">
+                  {word}
+                </motion.span>
+                {idx < arr.length - 1 ? ' ' : ''}
+              </React.Fragment>
             ))}
           </div>
         </motion.h2>

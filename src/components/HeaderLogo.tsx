@@ -4,6 +4,7 @@ import { SHOW_PROJECTS } from '../config';
 import {
   getContactPath,
   getHomePath,
+  getPrivacyPath,
   useI18n,
 } from '../i18n';
 
@@ -12,25 +13,71 @@ interface HeaderNavbarProps {
 }
 
 export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
-  const { locale, t, selectLocale, homePath, contactPath, isContactPage } = useI18n();
+  const {
+    locale,
+    t,
+    selectLocale,
+    homePath,
+    contactPath,
+    isContactPage,
+    isPrivacyPage,
+  } = useI18n();
   const navigate = useNavigate();
+  const isSubPage = isContactPage || isPrivacyPage;
   const [activeTab, setActiveTab] = useState<string>(isContactPage ? 'contact' : '');
 
   const navItems = [
-    { label: t.navbar.links.services, id: 'services', href: isContactPage ? `${homePath}#services` : '#services', isRoute: false },
-    { label: t.navbar.links.process, id: 'process', href: isContactPage ? `${homePath}#process` : '#process', isRoute: false },
+    {
+      label: t.navbar.links.services,
+      id: 'services',
+      href: isSubPage ? `${homePath}#services` : '#services',
+      isRoute: false,
+    },
+    {
+      label: t.navbar.links.process,
+      id: 'process',
+      href: isSubPage ? `${homePath}#process` : '#process',
+      isRoute: false,
+    },
     ...(SHOW_PROJECTS
-      ? [{ label: t.navbar.links.projects, id: 'projects', href: isContactPage ? `${homePath}#projects` : '#projects', isRoute: false }]
+      ? [
+          {
+            label: t.navbar.links.projects,
+            id: 'projects',
+            href: isSubPage ? `${homePath}#projects` : '#projects',
+            isRoute: false,
+          },
+        ]
       : []),
-    { label: t.navbar.links.team, id: 'team', href: isContactPage ? `${homePath}#team` : '#team', isRoute: false },
-    { label: t.navbar.links.pricing, id: 'pricing', href: isContactPage ? `${homePath}#pricing` : '#pricing', isRoute: false },
-    { label: t.navbar.links.faq, id: 'faq', href: isContactPage ? `${homePath}#faq` : '#faq', isRoute: false },
-    { label: t.navbar.links.contact, id: 'contact', href: contactPath, isRoute: true },
+    {
+      label: t.navbar.links.team,
+      id: 'team',
+      href: isSubPage ? `${homePath}#team` : '#team',
+      isRoute: false,
+    },
+    {
+      label: t.navbar.links.pricing,
+      id: 'pricing',
+      href: isSubPage ? `${homePath}#pricing` : '#pricing',
+      isRoute: false,
+    },
+    {
+      label: t.navbar.links.faq,
+      id: 'faq',
+      href: isSubPage ? `${homePath}#faq` : '#faq',
+      isRoute: false,
+    },
+    {
+      label: t.navbar.links.contact,
+      id: 'contact',
+      href: contactPath,
+      isRoute: true,
+    },
   ];
 
   const scrollToSection = (sectionId: string) => {
-    if (isContactPage) {
-      navigate(homePath);
+    if (isSubPage) {
+      navigate(`${homePath}#${sectionId}`);
       setTimeout(() => {
         const el = document.getElementById(sectionId);
         if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -47,17 +94,29 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
     {
       code: 'en',
       label: 'EN',
-      href: isContactPage ? getContactPath('en') : getHomePath('en'),
+      href: isPrivacyPage
+        ? getPrivacyPath('en')
+        : isContactPage
+          ? getContactPath('en')
+          : getHomePath('en'),
     },
     {
       code: 'sr',
       label: 'SR',
-      href: isContactPage ? getContactPath('sr') : getHomePath('sr'),
+      href: isPrivacyPage
+        ? getPrivacyPath('sr')
+        : isContactPage
+          ? getContactPath('sr')
+          : getHomePath('sr'),
     },
     {
       code: 'ru',
       label: 'RU',
-      href: isContactPage ? getContactPath('ru') : getHomePath('ru'),
+      href: isPrivacyPage
+        ? getPrivacyPath('ru')
+        : isContactPage
+          ? getContactPath('ru')
+          : getHomePath('ru'),
     },
   ];
 
@@ -65,17 +124,17 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
     <header className="w-full max-w-7xl mx-auto px-4 sm:px-8 pt-4 sm:pt-6 pb-2 relative z-40 select-none">
       <div
         id="navbar-backdrop-bar"
-        className="w-full flex items-center justify-between gap-4"
+        className="relative w-full flex items-center justify-between md:grid md:grid-cols-[1fr_auto_1fr] gap-4"
       >
         {/* Left: VDigital. Brand Logotype combining #9ce607 and white */}
-        <div className="flex items-center">
+        <div className="flex items-center justify-self-start">
           <a
             href={homePath}
             id="agency-brand-logo"
             onClick={(e) => {
               e.preventDefault();
               setActiveTab('');
-              if (isContactPage) {
+              if (isSubPage) {
                 navigate(homePath);
               } else {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -99,12 +158,12 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
         <nav
           id="desktop-nav"
           aria-label="Primary navigation"
-          className="hidden md:flex items-center gap-6 lg:gap-8 text-[13px] font-geist"
+          className="hidden md:flex items-center justify-center justify-self-center lg:absolute lg:left-1/2 lg:-translate-x-1/2 gap-5 lg:gap-8 text-[13px] font-geist whitespace-nowrap"
         >
           {navItems.map((item) => {
             const isActive = isContactPage
               ? item.id === 'contact'
-              : activeTab === item.id;
+              : !isPrivacyPage && activeTab === item.id;
             return (
               <a
                 key={item.id}
@@ -134,7 +193,7 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
         </nav>
 
         {/* Right: Language Switcher (EN · SR · RU) + CTA Button "Book a call" */}
-        <div className="flex items-center gap-3 sm:gap-5">
+        <div className="flex items-center justify-end justify-self-end md:col-start-3 gap-3 sm:gap-5">
           {/* Language Switcher with real <a href> links */}
           <div
             className="flex items-center gap-1.5 text-[12px] font-geist tracking-tight"

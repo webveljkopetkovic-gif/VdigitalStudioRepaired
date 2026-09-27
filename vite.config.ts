@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig, type Plugin } from 'vite';
 import { runPrerender } from './scripts/prerender.mjs';
+import contactHandler from './api/contact';
 
 function prerenderPlugin(): Plugin {
   let isSsrBuild = false;
@@ -20,14 +21,31 @@ function prerenderPlugin(): Plugin {
   };
 }
 
+function devContactApiPlugin(): Plugin {
+  return {
+    name: 'vite-plugin-dev-contact-api',
+    configureServer(server) {
+      server.middlewares.use('/api/contact', (req, res) => {
+        if (req.method !== 'POST') {
+          contactHandler(req, res);
+          return;
+        }
+        let rawBody = '';
+        req.on('data', (chunk) => {
+          rawBody += chunk;
+        });
+        req.on('end', () => {
+          (req as any).body = rawBody;
+          contactHandler(req, res);
+        });
+      });
+    },
+  };
+}
+
 export default defineConfig(() => {
   return {
-    plugins: [react(), tailwindcss(), prerenderPlugin()],
-    define: {
-      'process.env.WEB3FORMS_ACCESS_KEY': JSON.stringify(
-        process.env.WEB3FORMS_ACCESS_KEY || '8cae6776-aeee-436b-a022-349b42efa483'
-      ),
-    },
+    plugins: [react(), tailwindcss(), devContactApiPlugin(), prerenderPlugin()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

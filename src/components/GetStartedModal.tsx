@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { X, CheckCircle2, ArrowRight } from 'lucide-react';
 import { ServiceItem } from '../types';
-import { WEB3FORMS_ACCESS_KEY } from '../config';
+import { FORM_ENDPOINT } from '../config';
+import { useI18n } from '../i18n';
 
 interface GetStartedModalProps {
   service: ServiceItem | null;
@@ -9,8 +10,10 @@ interface GetStartedModalProps {
 }
 
 export const GetStartedModal: React.FC<GetStartedModalProps> = ({ service, onClose }) => {
+  const { locale } = useI18n();
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
+  const [botcheck, setBotcheck] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -19,23 +22,33 @@ export const GetStartedModal: React.FC<GetStartedModalProps> = ({ service, onClo
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (botcheck.trim().length > 0) {
+      setSubmitted(true);
+      return;
+    }
     if (!email.trim()) return;
 
     const form = e.currentTarget;
-    const formData = new FormData(form);
-    formData.append('access_key', WEB3FORMS_ACCESS_KEY);
-    formData.append('service', service.title);
-
     setIsSubmitting(true);
     setErrorMsg('');
 
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch(FORM_ENDPOINT, {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: company.trim() || 'Website Visitor',
+          contact: email.trim(),
+          profession: service.title,
+          botcheck,
+          locale,
+          formType: 'inquiry',
+        }),
       });
-      const data = await response.json();
-      if (response.ok) {
+      const data = await response.json().catch(() => ({}));
+      if (response.ok && data.ok !== false) {
         setSubmitted(true);
         form.reset();
       } else {
@@ -89,6 +102,17 @@ export const GetStartedModal: React.FC<GetStartedModalProps> = ({ service, onClo
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="hidden" aria-hidden="true">
+              <input
+                type="text"
+                name="botcheck"
+                value={botcheck}
+                onChange={(e) => setBotcheck(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+              />
+            </div>
+
             <div className="space-y-1">
               <div className="inline-block text-[11px] font-semibold text-[#a8f300] tracking-wider uppercase">
                 {service.pill}

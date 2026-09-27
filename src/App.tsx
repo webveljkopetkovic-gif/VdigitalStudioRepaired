@@ -1,6 +1,11 @@
-import React from 'react';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
-import { SHOW_PROJECTS } from './config';
+import React, { useEffect } from 'react';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import {
+  CONTACT_EMAIL,
+  PHONE_DISPLAY,
+  SHOW_PROJECTS,
+  SOCIAL_URLS,
+} from './config';
 import { getContactPath, I18nProvider, SupportedLocale } from './i18n';
 import { HeaderLogo } from './components/HeaderLogo';
 import { HeroTypography } from './components/HeroTypography';
@@ -19,11 +24,13 @@ import { RevenueCTASection } from './components/RevenueCTASection';
 import { FAQSection } from './components/FAQSection';
 import { ContactSection } from './components/ContactSection';
 import { ContactPage } from './components/ContactPage';
+import { PrivacyPage } from './components/PrivacyPage';
 import { Footer } from './components/Footer';
 import { FloatingChatButton } from './components/FloatingChatButton';
 
 const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const contactPath = getContactPath(locale);
 
   const goToContactPage = () => {
@@ -34,9 +41,48 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
     document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && location.hash) {
+      const id = location.hash.replace(/^#/, '');
+      if (id) {
+        setTimeout(() => {
+          document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+        }, 80);
+      }
+    }
+  }, [location.hash]);
+
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': ['Organization', 'ProfessionalService'],
+    name: 'VDigital',
+    url: 'https://vdigital.dev',
+    logo: 'https://vdigital.dev/favicon.svg',
+    image: 'https://vdigital.dev/og-image.png',
+    email: CONTACT_EMAIL,
+    telephone: PHONE_DISPLAY,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Niš',
+      addressCountry: 'RS',
+    },
+    areaServed: ['RS', 'Worldwide'],
+    founder: {
+      '@type': 'Person',
+      name: 'Veljko Petković',
+      url: 'https://www.veljkopetkovic.com',
+    },
+    sameAs: SOCIAL_URLS,
+  };
+
   return (
     <I18nProvider locale={locale}>
       <div className="min-h-screen w-full bg-[#060709] text-white selection:bg-[#a8f300] selection:text-black relative flex flex-col overflow-x-clip scroll-smooth">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+
         <main id="main-viewport" className="w-full flex flex-col">
           {/* 1 & 2 & 3. Navbar + Hero (#top) + Trust Bar (#trust) */}
           <section
@@ -107,7 +153,7 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
         {/* 13. Footer */}
         <Footer />
 
-        {/* Floating Chat Button (WhatsApp on / and /sr/, Telegram on /ru/) */}
+        {/* Floating Chat Button (WhatsApp on / and /sr, Telegram on /ru) */}
         <FloatingChatButton />
       </div>
     </I18nProvider>
@@ -117,6 +163,12 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
 const ContactPageRoute: React.FC<{ locale: SupportedLocale }> = ({ locale }) => (
   <I18nProvider locale={locale}>
     <ContactPage />
+  </I18nProvider>
+);
+
+const PrivacyPageRoute: React.FC<{ locale: SupportedLocale }> = ({ locale }) => (
+  <I18nProvider locale={locale}>
+    <PrivacyPage />
   </I18nProvider>
 );
 
@@ -135,6 +187,13 @@ export default function App() {
       <Route path="/sr/kontakt/" element={<ContactPageRoute locale="sr" />} />
       <Route path="/ru/kontakty" element={<ContactPageRoute locale="ru" />} />
       <Route path="/ru/kontakty/" element={<ContactPageRoute locale="ru" />} />
+
+      <Route path="/privacy" element={<PrivacyPageRoute locale="en" />} />
+      <Route path="/privacy/" element={<PrivacyPageRoute locale="en" />} />
+      <Route path="/sr/privatnost" element={<PrivacyPageRoute locale="sr" />} />
+      <Route path="/sr/privatnost/" element={<PrivacyPageRoute locale="sr" />} />
+      <Route path="/ru/konfidencialnost" element={<PrivacyPageRoute locale="ru" />} />
+      <Route path="/ru/konfidencialnost/" element={<PrivacyPageRoute locale="ru" />} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

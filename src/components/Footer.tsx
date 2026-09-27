@@ -2,16 +2,37 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   CONTACT_EMAIL,
+  INSTAGRAM_URL,
+  LINKEDIN_URL,
   PHONE_DISPLAY,
   PHONE_URL,
   SHOW_PROJECTS,
   TELEGRAM_URL,
+  TIKTOK_URL,
 } from '../config';
-import { getContactPath, getHomePath, useI18n } from '../i18n';
+import {
+  getContactPath,
+  getHomePath,
+  getPrivacyPath,
+  useI18n,
+} from '../i18n';
 
 export const Footer: React.FC = () => {
-  const { locale, t, selectLocale, homePath, contactPath, isContactPage } = useI18n();
+  const {
+    locale,
+    t,
+    selectLocale,
+    homePath,
+    contactPath,
+    privacyPath,
+    isContactPage,
+    isPrivacyPage,
+  } = useI18n();
   const navigate = useNavigate();
+  const isSubPage = isContactPage || isPrivacyPage;
+
+  const getSectionHref = (sectionId: string) =>
+    isSubPage ? `${homePath}#${sectionId}` : `#${sectionId}`;
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -22,8 +43,12 @@ export const Footer: React.FC = () => {
       navigate(contactPath);
       return;
     }
-    if (isContactPage) {
-      navigate(homePath);
+    if (sectionId === 'privacy') {
+      navigate(privacyPath);
+      return;
+    }
+    if (isSubPage) {
+      navigate(sectionId === 'top' ? homePath : `${homePath}#${sectionId}`);
       setTimeout(() => {
         if (sectionId === 'top') {
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -47,17 +72,29 @@ export const Footer: React.FC = () => {
     {
       code: 'en',
       label: 'EN',
-      href: isContactPage ? getContactPath('en') : getHomePath('en'),
+      href: isPrivacyPage
+        ? getPrivacyPath('en')
+        : isContactPage
+          ? getContactPath('en')
+          : getHomePath('en'),
     },
     {
       code: 'sr',
       label: 'SR',
-      href: isContactPage ? getContactPath('sr') : getHomePath('sr'),
+      href: isPrivacyPage
+        ? getPrivacyPath('sr')
+        : isContactPage
+          ? getContactPath('sr')
+          : getHomePath('sr'),
     },
     {
       code: 'ru',
       label: 'RU',
-      href: isContactPage ? getContactPath('ru') : getHomePath('ru'),
+      href: isPrivacyPage
+        ? getPrivacyPath('ru')
+        : isContactPage
+          ? getContactPath('ru')
+          : getHomePath('ru'),
     },
   ];
 
@@ -77,14 +114,14 @@ export const Footer: React.FC = () => {
             className="flex flex-col items-start space-y-2.5 text-[14px] sm:text-[14.5px]"
           >
             <a
-              href="#services"
+              href={getSectionHref('services')}
               onClick={(e) => handleNavClick(e, 'services')}
               className="text-white hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
             >
               {t.navbar.links.services}
             </a>
             <a
-              href="#process"
+              href={getSectionHref('process')}
               onClick={(e) => handleNavClick(e, 'process')}
               className="text-white hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
             >
@@ -92,7 +129,7 @@ export const Footer: React.FC = () => {
             </a>
             {SHOW_PROJECTS && (
               <a
-                href="#projects"
+                href={getSectionHref('projects')}
                 onClick={(e) => handleNavClick(e, 'projects')}
                 className="text-white hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
               >
@@ -100,21 +137,21 @@ export const Footer: React.FC = () => {
               </a>
             )}
             <a
-              href="#team"
+              href={getSectionHref('team')}
               onClick={(e) => handleNavClick(e, 'team')}
               className="text-white hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
             >
               {t.navbar.links.team}
             </a>
             <a
-              href="#pricing"
+              href={getSectionHref('pricing')}
               onClick={(e) => handleNavClick(e, 'pricing')}
               className="text-white hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
             >
               {t.navbar.links.pricing}
             </a>
             <a
-              href="#faq"
+              href={getSectionHref('faq')}
               onClick={(e) => handleNavClick(e, 'faq')}
               className="text-white hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
             >
@@ -126,6 +163,13 @@ export const Footer: React.FC = () => {
               className="text-white hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
             >
               {t.navbar.links.contact}
+            </a>
+            <a
+              href={privacyPath}
+              onClick={(e) => handleNavClick(e, 'privacy')}
+              className="text-neutral-400 hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
+            >
+              {t.footer.privacy}
             </a>
           </nav>
 
@@ -154,7 +198,7 @@ export const Footer: React.FC = () => {
             <div className="flex items-center gap-3.5 sm:gap-4 mt-7">
               {/* 1. Instagram */}
               <a
-                href="https://www.instagram.com/vdigital.studio"
+                href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow VDigital on Instagram"
@@ -179,7 +223,7 @@ export const Footer: React.FC = () => {
 
               {/* 2. TikTok */}
               <a
-                href="https://www.tiktok.com/@vdigital.studio"
+                href={TIKTOK_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow VDigital on TikTok"
@@ -198,7 +242,7 @@ export const Footer: React.FC = () => {
 
               {/* 3. LinkedIn */}
               <a
-                href="https://www.linkedin.com/company/vdigital-studio"
+                href={LINKEDIN_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow VDigital on LinkedIn"
@@ -283,14 +327,26 @@ export const Footer: React.FC = () => {
         {/* TIER 2: COPYRIGHT ROW                                             */}
         {/* ================================================================= */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-16 sm:mt-20 mb-12 sm:mb-16 text-[13px] sm:text-[14px] text-white/90">
-          <div className="text-left">{t.footer.copyright}</div>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-left">
+            <span>{t.footer.copyright}</span>
+            <a
+              href={privacyPath}
+              onClick={(e) => handleNavClick(e, 'privacy')}
+              className="text-neutral-400 hover:text-[#9ce607] transition-colors cursor-pointer underline-offset-4 hover:underline"
+            >
+              {t.footer.privacy}
+            </a>
+          </div>
           <div className="text-neutral-400 text-[13px]">{t.footer.location}</div>
         </div>
 
         {/* ================================================================= */}
         {/* TIER 3: CENTERED GIANT BOTTOM VDigital. LOGOTYPE                  */}
         {/* ================================================================= */}
-        <div className="w-full pt-2 pb-4 sm:pb-6 flex justify-center items-center select-none overflow-visible">
+        <div
+          aria-hidden="true"
+          className="w-full pt-2 pb-4 sm:pb-6 flex justify-center items-center select-none overflow-visible"
+        >
           <div
             className="font-geist font-bold tracking-[-0.045em] leading-[1.12] py-2 text-center whitespace-nowrap"
             style={{

@@ -56,7 +56,7 @@ export const FoundingClientsSection: React.FC = () => {
 
           {/* Heading + Green Italic Line */}
           <h2 className="font-geist font-semibold text-[30px] sm:text-[42px] md:text-[50px] leading-[1.12] tracking-[-0.025em] text-white max-w-3xl">
-            <span className="block">{t.founding.heading}</span>
+            <span className="block">{t.founding.heading}{' '}</span>
             <span className="block font-editorial italic font-normal text-[#9ce607] mt-1">
               {t.founding.headingItalic}
             </span>

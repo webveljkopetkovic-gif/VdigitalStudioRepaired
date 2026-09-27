@@ -121,7 +121,7 @@ const StackingCardItem: React.FC<StackingCardItemProps> = ({
       <div className="flex items-start justify-between gap-4 relative z-10">
         <h3>
           <span className="block font-geist text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight leading-[1.04]">
-            {service.titleWhite}
+            {service.titleWhite}{' '}
           </span>
           <span className="block font-geist text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-normal text-neutral-400 tracking-tight leading-[1.04] mt-0.5">
             {service.titleGrey}
@@ -145,9 +145,9 @@ const StackingCardItem: React.FC<StackingCardItemProps> = ({
       </div>
 
       {/* Tags Row */}
-      <div className="relative z-10 flex flex-wrap items-center gap-2 my-auto pt-4">
+      <ul className="relative z-10 flex flex-wrap items-center gap-2 my-auto pt-4 list-none p-0 m-0">
         {service.tags.map((tag, idx) => (
-          <span
+          <li
             key={idx}
             className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/35 border border-white/10 text-[11px] sm:text-[12px] font-mono text-neutral-300"
           >
@@ -157,9 +157,9 @@ const StackingCardItem: React.FC<StackingCardItemProps> = ({
               aria-hidden="true"
             />
             {tag}
-          </span>
+          </li>
         ))}
-      </div>
+      </ul>
 
       {/* Bottom Area: Giant Counter Left ("01") + Description Right */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 relative z-10 mt-auto">

@@ -27,7 +27,9 @@ export const KineticCarouselText: React.FC = () => {
   return (
     <div 
       id="kinetic-carousel-container"
-      className="absolute top-[38%] sm:top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen max-w-full pointer-events-none select-none z-[5] overflow-visible"
+      aria-hidden="true"
+      style={{ zIndex: 5 }}
+      className="absolute top-[38%] sm:top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen max-w-full pointer-events-none select-none overflow-visible"
     >
       {/* Infinite looping marquee with 3D volumetric lettering */}
       <div className="animate-marquee-carousel flex items-center whitespace-nowrap">

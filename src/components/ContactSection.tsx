@@ -10,24 +10,25 @@ import {
 } from 'lucide-react';
 import {
   CONTACT_EMAIL,
+  FORM_ENDPOINT,
   PHONE_DISPLAY,
   PHONE_URL,
   TELEGRAM_URL,
   VIBER_URL,
-  WEB3FORMS_ACCESS_KEY,
   WHATSAPP_URL,
 } from '../config';
 import { useI18n } from '../i18n';
 import { ViberIcon, WhatsAppIcon } from './BrandIcons';
 
 export const ContactSection: React.FC = () => {
-  const { t, contactPath } = useI18n();
+  const { locale, t, contactPath, privacyPath } = useI18n();
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState('');
   const [contactInfo, setContactInfo] = useState('');
   const [professionIndex, setProfessionIndex] = useState(0);
   const [message, setMessage] = useState('');
+  const [botcheck, setBotcheck] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -41,6 +42,12 @@ export const ContactSection: React.FC = () => {
     e.preventDefault();
     setErrorMsg('');
 
+    // Honeypot check on client side as well
+    if (botcheck.trim().length > 0) {
+      setIsSubmitted(true);
+      return;
+    }
+
     const trimmedName = fullName.trim();
     const trimmedContact = contactInfo.trim();
 
@@ -50,24 +57,28 @@ export const ContactSection: React.FC = () => {
     }
 
     const form = e.currentTarget;
-    const formData = new FormData(form);
-    formData.set('name', trimmedName);
-    formData.set('contact', trimmedContact);
-    formData.set('profession', profession);
-    formData.set('message', message.trim());
-    formData.append('access_key', WEB3FORMS_ACCESS_KEY);
-
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch(FORM_ENDPOINT, {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: trimmedName,
+          contact: trimmedContact,
+          profession,
+          message: message.trim(),
+          botcheck,
+          locale,
+          formType: 'inquiry',
+        }),
       });
 
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
 
-      if (response.ok) {
+      if (response.ok && data.ok !== false) {
         setIsSubmitted(true);
         setFullName('');
         setContactInfo('');
@@ -219,6 +230,20 @@ export const ContactSection: React.FC = () => {
                 </div>
               ) : (
                 <form id="form" onSubmit={handleSubmit} noValidate className="space-y-5">
+                  {/* Hidden Honeypot Field */}
+                  <div className="hidden" aria-hidden="true">
+                    <label htmlFor="contact-botcheck">Do not fill this field</label>
+                    <input
+                      id="contact-botcheck"
+                      type="text"
+                      name="botcheck"
+                      value={botcheck}
+                      onChange={(e) => setBotcheck(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
                   {/* 1. Full Name */}
                   <div>
                     <label
@@ -232,6 +257,7 @@ export const ContactSection: React.FC = () => {
                       name="name"
                       type="text"
                       required
+                      maxLength={120}
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder={t.contact.form.name}
@@ -252,6 +278,7 @@ export const ContactSection: React.FC = () => {
                       name="contact"
                       type="text"
                       required
+                      maxLength={160}
                       value={contactInfo}
                       onChange={(e) => setContactInfo(e.target.value)}
                       placeholder={t.contact.form.contact}
@@ -299,6 +326,7 @@ export const ContactSection: React.FC = () => {
                       id="contact-message"
                       name="message"
                       rows={4}
+                      maxLength={2000}
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       placeholder={t.contact.form.message}
@@ -329,9 +357,21 @@ export const ContactSection: React.FC = () => {
                     <span aria-hidden="true">→</span>
                   </button>
 
-                  {/* Privacy Note */}
-                  <p className="text-[12px] font-geist text-neutral-400 text-center pt-1">
-                    {t.contact.form.privacy}
+                  {/* Privacy Note + Link to Privacy Policy */}
+                  <p className="text-[12px] font-geist text-neutral-400 text-center pt-1 leading-relaxed">
+                    {t.contact.form.privacy}{' '}
+                    {t.contact.form.privacyAgreementPrefix}
+                    <a
+                      href={privacyPath}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate(privacyPath);
+                      }}
+                      className="text-neutral-300 hover:text-[#9ce607] underline underline-offset-2 transition-colors"
+                    >
+                      {t.contact.form.privacyAgreementLink}
+                    </a>
+                    {t.contact.form.privacyAgreementSuffix}
                   </p>
                 </form>
               )}

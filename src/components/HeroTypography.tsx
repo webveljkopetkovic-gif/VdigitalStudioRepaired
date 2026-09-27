@@ -25,27 +25,9 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
 
   return (
     <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-8 py-2 text-center select-none z-20">
-      <div className="relative flex items-center justify-between">
-        {/* Left column paragraph pushed down lower relative to <h1> and elevated above shadow (z-30) */}
-        <motion.div
-          initial={{ opacity: 0, x: -24, filter: 'blur(6px)' }}
-          animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.9, delay: 0.55, ease: smoothEase }}
-          className="hidden xl:block w-60 text-left self-end -mb-8 2xl:-mb-10 relative z-30"
-        >
-          <p
-            className="text-[12.5px] 2xl:text-[13px] leading-[1.62] text-white font-medium font-geist"
-            style={{
-              textShadow:
-                '0 2px 14px rgba(0, 0, 0, 1), 0 1px 4px rgba(0, 0, 0, 1)',
-            }}
-          >
-            {t.hero.leftText}
-          </p>
-        </motion.div>
-
+      <div className="relative grid grid-cols-1 sm:grid-cols-2 xl:flex xl:items-center xl:justify-between gap-y-3 sm:gap-x-3 xl:gap-0 max-w-lg xl:max-w-none mx-auto">
         {/* Center Main 4-Line Headline with dedicated dark shadow layer behind <h1> */}
-        <div className="flex-1 max-w-4xl mx-auto px-2 relative z-10">
+        <div className="order-1 sm:col-span-2 xl:order-2 xl:flex-1 max-w-4xl mx-auto px-2 relative z-10 w-full">
           {/* Outer Ambient Black Shadow Layer behind <h1> */}
           <div
             aria-hidden="true"
@@ -84,7 +66,7 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
                 transition={{ duration: 0.85, delay: 0.1, ease: smoothEase }}
                 className={`block text-white ${topLinesClass}`}
               >
-                {t.hero.line1}
+                {t.hero.line1}{' '}
               </motion.span>
             </span>
 
@@ -96,7 +78,7 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
                 transition={{ duration: 0.85, delay: 0.22, ease: smoothEase }}
                 className={`block text-white ${topLinesClass}`}
               >
-                {t.hero.line2}
+                {t.hero.line2}{' '}
               </motion.span>
             </span>
 
@@ -112,7 +94,7 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
                     '0 14px 36px rgba(0, 0, 0, 1), 0 5px 14px rgba(0, 0, 0, 0.98), 0 0 30px rgba(168, 243, 0, 0.28)',
                 }}
               >
-                {t.hero.line3}
+                {t.hero.line3}{' '}
               </motion.span>
             </span>
 
@@ -134,15 +116,33 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
           </h1>
         </div>
 
-        {/* Right column paragraph pushed down lower relative to <h1> and elevated above shadow (z-30) */}
+        {/* Left paragraph (single element in DOM, responsive across mobile/tablet/desktop) */}
+        <motion.div
+          initial={{ opacity: 0, x: -24, filter: 'blur(6px)' }}
+          animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.9, delay: 0.55, ease: smoothEase }}
+          className="order-2 xl:order-1 mt-6 sm:mt-7 xl:mt-0 px-4 sm:px-0 sm:pl-4 xl:pl-0 xl:w-60 text-center sm:text-left xl:self-end xl:-mb-8 2xl:-mb-10 relative z-30"
+        >
+          <p
+            className="text-[12px] sm:text-[12.5px] 2xl:text-[13px] leading-[1.62] text-white font-medium font-geist"
+            style={{
+              textShadow:
+                '0 2px 14px rgba(0, 0, 0, 1), 0 1px 4px rgba(0, 0, 0, 1)',
+            }}
+          >
+            {t.hero.leftText}
+          </p>
+        </motion.div>
+
+        {/* Right paragraph (single element in DOM, responsive across mobile/tablet/desktop) */}
         <motion.div
           initial={{ opacity: 0, x: 24, filter: 'blur(6px)' }}
           animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.9, delay: 0.65, ease: smoothEase }}
-          className="hidden xl:block w-60 text-right self-end -mb-8 2xl:-mb-10 relative z-30"
+          className="order-3 xl:order-3 mt-0 sm:mt-7 xl:mt-0 px-4 sm:px-0 sm:pr-4 xl:pr-0 xl:w-60 text-center sm:text-right xl:self-end xl:-mb-8 2xl:-mb-10 relative z-30"
         >
           <p
-            className="text-[12.5px] 2xl:text-[13px] leading-[1.62] text-white font-medium font-geist"
+            className="text-[12px] sm:text-[12.5px] 2xl:text-[13px] leading-[1.62] text-white font-medium font-geist"
             style={{
               textShadow:
                 '0 2px 14px rgba(0, 0, 0, 1), 0 1px 4px rgba(0, 0, 0, 1)',
@@ -152,20 +152,6 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
           </p>
         </motion.div>
       </div>
-
-      {/* Responsive supporting text for mobile/tablet */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.65, ease: smoothEase }}
-        className="xl:hidden relative z-30 mt-6 sm:mt-7 max-w-lg mx-auto flex flex-col sm:flex-row justify-between gap-3 text-[12px] sm:text-[12.5px] text-white font-medium px-4"
-        style={{
-          textShadow: '0 2px 12px rgba(0, 0, 0, 1), 0 1px 4px rgba(0, 0, 0, 1)',
-        }}
-      >
-        <p className="sm:text-left">{t.hero.leftText}</p>
-        <p className="sm:text-right">{t.hero.rightText}</p>
-      </motion.div>
     </div>
   );
 };

@@ -1,13 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { useI18n } from '../i18n';
 
 export const PainPointsSection: React.FC = () => {
-  const { t } = useI18n();
+  const { t, contactPath } = useI18n();
+  const navigate = useNavigate();
 
   const handleBookCall = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    navigate(contactPath);
   };
 
   // Exact 4 line-art icons from the reference layout (stacked layers, rocket, connected nodes, lifebuoy)
@@ -127,7 +129,7 @@ export const PainPointsSection: React.FC = () => {
               aria-label={t.painPoints.heading}
               className="font-geist font-normal text-[38px] sm:text-[48px] xl:text-[56px] leading-[1.06] tracking-[-0.03em] text-white max-w-[440px]"
             >
-              <span className="block">{t.painPoints.headingMain}</span>
+              <span className="block">{t.painPoints.headingMain}{' '}</span>
               <span className="block font-editorial italic font-normal text-[#9ce607] mt-1.5 tracking-[-0.015em]">
                 {t.painPoints.headingItalic}
               </span>
@@ -141,7 +143,7 @@ export const PainPointsSection: React.FC = () => {
             {/* Primary CTA Button */}
             <div className="mt-8 sm:mt-9">
               <a
-                href="#contact"
+                href={contactPath}
                 onClick={handleBookCall}
                 className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-[10px] bg-[#9ce607] hover:bg-[#abf50a] text-[#0a0c09] font-geist font-semibold text-[13.5px] sm:text-[14px] tracking-[-0.01em] transition-all duration-200 shadow-[0_8px_24px_rgba(156,230,7,0.28)] hover:scale-[1.02] active:scale-[0.98] cursor-pointer whitespace-nowrap"
               >
