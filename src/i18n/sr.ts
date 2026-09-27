@@ -159,7 +159,8 @@ export const sr: Translations = {
       'Posle 3. nedelje: stalna analitika, održavanje i unapređenja, kako bi vaši rezultati nastavili da rastu.',
   },
   team: {
-    heading: 'Ljudi iza VDigital studija',
+    heading: 'Ljudi iza VDigital.',
+    headingBefore: 'Ljudi iza',
     subheading: 'Tri stručnjaka, jedna direktna linija. Uvek razgovarate sa ljudima koji zaista rade na vašem projektu.',
     members: [
       {

@@ -99,8 +99,20 @@ export const TeamLeadershipSection: React.FC = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16 sm:mb-20 max-w-2xl mx-auto"
         >
-          <h2 className="font-geist font-medium text-[28px] sm:text-[38px] md:text-[44px] lg:text-[48px] text-white tracking-[-0.025em]">
-            {t.team.heading}
+          <h2
+            aria-label={t.team.heading}
+            className="font-geist font-medium text-[28px] sm:text-[38px] md:text-[44px] lg:text-[48px] text-white tracking-[-0.025em]"
+          >
+            <span>{t.team.headingBefore} </span>
+            <span className="inline-flex items-baseline font-geist font-bold tracking-[-0.04em]">
+              <span className="text-[#9ce607] drop-shadow-[0_0_16px_rgba(156,230,7,0.35)]">
+                V
+              </span>
+              <span className="text-white">Digital</span>
+              <span className="text-[#9ce607] drop-shadow-[0_0_14px_rgba(156,230,7,0.5)]">
+                .
+              </span>
+            </span>
           </h2>
           <p className="font-geist text-[14px] sm:text-[16px] text-neutral-400 mt-3 leading-relaxed">
             {t.team.subheading}

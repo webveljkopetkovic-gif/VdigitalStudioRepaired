@@ -3,15 +3,15 @@ import { motion } from 'motion/react';
 import { useI18n } from '../i18n';
 
 const WEEK_SHIFTS = [
-  ['0%', '8%', '16%', '26%', '34%'],
-  ['0%', '14%', '26%', '38%'],
-  ['0%', '16%', '28%', '38%'],
+  ['0%', '6%', '3%', '8%', '12%'],
+  ['0%', '10%', '18%', '24%'],
+  ['0%', '4%', '10%', '16%'],
 ];
 
-const WEEK_WIDTHS = [
-  ['54%', '50%', '68%', '56%', '58%'],
-  ['52%', '48%', '64%', '62%'],
-  ['68%', '58%', '56%', '52%'],
+const TASK_GAPS = [
+  ['1.25rem', '1.75rem', '1rem', '1.25rem', '1.5rem'],
+  ['1.5rem', '2.25rem', '1.75rem', '1.5rem'],
+  ['1.75rem', '1rem', '1.25rem', '1.75rem'],
 ];
 
 export const WorkflowPlan: React.FC = () => {
@@ -185,8 +185,8 @@ export const WorkflowPlan: React.FC = () => {
                     {week.tasks.map((task, taskIdx) => {
                       const shiftLeft =
                         WEEK_SHIFTS[colIdx]?.[taskIdx] ?? '0%';
-                      const barWidth =
-                        WEEK_WIDTHS[colIdx]?.[taskIdx] ?? '60%';
+                      const innerGap =
+                        TASK_GAPS[colIdx]?.[taskIdx] ?? '1.25rem';
 
                       return (
                         <motion.div
@@ -202,21 +202,23 @@ export const WorkflowPlan: React.FC = () => {
                           <div
                             style={{
                               marginLeft: shiftLeft,
-                              width: barWidth,
                             }}
-                            className="max-lg:!ml-0 max-lg:!w-full group relative rounded-[10px] bg-[#16181d]/90 hover:bg-[#1c1f26] border border-white/[0.08] hover:border-[#a3e635]/50 px-4 py-3 sm:px-4.5 sm:py-3.5 transition-colors duration-250 cursor-default shadow-[0_8px_20px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.06)]"
+                            className="max-sm:!ml-0 w-fit max-w-full group relative rounded-[10px] bg-[#16181d]/90 hover:bg-[#1c1f26] border border-white/[0.08] hover:border-[#a3e635]/50 px-4 py-3 sm:px-4.5 sm:py-3.5 transition-colors duration-250 cursor-default shadow-[0_8px_20px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.06)]"
                           >
                             <span
                               className="absolute left-0 top-2.5 bottom-2.5 w-[2.5px] rounded-r-full bg-[#a3e635]/40 group-hover:bg-[#a3e635] group-hover:shadow-[0_0_10px_#a3e635] transition-all duration-250"
                               aria-hidden="true"
                             />
 
-                            <div className="flex items-center justify-between gap-3 pl-1.5">
-                              <span className="font-geist font-semibold text-[14px] sm:text-[15px] text-white group-hover:text-[#f8fafc] tracking-[-0.01em] leading-snug truncate">
+                            <div
+                              style={{ gap: innerGap }}
+                              className="flex items-center justify-between pl-1.5"
+                            >
+                              <span className="font-geist font-semibold text-[13.5px] sm:text-[14.5px] text-white group-hover:text-[#f8fafc] tracking-[-0.01em] leading-snug">
                                 {task.title}
                               </span>
 
-                              <span className="shrink-0 inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/[0.06] group-hover:bg-[#a3e635]/15 border border-white/[0.08] group-hover:border-[#a3e635]/40 font-mono text-[11px] text-[#9ca3af] group-hover:text-[#a3e635] transition-colors duration-250">
+                              <span className="shrink-0 inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/[0.06] group-hover:bg-[#a3e635]/15 border border-white/[0.08] group-hover:border-[#a3e635]/40 font-mono text-[11px] text-[#9ca3af] group-hover:text-[#a3e635] transition-colors duration-250 whitespace-nowrap">
                                 {task.duration}
                               </span>
                             </div>

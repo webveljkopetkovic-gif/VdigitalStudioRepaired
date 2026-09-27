@@ -26,48 +26,51 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
   return (
     <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-8 py-2 text-center select-none z-20">
       <div className="relative flex items-center justify-between">
-        {/* Left column paragraph pushed down towards the dark background */}
+        {/* Left column paragraph pushed down lower relative to <h1> and elevated above shadow (z-30) */}
         <motion.div
           initial={{ opacity: 0, x: -24, filter: 'blur(6px)' }}
           animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.9, delay: 0.55, ease: smoothEase }}
-          className="hidden xl:block w-56 text-left self-end mb-2 z-20"
+          className="hidden xl:block w-60 text-left self-end -mb-8 2xl:-mb-10 relative z-30"
         >
           <p
-            className="text-[12px] leading-[1.6] text-neutral-200 font-normal font-geist"
-            style={{ textShadow: '0 2px 10px rgba(0, 0, 0, 0.95)' }}
+            className="text-[12.5px] 2xl:text-[13px] leading-[1.62] text-white font-medium font-geist"
+            style={{
+              textShadow:
+                '0 2px 14px rgba(0, 0, 0, 1), 0 1px 4px rgba(0, 0, 0, 1)',
+            }}
           >
             {t.hero.leftText}
           </p>
         </motion.div>
 
         {/* Center Main 4-Line Headline with dedicated dark shadow layer behind <h1> */}
-        <div className="flex-1 max-w-4xl mx-auto px-2 relative z-20">
+        <div className="flex-1 max-w-4xl mx-auto px-2 relative z-10">
           {/* Outer Ambient Black Shadow Layer behind <h1> */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -inset-x-10 sm:-inset-x-24 -inset-y-8 sm:-inset-y-12 -z-10 rounded-full"
+            className="pointer-events-none absolute -inset-x-4 sm:-inset-x-10 -inset-y-6 sm:-inset-y-10 -z-10 rounded-full"
             style={{
               background:
-                'radial-gradient(ellipse 74% 70% at 50% 50%, rgba(0, 0, 0, 0.94) 0%, rgba(4, 5, 8, 0.84) 46%, rgba(4, 5, 8, 0.42) 74%, rgba(4, 5, 8, 0) 100%)',
-              filter: 'blur(24px)',
+                'radial-gradient(ellipse 68% 66% at 50% 50%, rgba(0, 0, 0, 0.92) 0%, rgba(4, 5, 8, 0.8) 44%, rgba(4, 5, 8, 0.35) 70%, rgba(4, 5, 8, 0) 100%)',
+              filter: 'blur(20px)',
             }}
           />
           {/* Inner Core Black Layer directly behind <h1> text */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -inset-x-4 sm:-inset-x-10 -inset-y-3 sm:-inset-y-6 -z-10 rounded-[48px]"
+            className="pointer-events-none absolute -inset-x-2 sm:-inset-x-6 -inset-y-2 sm:-inset-y-5 -z-10 rounded-[48px]"
             style={{
               background:
-                'radial-gradient(ellipse 64% 60% at 50% 50%, rgba(0, 0, 0, 0.9) 0%, rgba(2, 3, 5, 0.72) 56%, rgba(0, 0, 0, 0) 100%)',
-              filter: 'blur(14px)',
+                'radial-gradient(ellipse 62% 58% at 50% 50%, rgba(0, 0, 0, 0.88) 0%, rgba(2, 3, 5, 0.68) 54%, rgba(0, 0, 0, 0) 100%)',
+              filter: 'blur(12px)',
             }}
           />
 
           <h1
             id="hero-title-main"
             aria-label={`${t.hero.line1} ${t.hero.line2} ${t.hero.line3} ${t.hero.line4}`}
-            className="relative z-10 text-[28px] sm:text-[42px] md:text-[50px] lg:text-[56px] xl:text-[62px] leading-[1.12] sm:leading-[1.1] drop-shadow-[0_14px_32px_rgba(0,0,0,1)]"
+            className="relative z-10 text-[24px] sm:text-[36px] md:text-[42px] lg:text-[48px] xl:text-[52px] leading-[1.14] sm:leading-[1.12] drop-shadow-[0_14px_32px_rgba(0,0,0,1)]"
             style={{
               textShadow:
                 '0 16px 44px rgba(0, 0, 0, 1), 0 8px 22px rgba(0, 0, 0, 1), 0 3px 8px rgba(0, 0, 0, 1)',
@@ -131,16 +134,19 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
           </h1>
         </div>
 
-        {/* Right column paragraph pushed down towards the dark background */}
+        {/* Right column paragraph pushed down lower relative to <h1> and elevated above shadow (z-30) */}
         <motion.div
           initial={{ opacity: 0, x: 24, filter: 'blur(6px)' }}
           animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.9, delay: 0.65, ease: smoothEase }}
-          className="hidden xl:block w-56 text-right self-end mb-2 z-20"
+          className="hidden xl:block w-60 text-right self-end -mb-8 2xl:-mb-10 relative z-30"
         >
           <p
-            className="text-[12px] leading-[1.6] text-neutral-200 font-normal font-geist"
-            style={{ textShadow: '0 2px 10px rgba(0, 0, 0, 0.95)' }}
+            className="text-[12.5px] 2xl:text-[13px] leading-[1.62] text-white font-medium font-geist"
+            style={{
+              textShadow:
+                '0 2px 14px rgba(0, 0, 0, 1), 0 1px 4px rgba(0, 0, 0, 1)',
+            }}
           >
             {t.hero.rightText}
           </p>
@@ -152,7 +158,10 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.65, ease: smoothEase }}
-        className="xl:hidden mt-3 max-w-lg mx-auto flex flex-col sm:flex-row justify-between gap-3 text-[11px] text-neutral-300 px-4"
+        className="xl:hidden relative z-30 mt-6 sm:mt-7 max-w-lg mx-auto flex flex-col sm:flex-row justify-between gap-3 text-[12px] sm:text-[12.5px] text-white font-medium px-4"
+        style={{
+          textShadow: '0 2px 12px rgba(0, 0, 0, 1), 0 1px 4px rgba(0, 0, 0, 1)',
+        }}
       >
         <p className="sm:text-left">{t.hero.leftText}</p>
         <p className="sm:text-right">{t.hero.rightText}</p>

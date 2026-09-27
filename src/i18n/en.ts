@@ -157,7 +157,8 @@ export const en = {
       'After week 3: ongoing analytics, maintenance and improvements, so your results keep growing.',
   },
   team: {
-    heading: 'The people behind VDigital',
+    heading: 'The people behind VDigital.',
+    headingBefore: 'The people behind',
     subheading: 'Three specialists, one direct line. You always talk to the people doing the work.',
     members: [
       {
