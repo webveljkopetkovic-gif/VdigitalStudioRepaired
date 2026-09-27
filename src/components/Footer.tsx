@@ -128,8 +128,8 @@ export const Footer: React.FC = () => {
                 href="https://www.instagram.com/vdigital.studio"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Follow VDigital. on Instagram"
-                title="Follow VDigital. on Instagram"
+                aria-label="Follow VDigital on Instagram"
+                title="Follow VDigital on Instagram"
                 className="group w-11 h-11 rounded-[10px] bg-[#1a1c20] hover:bg-[#22262b] border border-white/[0.06] hover:border-[#9ce607]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(0,0,0,0.4)]"
               >
                 <svg
@@ -153,8 +153,8 @@ export const Footer: React.FC = () => {
                 href="https://www.tiktok.com/@vdigital.studio"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Follow VDigital. on TikTok"
-                title="Follow VDigital. on TikTok"
+                aria-label="Follow VDigital on TikTok"
+                title="Follow VDigital on TikTok"
                 className="group w-11 h-11 rounded-[10px] bg-[#1a1c20] hover:bg-[#22262b] border border-white/[0.06] hover:border-[#9ce607]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(0,0,0,0.4)]"
               >
                 <svg
@@ -172,8 +172,8 @@ export const Footer: React.FC = () => {
                 href="https://www.linkedin.com/company/vdigital-studio"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Follow VDigital. on LinkedIn"
-                title="Follow VDigital. on LinkedIn"
+                aria-label="Follow VDigital on LinkedIn"
+                title="Follow VDigital on LinkedIn"
                 className="group w-11 h-11 rounded-[10px] bg-[#1a1c20] hover:bg-[#22262b] border border-white/[0.06] hover:border-[#9ce607]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(0,0,0,0.4)]"
               >
                 <svg
@@ -191,8 +191,8 @@ export const Footer: React.FC = () => {
                 href={TELEGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Contact VDigital. on Telegram"
-                title="Contact VDigital. on Telegram"
+                aria-label="Contact VDigital on Telegram"
+                title="Contact VDigital on Telegram"
                 className="group w-11 h-11 rounded-[10px] bg-[#1a1c20] hover:bg-[#22262b] border border-white/[0.06] hover:border-[#9ce607]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(0,0,0,0.4)]"
               >
                 <svg

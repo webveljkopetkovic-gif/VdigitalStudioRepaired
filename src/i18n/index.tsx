@@ -72,21 +72,35 @@ const RUSSIA_BELARUS_KAZAKHSTAN_TIMEZONES = new Set([
   'Asia/Oral',
 ]);
 
-const PAGE_META: Record<SupportedLocale, { title: string; description: string }> = {
+const PAGE_META: Record<
+  SupportedLocale,
+  {
+    title: string;
+    description: string;
+    canonical: string;
+    ogLocale: string;
+  }
+> = {
   en: {
-    title: 'VDigital. | Websites, Video & Marketing for Doctors and Coaches',
+    title: 'VDigital: Websites & Marketing for Doctors and Coaches',
     description:
-      'VDigital builds websites, video content, paid ads, and sales systems for doctors and coaches that bring new clients in 3 weeks.',
+      'We build websites, video content and marketing for doctors and health coaches. Strategy, ads and cold calling: a full client system in 3 weeks.',
+    canonical: 'https://vdigital.dev/',
+    ogLocale: 'en_US',
   },
   sr: {
-    title: 'VDigital. | Sajtovi, video i marketing za doktore i koučeve',
+    title: 'VDigital: Izrada sajta i marketing za lekare i coacheve',
     description:
-      'VDigital gradi veb-sajtove, video sadržaj, reklame i prodajne sisteme za doktore i koučeve koji donose nove klijente za 3 nedelje.',
+      'Izrađujemo sajtove, video sadržaj i marketing za lekare i health coacheve. Strategija, reklame i cold calling: ceo sistem za klijente za 3 nedelje.',
+    canonical: 'https://vdigital.dev/sr/',
+    ogLocale: 'sr_RS',
   },
   ru: {
-    title: 'VDigital. | Сайты, видео и маркетинг для врачей и коучей',
+    title: 'VDigital: Сайты и маркетинг для врачей и коучей',
     description:
-      'VDigital создаёт сайты, видеоконтент, рекламу и систему продаж для врачей и коучей, которые приводят новых клиентов за 3 недели.',
+      'Создаём сайты, видео и маркетинг для врачей и коучей. Стратегия, реклама и холодные звонки: полная система привлечения клиентов за 3 недели.',
+    canonical: 'https://vdigital.dev/ru/',
+    ogLocale: 'ru_RU',
   },
 };
 
@@ -143,10 +157,22 @@ export const I18nProvider: React.FC<{
       document.documentElement.lang = locale;
       const meta = PAGE_META[locale] || PAGE_META.en;
       document.title = meta.title;
-      const descEl = document.querySelector('meta[name="description"]');
-      if (descEl) {
-        descEl.setAttribute('content', meta.description);
-      }
+
+      const setMeta = (selector: string, attr: string, value: string) => {
+        const el = document.querySelector(selector);
+        if (el) el.setAttribute(attr, value);
+      };
+
+      setMeta('meta[name="description"]', 'content', meta.description);
+      setMeta('link[rel="canonical"]', 'href', meta.canonical);
+      setMeta('meta[property="og:title"]', 'content', meta.title);
+      setMeta('meta[property="og:description"]', 'content', meta.description);
+      setMeta('meta[property="og:url"]', 'content', meta.canonical);
+      setMeta('meta[property="og:locale"]', 'content', meta.ogLocale);
+      setMeta('meta[property="og:image:alt"]', 'content', meta.title);
+      setMeta('meta[name="twitter:title"]', 'content', meta.title);
+      setMeta('meta[name="twitter:description"]', 'content', meta.description);
+      setMeta('meta[name="twitter:image:alt"]', 'content', meta.title);
     }
   }, [locale]);
 

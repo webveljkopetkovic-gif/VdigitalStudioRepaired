@@ -52,8 +52,8 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             className="group inline-flex items-baseline font-geist text-[20px] sm:text-[22px] font-bold tracking-[-0.04em] leading-none cursor-pointer transition-transform duration-200 hover:scale-[1.02] focus:outline-none"
-            title="VDigital. Home"
-            aria-label="VDigital. Home"
+            title="VDigital"
+            aria-label="VDigital"
           >
             <span className="text-[#9ce607] drop-shadow-[0_0_12px_rgba(156,230,7,0.35)]">
               V
