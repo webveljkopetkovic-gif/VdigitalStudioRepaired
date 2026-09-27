@@ -45,6 +45,7 @@ function devContactApiPlugin(): Plugin {
 
 export default defineConfig(() => {
   return {
+    base: '/',
     plugins: [react(), tailwindcss(), devContactApiPlugin(), prerenderPlugin()],
     resolve: {
       alias: {

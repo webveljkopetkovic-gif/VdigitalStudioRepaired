@@ -261,12 +261,12 @@ export async function runPrerender() {
     return;
   }
 
-  // Extract Vite's injected <script type="module" ...> and <link rel="stylesheet" ...> tags from <head>
+  // Extract all scripts (module, importmap, external CDN), inline styles, and stylesheet/modulepreload/preconnect links from <head>
   const headMatch = templateHtml.match(/<head>([\s\S]*?)<\/head>/i);
   const rawHeadInner = headMatch ? headMatch[1] : '';
   const viteAssetTags = [];
   const assetRegex =
-    /<(?:script\s+type="module"[^>]*><\/script>|link\s+rel="(?:stylesheet|modulepreload)"[^>]*>)/gi;
+    /<(?:script(?![^>]*type=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>|style[^>]*>[\s\S]*?<\/style>|link[^>]*\brel=["'](?:stylesheet|modulepreload|preconnect)["'][^>]*>)/gi;
   let match;
   while ((match = assetRegex.exec(rawHeadInner)) !== null) {
     viteAssetTags.push(`    ${match[0]}`);
