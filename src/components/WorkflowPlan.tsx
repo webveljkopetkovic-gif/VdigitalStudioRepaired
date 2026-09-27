@@ -154,7 +154,7 @@ export const WorkflowPlan: React.FC = () => {
                 >
                   {/* Column Header: Week Label + Green Dot + Title */}
                   <div className="flex flex-col pb-6 mb-6 border-b border-white/[0.07]">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center">
                       <div className="flex items-center gap-2.5">
                         <span
                           className="w-2.5 h-2.5 rounded-full bg-[#a3e635] shrink-0"
@@ -167,10 +167,6 @@ export const WorkflowPlan: React.FC = () => {
                           {week.label}
                         </h3>
                       </div>
-
-                      <span className="font-mono text-[11px] text-white/30 tracking-widest">
-                        0{colIdx + 1} / 03
-                      </span>
                     </div>
 
                     <p className="font-geist text-[15px] text-[#9ca3af] font-normal mt-2 pl-5">

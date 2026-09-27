@@ -27,6 +27,7 @@ import { ContactPage } from './components/ContactPage';
 import { PrivacyPage } from './components/PrivacyPage';
 import { Footer } from './components/Footer';
 import { FloatingChatButton } from './components/FloatingChatButton';
+import { Preloader } from './components/Preloader';
 
 const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) => {
   const navigate = useNavigate();
@@ -174,8 +175,10 @@ const PrivacyPageRoute: React.FC<{ locale: SupportedLocale }> = ({ locale }) => 
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<LandingPageContent locale="en" />} />
+    <>
+      <Preloader />
+      <Routes>
+        <Route path="/" element={<LandingPageContent locale="en" />} />
       <Route path="/sr" element={<LandingPageContent locale="sr" />} />
       <Route path="/sr/" element={<LandingPageContent locale="sr" />} />
       <Route path="/ru" element={<LandingPageContent locale="ru" />} />
@@ -195,7 +198,8 @@ export default function App() {
       <Route path="/ru/konfidencialnost" element={<PrivacyPageRoute locale="ru" />} />
       <Route path="/ru/konfidencialnost/" element={<PrivacyPageRoute locale="ru" />} />
 
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
   );
 }
