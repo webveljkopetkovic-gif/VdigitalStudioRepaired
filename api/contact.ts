@@ -95,6 +95,18 @@ function isRateLimited(ip: string): boolean {
 }
 
 export default async function handler(req: any, res: any) {
+  const web3FormsKey = (
+    process.env.WEB3FORMS_ACCESS_KEY ||
+    process.env.VITE_WEB3FORMS_ACCESS_KEY ||
+    ''
+  ).trim();
+
+  if (req.method === 'GET') {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    return res.end(JSON.stringify({ ok: true, accessKey: web3FormsKey }));
+  }
+
   let body = req.body || {};
   if (typeof body === 'string') {
     try {
@@ -164,92 +176,42 @@ export default async function handler(req: any, res: any) {
     return res.end(JSON.stringify({ ok: false, message: msg.invalidContact }));
   }
 
-  const web3FormsKey = (
-    process.env.WEB3FORMS_ACCESS_KEY ||
-    process.env.VITE_WEB3FORMS_ACCESS_KEY ||
-    ''
-  ).trim();
-  const telegramBotToken = (process.env.TELEGRAM_BOT_TOKEN || '').trim();
-  const telegramChatId = (process.env.TELEGRAM_CHAT_ID || '').trim();
-
-  if (!web3FormsKey && (!telegramBotToken || !telegramChatId)) {
+  if (!web3FormsKey) {
     res.statusCode = 503;
     res.setHeader('Content-Type', 'application/json');
     return res.end(JSON.stringify({ ok: false, message: msg.serverNotConfigured }));
   }
 
-  let delivered = false;
-
-  if (web3FormsKey) {
-    try {
-      const payload: Record<string, string> = {
-        access_key: web3FormsKey,
-        from_name: 'VDigital Website',
-        subject:
-          formType === 'callback'
-            ? `VDigital Callback Request ("Or we call you") — ${name} (${contact})`
-            : `VDigital Inquiry — ${name} (${profession})`,
-        name,
-        phone: contact,
-        contact,
-        profession,
-        form_type: formType === 'callback' ? 'Or we call you (Callback)' : 'Contact Inquiry',
-        locale: locale.toUpperCase(),
-      };
-      if (message) {
-        payload.message = message;
-      }
-
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const result = await response.json().catch(() => null);
-      if (response.ok && (!result || result.success !== false)) {
-        delivered = true;
-      }
-    } catch {
-      // Fall through to check if Telegram succeeded
+  try {
+    const payload: Record<string, string> = {
+      access_key: web3FormsKey,
+      from_name: 'VDigital Website',
+      subject: `VDigital Inquiry — ${name} (${profession})`,
+      name,
+      contact,
+      profession,
+      locale: locale.toUpperCase(),
+    };
+    if (message) {
+      payload.message = message;
     }
-  }
 
-  if (telegramBotToken && telegramChatId) {
-    try {
-      const textLines = [
-        formType === 'callback' ? '📞 New Callback Request (VDigital)' : '📩 New Inquiry (VDigital)',
-        `Name: ${name}`,
-        `Contact: ${contact}`,
-        `Profession: ${profession}`,
-        ...(message ? [`Message: ${message}`] : []),
-        `Locale: ${locale.toUpperCase()}`,
-      ];
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
 
-      const tgRes = await fetch(
-        `https://api.telegram.org/bot${telegramBotToken}/sendMessage`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: telegramChatId,
-            text: textLines.join('\n'),
-          }),
-        }
-      );
-
-      if (tgRes.ok) {
-        delivered = true;
-      }
-    } catch {
-      // Ignore Telegram error if Web3Forms succeeded
+    const result = await response.json().catch(() => null);
+    if (!response.ok || (result && result.success === false)) {
+      res.statusCode = 502;
+      res.setHeader('Content-Type', 'application/json');
+      return res.end(JSON.stringify({ ok: false, message: msg.sendError }));
     }
-  }
-
-  if (!delivered) {
+  } catch {
     res.statusCode = 502;
     res.setHeader('Content-Type', 'application/json');
     return res.end(JSON.stringify({ ok: false, message: msg.sendError }));

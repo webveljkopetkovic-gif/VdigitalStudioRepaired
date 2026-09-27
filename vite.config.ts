@@ -46,6 +46,11 @@ function devContactApiPlugin(): Plugin {
 export default defineConfig(() => {
   return {
     base: '/',
+    define: {
+      __WEB3FORMS_ACCESS_KEY__: JSON.stringify(
+        (process.env.WEB3FORMS_ACCESS_KEY || process.env.VITE_WEB3FORMS_ACCESS_KEY || '').trim()
+      ),
+    },
     plugins: [react(), tailwindcss(), devContactApiPlugin(), prerenderPlugin()],
     resolve: {
       alias: {

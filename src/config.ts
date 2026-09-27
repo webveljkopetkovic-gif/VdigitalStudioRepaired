@@ -8,8 +8,13 @@ export const TELEGRAM_URL = TELEGRAM_USERNAME
   ? `https://t.me/${TELEGRAM_USERNAME}`
   : 'https://t.me/veljkopetkovic';
 
+declare const __WEB3FORMS_ACCESS_KEY__: string | undefined;
+
 export const CONTACT_EMAIL = 'hello@vdigital.dev';
 export const FORM_ENDPOINT = '/api/contact';
+export const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+export const WEB3FORMS_ACCESS_KEY =
+  typeof __WEB3FORMS_ACCESS_KEY__ !== 'undefined' ? __WEB3FORMS_ACCESS_KEY__ : '';
 
 export const WHATSAPP_URL = 'https://wa.me/381659131103';
 export const VIBER_URL = 'viber://chat?number=%2B381659131103';
