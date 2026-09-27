@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform, MotionValue } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { useI18n } from '../i18n';
@@ -49,6 +50,7 @@ interface StackingCardItemProps {
   total: number;
   scrollYProgress: MotionValue<number>;
   cardButtonLabel: string;
+  contactPath: string;
   onBookCall: () => void;
 }
 
@@ -58,6 +60,7 @@ const StackingCardItem: React.FC<StackingCardItemProps> = ({
   total,
   scrollYProgress,
   cardButtonLabel,
+  contactPath,
   onBookCall,
 }) => {
   const step = 1 / total;
@@ -128,7 +131,7 @@ const StackingCardItem: React.FC<StackingCardItemProps> = ({
         {/* Top-Right CTA Button */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <a
-            href="#contact"
+            href={contactPath}
             onClick={(e) => {
               e.preventDefault();
               onBookCall();
@@ -179,7 +182,8 @@ interface StickyServicesSectionProps {
 export const StickyServicesSection: React.FC<StickyServicesSectionProps> = ({
   onBookCall,
 }) => {
-  const { t } = useI18n();
+  const { t, contactPath } = useI18n();
+  const navigate = useNavigate();
   const containerRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -195,7 +199,7 @@ export const StickyServicesSection: React.FC<StickyServicesSectionProps> = ({
     if (onBookCall) {
       onBookCall();
     } else {
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+      navigate(contactPath);
     }
   };
 
@@ -242,6 +246,7 @@ export const StickyServicesSection: React.FC<StickyServicesSectionProps> = ({
                 total={cards.length}
                 scrollYProgress={scrollYProgress}
                 cardButtonLabel={t.services.cardButton}
+                contactPath={contactPath}
                 onBookCall={handleBookCall}
               />
             ))}

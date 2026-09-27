@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ArrowDown } from 'lucide-react';
 import { useI18n } from '../i18n';
 
@@ -11,14 +12,15 @@ export const HeroCTAButtons: React.FC<HeroCTAButtonsProps> = ({
   onPrimaryClick,
   onSecondaryClick,
 }) => {
-  const { t } = useI18n();
+  const { t, contactPath } = useI18n();
+  const navigate = useNavigate();
 
   const handlePrimary = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     if (onPrimaryClick) {
       onPrimaryClick();
     } else {
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+      navigate(contactPath);
     }
   };
 
@@ -38,7 +40,7 @@ export const HeroCTAButtons: React.FC<HeroCTAButtonsProps> = ({
     >
       {/* 1. Primary CTA: Beveled Neon Lime Pill Button "Book a free call →" */}
       <a
-        href="#contact"
+        href={contactPath}
         id="btn-hero-get-started"
         onClick={handlePrimary}
         className="group relative inline-flex items-center cursor-pointer select-none focus:outline-none hover:scale-[1.03] active:scale-[0.98] transition-transform duration-200"

@@ -1,14 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Check } from 'lucide-react';
 import { useI18n } from '../i18n';
 
 export const FoundingClientsSection: React.FC = () => {
-  const { t } = useI18n();
+  const { t, contactPath } = useI18n();
+  const navigate = useNavigate();
 
   const handleApplyClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    navigate(contactPath);
   };
 
   return (
@@ -83,7 +85,7 @@ export const FoundingClientsSection: React.FC = () => {
           {/* CTA Button: Apply for a founding spot → */}
           <div className="mt-10 pt-2">
             <a
-              href="#contact"
+              href={contactPath}
               onClick={handleApplyClick}
               className="group inline-flex items-center gap-2.5 px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#9ce607] hover:bg-[#abf50a] text-[#0a0c09] font-geist font-bold text-[14px] sm:text-[15px] tracking-[-0.01em] transition-all duration-200 cursor-pointer shadow-[0_8px_28px_rgba(156,230,7,0.35),inset_0_1px_1px_rgba(255,255,255,0.65)] hover:scale-[1.02] active:scale-[0.98]"
             >

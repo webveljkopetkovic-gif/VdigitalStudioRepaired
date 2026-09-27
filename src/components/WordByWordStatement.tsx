@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Stethoscope, PhoneCall } from 'lucide-react';
 import { useI18n } from '../i18n';
@@ -10,7 +11,8 @@ interface WordByWordStatementProps {
 export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
   onExplore,
 }) => {
-  const { t } = useI18n();
+  const { t, contactPath } = useI18n();
+  const navigate = useNavigate();
 
   const containerVariants = {
     hidden: { opacity: 1 },
@@ -63,7 +65,7 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
     if (onExplore) {
       onExplore();
     } else {
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+      navigate(contactPath);
     }
   };
 
@@ -227,7 +229,7 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
           className="mt-12 sm:mt-16 flex justify-center"
         >
           <a
-            href="#contact"
+            href={contactPath}
             onClick={handleCtaClick}
             className="group relative inline-flex items-center gap-2.5 px-8 sm:px-10 py-3.5 sm:py-4 rounded-full bg-[#06080a] border border-[#00f5a0] text-white text-[14px] sm:text-[15px] font-geist font-medium transition-all duration-300 cursor-pointer shadow-[0_0_24px_rgba(0,245,160,0.4),0_0_60px_rgba(0,245,160,0.15)] hover:shadow-[0_0_36px_rgba(0,245,160,0.65),0_0_80px_rgba(0,245,160,0.25)] hover:border-[#34d399] active:scale-[0.98]"
           >

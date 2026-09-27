@@ -1,7 +1,7 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { SHOW_PROJECTS } from './config';
-import { I18nProvider, SupportedLocale } from './i18n';
+import { getContactPath, I18nProvider, SupportedLocale } from './i18n';
 import { HeaderLogo } from './components/HeaderLogo';
 import { HeroTypography } from './components/HeroTypography';
 import { KineticCarouselText } from './components/KineticCarouselText';
@@ -18,12 +18,17 @@ import { FoundingClientsSection } from './components/FoundingClientsSection';
 import { RevenueCTASection } from './components/RevenueCTASection';
 import { FAQSection } from './components/FAQSection';
 import { ContactSection } from './components/ContactSection';
+import { ContactPage } from './components/ContactPage';
 import { Footer } from './components/Footer';
 import { FloatingChatButton } from './components/FloatingChatButton';
+import { TawkToChat } from './components/TawkToChat';
 
 const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) => {
-  const scrollToContact = () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  const navigate = useNavigate();
+  const contactPath = getContactPath(locale);
+
+  const goToContactPage = () => {
+    navigate(contactPath);
   };
 
   const scrollToProcess = () => {
@@ -41,7 +46,7 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
             className="relative h-screen h-[100vh] h-dvh min-h-screen max-h-screen w-full flex flex-col justify-between overflow-hidden pb-4 sm:pb-6 lg:pb-8"
           >
             {/* 1. Navbar */}
-            <HeaderLogo onBookCall={scrollToContact} />
+            <HeaderLogo onBookCall={goToContactPage} />
 
             {/* 2. Centerpiece Area: Volumetric 'creative/modern/digital', Sunburst, 4-Line Headline & Side Texts */}
             <div className="relative flex-1 flex flex-col justify-center items-center w-full my-auto py-4 sm:py-6 overflow-visible">
@@ -59,7 +64,7 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
             {/* 3. Lower Tier: Hero CTAs + Trust Bar (#trust) */}
             <div className="relative z-20 w-full flex flex-col items-center mt-1 sm:mt-2">
               <HeroCTAButtons
-                onPrimaryClick={scrollToContact}
+                onPrimaryClick={goToContactPage}
                 onSecondaryClick={scrollToProcess}
               />
 
@@ -68,20 +73,20 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
           </section>
 
           {/* 4. Statement (#statement) */}
-          <WordByWordStatement onExplore={scrollToContact} />
+          <WordByWordStatement onExplore={goToContactPage} />
 
           {/* 5. Pain Points (#problems) */}
           <PainPointsSection />
 
           {/* 6. Services (#services) */}
-          <StickyServicesSection onBookCall={scrollToContact} />
+          <StickyServicesSection onBookCall={goToContactPage} />
 
           {/* 7. Process (#process) */}
           <WorkflowPlan />
 
           {/* Hidden unless SHOW_PROJECTS === true in src/config.ts */}
           {SHOW_PROJECTS && (
-            <ProjectsSection onExploreClick={scrollToContact} />
+            <ProjectsSection onExploreClick={goToContactPage} />
           )}
 
           {/* 8. Team (#team) */}
@@ -103,12 +108,21 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
         {/* 13. Footer */}
         <Footer />
 
-        {/* Floating Chat Button (WhatsApp on / and /sr/, Telegram on /ru/) */}
+        {/* Live Tawk.to Chat Drawer & Script Loader */}
+        <TawkToChat />
+
+        {/* Floating Chat Button (Live Chat + WhatsApp on / and /sr/, Telegram on /ru/) */}
         <FloatingChatButton />
       </div>
     </I18nProvider>
   );
 };
+
+const ContactPageRoute: React.FC<{ locale: SupportedLocale }> = ({ locale }) => (
+  <I18nProvider locale={locale}>
+    <ContactPage />
+  </I18nProvider>
+);
 
 export default function App() {
   return (
@@ -118,6 +132,14 @@ export default function App() {
       <Route path="/sr/" element={<LandingPageContent locale="sr" />} />
       <Route path="/ru" element={<LandingPageContent locale="ru" />} />
       <Route path="/ru/" element={<LandingPageContent locale="ru" />} />
+
+      <Route path="/contact" element={<ContactPageRoute locale="en" />} />
+      <Route path="/contact/" element={<ContactPageRoute locale="en" />} />
+      <Route path="/sr/kontakt" element={<ContactPageRoute locale="sr" />} />
+      <Route path="/sr/kontakt/" element={<ContactPageRoute locale="sr" />} />
+      <Route path="/ru/kontakty" element={<ContactPageRoute locale="ru" />} />
+      <Route path="/ru/kontakty/" element={<ContactPageRoute locale="ru" />} />
+
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

@@ -13,6 +13,7 @@ const ROUTE_SEO = {
     titleHtml: 'VDigital: Websites & Marketing for Doctors and Coaches',
     description:
       'We build websites, video content and marketing for doctors and health coaches. Strategy, ads and cold calling: a full client system in 3 weeks.',
+    isContact: false,
   },
   sr: {
     url: '/sr/',
@@ -23,6 +24,7 @@ const ROUTE_SEO = {
     titleHtml: 'VDigital: Izrada sajta i marketing za lekare i coacheve',
     description:
       'Izrađujemo sajtove, video sadržaj i marketing za lekare i health coacheve. Strategija, reklame i cold calling: ceo sistem za klijente za 3 nedelje.',
+    isContact: false,
   },
   ru: {
     url: '/ru/',
@@ -33,10 +35,75 @@ const ROUTE_SEO = {
     titleHtml: 'VDigital: Сайты и маркетинг для врачей и коучей',
     description:
       'Создаём сайты, видео и маркетинг для врачей и коучей. Стратегия, реклама и холодные звонки: полная система привлечения клиентов за 3 недели.',
+    isContact: false,
+  },
+  contactEn: {
+    url: '/contact/',
+    lang: 'en',
+    ogLocale: 'en_US',
+    canonical: 'https://vdigital.dev/contact/',
+    title: 'Contact & Book a Free Call | VDigital',
+    titleHtml: 'Contact & Book a Free Call | VDigital',
+    description:
+      'Book a free 30-minute call with VDigital, or reach us on WhatsApp, Viber, Telegram or email. We reply within 24 hours on working days.',
+    isContact: true,
+  },
+  contactSr: {
+    url: '/sr/kontakt/',
+    lang: 'sr',
+    ogLocale: 'sr_RS',
+    canonical: 'https://vdigital.dev/sr/kontakt/',
+    title: 'Kontakt i besplatan poziv | VDigital',
+    titleHtml: 'Kontakt i besplatan poziv | VDigital',
+    description:
+      'Zakažite besplatan poziv od 30 minuta sa VDigital timom ili nam pišite na WhatsApp, Viber, Telegram ili email. Odgovaramo u roku od 24 sata.',
+    isContact: true,
+  },
+  contactRu: {
+    url: '/ru/kontakty/',
+    lang: 'ru',
+    ogLocale: 'ru_RU',
+    canonical: 'https://vdigital.dev/ru/kontakty/',
+    title: 'Контакты и бесплатная консультация | VDigital',
+    titleHtml: 'Контакты и бесплатная консультация | VDigital',
+    description:
+      'Запишитесь на бесплатный 30-минутный звонок с VDigital или напишите нам в Telegram, WhatsApp, Viber или на email. Отвечаем в течение 24 часов.',
+    isContact: true,
   },
 };
 
 function buildLocalizedHead(meta) {
+  const hreflangs = meta.isContact
+    ? `    <link rel="alternate" hreflang="en" href="https://vdigital.dev/contact/" />
+    <link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/kontakt/" />
+    <link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/kontakty/" />
+    <link rel="alternate" hreflang="x-default" href="https://vdigital.dev/contact/" />`
+    : `    <link rel="alternate" hreflang="en" href="https://vdigital.dev/" />
+    <link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/" />
+    <link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/" />
+    <link rel="alternate" hreflang="x-default" href="https://vdigital.dev/" />`;
+
+  const contactJsonLd = meta.isContact
+    ? `
+    <!-- Schema.org JSON-LD Structured Data (ContactPage) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "name": "${meta.titleHtml}",
+        "description": "${meta.description}",
+        "url": "${meta.canonical}",
+        "mainEntity": {
+          "@type": "ProfessionalService",
+          "name": "VDigital",
+          "telephone": "+381659131103",
+          "email": "hello@vdigital.dev",
+          "url": "https://vdigital.dev"
+        }
+      }
+    </script>`
+    : '';
+
   return `<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -51,10 +118,7 @@ function buildLocalizedHead(meta) {
 
     <!-- Canonical & Hreflang Links -->
     <link rel="canonical" href="${meta.canonical}" />
-    <link rel="alternate" hreflang="en" href="https://vdigital.dev/" />
-    <link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/" />
-    <link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/" />
-    <link rel="alternate" hreflang="x-default" href="https://vdigital.dev/" />
+${hreflangs}
 
     <!-- Favicons & Web App Manifest -->
     <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
@@ -136,7 +200,7 @@ function buildLocalizedHead(meta) {
         "alternateName": ["VDigital Studio", "vdigital.dev"],
         "url": "https://vdigital.dev/"
       }
-    </script>`;
+    </script>${contactJsonLd}`;
 }
 
 export async function runPrerender() {
@@ -196,6 +260,18 @@ export async function runPrerender() {
       { meta: ROUTE_SEO.en, outFile: path.resolve(distDir, 'index.html') },
       { meta: ROUTE_SEO.sr, outFile: path.resolve(distDir, 'sr/index.html') },
       { meta: ROUTE_SEO.ru, outFile: path.resolve(distDir, 'ru/index.html') },
+      {
+        meta: ROUTE_SEO.contactEn,
+        outFile: path.resolve(distDir, 'contact/index.html'),
+      },
+      {
+        meta: ROUTE_SEO.contactSr,
+        outFile: path.resolve(distDir, 'sr/kontakt/index.html'),
+      },
+      {
+        meta: ROUTE_SEO.contactRu,
+        outFile: path.resolve(distDir, 'ru/kontakty/index.html'),
+      },
     ];
 
     for (const route of routes) {

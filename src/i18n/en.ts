@@ -269,6 +269,35 @@ export const en = {
     location: 'Niš, Serbia · Working with clients worldwide',
     copyright: '© 2026 VDigital. All rights reserved.',
   },
+  contactPage: {
+    label: 'Contact',
+    h1Regular: 'Book a',
+    h1Italic: 'free call.',
+    intro:
+      "Tell us about your practice, where new clients should be coming from and what's holding you back. We'll talk it through and show you what a useful next step could look like.",
+    stepsLabel: 'What happens next',
+    step1: 'Pick a time that works for you.',
+    step2: 'We talk through your practice, your clients and your goals.',
+    step3:
+      'You get a concrete plan, and we decide together whether working together makes sense.',
+    writeLabel: 'Prefer to write?',
+    callbackLabel: 'Or we call you',
+    callbackNamePlaceholder: 'Your name',
+    callbackPhonePlaceholder: 'Phone number',
+    callbackButton: 'Call me',
+    callbackSuccess: "Thanks! We'll call you within 24 hours on working days.",
+    callbackError: 'Something went wrong. Please message us on WhatsApp.',
+    prefilledMessage: "Hi VDigital, I'd like to book a free call.",
+    calendarFallback:
+      "The calendar isn't available right now. Message us and we'll find a time together.",
+    liveChatButton: 'Live chat (Tawk.to)',
+    liveChatTitle: 'VDigital Live Chat',
+    liveChatSubtitle: 'Typically replies in a few minutes',
+    liveChatWelcome: 'Hi! Tell us briefly about your practice and how we can help.',
+    liveChatPlaceholder: 'Write a message...',
+    liveChatSend: 'Send',
+    socialsLabel: 'Follow us',
+  },
 };
 
 export type Translations = Omit<typeof en, 'lang'> & { lang: 'en' | 'sr' | 'ru' };

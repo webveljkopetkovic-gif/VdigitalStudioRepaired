@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   CONTACT_EMAIL,
   PHONE_DISPLAY,
@@ -6,16 +7,32 @@ import {
   SHOW_PROJECTS,
   TELEGRAM_URL,
 } from '../config';
-import { useI18n } from '../i18n';
+import { getContactPath, getHomePath, useI18n } from '../i18n';
 
 export const Footer: React.FC = () => {
-  const { locale, t, selectLocale } = useI18n();
+  const { locale, t, selectLocale, homePath, contactPath, isContactPage } = useI18n();
+  const navigate = useNavigate();
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     sectionId: string
   ) => {
     e.preventDefault();
+    if (sectionId === 'contact') {
+      navigate(contactPath);
+      return;
+    }
+    if (isContactPage) {
+      navigate(homePath);
+      setTimeout(() => {
+        if (sectionId === 'top') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 120);
+      return;
+    }
     if (sectionId === 'top') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
@@ -27,9 +44,21 @@ export const Footer: React.FC = () => {
   };
 
   const languages: { code: 'en' | 'sr' | 'ru'; label: string; href: string }[] = [
-    { code: 'en', label: 'EN', href: '/' },
-    { code: 'sr', label: 'SR', href: '/sr/' },
-    { code: 'ru', label: 'RU', href: '/ru/' },
+    {
+      code: 'en',
+      label: 'EN',
+      href: isContactPage ? getContactPath('en') : getHomePath('en'),
+    },
+    {
+      code: 'sr',
+      label: 'SR',
+      href: isContactPage ? getContactPath('sr') : getHomePath('sr'),
+    },
+    {
+      code: 'ru',
+      label: 'RU',
+      href: isContactPage ? getContactPath('ru') : getHomePath('ru'),
+    },
   ];
 
   return (
@@ -92,7 +121,7 @@ export const Footer: React.FC = () => {
               {t.navbar.links.faq}
             </a>
             <a
-              href="#contact"
+              href={contactPath}
               onClick={(e) => handleNavClick(e, 'contact')}
               className="text-white hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
             >

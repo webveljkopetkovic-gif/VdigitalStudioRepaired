@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import {
   CheckCircle2,
@@ -7,9 +8,9 @@ import {
   Mail,
   Phone,
   MessageCircle,
+  MessageSquare,
 } from 'lucide-react';
 import {
-  CALENDLY_URL,
   CONTACT_EMAIL,
   FORM_ENDPOINT,
   PHONE_DISPLAY,
@@ -19,9 +20,11 @@ import {
   WHATSAPP_URL,
 } from '../config';
 import { useI18n } from '../i18n';
+import { triggerLiveChat } from './TawkToChat';
 
 export const ContactSection: React.FC = () => {
-  const { t } = useI18n();
+  const { t, contactPath } = useI18n();
+  const navigate = useNavigate();
 
   const [fullName, setFullName] = useState('');
   const [contactInfo, setContactInfo] = useState('');
@@ -119,12 +122,14 @@ export const ContactSection: React.FC = () => {
               {t.contact.text}
             </p>
 
-            {/* Primary Button: Book a call -> opens [CALENDLY_URL] in a new tab */}
+            {/* Primary Button: Book a call -> links to contact page in same language */}
             <div className="mt-8">
               <a
-                href={CALENDLY_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={contactPath}
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate(contactPath);
+                }}
                 className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-[#9ce607] hover:bg-[#abf50a] text-[#0a0c09] font-geist font-bold text-[15px] tracking-[-0.01em] transition-all duration-200 cursor-pointer shadow-[0_8px_28px_rgba(156,230,7,0.35),inset_0_1px_1px_rgba(255,255,255,0.65)] hover:scale-[1.02] active:scale-[0.98]"
               >
                 <span>{t.contact.primaryButton}</span>
@@ -187,6 +192,17 @@ export const ContactSection: React.FC = () => {
                   <Phone className="w-4 h-4 text-[#9ce607]" />
                   <span>{PHONE_DISPLAY}</span>
                 </a>
+
+                {/* Live Chat (Tawk.to) */}
+                <button
+                  type="button"
+                  onClick={triggerLiveChat}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#141815]/80 hover:bg-[#1b221d] border border-white/10 hover:border-[#9ce607]/50 text-[13px] font-geist text-white transition-all cursor-pointer"
+                >
+                  <MessageSquare className="w-4 h-4 text-[#9ce607]" />
+                  <span>{t.contactPage.liveChatButton}</span>
+                  <span className="w-2 h-2 rounded-full bg-[#9ce607] animate-pulse" />
+                </button>
               </div>
             </div>
           </motion.div>

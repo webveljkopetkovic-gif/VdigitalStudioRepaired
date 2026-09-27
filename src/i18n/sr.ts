@@ -271,4 +271,33 @@ export const sr: Translations = {
     location: 'Niš, Srbija · Radimo sa klijentima širom sveta',
     copyright: '© 2026 VDigital. Sva prava zadržana.',
   },
+  contactPage: {
+    label: 'Kontakt',
+    h1Regular: 'Zakažite',
+    h1Italic: 'besplatan poziv.',
+    intro:
+      'Recite nam nešto o svom poslu, odakle bi trebalo da Vam dolaze novi klijenti i šta Vas trenutno koči. Proći ćemo kroz sve zajedno i pokazati Vam kako bi mogao da izgleda sledeći korak.',
+    stepsLabel: 'Šta sledi',
+    step1: 'Izaberite termin koji Vam odgovara.',
+    step2: 'Razgovaramo o Vašem poslu, klijentima i ciljevima.',
+    step3:
+      'Dobijate konkretan plan, a zajedno odlučujemo da li saradnja ima smisla.',
+    writeLabel: 'Više volite da pišete?',
+    callbackLabel: 'Ili Vas mi pozovemo',
+    callbackNamePlaceholder: 'Vaše ime',
+    callbackPhonePlaceholder: 'Broj telefona',
+    callbackButton: 'Pozovite me',
+    callbackSuccess: 'Hvala! Zovemo Vas u roku od 24 sata radnim danima.',
+    callbackError: 'Nešto nije u redu. Pišite nam na WhatsApp.',
+    prefilledMessage: 'Zdravo, želim da zakažem besplatan poziv sa VDigital timom.',
+    calendarFallback:
+      'Kalendar trenutno nije dostupan. Pišite nam i zajedno ćemo naći termin.',
+    liveChatButton: 'Live chat uživo (Tawk.to)',
+    liveChatTitle: 'VDigital Live Chat',
+    liveChatSubtitle: 'Obično odgovaramo za par minuta',
+    liveChatWelcome: 'Zdravo! Napišite nam ukratko čime se bavite i kako možemo da Vam pomognemo.',
+    liveChatPlaceholder: 'Napišite poruku...',
+    liveChatSend: 'Pošalji',
+    socialsLabel: 'Društvene mreže',
+  },
 };

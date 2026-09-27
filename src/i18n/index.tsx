@@ -72,7 +72,7 @@ const RUSSIA_BELARUS_KAZAKHSTAN_TIMEZONES = new Set([
   'Asia/Oral',
 ]);
 
-const PAGE_META: Record<
+const HOME_META: Record<
   SupportedLocale,
   {
     title: string;
@@ -103,6 +103,59 @@ const PAGE_META: Record<
     ogLocale: 'ru_RU',
   },
 };
+
+const CONTACT_META: Record<
+  SupportedLocale,
+  {
+    title: string;
+    description: string;
+    canonical: string;
+    ogLocale: string;
+  }
+> = {
+  en: {
+    title: 'Contact & Book a Free Call | VDigital',
+    description:
+      'Book a free 30-minute call with VDigital, or reach us on WhatsApp, Viber, Telegram or email. We reply within 24 hours on working days.',
+    canonical: 'https://vdigital.dev/contact/',
+    ogLocale: 'en_US',
+  },
+  sr: {
+    title: 'Kontakt i besplatan poziv | VDigital',
+    description:
+      'Zakažite besplatan poziv od 30 minuta sa VDigital timom ili nam pišite na WhatsApp, Viber, Telegram ili email. Odgovaramo u roku od 24 sata.',
+    canonical: 'https://vdigital.dev/sr/kontakt/',
+    ogLocale: 'sr_RS',
+  },
+  ru: {
+    title: 'Контакты и бесплатная консультация | VDigital',
+    description:
+      'Запишитесь на бесплатный 30-минутный звонок с VDigital или напишите нам в Telegram, WhatsApp, Viber или на email. Отвечаем в течение 24 часов.',
+    canonical: 'https://vdigital.dev/ru/kontakty/',
+    ogLocale: 'ru_RU',
+  },
+};
+
+export function getHomePath(locale: SupportedLocale): string {
+  if (locale === 'sr') return '/sr/';
+  if (locale === 'ru') return '/ru/';
+  return '/';
+}
+
+export function getContactPath(locale: SupportedLocale): string {
+  if (locale === 'sr') return '/sr/kontakt/';
+  if (locale === 'ru') return '/ru/kontakty/';
+  return '/contact/';
+}
+
+export function isContactRoute(pathname: string): boolean {
+  const clean = pathname.replace(/\/+$/, '');
+  return (
+    clean === '/contact' ||
+    clean === '/sr/kontakt' ||
+    clean === '/ru/kontakty'
+  );
+}
 
 function mapCountryToLocale(countryCode?: string | null): SupportedLocale | null {
   if (!countryCode) return null;
@@ -136,12 +189,18 @@ interface I18nContextValue {
   locale: SupportedLocale;
   t: Translations;
   selectLocale: (nextLocale: SupportedLocale) => void;
+  homePath: string;
+  contactPath: string;
+  isContactPage: boolean;
 }
 
 const I18nContext = createContext<I18nContextValue>({
   locale: 'en',
   t: en,
   selectLocale: () => {},
+  homePath: '/',
+  contactPath: '/contact/',
+  isContactPage: false,
 });
 
 export const I18nProvider: React.FC<{
@@ -151,11 +210,15 @@ export const I18nProvider: React.FC<{
   const navigate = useNavigate();
   const location = useLocation();
   const t = dictionaries[locale] || en;
+  const isContactPage = isContactRoute(location.pathname);
+  const homePath = getHomePath(locale);
+  const contactPath = getContactPath(locale);
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
       document.documentElement.lang = locale;
-      const meta = PAGE_META[locale] || PAGE_META.en;
+      const metaGroup = isContactPage ? CONTACT_META : HOME_META;
+      const meta = metaGroup[locale] || metaGroup.en;
       document.title = meta.title;
 
       const setMeta = (selector: string, attr: string, value: string) => {
@@ -173,15 +236,27 @@ export const I18nProvider: React.FC<{
       setMeta('meta[name="twitter:title"]', 'content', meta.title);
       setMeta('meta[name="twitter:description"]', 'content', meta.description);
       setMeta('meta[name="twitter:image:alt"]', 'content', meta.title);
-    }
-  }, [locale]);
 
-  // Location-based default language detection:
-  // - Serbia & region (RS, ME, BA, HR, MK, SI, XK) -> Serbian (/sr/)
-  // - Russia, Belarus, Kazakhstan (RU, BY, KZ) -> Russian (/ru/)
-  // - Everywhere else -> English (/)
+      if (isContactPage) {
+        setMeta('link[rel="alternate"][hreflang="en"]', 'href', 'https://vdigital.dev/contact/');
+        setMeta('link[rel="alternate"][hreflang="sr"]', 'href', 'https://vdigital.dev/sr/kontakt/');
+        setMeta('link[rel="alternate"][hreflang="ru"]', 'href', 'https://vdigital.dev/ru/kontakty/');
+        setMeta('link[rel="alternate"][hreflang="x-default"]', 'href', 'https://vdigital.dev/contact/');
+      } else {
+        setMeta('link[rel="alternate"][hreflang="en"]', 'href', 'https://vdigital.dev/');
+        setMeta('link[rel="alternate"][hreflang="sr"]', 'href', 'https://vdigital.dev/sr/');
+        setMeta('link[rel="alternate"][hreflang="ru"]', 'href', 'https://vdigital.dev/ru/');
+        setMeta('link[rel="alternate"][hreflang="x-default"]', 'href', 'https://vdigital.dev/');
+      }
+    }
+  }, [locale, isContactPage]);
+
+  // Location-based default language detection on root homepage (/):
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (location.pathname !== '/') {
+      return;
+    }
 
     let manualChoice: string | null = null;
     try {
@@ -190,16 +265,10 @@ export const I18nProvider: React.FC<{
       // Ignore
     }
 
-    // If user explicitly navigated directly to /sr/ or /ru/, respect that URL
-    if (location.pathname.startsWith('/sr') || location.pathname.startsWith('/ru')) {
-      return;
-    }
-
-    // If user manually clicked EN/SR/RU switcher in this session, respect their choice
     if (manualChoice === 'en' || manualChoice === 'sr' || manualChoice === 'ru') {
-      if (manualChoice === 'sr' && location.pathname === '/') {
+      if (manualChoice === 'sr') {
         navigate('/sr/', { replace: true });
-      } else if (manualChoice === 'ru' && location.pathname === '/') {
+      } else if (manualChoice === 'ru') {
         navigate('/ru/', { replace: true });
       }
       return;
@@ -218,7 +287,6 @@ export const I18nProvider: React.FC<{
       }
     };
 
-    // 1. Check cached geo result in sessionStorage
     try {
       const cachedGeo = sessionStorage.getItem(GEO_CHECKED_KEY) as SupportedLocale | null;
       if (cachedGeo === 'sr' || cachedGeo === 'ru' || cachedGeo === 'en') {
@@ -229,14 +297,12 @@ export const I18nProvider: React.FC<{
       // Ignore
     }
 
-    // 2. Instant timezone check for Serbia/Region or Russia/Belarus/Kazakhstan
     const tzLocale = detectTimezoneLocale();
     if (tzLocale === 'sr' || tzLocale === 'ru') {
       applyDetectedLocale(tzLocale);
       return;
     }
 
-    // 3. IP Geolocation lookup (GeoJS -> country.is -> ipapi.co fallback)
     let cancelled = false;
     (async () => {
       const endpoints = [
@@ -278,13 +344,23 @@ export const I18nProvider: React.FC<{
 
   const selectLocale = (nextLocale: SupportedLocale) => {
     markManualLocale(nextLocale);
-    const targetPath =
-      nextLocale === 'en' ? '/' : nextLocale === 'sr' ? '/sr/' : '/ru/';
+    const targetPath = isContactPage
+      ? getContactPath(nextLocale)
+      : getHomePath(nextLocale);
     navigate(targetPath);
   };
 
   return (
-    <I18nContext.Provider value={{ locale, t, selectLocale }}>
+    <I18nContext.Provider
+      value={{
+        locale,
+        t,
+        selectLocale,
+        homePath,
+        contactPath,
+        isContactPage,
+      }}
+    >
       {children}
     </I18nContext.Provider>
   );
