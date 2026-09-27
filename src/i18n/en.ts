@@ -170,14 +170,14 @@ export const en = {
       },
       {
         id: 'member2',
-        name: '[TEAM_2_NAME]',
+        name: 'Velimir Nikolić',
         role: 'Video & Social Media',
         text: 'Films, edits and runs content that makes people stop scrolling and start trusting you.',
         photo: '/team/member2.webp',
       },
       {
         id: 'member3',
-        name: '[TEAM_3_NAME]',
+        name: 'Vuk Stefanović',
         role: 'Sales & Outreach',
         text: 'Handles cold calling and follow-ups, turning interest into booked appointments.',
         photo: '/team/member3.webp',

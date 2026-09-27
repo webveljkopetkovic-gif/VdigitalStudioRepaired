@@ -172,14 +172,14 @@ export const sr: Translations = {
       },
       {
         id: 'member2',
-        name: '[TEAM_2_NAME]',
+        name: 'Velimir Nikolić',
         role: 'Video i Društvene mreže',
         text: 'Snima, montira i vodi sadržaj zbog kog ljudi prestaju da skroluju i počinju da vam veruju.',
         photo: '/team/member2.webp',
       },
       {
         id: 'member3',
-        name: '[TEAM_3_NAME]',
+        name: 'Vuk Stefanović',
         role: 'Prodaja i Outreach',
         text: 'Vodi hladne pozive i follow-up komunikaciju, pretvarajući interesovanje u zakazane termine.',
         photo: '/team/member3.webp',
