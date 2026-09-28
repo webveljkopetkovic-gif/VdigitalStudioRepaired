@@ -81,8 +81,21 @@ function getClientIp(req: any): string {
   return req?.socket?.remoteAddress || 'unknown';
 }
 
+const MAX_TRACKED_IPS = 5000;
+
+function pruneBuckets(now: number) {
+  for (const [ip, timestamps] of ipBuckets) {
+    if (!timestamps.some((t) => now - t < RATE_LIMIT_WINDOW_MS)) {
+      ipBuckets.delete(ip);
+    }
+  }
+}
+
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
+  if (ipBuckets.size > MAX_TRACKED_IPS) {
+    pruneBuckets(now);
+  }
   const timestamps = ipBuckets.get(ip) || [];
   const recent = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
   if (recent.length >= RATE_LIMIT_MAX_REQUESTS) {
@@ -104,6 +117,7 @@ export default async function handler(req: any, res: any) {
   if (req.method === 'GET') {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-store');
     return res.end(JSON.stringify({ ok: true, accessKey: web3FormsKey }));
   }
 
@@ -122,6 +136,7 @@ export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') {
     res.statusCode = 405;
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-store');
     return res.end(JSON.stringify({ ok: false, message: msg.methodNotAllowed }));
   }
 
@@ -135,6 +150,7 @@ export default async function handler(req: any, res: any) {
   ) {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-store');
     return res.end(JSON.stringify({ ok: true }));
   }
 
@@ -142,6 +158,7 @@ export default async function handler(req: any, res: any) {
   if (isRateLimited(clientIp)) {
     res.statusCode = 429;
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-store');
     return res.end(JSON.stringify({ ok: false, message: msg.rateLimited }));
   }
 
@@ -156,6 +173,7 @@ export default async function handler(req: any, res: any) {
   if (!name || !contact || (formType === 'inquiry' && !profession)) {
     res.statusCode = 400;
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-store');
     return res.end(JSON.stringify({ ok: false, message: msg.invalidRequired }));
   }
 
@@ -167,18 +185,21 @@ export default async function handler(req: any, res: any) {
   ) {
     res.statusCode = 400;
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-store');
     return res.end(JSON.stringify({ ok: false, message: msg.tooLong }));
   }
 
   if (!isValidEmailOrPhone(contact)) {
     res.statusCode = 400;
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-store');
     return res.end(JSON.stringify({ ok: false, message: msg.invalidContact }));
   }
 
   if (!web3FormsKey) {
     res.statusCode = 503;
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-store');
     return res.end(JSON.stringify({ ok: false, message: msg.serverNotConfigured }));
   }
 
@@ -209,15 +230,18 @@ export default async function handler(req: any, res: any) {
     if (!response.ok || (result && result.success === false)) {
       res.statusCode = 502;
       res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Cache-Control', 'no-store');
       return res.end(JSON.stringify({ ok: false, message: msg.sendError }));
     }
   } catch {
     res.statusCode = 502;
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-store');
     return res.end(JSON.stringify({ ok: false, message: msg.sendError }));
   }
 
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Cache-Control', 'no-store');
   return res.end(JSON.stringify({ ok: true }));
 }

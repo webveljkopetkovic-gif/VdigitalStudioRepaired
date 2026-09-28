@@ -188,13 +188,6 @@ ${hreflangs}
       type="font/woff2"
       crossorigin
     />
-    <link
-      rel="preload"
-      href="/fonts/GeistMono-Variable.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
 
     <!-- Open Graph Metadata -->
     <meta property="og:type" content="website" />

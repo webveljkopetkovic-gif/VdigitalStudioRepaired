@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { MotionConfig } from 'motion/react';
 import {
   CONTACT_EMAIL,
   PHONE_DISPLAY,
@@ -181,7 +182,7 @@ const PrivacyPageRoute: React.FC<{ locale: SupportedLocale }> = ({ locale }) => 
 
 export default function App() {
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <Preloader />
       <Routes>
         <Route path="/" element={<LandingPageContent locale="en" />} />
@@ -212,6 +213,6 @@ export default function App() {
 
         <Route path="*" element={<LandingPageContent locale="en" />} />
       </Routes>
-    </>
+    </MotionConfig>
   );
 }

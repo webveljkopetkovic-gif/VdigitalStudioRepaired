@@ -48,7 +48,7 @@ export const Preloader: React.FC = () => {
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#060709] select-none pointer-events-none transition-opacity duration-400 ease-out ${
+      className={`vd-preloader fixed inset-0 z-[9999] flex items-center justify-center bg-[#060709] select-none pointer-events-none transition-opacity duration-400 ease-out ${
         isExiting ? 'opacity-0' : 'opacity-100'
       }`}
     >
