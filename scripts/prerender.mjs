@@ -300,11 +300,16 @@ export async function runPrerender() {
 
     const routes = [
       { meta: ROUTE_SEO.en, outFile: path.resolve(distDir, 'index.html') },
+      { meta: ROUTE_SEO.en, outFile: path.resolve(distDir, 'en/index.html') },
       { meta: ROUTE_SEO.sr, outFile: path.resolve(distDir, 'sr/index.html') },
       { meta: ROUTE_SEO.ru, outFile: path.resolve(distDir, 'ru/index.html') },
       {
         meta: ROUTE_SEO.contactEn,
         outFile: path.resolve(distDir, 'contact/index.html'),
+      },
+      {
+        meta: ROUTE_SEO.contactEn,
+        outFile: path.resolve(distDir, 'en/contact/index.html'),
       },
       {
         meta: ROUTE_SEO.contactSr,
@@ -317,6 +322,10 @@ export async function runPrerender() {
       {
         meta: ROUTE_SEO.privacyEn,
         outFile: path.resolve(distDir, 'privacy/index.html'),
+      },
+      {
+        meta: ROUTE_SEO.privacyEn,
+        outFile: path.resolve(distDir, 'en/privacy/index.html'),
       },
       {
         meta: ROUTE_SEO.privacySr,

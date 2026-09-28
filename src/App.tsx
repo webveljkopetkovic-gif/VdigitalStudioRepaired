@@ -179,24 +179,30 @@ export default function App() {
       <Preloader />
       <Routes>
         <Route path="/" element={<LandingPageContent locale="en" />} />
-      <Route path="/sr" element={<LandingPageContent locale="sr" />} />
-      <Route path="/sr/" element={<LandingPageContent locale="sr" />} />
-      <Route path="/ru" element={<LandingPageContent locale="ru" />} />
-      <Route path="/ru/" element={<LandingPageContent locale="ru" />} />
+        <Route path="/en" element={<LandingPageContent locale="en" />} />
+        <Route path="/en/" element={<LandingPageContent locale="en" />} />
+        <Route path="/sr" element={<LandingPageContent locale="sr" />} />
+        <Route path="/sr/" element={<LandingPageContent locale="sr" />} />
+        <Route path="/ru" element={<LandingPageContent locale="ru" />} />
+        <Route path="/ru/" element={<LandingPageContent locale="ru" />} />
 
-      <Route path="/contact" element={<ContactPageRoute locale="en" />} />
-      <Route path="/contact/" element={<ContactPageRoute locale="en" />} />
-      <Route path="/sr/kontakt" element={<ContactPageRoute locale="sr" />} />
-      <Route path="/sr/kontakt/" element={<ContactPageRoute locale="sr" />} />
-      <Route path="/ru/kontakty" element={<ContactPageRoute locale="ru" />} />
-      <Route path="/ru/kontakty/" element={<ContactPageRoute locale="ru" />} />
+        <Route path="/contact" element={<ContactPageRoute locale="en" />} />
+        <Route path="/contact/" element={<ContactPageRoute locale="en" />} />
+        <Route path="/en/contact" element={<ContactPageRoute locale="en" />} />
+        <Route path="/en/contact/" element={<ContactPageRoute locale="en" />} />
+        <Route path="/sr/kontakt" element={<ContactPageRoute locale="sr" />} />
+        <Route path="/sr/kontakt/" element={<ContactPageRoute locale="sr" />} />
+        <Route path="/ru/kontakty" element={<ContactPageRoute locale="ru" />} />
+        <Route path="/ru/kontakty/" element={<ContactPageRoute locale="ru" />} />
 
-      <Route path="/privacy" element={<PrivacyPageRoute locale="en" />} />
-      <Route path="/privacy/" element={<PrivacyPageRoute locale="en" />} />
-      <Route path="/sr/privatnost" element={<PrivacyPageRoute locale="sr" />} />
-      <Route path="/sr/privatnost/" element={<PrivacyPageRoute locale="sr" />} />
-      <Route path="/ru/konfidencialnost" element={<PrivacyPageRoute locale="ru" />} />
-      <Route path="/ru/konfidencialnost/" element={<PrivacyPageRoute locale="ru" />} />
+        <Route path="/privacy" element={<PrivacyPageRoute locale="en" />} />
+        <Route path="/privacy/" element={<PrivacyPageRoute locale="en" />} />
+        <Route path="/en/privacy" element={<PrivacyPageRoute locale="en" />} />
+        <Route path="/en/privacy/" element={<PrivacyPageRoute locale="en" />} />
+        <Route path="/sr/privatnost" element={<PrivacyPageRoute locale="sr" />} />
+        <Route path="/sr/privatnost/" element={<PrivacyPageRoute locale="sr" />} />
+        <Route path="/ru/konfidencialnost" element={<PrivacyPageRoute locale="ru" />} />
+        <Route path="/ru/konfidencialnost/" element={<PrivacyPageRoute locale="ru" />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

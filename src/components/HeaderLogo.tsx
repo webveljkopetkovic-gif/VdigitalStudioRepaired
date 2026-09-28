@@ -203,6 +203,8 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
               <React.Fragment key={lang.code}>
                 <a
                   href={lang.href}
+                  hrefLang={lang.code}
+                  lang={lang.code}
                   onClick={(e) => {
                     e.preventDefault();
                     selectLocale(lang.code);

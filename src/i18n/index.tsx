@@ -14,7 +14,11 @@ const dictionaries: Record<SupportedLocale, Translations> = {
 
 export function setLangCookie(locale: SupportedLocale) {
   if (typeof document === 'undefined') return;
-  document.cookie = `lang=${locale}; Path=/; Max-Age=31536000; SameSite=Lax; Secure`;
+  const isHttps =
+    typeof window !== 'undefined' && window.location.protocol === 'https:';
+  document.cookie = `lang=${locale}; Path=/; Max-Age=31536000; SameSite=Lax${
+    isHttps ? '; Secure' : ''
+  }`;
 }
 
 const HOME_META: Record<
@@ -135,6 +139,7 @@ export function isContactRoute(pathname: string): boolean {
   const clean = pathname.replace(/\/+$/, '');
   return (
     clean === '/contact' ||
+    clean === '/en/contact' ||
     clean === '/sr/kontakt' ||
     clean === '/ru/kontakty'
   );
@@ -144,6 +149,7 @@ export function isPrivacyRoute(pathname: string): boolean {
   const clean = pathname.replace(/\/+$/, '');
   return (
     clean === '/privacy' ||
+    clean === '/en/privacy' ||
     clean === '/sr/privatnost' ||
     clean === '/ru/konfidencialnost'
   );

@@ -1,21 +1,22 @@
 /**
  * Country -> language mapping configuration.
- * - sr (/sr): Serbia and former Yugoslavia
- * - ru (/ru): Russia, Belarus, Ukraine, Kazakhstan
+ * - sr (/sr): Serbia and the ex-Yugoslav region
+ * - ru (/ru): Russia, Kazakhstan, Belarus, Kyrgyzstan, Uzbekistan and other Russian-speaking countries
  * - Every other country (or unknown) falls back to English (/)
  */
 export const COUNTRY_LANGUAGE_CONFIG = {
   sr: ['RS', 'BA', 'ME', 'HR', 'MK', 'SI', 'XK'],
-  ru: ['RU', 'BY', 'UA', 'KZ'],
+  ru: ['RU', 'KZ', 'BY', 'KG', 'UZ', 'UA', 'TJ', 'AM', 'MD', 'AZ', 'TM'],
 } as const;
 
 const BOT =
-  /bot|crawler|spider|preview|facebookexternalhit|whatsapp|slack|discord|telegram/i;
+  /bot|crawler|spider|preview|facebookexternalhit|whatsapp|slack|discord|telegram|googlebot|bingbot|yandex|baiduspider|duckduckbot/i;
 
 export const config = { matcher: '/' };
 
 export default function middleware(request: Request) {
   const url = new URL(request.url);
+  // Only the root path / may redirect; language-prefixed paths (/sr, /en, /ru) never redirect
   if (url.pathname !== '/') return;
   if (BOT.test(request.headers.get('user-agent') || '')) return;
 
@@ -41,7 +42,7 @@ export default function middleware(request: Request) {
     headers: {
       Location: `/${lang}${url.search}`,
       'Cache-Control': 'private, no-store',
-      Vary: 'Cookie',
+      Vary: 'Cookie, x-vercel-ip-country',
     },
   });
 }
