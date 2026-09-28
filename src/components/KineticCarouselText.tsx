@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export const KineticCarouselText: React.FC = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Words sequence matching design: "creative", "modern", "digital"
   const words = ['creative', 'modern', 'digital', 'creative', 'modern', 'digital'];
 
@@ -31,11 +37,13 @@ export const KineticCarouselText: React.FC = () => {
       style={{ zIndex: 5 }}
       className="absolute top-[38%] sm:top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen max-w-full pointer-events-none select-none overflow-visible"
     >
-      {/* Infinite looping marquee with 3D volumetric lettering */}
-      <div className="animate-marquee-carousel flex items-center whitespace-nowrap">
-        {renderSegment('seg-1')}
-        {renderSegment('seg-2')}
-      </div>
+      {/* Infinite looping marquee with 3D volumetric lettering (client-only after mount) */}
+      {mounted && (
+        <div className="animate-marquee-carousel flex items-center whitespace-nowrap">
+          {renderSegment('seg-1')}
+          {renderSegment('seg-2')}
+        </div>
+      )}
 
       {/* Atmospheric soft blurred color glows instead of hard 3D spheres - positioned up and down away from text */}
       

@@ -21,8 +21,7 @@ export const VIBER_URL = 'viber://chat?number=%2B381659131103';
 export const PHONE_URL = 'tel:+381659131103';
 export const PHONE_DISPLAY = '+381 65 913 1103';
 
-export const INSTAGRAM_URL =
-  'https://www.instagram.com/vdigital.dev?utm_source=qr&stkn=MXhqNmV4ZWNnd3Bnag==';
+export const INSTAGRAM_URL = 'https://www.instagram.com/vdigital.dev/';
 export const TIKTOK_URL = 'https://www.tiktok.com/@vdigital.studio';
 export const LINKEDIN_URL = 'https://www.linkedin.com/company/vdigital-dev';
 

@@ -277,8 +277,8 @@ export const ContactPage: React.FC = () => {
                   href={INSTAGRAM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Follow VDigital on Instagram"
-                  title="Follow VDigital on Instagram"
+                  aria-label="VDigital on Instagram"
+                  title="VDigital on Instagram"
                   className="group w-10 h-10 rounded-[10px] bg-[#141416] hover:bg-[#1c1d21] border border-white/[0.06] hover:border-[#b6ff00]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5"
                 >
                   <svg
@@ -302,8 +302,8 @@ export const ContactPage: React.FC = () => {
                   href={TIKTOK_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Follow VDigital on TikTok"
-                  title="Follow VDigital on TikTok"
+                  aria-label="VDigital on TikTok"
+                  title="VDigital on TikTok"
                   className="group w-10 h-10 rounded-[10px] bg-[#141416] hover:bg-[#1c1d21] border border-white/[0.06] hover:border-[#b6ff00]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5"
                 >
                   <svg
@@ -321,8 +321,8 @@ export const ContactPage: React.FC = () => {
                   href={LINKEDIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Follow VDigital on LinkedIn"
-                  title="Follow VDigital on LinkedIn"
+                  aria-label="VDigital on LinkedIn"
+                  title="VDigital on LinkedIn"
                   className="group w-10 h-10 rounded-[10px] bg-[#141416] hover:bg-[#1c1d21] border border-white/[0.06] hover:border-[#b6ff00]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5"
                 >
                   <svg
@@ -340,8 +340,8 @@ export const ContactPage: React.FC = () => {
                   href={telegramDirectHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Contact VDigital on Telegram"
-                  title="Contact VDigital on Telegram"
+                  aria-label="VDigital on Telegram"
+                  title="VDigital on Telegram"
                   className="group w-10 h-10 rounded-[10px] bg-[#141416] hover:bg-[#1c1d21] border border-white/[0.06] hover:border-[#b6ff00]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5"
                 >
                   <svg

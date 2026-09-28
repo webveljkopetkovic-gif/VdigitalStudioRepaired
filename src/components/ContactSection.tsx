@@ -256,7 +256,6 @@ export const ContactSection: React.FC = () => {
                 <form id="form" onSubmit={handleSubmit} noValidate className="space-y-5">
                   {/* Hidden Honeypot Field */}
                   <div className="hidden" aria-hidden="true">
-                    <label htmlFor="contact-botcheck">Do not fill this field</label>
                     <input
                       id="contact-botcheck"
                       type="text"

@@ -179,13 +179,16 @@ export const Footer: React.FC = () => {
               {t.footer.text}
             </p>
 
-            <div className="flex flex-col space-y-1 text-[14px] sm:text-[14.5px] text-neutral-400 leading-relaxed">
+            <div className="flex flex-wrap items-center justify-start md:justify-center text-[14px] sm:text-[14.5px] text-neutral-400 leading-relaxed">
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
                 className="hover:text-[#9ce607] transition-colors"
               >
                 {CONTACT_EMAIL}
               </a>
+              <span className="text-neutral-500 select-none whitespace-pre">
+                {' · '}
+              </span>
               <a
                 href={PHONE_URL}
                 className="hover:text-white transition-colors tabular-nums"
@@ -201,8 +204,8 @@ export const Footer: React.FC = () => {
                 href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Follow VDigital on Instagram"
-                title="Follow VDigital on Instagram"
+                aria-label="VDigital on Instagram"
+                title="VDigital on Instagram"
                 className="group w-11 h-11 rounded-[10px] bg-[#1a1c20] hover:bg-[#22262b] border border-white/[0.06] hover:border-[#9ce607]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(0,0,0,0.4)]"
               >
                 <svg
@@ -226,8 +229,8 @@ export const Footer: React.FC = () => {
                 href={TIKTOK_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Follow VDigital on TikTok"
-                title="Follow VDigital on TikTok"
+                aria-label="VDigital on TikTok"
+                title="VDigital on TikTok"
                 className="group w-11 h-11 rounded-[10px] bg-[#1a1c20] hover:bg-[#22262b] border border-white/[0.06] hover:border-[#9ce607]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(0,0,0,0.4)]"
               >
                 <svg
@@ -245,8 +248,8 @@ export const Footer: React.FC = () => {
                 href={LINKEDIN_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Follow VDigital on LinkedIn"
-                title="Follow VDigital on LinkedIn"
+                aria-label="VDigital on LinkedIn"
+                title="VDigital on LinkedIn"
                 className="group w-11 h-11 rounded-[10px] bg-[#1a1c20] hover:bg-[#22262b] border border-white/[0.06] hover:border-[#9ce607]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(0,0,0,0.4)]"
               >
                 <svg
@@ -264,8 +267,8 @@ export const Footer: React.FC = () => {
                 href={TELEGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Contact VDigital on Telegram"
-                title="Contact VDigital on Telegram"
+                aria-label="VDigital on Telegram"
+                title="VDigital on Telegram"
                 className="group w-11 h-11 rounded-[10px] bg-[#1a1c20] hover:bg-[#22262b] border border-white/[0.06] hover:border-[#9ce607]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(0,0,0,0.4)]"
               >
                 <svg
@@ -296,6 +299,8 @@ export const Footer: React.FC = () => {
                   <React.Fragment key={lang.code}>
                     <a
                       href={lang.href}
+                      hrefLang={lang.code}
+                      lang={lang.code}
                       onClick={(e) => {
                         e.preventDefault();
                         selectLocale(lang.code);
@@ -337,7 +342,6 @@ export const Footer: React.FC = () => {
               {t.footer.privacy}
             </a>
           </div>
-          <div className="text-neutral-400 text-[13px]">{t.footer.location}</div>
         </div>
 
         {/* ================================================================= */}

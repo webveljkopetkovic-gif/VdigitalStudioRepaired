@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 export const Preloader: React.FC = () => {
+  const [mounted, setMounted] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
   const [isRemoved, setIsRemoved] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const duration = 1100; // 0 -> 100% fill duration in ms
     const startTime = performance.now();
     let rafId: number;
@@ -43,7 +45,7 @@ export const Preloader: React.FC = () => {
     };
   }, []);
 
-  if (isRemoved) return null;
+  if (!mounted || isRemoved) return null;
 
   return (
     <div
@@ -56,21 +58,11 @@ export const Preloader: React.FC = () => {
         className={`relative inline-flex items-baseline font-geist text-[46px] sm:text-[64px] md:text-[76px] font-bold tracking-[-0.04em] leading-none transition-transform duration-400 ease-out ${
           isExiting ? 'scale-[1.04]' : 'scale-100'
         }`}
+        style={{
+          opacity: Math.max(0.15, progress / 100),
+        }}
       >
-        {/* Base unfilled silhouette layer */}
         <span className="inline-flex items-baseline">
-          <span className="text-[#9ce607]/15">V</span>
-          <span className="text-white/15">Digital</span>
-          <span className="text-[#9ce607]/15">.</span>
-        </span>
-
-        {/* Active brand-colored layer filling from 0% to 100% */}
-        <span
-          className="absolute inset-0 inline-flex items-baseline overflow-hidden"
-          style={{
-            clipPath: `inset(-20% ${100 - progress}% -20% -10%)`,
-          }}
-        >
           <span className="text-[#9ce607] drop-shadow-[0_0_18px_rgba(156,230,7,0.45)]">
             V
           </span>
