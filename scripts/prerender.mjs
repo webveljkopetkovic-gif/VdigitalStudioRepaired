@@ -172,6 +172,7 @@ function buildLocalizedHead(meta) {
 
       gtag('config', 'G-NNXZ378TYV');
     </script>
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="eb8zYfNi2/lC1GJjWzbHlw" async></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${meta.titleHtml}</title>
@@ -296,7 +297,8 @@ export async function runPrerender() {
   while ((match = assetRegex.exec(rawHeadInner)) !== null) {
     if (
       match[0].includes('googletagmanager.com/gtag/js') ||
-      match[0].includes('G-NNXZ378TYV')
+      match[0].includes('G-NNXZ378TYV') ||
+      match[0].includes('analytics.ahrefs.com/analytics.js')
     ) {
       continue;
     }
