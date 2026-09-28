@@ -21,6 +21,11 @@ import {
 } from '../config';
 import { useI18n } from '../i18n';
 import { ViberIcon, WhatsAppIcon } from './BrandIcons';
+import {
+  trackBookCallClick,
+  trackFormSubmit,
+  trackMessengerClick,
+} from '../utils/analytics';
 
 export const ContactSection: React.FC = () => {
   const { locale, t, contactPath, privacyPath } = useI18n();
@@ -103,6 +108,7 @@ export const ContactSection: React.FC = () => {
       const data = await response.json().catch(() => ({}));
 
       if (response.ok && data.success !== false) {
+        trackFormSubmit('contact_inquiry_form');
         setIsSubmitted(true);
         setFullName('');
         setContactInfo('');
@@ -166,6 +172,7 @@ export const ContactSection: React.FC = () => {
                 href={contactPath}
                 onClick={(e) => {
                   e.preventDefault();
+                  trackBookCallClick('contact_section');
                   navigate(contactPath);
                 }}
                 className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-[#9ce607] hover:bg-[#abf50a] text-[#0a0c09] font-geist font-bold text-[15px] tracking-[-0.01em] transition-all duration-200 cursor-pointer shadow-[0_8px_28px_rgba(156,230,7,0.35),inset_0_1px_1px_rgba(255,255,255,0.65)] hover:scale-[1.02] active:scale-[0.98]"
@@ -187,6 +194,7 @@ export const ContactSection: React.FC = () => {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackMessengerClick('whatsapp', 'contact_section')}
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#141815]/80 hover:bg-[#1b221d] border border-white/10 hover:border-[#9ce607]/50 text-[13px] font-geist text-white transition-all"
                 >
                   <WhatsAppIcon className="w-4 h-4 text-[#9ce607]" />
@@ -196,6 +204,7 @@ export const ContactSection: React.FC = () => {
                 {/* Viber */}
                 <a
                   href={VIBER_URL}
+                  onClick={() => trackMessengerClick('viber', 'contact_section')}
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#141815]/80 hover:bg-[#1b221d] border border-white/10 hover:border-[#9ce607]/50 text-[13px] font-geist text-white transition-all"
                 >
                   <ViberIcon className="w-4 h-4 text-[#9ce607]" />
@@ -207,6 +216,7 @@ export const ContactSection: React.FC = () => {
                   href={TELEGRAM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackMessengerClick('telegram', 'contact_section')}
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#141815]/80 hover:bg-[#1b221d] border border-white/10 hover:border-[#9ce607]/50 text-[13px] font-geist text-white transition-all"
                 >
                   <Send className="w-4 h-4 text-[#9ce607]" />

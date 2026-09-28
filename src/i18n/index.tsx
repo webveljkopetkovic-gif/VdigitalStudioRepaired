@@ -121,6 +121,38 @@ const PRIVACY_META: Record<
   },
 };
 
+const NOT_FOUND_META: Record<
+  SupportedLocale,
+  {
+    title: string;
+    description: string;
+    canonical: string;
+    ogLocale: string;
+  }
+> = {
+  en: {
+    title: '404 — Page Not Found | VDigital',
+    description:
+      "The page you are looking for doesn't exist or has been moved. Return to the VDigital homepage.",
+    canonical: 'https://vdigital.dev/',
+    ogLocale: 'en_US',
+  },
+  sr: {
+    title: '404 — Stranica nije pronađena | VDigital',
+    description:
+      'Stranica koju tražite ne postoji ili je premeštena. Vratite se na početnu stranicu VDigital studija.',
+    canonical: 'https://vdigital.dev/sr',
+    ogLocale: 'sr_RS',
+  },
+  ru: {
+    title: '404 — Страница не найдена | VDigital',
+    description:
+      'Запрашиваемая страница не существует или была перемещена. Вернитесь на главную страницу VDigital.',
+    canonical: 'https://vdigital.dev/ru',
+    ogLocale: 'ru_RU',
+  },
+};
+
 export function getHomePath(locale: SupportedLocale): string {
   if (locale === 'sr') return '/sr';
   if (locale === 'ru') return '/ru';
@@ -139,6 +171,11 @@ export function getPrivacyPath(locale: SupportedLocale): string {
   return '/privacy';
 }
 
+export function isHomeRoute(pathname: string): boolean {
+  const clean = pathname.replace(/\/+$/, '') || '/';
+  return clean === '/' || clean === '/en' || clean === '/sr' || clean === '/ru';
+}
+
 export function isContactRoute(pathname: string): boolean {
   const clean = pathname.replace(/\/+$/, '');
   return (
@@ -155,7 +192,9 @@ export function isPrivacyRoute(pathname: string): boolean {
     clean === '/privacy' ||
     clean === '/en/privacy' ||
     clean === '/sr/privatnost' ||
-    clean === '/ru/konfidencialnost'
+    clean === '/sr/privacy' ||
+    clean === '/ru/konfidencialnost' ||
+    clean === '/ru/privacy'
   );
 }
 
@@ -168,6 +207,7 @@ interface I18nContextValue {
   privacyPath: string;
   isContactPage: boolean;
   isPrivacyPage: boolean;
+  isNotFoundPage: boolean;
 }
 
 const I18nContext = createContext<I18nContextValue>({
@@ -179,6 +219,7 @@ const I18nContext = createContext<I18nContextValue>({
   privacyPath: '/privacy',
   isContactPage: false,
   isPrivacyPage: false,
+  isNotFoundPage: false,
 });
 
 export const I18nProvider: React.FC<{
@@ -190,6 +231,8 @@ export const I18nProvider: React.FC<{
   const t = dictionaries[locale] || en;
   const isContactPage = isContactRoute(location.pathname);
   const isPrivacyPage = isPrivacyRoute(location.pathname);
+  const isNotFoundPage =
+    !isHomeRoute(location.pathname) && !isContactPage && !isPrivacyPage;
   const homePath = getHomePath(locale);
   const contactPath = getContactPath(locale);
   const privacyPath = getPrivacyPath(locale);
@@ -197,11 +240,13 @@ export const I18nProvider: React.FC<{
   useEffect(() => {
     if (typeof document !== 'undefined') {
       document.documentElement.lang = locale;
-      const metaGroup = isPrivacyPage
-        ? PRIVACY_META
-        : isContactPage
-          ? CONTACT_META
-          : HOME_META;
+      const metaGroup = isNotFoundPage
+        ? NOT_FOUND_META
+        : isPrivacyPage
+          ? PRIVACY_META
+          : isContactPage
+            ? CONTACT_META
+            : HOME_META;
       const meta = metaGroup[locale] || metaGroup.en;
       document.title = meta.title;
 
@@ -238,7 +283,7 @@ export const I18nProvider: React.FC<{
         setMeta('link[rel="alternate"][hreflang="x-default"]', 'href', 'https://vdigital.dev/');
       }
     }
-  }, [locale, isContactPage, isPrivacyPage]);
+  }, [locale, isContactPage, isPrivacyPage, isNotFoundPage]);
 
   const selectLocale = (nextLocale: SupportedLocale) => {
     saveLanguageChoice(nextLocale);
@@ -261,6 +306,7 @@ export const I18nProvider: React.FC<{
         privacyPath,
         isContactPage,
         isPrivacyPage,
+        isNotFoundPage,
       }}
     >
       {children}

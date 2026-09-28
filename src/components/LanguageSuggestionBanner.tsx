@@ -8,6 +8,11 @@ import {
   SupportedLocale,
   useI18n,
 } from '../i18n';
+import {
+  CONSENT_UPDATED_EVENT,
+  getConsentChoice,
+  OPEN_COOKIE_BANNER_EVENT,
+} from '../utils/analytics';
 
 const SR_COUNTRIES = new Set(['RS', 'BA', 'ME', 'HR']);
 const RU_COUNTRIES = new Set(['RU', 'BY', 'KZ', 'KG', 'UZ', 'TJ', 'AM', 'AZ', 'MD']);
@@ -94,6 +99,22 @@ export const LanguageSuggestionBanner: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isEntered, setIsEntered] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [cookieBannerOpen, setCookieBannerOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    setCookieBannerOpen(!getConsentChoice());
+
+    const onConsentUpdated = () => setCookieBannerOpen(false);
+    const onCookieOpened = () => setCookieBannerOpen(true);
+
+    window.addEventListener(CONSENT_UPDATED_EVENT, onConsentUpdated);
+    window.addEventListener(OPEN_COOKIE_BANNER_EVENT, onCookieOpened);
+    return () => {
+      window.removeEventListener(CONSENT_UPDATED_EVENT, onConsentUpdated);
+      window.removeEventListener(OPEN_COOKIE_BANNER_EVENT, onCookieOpened);
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -194,7 +215,11 @@ export const LanguageSuggestionBanner: React.FC = () => {
       style={{
         paddingBottom: 'env(safe-area-inset-bottom, 0px)',
       }}
-      className={`fixed bottom-4 left-4 right-4 sm:right-auto sm:bottom-7 sm:left-7 z-50 pointer-events-none flex justify-center sm:justify-start ${
+      className={`fixed left-4 right-4 sm:right-auto sm:left-6 z-50 pointer-events-none flex justify-center sm:justify-start ${
+        cookieBannerOpen
+          ? 'bottom-36 sm:bottom-36'
+          : 'bottom-4 sm:bottom-7'
+      } ${
         prefersReducedMotion
           ? 'opacity-100 translate-y-0'
           : `transition-all duration-300 ease-out ${

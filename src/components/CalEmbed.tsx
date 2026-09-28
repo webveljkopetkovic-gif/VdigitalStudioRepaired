@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Cal, { getCalApi } from "@calcom/embed-react";
+import { trackCalBookingCompleted } from "../utils/analytics";
 
 export interface CalEmbedProps {
   onLoaded?: () => void;
@@ -61,6 +62,15 @@ export const CalEmbed: React.FC<CalEmbedProps> = ({ onLoaded, onError }) => {
           callback: () => {
             if (!cancelled) {
               onError?.();
+            }
+          },
+        });
+
+        cal("on", {
+          action: "bookingSuccessful",
+          callback: () => {
+            if (!cancelled) {
+              trackCalBookingCompleted();
             }
           },
         });

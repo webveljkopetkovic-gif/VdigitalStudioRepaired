@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Check } from 'lucide-react';
 import { useI18n } from '../i18n';
+import { trackBookCallClick } from '../utils/analytics';
 
 export const FoundingClientsSection: React.FC = () => {
   const { t, contactPath } = useI18n();
@@ -10,6 +11,7 @@ export const FoundingClientsSection: React.FC = () => {
 
   const handleApplyClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    trackBookCallClick('founding_clients');
     navigate(contactPath);
   };
 

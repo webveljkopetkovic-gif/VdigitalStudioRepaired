@@ -3,6 +3,7 @@ import { X, CheckCircle2, ArrowRight } from 'lucide-react';
 import { ServiceItem } from '../types';
 import { FORM_ENDPOINT } from '../config';
 import { useI18n } from '../i18n';
+import { trackFormSubmit } from '../utils/analytics';
 
 interface GetStartedModalProps {
   service: ServiceItem | null;
@@ -49,6 +50,7 @@ export const GetStartedModal: React.FC<GetStartedModalProps> = ({ service, onClo
       });
       const data = await response.json().catch(() => ({}));
       if (response.ok && data.ok !== false) {
+        trackFormSubmit('service_inquiry_modal');
         setSubmitted(true);
         form.reset();
       } else {

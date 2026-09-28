@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform, MotionValue } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { useI18n } from '../i18n';
+import { trackBookCallClick } from '../utils/analytics';
 
 interface StackingCardData {
   id: string;
@@ -196,6 +197,7 @@ export const StickyServicesSection: React.FC<StickyServicesSectionProps> = ({
   }));
 
   const handleBookCall = () => {
+    trackBookCallClick('services');
     if (onBookCall) {
       onBookCall();
     } else {

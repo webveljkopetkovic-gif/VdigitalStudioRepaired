@@ -277,6 +277,13 @@ export const sr: Translations = {
     location: 'Niš, Srbija · Radimo sa klijentima širom sveta',
     copyright: '© 2026 VDigital. Sva prava zadržana.',
     privacy: 'Politika privatnosti',
+    cookieSettings: 'Podešavanje kolačića',
+  },
+  cookieBanner: {
+    text: 'Koristimo kolačiće da bismo razumeli kako posetioci koriste sajt.',
+    accept: 'Prihvatam',
+    decline: 'Odbijam',
+    privacyLink: 'Politika privatnosti',
   },
   contactPage: {
     label: 'Kontakt',
@@ -314,16 +321,16 @@ export const sr: Translations = {
         body: 'VDigital, Niš, Republika Srbija. Za sva pitanja ili zahteve u vezi sa zaštitom podataka o ličnosti možete nam pisati na hello@vdigital.dev.',
       },
       {
-        heading: '2. Koje podatke prikupljamo',
-        body: 'Kada pošaljete kontakt formu ili zahtev za poziv na našem sajtu, prikupljamo samo podatke koje sami unesete: ime, email adresu ili broj telefona, čime se bavite (profesiju) i tekst poruke. Takođe čuvamo jedan „lang“ kolačić (cookie) kako bismo zapamtili izbor jezika posetioca; on ne sadrži nikakve podatke o ličnosti.',
+        heading: '2. Koje podatke prikupljamo i kolačići (Cookies)',
+        body: 'Kada pošaljete kontakt formu ili zahtev za poziv na našem sajtu, prikupljamo samo podatke koje sami unesete: ime, email adresu ili broj telefona, čime se bavite (profesiju) i tekst poruke. Takođe u vašem pregledaču čuvamo izbor jezika („vd_lang_choice“) i vaš izbor u vezi sa kolačićima („vd-consent“ = „granted“ ili „denied“). Podrazumevano, Google Analytics 4 je učitan kroz Google Consent Mode v2 sa isključenim skladištenjem analitičkih podataka. Tek ako kliknete „Prihvatam“ na baneru za kolačiće, aktiviramo Google Analytics 4 kako bismo razumeli kako posetioci koriste naš sajt (posećene stranice, klikovi na dugmad i tip uređaja). Reklamni kolačići su uvek isključeni. Svoj izbor možete promeniti u svakom trenutku klikom na „Podešavanje kolačića“ u futeru sajta.',
       },
       {
         heading: '3. Svrha obrade podataka',
-        body: 'Vaše podatke koristimo isključivo kako bismo odgovorili na vaš upit, zakazali razgovor koji ste tražili ili pripremili predlog saradnje. Ne šaljemo neželjene reklamne mejlove (spam) i nikada ne prodajemo niti ustupamo vaše podatke trećim licima.',
+        body: 'Vaše podatke koristimo isključivo kako bismo odgovorili na vaš upit, zakazali razgovor koji ste tražili, pripremili predlog saradnje i — ukoliko ste prihvatili analitičke kolačiće — analizirali zbirnu posećenost sajta. Ne šaljemo neželjene reklamne mejlove (spam) i nikada ne prodajemo niti ustupamo vaše podatke trećim licima.',
       },
       {
         heading: '4. Pravni osnov',
-        body: 'Podatke obrađujemo na osnovu vašeg pristanka prilikom slanja forme i radi preduzimanja radnji na vaš zahtev pre zaključenja ugovora, u skladu sa Zakonom o zaštiti podataka o ličnosti Republike Srbije (ZZPL) i Opštom uredbom EU o zaštiti podataka (GDPR) za posetioce iz Evropske unije.',
+        body: 'Podatke obrađujemo na osnovu vašeg pristanka (prilikom slanja forme ili prihvatanja analitičkih kolačića) i radi preduzimanja radnji na vaš zahtev pre zaključenja ugovora, u skladu sa Zakonom o zaštiti podataka o ličnosti Republike Srbije (ZZPL) i Opštom uredbom EU o zaštiti podataka (GDPR) za posetioce iz Evropske unije.',
       },
       {
         heading: '5. Rok čuvanja podataka',
@@ -331,12 +338,23 @@ export const sr: Translations = {
       },
       {
         heading: '6. Treća lica i obrađivači podataka',
-        body: 'Za potrebe hostinga sajta i prosleđivanja upita na našu email adresu, podaci se obrađuju isključivo u neophodnom obimu putem sledećih servisa: Vercel Inc. (hosting veb-sajta i izvršavanje serverske funkcije) i Web3Forms (servis za prosleđivanje poruka iz kontakt forme na hello@vdigital.dev).',
+        body: 'Za potrebe hostinga sajta, prosleđivanja upita na našu email adresu i analitike poseta (uz vašu saglasnost), podaci se obrađuju isključivo u neophodnom obimu putem sledećih servisa: Vercel Inc. (hosting veb-sajta i izvršavanje serverske funkcije), Web3Forms (servis za prosleđivanje poruka iz kontakt forme na hello@vdigital.dev) i Google Ireland Limited / Google LLC (Google Analytics 4 za anonimizovanu statistiku korišćenja sajta, isključivo ako prihvatite analitičke kolačiće).',
       },
       {
         heading: '7. Vaša prava',
-        body: 'U svakom trenutku imate pravo da zatražite uvid u svoje podatke, njihovu ispravku, brisanje ili ograničenje obrade slanjem mejla na hello@vdigital.dev. Takođe imate pravo da podnesete pritužbu Povereniku za informacije od javnog značaja i zaštitu podataka o ličnosti Republike Srbije ili nadležnom telu za zaštitu podataka u EU.',
+        body: 'U svakom trenutku imate pravo da zatražite uvid u svoje podatke, njihovu ispravku, brisanje ili ograničenje obrade slanjem mejla na hello@vdigital.dev, kao i da povučete saglasnost za analitičke kolačiće putem linka „Podešavanje kolačića“ u futeru. Takođe imate pravo da podnesete pritužbu Povereniku za informacije od javnog značaja i zaštitu podataka o ličnosti Republike Srbije ili nadležnom telu za zaštitu podataka u EU.',
       },
     ],
+  },
+  notFoundPage: {
+    code: '404',
+    label: 'Greška 404',
+    headingRegular: 'Ups...',
+    headingItalic: 'Stranica nije pronađena.',
+    description:
+      'Stranica koju tražite ne postoji, premeštena je ili je privremeno nedostupna. Vratite se na početnu stranicu.',
+    primaryCta: 'Nazad na početnu',
+    secondaryCta: 'Kontaktirajte nas',
+    imageAlt: 'Ilustracija greške 404',
   },
 };

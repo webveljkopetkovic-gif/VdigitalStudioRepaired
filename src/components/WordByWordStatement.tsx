@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Stethoscope, PhoneCall } from 'lucide-react';
 import { useI18n } from '../i18n';
+import { trackBookCallClick } from '../utils/analytics';
 
 interface WordByWordStatementProps {
   onExplore?: () => void;
@@ -62,6 +63,7 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
 
   const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    trackBookCallClick('statement');
     if (onExplore) {
       onExplore();
     } else {

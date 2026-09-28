@@ -16,6 +16,7 @@ import {
   getPrivacyPath,
   useI18n,
 } from '../i18n';
+import { openCookieSettings, trackMessengerClick } from '../utils/analytics';
 
 export const Footer: React.FC = () => {
   const {
@@ -27,9 +28,10 @@ export const Footer: React.FC = () => {
     privacyPath,
     isContactPage,
     isPrivacyPage,
+    isNotFoundPage,
   } = useI18n();
   const navigate = useNavigate();
-  const isSubPage = isContactPage || isPrivacyPage;
+  const isSubPage = isContactPage || isPrivacyPage || isNotFoundPage;
 
   const getSectionHref = (sectionId: string) =>
     isSubPage ? `${homePath}#${sectionId}` : `#${sectionId}`;
@@ -269,6 +271,7 @@ export const Footer: React.FC = () => {
                 rel="noopener noreferrer"
                 aria-label="VDigital on Telegram"
                 title="VDigital on Telegram"
+                onClick={() => trackMessengerClick('telegram', 'footer')}
                 className="group w-11 h-11 rounded-[10px] bg-[#1a1c20] hover:bg-[#22262b] border border-white/[0.06] hover:border-[#9ce607]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(0,0,0,0.4)]"
               >
                 <svg
@@ -341,6 +344,13 @@ export const Footer: React.FC = () => {
             >
               {t.footer.privacy}
             </a>
+            <button
+              type="button"
+              onClick={openCookieSettings}
+              className="text-neutral-400 hover:text-[#9ce607] transition-colors cursor-pointer underline-offset-4 hover:underline"
+            >
+              {t.footer.cookieSettings}
+            </button>
           </div>
         </div>
 

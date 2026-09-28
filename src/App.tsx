@@ -25,9 +25,11 @@ import { FAQSection } from './components/FAQSection';
 import { ContactSection } from './components/ContactSection';
 import { ContactPage } from './components/ContactPage';
 import { PrivacyPage } from './components/PrivacyPage';
+import { NotFoundPage } from './components/NotFoundPage';
 import { Footer } from './components/Footer';
 import { FloatingChatButton } from './components/FloatingChatButton';
 import { LanguageSuggestionBanner } from './components/LanguageSuggestionBanner';
+import { CookieConsentBanner } from './components/CookieConsentBanner';
 import { Preloader } from './components/Preloader';
 
 const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) => {
@@ -160,6 +162,7 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
 
         {/* Non-intrusive Language Suggestion Banner (client-side only, after hydration) */}
         <LanguageSuggestionBanner />
+        <CookieConsentBanner />
       </div>
     </I18nProvider>
   );
@@ -169,6 +172,7 @@ const ContactPageRoute: React.FC<{ locale: SupportedLocale }> = ({ locale }) => 
   <I18nProvider locale={locale}>
     <ContactPage />
     <LanguageSuggestionBanner />
+    <CookieConsentBanner />
   </I18nProvider>
 );
 
@@ -176,8 +180,28 @@ const PrivacyPageRoute: React.FC<{ locale: SupportedLocale }> = ({ locale }) => 
   <I18nProvider locale={locale}>
     <PrivacyPage />
     <LanguageSuggestionBanner />
+    <CookieConsentBanner />
   </I18nProvider>
 );
+
+const NotFoundPageRoute: React.FC = () => {
+  const location = useLocation();
+  const path = location.pathname.toLowerCase();
+  const locale: SupportedLocale =
+    path === '/sr' || path.startsWith('/sr/')
+      ? 'sr'
+      : path === '/ru' || path.startsWith('/ru/')
+        ? 'ru'
+        : 'en';
+
+  return (
+    <I18nProvider locale={locale}>
+      <NotFoundPage />
+      <LanguageSuggestionBanner />
+      <CookieConsentBanner />
+    </I18nProvider>
+  );
+};
 
 export default function App() {
   return (
@@ -207,10 +231,14 @@ export default function App() {
         <Route path="/en/privacy/" element={<PrivacyPageRoute locale="en" />} />
         <Route path="/sr/privatnost" element={<PrivacyPageRoute locale="sr" />} />
         <Route path="/sr/privatnost/" element={<PrivacyPageRoute locale="sr" />} />
+        <Route path="/sr/privacy" element={<PrivacyPageRoute locale="sr" />} />
+        <Route path="/sr/privacy/" element={<PrivacyPageRoute locale="sr" />} />
         <Route path="/ru/konfidencialnost" element={<PrivacyPageRoute locale="ru" />} />
         <Route path="/ru/konfidencialnost/" element={<PrivacyPageRoute locale="ru" />} />
+        <Route path="/ru/privacy" element={<PrivacyPageRoute locale="ru" />} />
+        <Route path="/ru/privacy/" element={<PrivacyPageRoute locale="ru" />} />
 
-        <Route path="*" element={<LandingPageContent locale="en" />} />
+        <Route path="*" element={<NotFoundPageRoute />} />
       </Routes>
     </>
   );

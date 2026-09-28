@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowDown } from 'lucide-react';
 import { useI18n } from '../i18n';
+import { trackBookCallClick } from '../utils/analytics';
 
 interface HeroCTAButtonsProps {
   onPrimaryClick?: () => void;
@@ -17,6 +18,7 @@ export const HeroCTAButtons: React.FC<HeroCTAButtonsProps> = ({
 
   const handlePrimary = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    trackBookCallClick('hero');
     if (onPrimaryClick) {
       onPrimaryClick();
     } else {

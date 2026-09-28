@@ -21,6 +21,11 @@ import { HeaderLogo } from './HeaderLogo';
 import { Footer } from './Footer';
 import { FloatingChatButton } from './FloatingChatButton';
 import { ViberIcon, WhatsAppIcon } from './BrandIcons';
+import {
+  trackBookCallClick,
+  trackCalBookingCompleted,
+  trackMessengerClick,
+} from '../utils/analytics';
 
 export const ContactPage: React.FC = () => {
   const { locale, t } = useI18n();
@@ -91,6 +96,16 @@ export const ContactPage: React.FC = () => {
       hideEventTypeDetails: false,
       layout: 'month_view',
     });
+
+    if (!Cal.ns['30min'].__vdBookingListenerAttached) {
+      Cal.ns['30min'].__vdBookingListenerAttached = true;
+      Cal.ns['30min']('on', {
+        action: 'bookingSuccessful',
+        callback: () => {
+          trackCalBookingCompleted();
+        },
+      });
+    }
   }, []);
 
   const whatsappPrefilledHref = `${WHATSAPP_URL}?text=${encodeURIComponent(
@@ -213,6 +228,7 @@ export const ContactPage: React.FC = () => {
                       href={BOOKING_URL}
                       target="_blank"
                       rel="noopener"
+                      onClick={() => trackBookCallClick('contact_page_step1')}
                       className="text-[#b6ff00] hover:underline inline-flex items-center gap-1"
                     >
                       <span>{t.contactPage.step1Booking}</span>
@@ -258,6 +274,15 @@ export const ContactPage: React.FC = () => {
                   href={item.href}
                   target={item.external ? '_blank' : undefined}
                   rel={item.external ? 'noopener noreferrer' : undefined}
+                  onClick={() => {
+                    if (
+                      item.key === 'whatsapp' ||
+                      item.key === 'viber' ||
+                      item.key === 'telegram'
+                    ) {
+                      trackMessengerClick(item.key, 'contact_page_links');
+                    }
+                  }}
                   className="group inline-flex items-center gap-2.5 text-[14px] text-neutral-200 hover:text-[#b6ff00] transition-colors w-fit"
                 >
                   {item.icon}
@@ -342,6 +367,7 @@ export const ContactPage: React.FC = () => {
                   rel="noopener noreferrer"
                   aria-label="VDigital on Telegram"
                   title="VDigital on Telegram"
+                  onClick={() => trackMessengerClick('telegram', 'contact_page_socials')}
                   className="group w-10 h-10 rounded-[10px] bg-[#141416] hover:bg-[#1c1d21] border border-white/[0.06] hover:border-[#b6ff00]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5"
                 >
                   <svg
@@ -385,6 +411,7 @@ export const ContactPage: React.FC = () => {
                   href={BOOKING_URL}
                   target="_blank"
                   rel="noopener"
+                  onClick={() => trackBookCallClick('contact_page_header')}
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-[8px] bg-[#b6ff00] hover:bg-[#c6ff26] text-[#0a0a0a] font-semibold text-[13px] transition-colors"
                 >
                   <span>{t.contactPage.step1Booking}</span>
@@ -409,6 +436,7 @@ export const ContactPage: React.FC = () => {
                   href={whatsappPrefilledHref}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackMessengerClick('whatsapp', 'contact_page_card')}
                   className="h-10 px-4 rounded-[8px] bg-[#1d1e22] hover:bg-[#25272c] border border-white/[0.08] hover:border-[#b6ff00]/50 text-white font-medium text-[13px] flex items-center justify-center gap-2 transition-all duration-200"
                 >
                   <WhatsAppIcon className="w-4 h-4 text-[#b6ff00] shrink-0" />
@@ -418,6 +446,7 @@ export const ContactPage: React.FC = () => {
                 {/* Viber Button */}
                 <a
                   href={VIBER_URL}
+                  onClick={() => trackMessengerClick('viber', 'contact_page_card')}
                   className="h-10 px-4 rounded-[8px] bg-[#1d1e22] hover:bg-[#25272c] border border-white/[0.08] hover:border-[#b6ff00]/50 text-white font-medium text-[13px] flex items-center justify-center gap-2 transition-all duration-200"
                 >
                   <ViberIcon className="w-4 h-4 text-[#b6ff00] shrink-0" />

@@ -7,6 +7,7 @@ import {
   getPrivacyPath,
   useI18n,
 } from '../i18n';
+import { trackBookCallClick } from '../utils/analytics';
 
 interface HeaderNavbarProps {
   onBookCall?: () => void;
@@ -21,9 +22,10 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
     contactPath,
     isContactPage,
     isPrivacyPage,
+    isNotFoundPage,
   } = useI18n();
   const navigate = useNavigate();
-  const isSubPage = isContactPage || isPrivacyPage;
+  const isSubPage = isContactPage || isPrivacyPage || isNotFoundPage;
   const [activeTab, setActiveTab] = useState<string>(isContactPage ? 'contact' : '');
 
   const navItems = [
@@ -231,6 +233,7 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
             id="btn-hire-agency"
             onClick={(e) => {
               e.preventDefault();
+              trackBookCallClick('navbar');
               if (onBookCall) {
                 onBookCall();
               } else {

@@ -285,6 +285,13 @@ export const en = {
     location: 'Niš, Serbia · Working with clients worldwide',
     copyright: '© 2026 VDigital. All rights reserved.',
     privacy: 'Privacy Policy',
+    cookieSettings: 'Cookie settings',
+  },
+  cookieBanner: {
+    text: 'We use cookies to understand how visitors use our site.',
+    accept: 'Accept',
+    decline: 'Decline',
+    privacyLink: 'Privacy Policy',
   },
   contactPage: {
     label: 'Contact',
@@ -322,16 +329,16 @@ export const en = {
         body: 'VDigital, based in Niš, Republic of Serbia. For any privacy-related questions or requests, you can reach us directly at hello@vdigital.dev.',
       },
       {
-        heading: '2. What data we collect',
-        body: 'When you submit a contact or callback form on our website, we collect only the information you choose to provide: your name, your email address or phone number, your profession or area of work, and your message. We also store a single "lang" cookie to remember the visitor\'s language choice; it contains no personal data.',
+        heading: '2. What data we collect & cookies',
+        body: 'When you submit a contact or callback form on our website, we collect only the information you choose to provide: your name, your email address or phone number, your profession or area of work, and your message. We also store local preferences in your browser to remember your language choice ("vd_lang_choice") and your cookie consent choice ("vd-consent" = "granted" or "denied"). By default, Google Analytics 4 is loaded with Google Consent Mode v2 set to denied. Only if you click "Accept" on the cookie banner do we enable Google Analytics 4 cookies to understand how visitors use our site (such as pages visited, button clicks, and device type). Advertising cookies and ad personalization remain disabled at all times. You can change your choice at any time using the "Cookie settings" link in the footer.',
       },
       {
         heading: '3. Purpose of processing',
-        body: 'We use your information exclusively to reply to your inquiry, schedule a call you requested, or prepare a proposal for potential collaboration. We do not send unsolicited marketing newsletters and we never sell or rent your data.',
+        body: 'We use your information exclusively to reply to your inquiry, schedule a call you requested, prepare a proposal for potential collaboration, and—if you accept analytics cookies—measure aggregate website usage. We do not send unsolicited marketing newsletters and we never sell or rent your data.',
       },
       {
         heading: '4. Legal basis',
-        body: 'We process your data based on your consent when submitting the form and to take steps at your request prior to entering into a contract, in accordance with the Serbian Law on Personal Data Protection (ZZPL) and the EU General Data Protection Regulation (GDPR) for visitors from the European Economic Area.',
+        body: 'We process your data based on your consent (when submitting a form or accepting analytics cookies) and to take steps at your request prior to entering into a contract, in accordance with the Serbian Law on Personal Data Protection (ZZPL) and the EU General Data Protection Regulation (GDPR) for visitors from the European Economic Area.',
       },
       {
         heading: '5. Data retention period',
@@ -339,13 +346,24 @@ export const en = {
       },
       {
         heading: '6. Third-party processors',
-        body: 'To host this website and deliver your form submission to our inbox, data is processed strictly as needed by: Vercel Inc. (website hosting and serverless API execution) and Web3Forms (form delivery service that forwards your inquiry to hello@vdigital.dev).',
+        body: 'To host this website, deliver your form submission to our inbox, and analyze website traffic (when consented), data is processed strictly as needed by: Vercel Inc. (website hosting and serverless API execution), Web3Forms (form delivery service that forwards your inquiry to hello@vdigital.dev), and Google Ireland Limited / Google LLC (Google Analytics 4 for anonymized website usage statistics, activated only if you accept analytics cookies).',
       },
       {
         heading: '7. Your rights',
-        body: 'You have the right to request access to your personal data, correction of inaccurate data, deletion of your data, or restriction of processing at any time by emailing hello@vdigital.dev. You also have the right to lodge a complaint with the Serbian Commissioner for Information of Public Importance and Personal Data Protection (Poverenik za informacije od javnog značaja i zaštitu podataka o ličnosti) or with your local data protection authority in the EU.',
+        body: 'You have the right to request access to your personal data, correction of inaccurate data, deletion of your data, or restriction of processing at any time by emailing hello@vdigital.dev, and you can withdraw analytics cookie consent at any time via the "Cookie settings" link in the footer. You also have the right to lodge a complaint with the Serbian Commissioner for Information of Public Importance and Personal Data Protection (Poverenik za informacije od javnog značaja i zaštitu podataka o ličnosti) or with your local data protection authority in the EU.',
       },
     ],
+  },
+  notFoundPage: {
+    code: '404',
+    label: 'Error 404',
+    headingRegular: 'Ooops...',
+    headingItalic: 'Page not found.',
+    description:
+      "Sorry, the page you are looking for doesn't exist, has been moved, or is temporarily unavailable. Let's get you back on track.",
+    primaryCta: 'Back to homepage',
+    secondaryCta: 'Contact us',
+    imageAlt: '404 error illustration',
   },
 };
 
