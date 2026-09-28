@@ -175,6 +175,7 @@ function buildLocalizedHead(meta) {
     <script src="https://analytics.ahrefs.com/analytics.js" data-key="eb8zYfNi2/lC1GJjWzbHlw" async></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="ahrefs-site-verification" content="3fc2f972861e0a609e2ed3cc2936b37fcf31ba9d0fa888f996c8d9ceb6717131" />
     <title>${meta.titleHtml}</title>
     <meta
       name="description"
