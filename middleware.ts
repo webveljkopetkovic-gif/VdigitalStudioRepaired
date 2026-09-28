@@ -30,7 +30,7 @@ export default function middleware(request: Request): Response {
   if (/^[A-Z]{2}$/.test(country)) {
     headers.set(
       'Set-Cookie',
-      `vd_country=${country}; Path=/; Max-Age=86400; SameSite=Lax`
+      `vd_country=${country}; Path=/; Max-Age=86400; SameSite=Lax; Secure`
     );
   }
 

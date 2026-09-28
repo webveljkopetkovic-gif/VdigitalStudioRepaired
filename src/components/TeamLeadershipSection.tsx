@@ -16,8 +16,27 @@ interface TeamPhotoCardProps {
   photo: string;
 }
 
+// Serve Cloudinary photos as WebP/AVIF at display size instead of the full original JPG.
+function optimizeCloudinaryUrl(url: string): string {
+  if (!url.includes('res.cloudinary.com') || !url.includes('/image/upload/')) return url;
+  if (url.includes('/image/upload/f_auto')) return url;
+  return url.replace('/image/upload/', '/image/upload/f_auto,q_auto,w_600,c_limit/');
+}
+
 const TeamPhotoCard: React.FC<TeamPhotoCardProps> = ({ name, role, photo }) => {
   const [imageError, setImageError] = useState(false);
+  const optimizedPhoto = optimizeCloudinaryUrl(photo);
+  const [photoSrc, setPhotoSrc] = useState(optimizedPhoto);
+
+  const handlePhotoError = () => {
+    // If the optimized version fails for any reason, retry the original once,
+    // then fall back to initials.
+    if (photoSrc !== photo) {
+      setPhotoSrc(photo);
+    } else {
+      setImageError(true);
+    }
+  };
   const initials = getInitials(name);
 
   return (
@@ -49,13 +68,13 @@ const TeamPhotoCard: React.FC<TeamPhotoCardProps> = ({ name, role, photo }) => {
         {/* Team Member Photo */}
         {!imageError && (
           <img
-            src={photo}
+            src={photoSrc}
             alt={`${name} — ${role}`}
             width={512}
             height={512}
             loading="lazy"
             decoding="async"
-            onError={() => setImageError(true)}
+            onError={handlePhotoError}
             className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-105"
           />
         )}
