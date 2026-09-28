@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import {
   CONTACT_EMAIL,
   PHONE_DISPLAY,
@@ -27,6 +27,7 @@ import { ContactPage } from './components/ContactPage';
 import { PrivacyPage } from './components/PrivacyPage';
 import { Footer } from './components/Footer';
 import { FloatingChatButton } from './components/FloatingChatButton';
+import { LanguageSuggestionBanner } from './components/LanguageSuggestionBanner';
 import { Preloader } from './components/Preloader';
 
 const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) => {
@@ -156,6 +157,9 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
 
         {/* Floating Chat Button (WhatsApp on / and /sr, Telegram on /ru) */}
         <FloatingChatButton />
+
+        {/* Non-intrusive Language Suggestion Banner (client-side only, after hydration) */}
+        <LanguageSuggestionBanner />
       </div>
     </I18nProvider>
   );
@@ -164,12 +168,14 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
 const ContactPageRoute: React.FC<{ locale: SupportedLocale }> = ({ locale }) => (
   <I18nProvider locale={locale}>
     <ContactPage />
+    <LanguageSuggestionBanner />
   </I18nProvider>
 );
 
 const PrivacyPageRoute: React.FC<{ locale: SupportedLocale }> = ({ locale }) => (
   <I18nProvider locale={locale}>
     <PrivacyPage />
+    <LanguageSuggestionBanner />
   </I18nProvider>
 );
 
@@ -204,7 +210,7 @@ export default function App() {
         <Route path="/ru/konfidencialnost" element={<PrivacyPageRoute locale="ru" />} />
         <Route path="/ru/konfidencialnost/" element={<PrivacyPageRoute locale="ru" />} />
 
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<LandingPageContent locale="en" />} />
       </Routes>
     </>
   );

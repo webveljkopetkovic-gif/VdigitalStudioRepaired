@@ -12,13 +12,17 @@ const dictionaries: Record<SupportedLocale, Translations> = {
   ru,
 };
 
-export function setLangCookie(locale: SupportedLocale) {
-  if (typeof document === 'undefined') return;
-  const isHttps =
-    typeof window !== 'undefined' && window.location.protocol === 'https:';
-  document.cookie = `lang=${locale}; Path=/; Max-Age=31536000; SameSite=Lax${
-    isHttps ? '; Secure' : ''
-  }`;
+export const LANG_CHOICE_STORAGE_KEY = 'vd_lang_choice';
+export const LANG_BANNER_DISMISSED_KEY = 'vd_lang_banner_dismissed';
+
+export function saveLanguageChoice(locale: SupportedLocale) {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem(LANG_CHOICE_STORAGE_KEY, locale);
+    }
+  } catch {
+    // Ignore localStorage errors (e.g. private browsing or restricted storage)
+  }
 }
 
 const HOME_META: Record<
@@ -237,7 +241,7 @@ export const I18nProvider: React.FC<{
   }, [locale, isContactPage, isPrivacyPage]);
 
   const selectLocale = (nextLocale: SupportedLocale) => {
-    setLangCookie(nextLocale);
+    saveLanguageChoice(nextLocale);
     const targetPath = isPrivacyPage
       ? getPrivacyPath(nextLocale)
       : isContactPage

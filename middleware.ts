@@ -1,48 +1,41 @@
 /**
- * Country -> language mapping configuration.
- * - sr (/sr): Serbia and the ex-Yugoslav region
- * - ru (/ru): Russia, Kazakhstan, Belarus, Kyrgyzstan, Uzbekistan and other Russian-speaking countries
- * - Every other country (or unknown) falls back to English (/)
+ * Lightweight Vercel Edge Middleware that reads the `x-vercel-ip-country` header
+ * and sets a `vd_country` cookie (e.g. `RS`) for the client-side language suggestion banner.
+ *
+ * It never redirects and never modifies the response body.
  */
-export const COUNTRY_LANGUAGE_CONFIG = {
-  sr: ['RS', 'BA', 'ME', 'HR', 'MK', 'SI', 'XK'],
-  ru: ['RU', 'KZ', 'BY', 'KG', 'UZ', 'UA', 'TJ', 'AM', 'MD', 'AZ', 'TM'],
-} as const;
+export const config = {
+  matcher: [
+    '/',
+    '/sr',
+    '/ru',
+    '/contact',
+    '/sr/kontakt',
+    '/ru/kontakty',
+    '/privacy',
+    '/sr/privatnost',
+    '/ru/konfidencialnost',
+  ],
+};
 
-const BOT =
-  /bot|crawler|spider|preview|facebookexternalhit|whatsapp|slack|discord|telegram|googlebot|bingbot|yandex|baiduspider|duckduckbot/i;
+export default function middleware(request: Request): Response {
+  const country = (request.headers.get('x-vercel-ip-country') || '')
+    .trim()
+    .toUpperCase();
 
-export const config = { matcher: '/' };
+  const headers = new Headers({
+    'x-middleware-next': '1',
+  });
 
-export default function middleware(request: Request) {
-  const url = new URL(request.url);
-  // Only the root path / may redirect; language-prefixed paths (/sr, /en, /ru) never redirect
-  if (url.pathname !== '/') return;
-  if (BOT.test(request.headers.get('user-agent') || '')) return;
-
-  const cookie = request.headers.get('cookie') || '';
-  const chosen = cookie.match(/(?:^|;\s*)lang=(en|sr|ru)\b/)?.[1] as
-    | 'en'
-    | 'sr'
-    | 'ru'
-    | undefined;
-  const country = (request.headers.get('x-vercel-ip-country') || '').toUpperCase();
-  const lang =
-    chosen ??
-    ((COUNTRY_LANGUAGE_CONFIG.sr as readonly string[]).includes(country)
-      ? 'sr'
-      : (COUNTRY_LANGUAGE_CONFIG.ru as readonly string[]).includes(country)
-        ? 'ru'
-        : 'en');
-
-  if (lang === 'en') return;
+  if (/^[A-Z]{2}$/.test(country)) {
+    headers.set(
+      'Set-Cookie',
+      `vd_country=${country}; Path=/; Max-Age=86400; SameSite=Lax`
+    );
+  }
 
   return new Response(null, {
-    status: 302,
-    headers: {
-      Location: `/${lang}${url.search}`,
-      'Cache-Control': 'private, no-store',
-      Vary: 'Cookie, x-vercel-ip-country',
-    },
+    status: 200,
+    headers,
   });
 }
