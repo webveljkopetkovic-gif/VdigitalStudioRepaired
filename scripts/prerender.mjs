@@ -147,10 +147,9 @@ function buildLocalizedHead(meta) {
       : '';
 
   return `<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Google Consent Mode v2 & Google Analytics 4 -->
-    <script data-gtag="consent-default">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NNXZ378TYV"></script>
+    <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('consent', 'default', {
@@ -169,14 +168,12 @@ function buildLocalizedHead(meta) {
           });
         }
       } catch (e) {}
-    </script>
-    <script data-gtag="loader" async src="https://www.googletagmanager.com/gtag/js?id=G-NNXZ378TYV"></script>
-    <script data-gtag="config">
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+
       gtag('config', 'G-NNXZ378TYV');
     </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${meta.titleHtml}</title>
     <meta
       name="description"
@@ -294,9 +291,15 @@ export async function runPrerender() {
   const rawHeadInner = headMatch ? headMatch[1] : '';
   const viteAssetTags = [];
   const assetRegex =
-    /<(?:script(?![^>]*type=["']application\/ld\+json["'])(?![^>]*data-gtag)[^>]*>[\s\S]*?<\/script>|style[^>]*>[\s\S]*?<\/style>|link[^>]*\brel=["'](?:stylesheet|modulepreload|preconnect)["'][^>]*>)/gi;
+    /<(?:script(?![^>]*type=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>|style[^>]*>[\s\S]*?<\/style>|link[^>]*\brel=["'](?:stylesheet|modulepreload|preconnect)["'][^>]*>)/gi;
   let match;
   while ((match = assetRegex.exec(rawHeadInner)) !== null) {
+    if (
+      match[0].includes('googletagmanager.com/gtag/js') ||
+      match[0].includes('G-NNXZ378TYV')
+    ) {
+      continue;
+    }
     viteAssetTags.push(`    ${match[0]}`);
   }
 
