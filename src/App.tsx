@@ -31,6 +31,7 @@ import { FloatingChatButton } from './components/FloatingChatButton';
 import { LanguageSuggestionBanner } from './components/LanguageSuggestionBanner';
 import { CookieConsentBanner } from './components/CookieConsentBanner';
 import { Preloader } from './components/Preloader';
+import { useYandexMetrica } from './hooks/useYandexMetrica';
 
 const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) => {
   const navigate = useNavigate();
@@ -204,6 +205,8 @@ const NotFoundPageRoute: React.FC = () => {
 };
 
 export default function App() {
+  useYandexMetrica();
+
   return (
     <>
       <Preloader />

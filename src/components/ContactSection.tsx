@@ -109,6 +109,7 @@ export const ContactSection: React.FC = () => {
 
       if (response.ok && data.success !== false) {
         trackFormSubmit('contact_inquiry_form');
+        window.ym?.(113158297, "reachGoal", "quote_request");
         setIsSubmitted(true);
         setFullName('');
         setContactInfo('');
