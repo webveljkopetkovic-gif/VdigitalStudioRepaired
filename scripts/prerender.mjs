@@ -176,6 +176,7 @@ function buildLocalizedHead(meta) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="ahrefs-site-verification" content="3fc2f972861e0a609e2ed3cc2936b37fcf31ba9d0fa888f996c8d9ceb6717131" />
+    <meta name="yandex-verification" content="ef0ec9a99331b0d2" />
     <title>${meta.titleHtml}</title>
     <meta
       name="description"
