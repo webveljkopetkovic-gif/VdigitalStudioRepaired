@@ -173,6 +173,18 @@ function buildLocalizedHead(meta) {
       gtag('config', 'G-NNXZ378TYV');
     </script>
     <script src="https://analytics.ahrefs.com/analytics.js" data-key="eb8zYfNi2/lC1GJjWzbHlw" async></script>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=113158297', 'ym');
+
+        ym(113158297, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <!-- /Yandex.Metrika counter -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="ahrefs-site-verification" content="3fc2f972861e0a609e2ed3cc2936b37fcf31ba9d0fa888f996c8d9ceb6717131" />
@@ -300,7 +312,8 @@ export async function runPrerender() {
     if (
       match[0].includes('googletagmanager.com/gtag/js') ||
       match[0].includes('G-NNXZ378TYV') ||
-      match[0].includes('analytics.ahrefs.com/analytics.js')
+      match[0].includes('analytics.ahrefs.com/analytics.js') ||
+      match[0].includes('mc.yandex.ru/metrika/tag.js')
     ) {
       continue;
     }
