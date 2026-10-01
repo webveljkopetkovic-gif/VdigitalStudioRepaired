@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 export const Preloader: React.FC = () => {
-  const [mounted, setMounted] = useState(false);
+  const isSSR = typeof window === 'undefined';
   const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
   const [isRemoved, setIsRemoved] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     const duration = 1100; // 0 -> 100% fill duration in ms
     const startTime = performance.now();
     let rafId: number;
@@ -45,7 +44,7 @@ export const Preloader: React.FC = () => {
     };
   }, []);
 
-  if (!mounted || isRemoved) return null;
+  if (isSSR || isRemoved) return null;
 
   return (
     <div

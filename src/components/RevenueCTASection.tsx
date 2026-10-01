@@ -10,6 +10,7 @@ const VERTICAL_SLATS = [
 export const RevenueCTASection: React.FC = () => {
   const { t } = useI18n();
   const shouldReduceMotion = useReducedMotion();
+  const isSSR = typeof window === 'undefined';
 
   const cards = [
     {
@@ -206,8 +207,8 @@ export const RevenueCTASection: React.FC = () => {
       <div className="relative z-10 w-full max-w-[1140px] mx-auto">
         {/* Headline */}
         <motion.h2
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={isSSR ? false : { opacity: 0, y: 18 }}
+          whileInView={isSSR ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           className="font-geist font-normal text-[30px] sm:text-[42px] md:text-[50px] lg:text-[56px] leading-[1.16] tracking-[-0.025em] text-white max-w-[860px] mb-12 sm:mb-14 lg:mb-16"
@@ -224,8 +225,8 @@ export const RevenueCTASection: React.FC = () => {
           {cards.map((card, index) => (
             <motion.div
               key={card.id}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={isSSR ? false : { opacity: 0, y: 18 }}
+              whileInView={isSSR ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{
                 duration: 0.5,
@@ -258,8 +259,8 @@ export const RevenueCTASection: React.FC = () => {
 
         {/* Bottom Line */}
         <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={isSSR ? false : { opacity: 0, y: 14 }}
+          whileInView={isSSR ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
           className="mt-10 sm:mt-12 font-geist text-[14px] sm:text-[15.5px] leading-[1.65] text-[#d6dfd0] max-w-3xl"

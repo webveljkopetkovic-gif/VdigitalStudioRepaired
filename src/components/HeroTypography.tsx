@@ -9,6 +9,7 @@ interface HeroTypographyProps {
 
 export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'curated' }) => {
   const { t } = useI18n();
+  const isSSR = typeof window === 'undefined';
 
   const isAllEditorial = pairingMode === 'editorial';
   const isAllGeist = pairingMode === 'geist';
@@ -61,8 +62,8 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
             {/* Line 1: White */}
             <span className="block overflow-hidden py-1 -my-1">
               <motion.span
-                initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                initial={isSSR ? false : { opacity: 0, y: 40, filter: 'blur(8px)' }}
+                animate={isSSR ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
                 transition={{ duration: 0.85, delay: 0.1, ease: smoothEase }}
                 className={`block text-white ${topLinesClass}`}
               >
@@ -73,8 +74,8 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
             {/* Line 2: White */}
             <span className="block overflow-hidden py-1 -my-1 mt-0.5">
               <motion.span
-                initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                initial={isSSR ? false : { opacity: 0, y: 40, filter: 'blur(8px)' }}
+                animate={isSSR ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
                 transition={{ duration: 0.85, delay: 0.22, ease: smoothEase }}
                 className={`block text-white ${topLinesClass}`}
               >
@@ -85,8 +86,8 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
             {/* Line 3: Green Italic */}
             <span className="block overflow-hidden py-1.5 -my-1.5 mt-1">
               <motion.span
-                initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                initial={isSSR ? false : { opacity: 0, y: 40, filter: 'blur(8px)' }}
+                animate={isSSR ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
                 transition={{ duration: 0.9, delay: 0.36, ease: smoothEase }}
                 className={`block text-[#a8f300] ${bottomLinesClass}`}
                 style={{
@@ -101,8 +102,8 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
             {/* Line 4: Green Italic */}
             <span className="block overflow-hidden py-1.5 -my-1.5">
               <motion.span
-                initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                initial={isSSR ? false : { opacity: 0, y: 40, filter: 'blur(8px)' }}
+                animate={isSSR ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
                 transition={{ duration: 0.9, delay: 0.48, ease: smoothEase }}
                 className={`block text-[#a8f300] ${bottomLinesClass}`}
                 style={{
@@ -118,8 +119,8 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
 
         {/* Left paragraph (single element in DOM, responsive across mobile/tablet/desktop) */}
         <motion.div
-          initial={{ opacity: 0, x: -24, filter: 'blur(6px)' }}
-          animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+          initial={isSSR ? false : { opacity: 0, x: -24, filter: 'blur(6px)' }}
+          animate={isSSR ? undefined : { opacity: 1, x: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.9, delay: 0.55, ease: smoothEase }}
           className="order-2 xl:order-1 mt-6 sm:mt-7 xl:mt-0 px-4 sm:px-0 sm:pl-4 xl:pl-0 xl:w-60 text-center sm:text-left xl:self-end xl:-mb-8 2xl:-mb-10 relative z-30"
         >
@@ -136,8 +137,8 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
 
         {/* Right paragraph (single element in DOM, responsive across mobile/tablet/desktop) */}
         <motion.div
-          initial={{ opacity: 0, x: 24, filter: 'blur(6px)' }}
-          animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+          initial={isSSR ? false : { opacity: 0, x: 24, filter: 'blur(6px)' }}
+          animate={isSSR ? undefined : { opacity: 1, x: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.9, delay: 0.65, ease: smoothEase }}
           className="order-3 xl:order-3 mt-0 sm:mt-7 xl:mt-0 px-4 sm:px-0 sm:pr-4 xl:pr-0 xl:w-60 text-center sm:text-right xl:self-end xl:-mb-8 2xl:-mb-10 relative z-30"
         >

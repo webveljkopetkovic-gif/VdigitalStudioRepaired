@@ -146,7 +146,14 @@ function buildLocalizedHead(meta) {
     </script>`
       : '';
 
+  const ogLocaleAlternates = ['en_US', 'sr_RS', 'ru_RU']
+    .filter((loc) => loc !== meta.ogLocale)
+    .map((loc) => `    <meta property="og:locale:alternate" content="${loc}" />`)
+    .join('\n');
+
   return `<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Google Consent Mode v2 (strictly local default — zero network requests before consent) -->
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -192,8 +199,6 @@ function buildLocalizedHead(meta) {
         ym(113158297, 'init', {defer:true, ssr:true, webvisor:false, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
     </script>
     <!-- /Yandex.Metrika counter -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="ahrefs-site-verification" content="3fc2f972861e0a609e2ed3cc2936b37fcf31ba9d0fa888f996c8d9ceb6717131" />
     <meta name="yandex-verification" content="ef0ec9a99331b0d2" />
     <title>${meta.titleHtml}</title>
@@ -247,6 +252,7 @@ ${hreflangs}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="VDigital" />
     <meta property="og:locale" content="${meta.ogLocale}" />
+${ogLocaleAlternates}
     <meta property="og:url" content="${meta.canonical}" />
     <meta
       property="og:title"

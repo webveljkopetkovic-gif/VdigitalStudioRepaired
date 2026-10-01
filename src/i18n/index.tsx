@@ -286,6 +286,17 @@ export const I18nProvider: React.FC<{
       setMeta('meta[property="og:description"]', 'content', meta.description);
       setMeta('meta[property="og:url"]', 'content', meta.canonical);
       setMeta('meta[property="og:locale"]', 'content', meta.ogLocale);
+      const alternateOgLocales = ['en_US', 'sr_RS', 'ru_RU'].filter(
+        (loc) => loc !== meta.ogLocale
+      );
+      const altLocaleEls = document.querySelectorAll(
+        'meta[property="og:locale:alternate"]'
+      );
+      alternateOgLocales.forEach((altLoc, idx) => {
+        if (altLocaleEls[idx]) {
+          altLocaleEls[idx].setAttribute('content', altLoc);
+        }
+      });
       setMeta('meta[property="og:image:alt"]', 'content', meta.title);
       setMeta('meta[name="twitter:title"]', 'content', meta.title);
       setMeta('meta[name="twitter:description"]', 'content', meta.description);

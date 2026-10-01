@@ -30,6 +30,7 @@ import {
 export const ContactSection: React.FC = () => {
   const { locale, t, contactPath, privacyPath } = useI18n();
   const navigate = useNavigate();
+  const isSSR = typeof window === 'undefined';
 
   const [fullName, setFullName] = useState('');
   const [contactInfo, setContactInfo] = useState('');
@@ -146,8 +147,8 @@ export const ContactSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-start">
           {/* Left Column: Heading + Book a Call Button + Direct Contact Channels */}
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={isSSR ? false : { opacity: 0, y: 18 }}
+            whileInView={isSSR ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55 }}
             className="lg:col-span-5 flex flex-col items-start"
@@ -247,8 +248,8 @@ export const ContactSection: React.FC = () => {
 
           {/* Right Column: Frosted Glass Contact Form */}
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={isSSR ? false : { opacity: 0, y: 18 }}
+            whileInView={isSSR ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55, delay: 0.1 }}
             className="lg:col-span-7 w-full"

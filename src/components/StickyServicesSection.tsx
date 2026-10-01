@@ -86,15 +86,21 @@ const StackingCardItem: React.FC<StackingCardItemProps> = ({
     [nextStart, 1],
     [1, 1 - (total - 1 - index) * 0.12]
   );
+  const brightnessFilter = useTransform(brightness, (b) => `brightness(${b})`);
+  const isSSR = typeof window === 'undefined';
 
   const topOffset = index * 24;
 
   return (
     <motion.div
       style={{
-        y,
-        scale,
-        filter: useTransform(brightness, (b) => `brightness(${b})`),
+        ...(isSSR
+          ? {}
+          : {
+              y,
+              scale,
+              filter: brightnessFilter,
+            }),
         top: `${topOffset}px`,
         zIndex: index + 10,
         background: service.bgGradient,

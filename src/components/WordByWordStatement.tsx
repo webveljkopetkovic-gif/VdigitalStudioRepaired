@@ -14,6 +14,7 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
 }) => {
   const { t, contactPath } = useI18n();
   const navigate = useNavigate();
+  const isSSR = typeof window === 'undefined';
 
   const containerVariants = {
     hidden: { opacity: 1 },
@@ -61,6 +62,9 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
     },
   };
 
+  const activeWordVariants = isSSR ? undefined : wordVariants;
+  const activeBadgeVariants = isSSR ? undefined : badgeVariants;
+
   const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     trackBookCallClick('statement');
@@ -90,9 +94,9 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
       <div className="relative z-10 w-full max-w-7xl 2xl:max-w-[1480px] mx-auto flex flex-col items-center">
         {/* The Exact Animated Statement with 4 Glowing Icon Chips */}
         <motion.h2
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
+          variants={isSSR ? undefined : containerVariants}
+          initial={isSSR ? false : 'hidden'}
+          whileInView={isSSR ? undefined : 'visible'}
           viewport={{ once: false, amount: 0.3 }}
           aria-label={t.statement.text}
           className="text-center font-geist font-medium text-[26px] sm:text-[38px] md:text-[46px] lg:text-[50px] xl:text-[56px] 2xl:text-[62px] leading-[1.28] sm:leading-[1.3] tracking-[-0.02em] text-white w-full max-w-6xl xl:max-w-7xl 2xl:max-w-[1400px] mx-auto px-2 sm:px-4"
@@ -101,7 +105,7 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
           <div className="flex flex-wrap items-center justify-center gap-x-2.5 sm:gap-x-4 md:gap-x-5 gap-y-2">
             {t.statement.words.row1.map((word, idx) => (
               <React.Fragment key={`r1-${idx}`}>
-                <motion.span variants={wordVariants} className="inline-block">
+                <motion.span variants={activeWordVariants} className="inline-block">
                   {word}
                 </motion.span>{' '}
               </React.Fragment>
@@ -109,7 +113,7 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
 
             {/* 1. Stethoscope Glowing Badge after "heal" */}
             <motion.span
-              variants={badgeVariants}
+              variants={activeBadgeVariants}
               whileHover={{ scale: 1.14, rotate: -3 }}
               className="relative inline-flex items-center justify-center align-middle mx-1 sm:mx-1.5 cursor-pointer group"
               aria-hidden="true"
@@ -122,7 +126,7 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
 
             {t.statement.words.row1AfterHeal.map((word, idx) => (
               <React.Fragment key={`r1b-${idx}`}>
-                <motion.span variants={wordVariants} className="inline-block">
+                <motion.span variants={activeWordVariants} className="inline-block">
                   {word}
                 </motion.span>{' '}
               </React.Fragment>
@@ -133,7 +137,7 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
           <div className="flex flex-wrap items-center justify-center gap-x-2.5 sm:gap-x-4 md:gap-x-5 gap-y-2 mt-2 sm:mt-3 lg:mt-4">
             {t.statement.words.row2.map((word, idx) => (
               <React.Fragment key={`r2-${idx}`}>
-                <motion.span variants={wordVariants} className="inline-block">
+                <motion.span variants={activeWordVariants} className="inline-block">
                   {word}
                 </motion.span>{' '}
               </React.Fragment>
@@ -141,7 +145,7 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
 
             {/* 2. Code </> Glowing Badge after "website" */}
             <motion.span
-              variants={badgeVariants}
+              variants={activeBadgeVariants}
               whileHover={{ scale: 1.15, rotate: 3 }}
               className="relative inline-flex items-center justify-center align-middle mx-1 sm:mx-1.5 cursor-pointer group"
               aria-hidden="true"
@@ -166,7 +170,7 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
 
             {t.statement.words.row2AfterWebsite.map((word, idx) => (
               <React.Fragment key={`r2b-${idx}`}>
-                <motion.span variants={wordVariants} className="inline-block">
+                <motion.span variants={activeWordVariants} className="inline-block">
                   {word}
                 </motion.span>{' '}
               </React.Fragment>
@@ -174,7 +178,7 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
 
             {/* 3. Video / Reels Glowing Magenta Badge after "content" */}
             <motion.span
-              variants={badgeVariants}
+              variants={activeBadgeVariants}
               whileHover={{ scale: 1.15, rotate: 3 }}
               className="relative inline-flex items-center justify-center align-middle mx-1 sm:mx-1.5 cursor-pointer group"
               aria-hidden="true"
@@ -205,7 +209,7 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
           <div className="flex flex-wrap items-center justify-center gap-x-2.5 sm:gap-x-4 md:gap-x-5 gap-y-2 mt-2 sm:mt-3 lg:mt-4">
             {t.statement.words.row3.map((word, idx) => (
               <React.Fragment key={`r3-${idx}`}>
-                <motion.span variants={wordVariants} className="inline-block">
+                <motion.span variants={activeWordVariants} className="inline-block">
                   {word}
                 </motion.span>{' '}
               </React.Fragment>
@@ -213,7 +217,7 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
 
             {/* 4. Phone Glowing Lime Badge after "calls" */}
             <motion.span
-              variants={badgeVariants}
+              variants={activeBadgeVariants}
               whileHover={{ scale: 1.15, rotate: -3 }}
               className="relative inline-flex items-center justify-center align-middle mx-1 sm:mx-1.5 cursor-pointer group"
               aria-hidden="true"
@@ -226,7 +230,7 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
 
             {t.statement.words.row3AfterCalls.map((word, idx, arr) => (
               <React.Fragment key={`r3b-${idx}`}>
-                <motion.span variants={wordVariants} className="inline-block">
+                <motion.span variants={activeWordVariants} className="inline-block">
                   {word}
                 </motion.span>
                 {idx < arr.length - 1 ? ' ' : ''}
@@ -237,8 +241,8 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
 
         {/* CTA Button: "Let's talk →" with neon green outline glow */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={isSSR ? false : { opacity: 0, y: 16 }}
+          whileInView={isSSR ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: false }}
           transition={{ delay: 0.5, duration: 0.6 }}
           className="mt-12 sm:mt-16 flex justify-center"

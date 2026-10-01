@@ -8,6 +8,7 @@ import { trackBookCallClick } from '../utils/analytics';
 export const FoundingClientsSection: React.FC = () => {
   const { t, contactPath } = useI18n();
   const navigate = useNavigate();
+  const isSSR = typeof window === 'undefined';
 
   const handleApplyClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -33,8 +34,8 @@ export const FoundingClientsSection: React.FC = () => {
 
       <div className="relative z-10 w-full max-w-[1040px] mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 22 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={isSSR ? false : { opacity: 0, y: 22 }}
+          whileInView={isSSR ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="relative rounded-[28px] sm:rounded-[36px] bg-[#111512]/85 backdrop-blur-xl border border-[#9ce607]/25 p-8 sm:p-12 lg:p-16 shadow-[0_24px_70px_rgba(0,0,0,0.75),inset_0_1px_0_rgba(255,255,255,0.1)] overflow-hidden"

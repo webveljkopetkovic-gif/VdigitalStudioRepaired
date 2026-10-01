@@ -6,6 +6,7 @@ import { useI18n } from '../i18n';
 export const PainPointsSection: React.FC = () => {
   const { t, contactPath } = useI18n();
   const navigate = useNavigate();
+  const isSSR = typeof window === 'undefined';
 
   const handleBookCall = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -113,8 +114,8 @@ export const PainPointsSection: React.FC = () => {
           {/* LEFT COLUMN: Eyebrow + Big Editorial Split Heading + Copy + CTA */}
           {/* =============================================================== */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={isSSR ? false : { opacity: 0, y: 20 }}
+            whileInView={isSSR ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 flex flex-col items-start lg:sticky lg:top-28"
@@ -169,8 +170,8 @@ export const PainPointsSection: React.FC = () => {
               return (
                 <motion.div
                   key={card.id}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={isSSR ? false : { opacity: 0, y: 24 }}
+                  whileInView={isSSR ? undefined : { opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{
                     duration: 0.55,

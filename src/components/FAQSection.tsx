@@ -6,6 +6,7 @@ import { useI18n } from '../i18n';
 export const FAQSection: React.FC = () => {
   const { t } = useI18n();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const isSSR = typeof window === 'undefined';
 
   const faqSchema = {
     '@context': 'https://schema.org',
@@ -33,8 +34,8 @@ export const FAQSection: React.FC = () => {
       <div className="relative z-10 w-full max-w-[920px] mx-auto">
         {/* Eyebrow Label + Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={isSSR ? false : { opacity: 0, y: 18 }}
+          whileInView={isSSR ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
           className="mb-12 sm:mb-16"

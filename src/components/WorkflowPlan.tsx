@@ -16,6 +16,7 @@ const TASK_GAPS = [
 
 export const WorkflowPlan: React.FC = () => {
   const { t } = useI18n();
+  const isSSR = typeof window === 'undefined';
 
   const headerVariants = {
     hidden: { opacity: 0, y: 28, filter: 'blur(8px)' },
@@ -95,9 +96,9 @@ export const WorkflowPlan: React.FC = () => {
       <div className="relative z-10 w-full max-w-[1440px] mx-auto flex flex-col justify-between gap-12 lg:gap-16">
         {/* TOP HEADER AREA */}
         <motion.div
-          variants={headerVariants}
-          initial="hidden"
-          whileInView="visible"
+          variants={isSSR ? undefined : headerVariants}
+          initial={isSSR ? false : 'hidden'}
+          whileInView={isSSR ? undefined : 'visible'}
           viewport={{ once: false, amount: 0.3 }}
           className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 border-b border-white/[0.08] pb-10 lg:pb-12"
         >
@@ -146,9 +147,9 @@ export const WorkflowPlan: React.FC = () => {
                 <motion.div
                   key={week.label}
                   custom={colIdx}
-                  variants={columnVariants}
-                  initial="hidden"
-                  whileInView="visible"
+                  variants={isSSR ? undefined : columnVariants}
+                  initial={isSSR ? false : 'hidden'}
+                  whileInView={isSSR ? undefined : 'visible'}
                   viewport={{ once: false, amount: 0.2 }}
                   className="relative flex flex-col p-6 sm:p-8 lg:p-9 min-h-[380px] sm:min-h-[430px] lg:min-h-[480px]"
                 >
@@ -187,7 +188,7 @@ export const WorkflowPlan: React.FC = () => {
                       return (
                         <motion.div
                           key={task.title}
-                          variants={taskBarVariants}
+                          variants={isSSR ? undefined : taskBarVariants}
                           whileHover={{
                             y: -3,
                             scale: 1.015,
@@ -231,8 +232,8 @@ export const WorkflowPlan: React.FC = () => {
 
         {/* Bottom Line under Process */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={isSSR ? false : { opacity: 0 }}
+          whileInView={isSSR ? undefined : { opacity: 1 }}
           viewport={{ once: false }}
           transition={{ delay: 0.35, duration: 0.6 }}
           className="flex items-center justify-center pt-2 text-center"
