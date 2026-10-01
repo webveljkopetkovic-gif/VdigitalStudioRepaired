@@ -32,6 +32,7 @@ import { LanguageSuggestionBanner } from './components/LanguageSuggestionBanner'
 import { CookieConsentBanner } from './components/CookieConsentBanner';
 import { Preloader } from './components/Preloader';
 import { useYandexMetrica } from './hooks/useYandexMetrica';
+import { Analytics } from '@vercel/analytics/react';
 
 const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) => {
   const navigate = useNavigate();
@@ -256,6 +257,7 @@ export default function App() {
         <Route path="/ru/*" element={<NotFoundPageRoute forcedLocale="ru" />} />
         <Route path="*" element={<NotFoundPageRoute />} />
       </Routes>
+      <Analytics />
     </>
   );
 }

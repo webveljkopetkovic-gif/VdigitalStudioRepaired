@@ -357,41 +357,81 @@ export async function runPrerender() {
     const { render } = await import(serverEntryUrl);
 
     const routes = [
-      { meta: ROUTE_SEO.en, outFile: path.resolve(distDir, 'index.html') },
-      { meta: ROUTE_SEO.en, outFile: path.resolve(distDir, 'en/index.html') },
-      { meta: ROUTE_SEO.sr, outFile: path.resolve(distDir, 'sr/index.html') },
-      { meta: ROUTE_SEO.ru, outFile: path.resolve(distDir, 'ru/index.html') },
       {
-        meta: ROUTE_SEO.contactEn,
-        outFile: path.resolve(distDir, 'contact/index.html'),
+        meta: ROUTE_SEO.en,
+        outFiles: [
+          path.resolve(distDir, 'index.html'),
+          path.resolve(distDir, 'en.html'),
+          path.resolve(distDir, 'en/index.html'),
+        ],
+      },
+      {
+        meta: ROUTE_SEO.sr,
+        outFiles: [
+          path.resolve(distDir, 'sr.html'),
+          path.resolve(distDir, 'sr/index.html'),
+        ],
+      },
+      {
+        meta: ROUTE_SEO.ru,
+        outFiles: [
+          path.resolve(distDir, 'ru.html'),
+          path.resolve(distDir, 'ru/index.html'),
+        ],
       },
       {
         meta: ROUTE_SEO.contactEn,
-        outFile: path.resolve(distDir, 'en/contact/index.html'),
+        outFiles: [
+          path.resolve(distDir, 'contact.html'),
+          path.resolve(distDir, 'contact/index.html'),
+          path.resolve(distDir, 'en/contact.html'),
+          path.resolve(distDir, 'en/contact/index.html'),
+        ],
       },
       {
         meta: ROUTE_SEO.contactSr,
-        outFile: path.resolve(distDir, 'sr/kontakt/index.html'),
+        outFiles: [
+          path.resolve(distDir, 'sr/kontakt.html'),
+          path.resolve(distDir, 'sr/kontakt/index.html'),
+        ],
       },
       {
         meta: ROUTE_SEO.contactRu,
-        outFile: path.resolve(distDir, 'ru/kontakty/index.html'),
+        outFiles: [
+          path.resolve(distDir, 'ru/kontakty.html'),
+          path.resolve(distDir, 'ru/kontakty/index.html'),
+        ],
       },
       {
         meta: ROUTE_SEO.privacyEn,
-        outFile: path.resolve(distDir, 'privacy/index.html'),
-      },
-      {
-        meta: ROUTE_SEO.privacyEn,
-        outFile: path.resolve(distDir, 'en/privacy/index.html'),
+        outFiles: [
+          path.resolve(distDir, 'privacy.html'),
+          path.resolve(distDir, 'privacy/index.html'),
+          path.resolve(distDir, 'en/privacy.html'),
+          path.resolve(distDir, 'en/privacy/index.html'),
+        ],
       },
       {
         meta: ROUTE_SEO.privacySr,
-        outFile: path.resolve(distDir, 'sr/privatnost/index.html'),
+        outFiles: [
+          path.resolve(distDir, 'sr/privatnost.html'),
+          path.resolve(distDir, 'sr/privatnost/index.html'),
+          path.resolve(distDir, 'politika-privatnosti.html'),
+          path.resolve(distDir, 'politika-privatnosti/index.html'),
+          path.resolve(distDir, 'sr/politika-privatnosti.html'),
+          path.resolve(distDir, 'sr/politika-privatnosti/index.html'),
+        ],
       },
       {
         meta: ROUTE_SEO.privacyRu,
-        outFile: path.resolve(distDir, 'ru/konfidencialnost/index.html'),
+        outFiles: [
+          path.resolve(distDir, 'ru/konfidencialnost.html'),
+          path.resolve(distDir, 'ru/konfidencialnost/index.html'),
+          path.resolve(distDir, 'politika-konfidencialnosti.html'),
+          path.resolve(distDir, 'politika-konfidencialnosti/index.html'),
+          path.resolve(distDir, 'ru/politika-konfidencialnosti.html'),
+          path.resolve(distDir, 'ru/politika-konfidencialnosti/index.html'),
+        ],
       },
     ];
 
@@ -404,11 +444,13 @@ export async function runPrerender() {
         .replace(/<head>[\s\S]*?<\/head>/i, localizedHead)
         .replace('<div id="root"></div>', `<div id="root">${renderedAppHtml}</div>`);
 
-      fs.mkdirSync(path.dirname(route.outFile), { recursive: true });
-      fs.writeFileSync(route.outFile, routeHtml, 'utf-8');
-      console.log(
-        `[prerender] Prerendered ${route.meta.url} -> ${path.relative(rootDir, route.outFile)}`
-      );
+      for (const outFile of route.outFiles) {
+        fs.mkdirSync(path.dirname(outFile), { recursive: true });
+        fs.writeFileSync(outFile, routeHtml, 'utf-8');
+        console.log(
+          `[prerender] Prerendered ${route.meta.url} (lang="${route.meta.lang}", canonical="${route.meta.canonical}") -> ${path.relative(rootDir, outFile)}`
+        );
+      }
     }
   } finally {
     fs.rmSync(ssrOutDir, { recursive: true, force: true });

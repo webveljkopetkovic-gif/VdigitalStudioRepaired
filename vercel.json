@@ -12,6 +12,38 @@
   ],
   "rewrites": [
     {
+      "source": "/sr",
+      "destination": "/sr.html"
+    },
+    {
+      "source": "/ru",
+      "destination": "/ru.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html"
+    },
+    {
+      "source": "/sr/kontakt",
+      "destination": "/sr/kontakt.html"
+    },
+    {
+      "source": "/ru/kontakty",
+      "destination": "/ru/kontakty.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "source": "/sr/privatnost",
+      "destination": "/sr/privatnost.html"
+    },
+    {
+      "source": "/ru/konfidencialnost",
+      "destination": "/ru/konfidencialnost.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/"
     }

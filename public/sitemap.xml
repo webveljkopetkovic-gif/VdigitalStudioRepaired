@@ -1,39 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://vdigital.dev</loc>
-    <lastmod>2026-09-29</lastmod>
+    <loc>https://vdigital.dev/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/" />
+    <lastmod>2026-10-01</lastmod>
   </url>
   <url>
     <loc>https://vdigital.dev/sr</loc>
-    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/" />
+    <lastmod>2026-10-01</lastmod>
   </url>
   <url>
     <loc>https://vdigital.dev/ru</loc>
-    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/" />
+    <lastmod>2026-10-01</lastmod>
   </url>
   <url>
     <loc>https://vdigital.dev/contact</loc>
-    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/contact" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/kontakt" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/kontakty" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/contact" />
+    <lastmod>2026-10-01</lastmod>
   </url>
   <url>
     <loc>https://vdigital.dev/sr/kontakt</loc>
-    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/contact" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/kontakt" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/kontakty" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/contact" />
+    <lastmod>2026-10-01</lastmod>
   </url>
   <url>
     <loc>https://vdigital.dev/ru/kontakty</loc>
-    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/contact" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/kontakt" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/kontakty" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/contact" />
+    <lastmod>2026-10-01</lastmod>
   </url>
   <url>
     <loc>https://vdigital.dev/privacy</loc>
-    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/privacy" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/privatnost" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/konfidencialnost" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/privacy" />
+    <lastmod>2026-10-01</lastmod>
   </url>
   <url>
     <loc>https://vdigital.dev/sr/privatnost</loc>
-    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/privacy" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/privatnost" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/konfidencialnost" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/privacy" />
+    <lastmod>2026-10-01</lastmod>
   </url>
   <url>
     <loc>https://vdigital.dev/ru/konfidencialnost</loc>
-    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/privacy" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/privatnost" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/konfidencialnost" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/privacy" />
+    <lastmod>2026-10-01</lastmod>
   </url>
 </urlset>

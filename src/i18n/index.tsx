@@ -260,15 +260,28 @@ export const I18nProvider: React.FC<{
         if (el) el.setAttribute(attr, value);
       };
 
+      const upsertLink = (
+        selector: string,
+        attrs: Record<string, string>
+      ) => {
+        let el = document.querySelector(selector) as HTMLLinkElement | null;
+        if (!el) {
+          el = document.createElement('link');
+          document.head.appendChild(el);
+        }
+        Object.entries(attrs).forEach(([k, v]) => el!.setAttribute(k, v));
+      };
+
       setMeta('meta[name="description"]', 'content', meta.description);
       setMeta(
         'meta[name="robots"]',
         'content',
-        isNotFoundPage
-          ? 'noindex'
-          : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+        'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
       );
-      setMeta('link[rel="canonical"]', 'href', meta.canonical);
+      upsertLink('link[rel="canonical"]', {
+        rel: 'canonical',
+        href: meta.canonical,
+      });
       setMeta('meta[property="og:title"]', 'content', meta.title);
       setMeta('meta[property="og:description"]', 'content', meta.description);
       setMeta('meta[property="og:url"]', 'content', meta.canonical);
@@ -279,20 +292,68 @@ export const I18nProvider: React.FC<{
       setMeta('meta[name="twitter:image:alt"]', 'content', meta.title);
 
       if (isPrivacyPage) {
-        setMeta('link[rel="alternate"][hreflang="en"]', 'href', 'https://vdigital.dev/privacy');
-        setMeta('link[rel="alternate"][hreflang="sr"]', 'href', 'https://vdigital.dev/sr/privatnost');
-        setMeta('link[rel="alternate"][hreflang="ru"]', 'href', 'https://vdigital.dev/ru/konfidencialnost');
-        setMeta('link[rel="alternate"][hreflang="x-default"]', 'href', 'https://vdigital.dev/privacy');
+        upsertLink('link[rel="alternate"][hreflang="en"]', {
+          rel: 'alternate',
+          hreflang: 'en',
+          href: 'https://vdigital.dev/privacy',
+        });
+        upsertLink('link[rel="alternate"][hreflang="sr"]', {
+          rel: 'alternate',
+          hreflang: 'sr',
+          href: 'https://vdigital.dev/sr/privatnost',
+        });
+        upsertLink('link[rel="alternate"][hreflang="ru"]', {
+          rel: 'alternate',
+          hreflang: 'ru',
+          href: 'https://vdigital.dev/ru/konfidencialnost',
+        });
+        upsertLink('link[rel="alternate"][hreflang="x-default"]', {
+          rel: 'alternate',
+          hreflang: 'x-default',
+          href: 'https://vdigital.dev/privacy',
+        });
       } else if (isContactPage) {
-        setMeta('link[rel="alternate"][hreflang="en"]', 'href', 'https://vdigital.dev/contact');
-        setMeta('link[rel="alternate"][hreflang="sr"]', 'href', 'https://vdigital.dev/sr/kontakt');
-        setMeta('link[rel="alternate"][hreflang="ru"]', 'href', 'https://vdigital.dev/ru/kontakty');
-        setMeta('link[rel="alternate"][hreflang="x-default"]', 'href', 'https://vdigital.dev/contact');
+        upsertLink('link[rel="alternate"][hreflang="en"]', {
+          rel: 'alternate',
+          hreflang: 'en',
+          href: 'https://vdigital.dev/contact',
+        });
+        upsertLink('link[rel="alternate"][hreflang="sr"]', {
+          rel: 'alternate',
+          hreflang: 'sr',
+          href: 'https://vdigital.dev/sr/kontakt',
+        });
+        upsertLink('link[rel="alternate"][hreflang="ru"]', {
+          rel: 'alternate',
+          hreflang: 'ru',
+          href: 'https://vdigital.dev/ru/kontakty',
+        });
+        upsertLink('link[rel="alternate"][hreflang="x-default"]', {
+          rel: 'alternate',
+          hreflang: 'x-default',
+          href: 'https://vdigital.dev/contact',
+        });
       } else {
-        setMeta('link[rel="alternate"][hreflang="en"]', 'href', 'https://vdigital.dev/');
-        setMeta('link[rel="alternate"][hreflang="sr"]', 'href', 'https://vdigital.dev/sr');
-        setMeta('link[rel="alternate"][hreflang="ru"]', 'href', 'https://vdigital.dev/ru');
-        setMeta('link[rel="alternate"][hreflang="x-default"]', 'href', 'https://vdigital.dev/');
+        upsertLink('link[rel="alternate"][hreflang="en"]', {
+          rel: 'alternate',
+          hreflang: 'en',
+          href: 'https://vdigital.dev/',
+        });
+        upsertLink('link[rel="alternate"][hreflang="sr"]', {
+          rel: 'alternate',
+          hreflang: 'sr',
+          href: 'https://vdigital.dev/sr',
+        });
+        upsertLink('link[rel="alternate"][hreflang="ru"]', {
+          rel: 'alternate',
+          hreflang: 'ru',
+          href: 'https://vdigital.dev/ru',
+        });
+        upsertLink('link[rel="alternate"][hreflang="x-default"]', {
+          rel: 'alternate',
+          hreflang: 'x-default',
+          href: 'https://vdigital.dev/',
+        });
       }
     }
   }, [locale, isContactPage, isPrivacyPage, isNotFoundPage]);
