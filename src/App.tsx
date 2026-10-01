@@ -185,15 +185,20 @@ const PrivacyPageRoute: React.FC<{ locale: SupportedLocale }> = ({ locale }) => 
   </I18nProvider>
 );
 
-const NotFoundPageRoute: React.FC = () => {
+const NotFoundPageRoute: React.FC<{ forcedLocale?: SupportedLocale }> = ({
+  forcedLocale,
+}) => {
   const location = useLocation();
   const path = location.pathname.toLowerCase();
   const locale: SupportedLocale =
-    path === '/sr' || path.startsWith('/sr/')
-      ? 'sr'
+    forcedLocale ||
+    (path === '/en' || path.startsWith('/en/')
+      ? 'en'
       : path === '/ru' || path.startsWith('/ru/')
         ? 'ru'
-        : 'en';
+        : path === '/sr' || path.startsWith('/sr/')
+          ? 'sr'
+          : 'sr');
 
   return (
     <I18nProvider locale={locale}>
@@ -246,6 +251,9 @@ export default function App() {
         <Route path="/politika-konfidencijalnosti" element={<PrivacyPageRoute locale="ru" />} />
         <Route path="/ru/politika-konfidencialnosti" element={<PrivacyPageRoute locale="ru" />} />
 
+        <Route path="/sr/*" element={<NotFoundPageRoute forcedLocale="sr" />} />
+        <Route path="/en/*" element={<NotFoundPageRoute forcedLocale="en" />} />
+        <Route path="/ru/*" element={<NotFoundPageRoute forcedLocale="ru" />} />
         <Route path="*" element={<NotFoundPageRoute />} />
       </Routes>
     </>

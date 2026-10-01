@@ -30,6 +30,7 @@ export const NotFoundPage: React.FC = () => {
 
   return (
     <div className="min-h-screen w-full bg-[#060709] text-white selection:bg-[#a8f300] selection:text-black relative flex flex-col overflow-x-clip font-geist">
+      <meta name="robots" content="noindex" />
       {/* Subtle architectural dark grid backdrop */}
       <div
         aria-hidden="true"

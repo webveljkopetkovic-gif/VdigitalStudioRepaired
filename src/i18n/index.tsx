@@ -261,6 +261,13 @@ export const I18nProvider: React.FC<{
       };
 
       setMeta('meta[name="description"]', 'content', meta.description);
+      setMeta(
+        'meta[name="robots"]',
+        'content',
+        isNotFoundPage
+          ? 'noindex'
+          : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+      );
       setMeta('link[rel="canonical"]', 'href', meta.canonical);
       setMeta('meta[property="og:title"]', 'content', meta.title);
       setMeta('meta[property="og:description"]', 'content', meta.description);

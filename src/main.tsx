@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
+import { isContactRoute, isHomeRoute, isPrivacyRoute } from './i18n';
 import './index.css';
 
 const rootElement = document.getElementById('root')!;
@@ -14,8 +15,13 @@ const appTree = (
   </StrictMode>
 );
 
-if (rootElement.hasChildNodes()) {
+const pathname = typeof window !== 'undefined' ? window.location.pathname : '/';
+const isKnownPrerenderedRoute =
+  isHomeRoute(pathname) || isContactRoute(pathname) || isPrivacyRoute(pathname);
+
+if (rootElement.hasChildNodes() && isKnownPrerenderedRoute) {
   hydrateRoot(rootElement, appTree);
 } else {
+  rootElement.innerHTML = '';
   createRoot(rootElement).render(appTree);
 }
