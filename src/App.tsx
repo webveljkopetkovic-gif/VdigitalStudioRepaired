@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import {
   CONTACT_EMAIL,
   PHONE_DISPLAY,
@@ -215,6 +216,7 @@ export default function App() {
   return (
     <>
       <Preloader />
+      <Analytics />
       <Routes>
         <Route path="/" element={<LandingPageContent locale="en" />} />
         <Route path="/en" element={<LandingPageContent locale="en" />} />
