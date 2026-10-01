@@ -1,100 +1,376 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import * as CookieConsent from 'vanilla-cookieconsent';
+import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import { useI18n } from '../i18n';
 import {
-  getConsentChoice,
   OPEN_COOKIE_BANNER_EVENT,
-  setConsentChoice,
-  updateGtagConsent,
+  syncConsentState,
 } from '../utils/analytics';
 
+let isCookieConsentInitialized = false;
+
 export const CookieConsentBanner: React.FC = () => {
-  const { t, privacyPath } = useI18n();
-  const navigate = useNavigate();
-  const [isVisible, setIsVisible] = useState(false);
+  const { locale } = useI18n();
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const existingChoice = getConsentChoice();
-    if (existingChoice === 'granted') {
-      updateGtagConsent('granted');
-      setIsVisible(false);
-    } else if (existingChoice === 'denied') {
-      updateGtagConsent('denied');
-      setIsVisible(false);
+    if (!isCookieConsentInitialized) {
+      isCookieConsentInitialized = true;
+
+      CookieConsent.run({
+        revision: 1,
+        cookie: {
+          name: 'cc_cookie',
+          expiresAfterDays: 182, // 6 months
+          sameSite: 'Lax',
+          path: '/',
+        },
+        guiOptions: {
+          consentModal: {
+            layout: 'box inline',
+            position: 'bottom left',
+            equalWeightButtons: true,
+            flipButtons: false,
+          },
+          preferencesModal: {
+            layout: 'box',
+            position: 'right',
+            equalWeightButtons: true,
+            flipButtons: false,
+          },
+        },
+        onFirstConsent: () => {
+          syncConsentState();
+        },
+        onConsent: () => {
+          syncConsentState();
+        },
+        onChange: () => {
+          syncConsentState();
+        },
+        categories: {
+          necessary: {
+            enabled: true,
+            readOnly: true,
+          },
+          analytics: {
+            enabled: false,
+            readOnly: false,
+            autoClear: {
+              cookies: [
+                { name: /^(_ga|_gid|_gat|_ym_|yandexuid|yabs-sid|ymex)/ },
+              ],
+            },
+          },
+          marketing: {
+            enabled: false,
+            readOnly: false,
+            autoClear: {
+              cookies: [
+                { name: /^(_fbp|_fbc|_ttp|_gcl_|li_)/ },
+              ],
+            },
+          },
+        },
+        language: {
+          default: locale,
+          translations: {
+            en: {
+              consentModal: {
+                title: 'We respect your privacy',
+                description:
+                  'We use strictly necessary cookies to remember your settings and, only with your explicit consent, analytics and marketing cookies to understand how visitors use our site. <a href="/privacy" class="cc-link">Privacy &amp; Cookie Policy</a>',
+                acceptAllBtn: 'Accept all',
+                acceptNecessaryBtn: 'Reject all',
+                showPreferencesBtn: 'Settings',
+              },
+              preferencesModal: {
+                title: 'Cookie preferences',
+                acceptAllBtn: 'Accept all',
+                acceptNecessaryBtn: 'Reject all',
+                savePreferencesBtn: 'Save settings',
+                closeIconLabel: 'Close modal',
+                serviceCounterLabel: 'Service|Services',
+                sections: [
+                  {
+                    title: 'How we use cookies',
+                    description:
+                      'No non-essential cookies or third-party trackers load until you explicitly opt in. You can change or withdraw your consent at any time. Read our full <a href="/privacy" class="cc-link">Privacy &amp; Cookie Policy</a>.',
+                  },
+                  {
+                    title: 'Strictly necessary <span class="pm__badge">Always active</span>',
+                    description:
+                      'Essential for the website to function properly and to remember your cookie consent and language preferences. They do not track you across sites.',
+                    linkedCategory: 'necessary',
+                    cookieTable: {
+                      headers: {
+                        name: 'Name',
+                        domain: 'Provider',
+                        description: 'Purpose',
+                        expiration: 'Duration',
+                      },
+                      body: [
+                        {
+                          name: 'cc_cookie',
+                          domain: 'vdigital.dev',
+                          description: 'Stores your cookie consent preferences.',
+                          expiration: '6 months',
+                        },
+                        {
+                          name: 'vd_lang_choice',
+                          domain: 'vdigital.dev (localStorage)',
+                          description: 'Remembers your selected site language (SR / EN / RU).',
+                          expiration: 'Persistent',
+                        },
+                      ],
+                    },
+                  },
+                  {
+                    title: 'Analytics cookies',
+                    description:
+                      'Help us understand how visitors interact with our pages (Google Analytics 4, Yandex Metrica, and Ahrefs Analytics). Loaded only if you accept this category.',
+                    linkedCategory: 'analytics',
+                    cookieTable: {
+                      headers: {
+                        name: 'Name',
+                        domain: 'Provider',
+                        description: 'Purpose',
+                        expiration: 'Duration',
+                      },
+                      body: [
+                        {
+                          name: '_ga, _ga_NNXZ378TYV',
+                          domain: 'Google LLC (USA / EU)',
+                          description: 'Google Analytics 4 anonymous visitor and session statistics.',
+                          expiration: '2 years',
+                        },
+                        {
+                          name: '_gid, _gat',
+                          domain: 'Google LLC (USA / EU)',
+                          description: 'Distinguishes visitors and throttles request rate.',
+                          expiration: '24 hours / 1 min',
+                        },
+                        {
+                          name: '_ym_uid, _ym_d, _ym_isad, _ym_visorc',
+                          domain: 'Yandex LLC (Russia)',
+                          description: 'Yandex Metrica visitor and session analytics.',
+                          expiration: '30 min – 1 year',
+                        },
+                      ],
+                    },
+                  },
+                  {
+                    title: 'Marketing & third-party embeds',
+                    description:
+                      'Used for interactive third-party media embeds (such as YouTube videos via youtube-nocookie.com and Cal.com scheduling widgets) and advertising attribution.',
+                    linkedCategory: 'marketing',
+                  },
+                ],
+              },
+            },
+            sr: {
+              consentModal: {
+                title: 'Poštujemo vašu privatnost',
+                description:
+                  'Koristimo samo neophodne kolačiće za rad sajta, a analitičke i marketinške kolačiće učitavamo isključivo uz vašu izričitu saglasnost. <a href="/sr/privatnost" class="cc-link">Politika privatnosti i kolačića</a>',
+                acceptAllBtn: 'Prihvati sve',
+                acceptNecessaryBtn: 'Odbij sve',
+                showPreferencesBtn: 'Podešavanja',
+              },
+              preferencesModal: {
+                title: 'Podešavanje kolačića',
+                acceptAllBtn: 'Prihvati sve',
+                acceptNecessaryBtn: 'Odbij sve',
+                savePreferencesBtn: 'Sačuvaj izbor',
+                closeIconLabel: 'Zatvori prozor',
+                serviceCounterLabel: 'Servis|Servisa',
+                sections: [
+                  {
+                    title: 'Kako koristimo kolačiće',
+                    description:
+                      'Nijedan opcioni kolačić ili eksterni tragač se ne učitava dok ne date izričitu saglasnost. Svoj izbor možete promeniti ili povući u svakom trenutku. Pročitajte našu <a href="/sr/privatnost" class="cc-link">Politiku privatnosti i kolačića</a>.',
+                  },
+                  {
+                    title: 'Neophodni kolačići <span class="pm__badge">Uvek aktivni</span>',
+                    description:
+                      'Neophodni za osnovno funkcionisanje sajta, pamćenje vaše odluke o kolačićima i izbora jezika.',
+                    linkedCategory: 'necessary',
+                    cookieTable: {
+                      headers: {
+                        name: 'Naziv',
+                        domain: 'Pružalac',
+                        description: 'Svrha',
+                        expiration: 'Trajanje',
+                      },
+                      body: [
+                        {
+                          name: 'cc_cookie',
+                          domain: 'vdigital.dev',
+                          description: 'Čuva vaš izbor u vezi sa kolačićima.',
+                          expiration: '6 meseci',
+                        },
+                        {
+                          name: 'vd_lang_choice',
+                          domain: 'vdigital.dev (localStorage)',
+                          description: 'Pamti izabrani jezik sajta (SR / EN / RU).',
+                          expiration: 'Trajno',
+                        },
+                      ],
+                    },
+                  },
+                  {
+                    title: 'Analitički kolačići',
+                    description:
+                      'Pomažu nam da razumemo kako posetioci koriste naš sajt (Google Analytics 4, Yandex Metrica i Ahrefs Analytics). Učitavaju se isključivo ako prihvatite ovu kategoriju.',
+                    linkedCategory: 'analytics',
+                    cookieTable: {
+                      headers: {
+                        name: 'Naziv',
+                        domain: 'Pružalac',
+                        description: 'Svrha',
+                        expiration: 'Trajanje',
+                      },
+                      body: [
+                        {
+                          name: '_ga, _ga_NNXZ378TYV',
+                          domain: 'Google LLC (SAD / EU)',
+                          description: 'Google Analytics 4 anonimizovana statistika poseta.',
+                          expiration: '2 godine',
+                        },
+                        {
+                          name: '_gid, _gat',
+                          domain: 'Google LLC (SAD / EU)',
+                          description: 'Razlikovanje sesija i ograničavanje broja zahteva.',
+                          expiration: '24 sata / 1 min',
+                        },
+                        {
+                          name: '_ym_uid, _ym_d, _ym_isad, _ym_visorc',
+                          domain: 'Yandex LLC (Rusija)',
+                          description: 'Yandex Metrica statistika poseta i sesija.',
+                          expiration: '30 min – 1 godina',
+                        },
+                      ],
+                    },
+                  },
+                  {
+                    title: 'Marketing i eksterni sadržaji',
+                    description:
+                      'Koriste se za učitavanje interaktivnih ugrađenih sadržaja trećih strana (YouTube video preko youtube-nocookie.com i Cal.com kalendar) i merenje reklamnih kampanja.',
+                    linkedCategory: 'marketing',
+                  },
+                ],
+              },
+            },
+            ru: {
+              consentModal: {
+                title: 'Мы уважаем вашу конфиденциальность',
+                description:
+                  'Мы используем строго необходимые файлы cookie для работы сайта, а аналитические и маркетинговые cookie загружаем только с вашего явного согласия. <a href="/ru/konfidencialnost" class="cc-link">Политика конфиденциальности и cookie</a>',
+                acceptAllBtn: 'Принять все',
+                acceptNecessaryBtn: 'Отклонить все',
+                showPreferencesBtn: 'Настройки',
+              },
+              preferencesModal: {
+                title: 'Настройки файлов cookie',
+                acceptAllBtn: 'Принять все',
+                acceptNecessaryBtn: 'Отклонить все',
+                savePreferencesBtn: 'Сохранить настройки',
+                closeIconLabel: 'Закрыть окно',
+                serviceCounterLabel: 'Сервис|Сервиса',
+                sections: [
+                  {
+                    title: 'Как мы используем cookie',
+                    description:
+                      'Ни один необязательный файл cookie или сторонний трекер не загружается без вашего согласия. Вы можете изменить или отозвать согласие в любое время. Подробнее в <a href="/ru/konfidencialnost" class="cc-link">Политике конфиденциальности и cookie</a>.',
+                  },
+                  {
+                    title: 'Строго необходимые <span class="pm__badge">Всегда активны</span>',
+                    description:
+                      'Необходимы для корректной работы сайта и сохранения вашего выбора языка и настроек cookie.',
+                    linkedCategory: 'necessary',
+                    cookieTable: {
+                      headers: {
+                        name: 'Имя',
+                        domain: 'Провайдер',
+                        description: 'Назначение',
+                        expiration: 'Срок',
+                      },
+                      body: [
+                        {
+                          name: 'cc_cookie',
+                          domain: 'vdigital.dev',
+                          description: 'Сохраняет ваш выбор настроек cookie.',
+                          expiration: '6 месяцев',
+                        },
+                        {
+                          name: 'vd_lang_choice',
+                          domain: 'vdigital.dev (localStorage)',
+                          description: 'Запоминает выбранный язык сайта (SR / EN / RU).',
+                          expiration: 'Постоянно',
+                        },
+                      ],
+                    },
+                  },
+                  {
+                    title: 'Аналитические cookie',
+                    description:
+                      'Помогают нам понимать, как посетители взаимодействуют с сайтом (Google Analytics 4, Яндекс Метрика и Ahrefs Analytics). Загружаются только при вашем согласии.',
+                    linkedCategory: 'analytics',
+                    cookieTable: {
+                      headers: {
+                        name: 'Имя',
+                        domain: 'Провайдер',
+                        description: 'Назначение',
+                        expiration: 'Срок',
+                      },
+                      body: [
+                        {
+                          name: '_ga, _ga_NNXZ378TYV',
+                          domain: 'Google LLC (США / ЕС)',
+                          description: 'Обезличенная статистика посещений Google Analytics 4.',
+                          expiration: '2 года',
+                        },
+                        {
+                          name: '_gid, _gat',
+                          domain: 'Google LLC (США / ЕС)',
+                          description: 'Различение сессий и ограничение частоты запросов.',
+                          expiration: '24 часа / 1 мин',
+                        },
+                        {
+                          name: '_ym_uid, _ym_d, _ym_isad, _ym_visorc',
+                          domain: 'ООО «Яндекс» (Россия)',
+                          description: 'Аналитика посещений и сессий Яндекс Метрики.',
+                          expiration: '30 мин – 1 год',
+                        },
+                      ],
+                    },
+                  },
+                  {
+                    title: 'Маркетинг и внешние виджеты',
+                    description:
+                      'Используются для интерактивных виджетов третьих сторон (видео YouTube через youtube-nocookie.com и календарь Cal.com) и маркетинговой атрибуции.',
+                    linkedCategory: 'marketing',
+                  },
+                ],
+              },
+            },
+          },
+        },
+      });
     } else {
-      setIsVisible(true);
+      CookieConsent.setLanguage(locale);
     }
 
-    const handleOpenSettings = () => {
-      setIsVisible(true);
+    const handleOpenPreferences = () => {
+      CookieConsent.showPreferences();
     };
 
-    window.addEventListener(OPEN_COOKIE_BANNER_EVENT, handleOpenSettings);
+    window.addEventListener(OPEN_COOKIE_BANNER_EVENT, handleOpenPreferences);
     return () => {
-      window.removeEventListener(OPEN_COOKIE_BANNER_EVENT, handleOpenSettings);
+      window.removeEventListener(OPEN_COOKIE_BANNER_EVENT, handleOpenPreferences);
     };
-  }, []);
+  }, [locale]);
 
-  if (!isVisible) {
-    return null;
-  }
-
-  const handleAccept = () => {
-    setConsentChoice('granted');
-    setIsVisible(false);
-  };
-
-  const handleDecline = () => {
-    setConsentChoice('denied');
-    setIsVisible(false);
-  };
-
-  const handlePrivacyClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    navigate(privacyPath);
-  };
-
-  return (
-    <div
-      role="region"
-      aria-label={t.footer.cookieSettings}
-      style={{
-        paddingBottom: 'env(safe-area-inset-bottom, 0px)',
-      }}
-      className="fixed bottom-4 left-4 right-4 sm:right-auto sm:bottom-6 sm:left-6 z-50 pointer-events-none flex justify-center sm:justify-start"
-    >
-      <div className="pointer-events-auto w-full sm:max-w-[360px] rounded-[14px] bg-[#111512]/90 backdrop-blur-xl border border-white/[0.12] px-4 py-3.5 shadow-[0_16px_42px_rgba(0,0,0,0.72),inset_0_1px_0_rgba(255,255,255,0.08)] font-geist text-white">
-        <p className="text-[12.5px] sm:text-[13px] leading-[1.5] text-neutral-200">
-          {t.cookieBanner.text}{' '}
-          <a
-            href={privacyPath}
-            onClick={handlePrivacyClick}
-            className="text-neutral-400 hover:text-[#9ce607] underline underline-offset-2 transition-colors whitespace-nowrap"
-          >
-            {t.cookieBanner.privacyLink}
-          </a>
-        </p>
-
-        <div className="mt-3 flex items-center gap-2">
-          <button
-            type="button"
-            onClick={handleAccept}
-            className="px-3.5 py-1.5 rounded-[8px] bg-[#9ce607] hover:bg-[#abf50a] active:scale-[0.98] text-[#0a0c09] font-geist font-semibold text-[12px] sm:text-[12.5px] tracking-[-0.01em] transition-all cursor-pointer shadow-[0_2px_10px_rgba(156,230,7,0.28)]"
-          >
-            {t.cookieBanner.accept}
-          </button>
-
-          <button
-            type="button"
-            onClick={handleDecline}
-            className="px-3.5 py-1.5 rounded-[8px] bg-white/[0.06] hover:bg-white/[0.12] active:scale-[0.98] border border-white/[0.1] text-neutral-300 hover:text-white font-geist font-medium text-[12px] sm:text-[12.5px] tracking-[-0.01em] transition-all cursor-pointer"
-          >
-            {t.cookieBanner.decline}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+  return null;
 };

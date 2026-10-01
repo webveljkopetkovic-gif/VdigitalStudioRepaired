@@ -193,8 +193,13 @@ export function isPrivacyRoute(pathname: string): boolean {
     clean === '/en/privacy' ||
     clean === '/sr/privatnost' ||
     clean === '/sr/privacy' ||
+    clean === '/politika-privatnosti' ||
+    clean === '/sr/politika-privatnosti' ||
     clean === '/ru/konfidencialnost' ||
-    clean === '/ru/privacy'
+    clean === '/ru/privacy' ||
+    clean === '/politika-konfidencialnosti' ||
+    clean === '/politika-konfidencijalnosti' ||
+    clean === '/ru/politika-konfidencialnosti'
   );
 }
 

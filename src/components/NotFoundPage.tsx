@@ -6,8 +6,7 @@ import { HeaderLogo } from './HeaderLogo';
 import { Footer } from './Footer';
 import { FloatingChatButton } from './FloatingChatButton';
 
-const NOT_FOUND_ILLUSTRATION_URL =
-  'https://res.cloudinary.com/qftxmdqk/image/upload/v1790617071/b564f5b9-54be-4548-b0a3-3ef5f5c3aed5.png';
+const NOT_FOUND_ILLUSTRATION_URL = '/images/404-illustration.png';
 
 export const NotFoundPage: React.FC = () => {
   const { locale, t, homePath, contactPath } = useI18n();

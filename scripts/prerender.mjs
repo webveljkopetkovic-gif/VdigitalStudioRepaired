@@ -147,34 +147,41 @@ function buildLocalizedHead(meta) {
       : '';
 
   return `<head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NNXZ378TYV"></script>
+    <!-- Google Consent Mode v2 (strictly local default — zero network requests before consent) -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('consent', 'default', {
-        'analytics_storage': 'denied',
         'ad_storage': 'denied',
         'ad_user_data': 'denied',
-        'ad_personalization': 'denied'
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'wait_for_update': 500
       });
-      try {
-        if (localStorage.getItem('vd-consent') === 'granted') {
-          gtag('consent', 'update', {
-            'analytics_storage': 'granted',
-            'ad_storage': 'denied',
-            'ad_user_data': 'denied',
-            'ad_personalization': 'denied'
-          });
-        }
-      } catch (e) {}
-      gtag('js', new Date());
-
-      gtag('config', 'G-NNXZ378TYV');
     </script>
-    <script src="https://analytics.ahrefs.com/analytics.js" data-key="eb8zYfNi2/lC1GJjWzbHlw" async></script>
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
+    <!-- Google tag (gtag.js) — gated behind "analytics" consent -->
+    <script
+      type="text/plain"
+      data-category="analytics"
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-NNXZ378TYV"
+    ></script>
+    <script type="text/plain" data-category="analytics">
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NNXZ378TYV', { anonymize_ip: true });
+    </script>
+    <!-- Ahrefs Analytics — gated behind "analytics" consent -->
+    <script
+      type="text/plain"
+      data-category="analytics"
+      src="https://analytics.ahrefs.com/analytics.js"
+      data-key="eb8zYfNi2/lC1GJjWzbHlw"
+      async
+    ></script>
+    <!-- Yandex.Metrika counter — gated behind "analytics" consent -->
+    <script type="text/plain" data-category="analytics">
         (function(m,e,t,r,i,k,a){
             m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
             m[i].l=1*new Date();
@@ -313,7 +320,9 @@ export async function runPrerender() {
       match[0].includes('googletagmanager.com/gtag/js') ||
       match[0].includes('G-NNXZ378TYV') ||
       match[0].includes('analytics.ahrefs.com/analytics.js') ||
-      match[0].includes('mc.yandex.ru/metrika/tag.js')
+      match[0].includes('mc.yandex.ru/metrika/tag.js') ||
+      match[0].includes('wait_for_update') ||
+      match[0].includes('data-category=')
     ) {
       continue;
     }

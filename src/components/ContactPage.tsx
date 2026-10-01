@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Mail,
   Send,
   ArrowUpRight,
+  Calendar,
 } from 'lucide-react';
 import {
   BOOKING_URL,
@@ -22,6 +23,11 @@ import { Footer } from './Footer';
 import { FloatingChatButton } from './FloatingChatButton';
 import { ViberIcon, WhatsAppIcon } from './BrandIcons';
 import {
+  acceptCategoryConsent,
+  CONSENT_UPDATED_EVENT,
+  hasAnalyticsConsent,
+  hasMarketingConsent,
+  openCookieSettings,
   trackBookCallClick,
   trackCalBookingCompleted,
   trackMessengerClick,
@@ -29,6 +35,9 @@ import {
 
 export const ContactPage: React.FC = () => {
   const { locale, t } = useI18n();
+  const [calAllowed, setCalAllowed] = useState<boolean>(
+    () => hasMarketingConsent() || hasAnalyticsConsent()
+  );
 
   // Scroll to top when arriving on Contact page
   useEffect(() => {
@@ -37,9 +46,22 @@ export const ContactPage: React.FC = () => {
     }
   }, [locale]);
 
-  // Initialize Cal.com inline embed ("vdigital/30min")
+  // Listen for consent updates so Cal.com loads automatically once consented
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    const sync = () => {
+      if (hasMarketingConsent() || hasAnalyticsConsent()) {
+        setCalAllowed(true);
+      }
+    };
+    sync();
+    window.addEventListener(CONSENT_UPDATED_EVENT, sync);
+    return () => window.removeEventListener(CONSENT_UPDATED_EVENT, sync);
+  }, []);
+
+  // Initialize Cal.com inline embed ("vdigital/30min") ONLY after consent or explicit click
+  useEffect(() => {
+    if (typeof window === 'undefined' || !calAllowed) return;
 
     const container = document.getElementById('my-cal-inline-30min');
     if (container) {
@@ -106,7 +128,7 @@ export const ContactPage: React.FC = () => {
         },
       });
     }
-  }, []);
+  }, [calAllowed]);
 
   const whatsappPrefilledHref = `${WHATSAPP_URL}?text=${encodeURIComponent(
     t.contactPage.prefilledMessage
@@ -420,12 +442,59 @@ export const ContactPage: React.FC = () => {
               )}
             </div>
 
-            {/* Cal inline embed code begins */}
-            <div
-              id="my-cal-inline-30min"
-              style={{ width: '100%', height: '100%', overflow: 'scroll' }}
-              className="w-full min-h-[580px]"
-            />
+            {/* Cal inline embed code begins (gated behind consent / click-to-load) */}
+            {calAllowed ? (
+              <div
+                id="my-cal-inline-30min"
+                style={{ width: '100%', height: '100%', overflow: 'scroll' }}
+                className="w-full min-h-[580px]"
+              />
+            ) : (
+              <div className="w-full min-h-[420px] rounded-[12px] bg-[#0e1012] border border-white/[0.08] p-6 sm:p-10 flex flex-col items-center justify-center text-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-[#b6ff00]/15 border border-[#b6ff00]/40 flex items-center justify-center text-[#b6ff00]">
+                  <Calendar className="w-6 h-6" />
+                </div>
+                <div className="max-w-md space-y-2">
+                  <h3 className="text-[17px] sm:text-[19px] font-semibold text-white">
+                    {locale === 'sr'
+                      ? 'Interaktivni kalendar (Cal.com)'
+                      : locale === 'ru'
+                        ? 'Интерактивный календарь (Cal.com)'
+                        : 'Interactive Booking Calendar (Cal.com)'}
+                  </h3>
+                  <p className="text-[13.5px] leading-relaxed text-neutral-300">
+                    {locale === 'sr'
+                      ? 'Kalendar za zakazivanje poziva koristi eksterni servis Cal.com. Kliknite ispod da učitate kalendar ili nam pišite direktno putem kanala ispod.'
+                      : locale === 'ru'
+                        ? 'Календарь записи использует внешний сервис Cal.com. Нажмите кнопку ниже, чтобы загрузить календарь, или напишите нам напрямую.'
+                        : 'Our scheduling calendar is powered by Cal.com. Click below to load the interactive calendar, or reach us directly via the channels below.'}
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-center justify-center gap-3 mt-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      acceptCategoryConsent('marketing');
+                      setCalAllowed(true);
+                    }}
+                    className="px-5 py-2.5 rounded-[8px] bg-[#b6ff00] hover:bg-[#c6ff26] text-[#0a0a0a] font-semibold text-[13.5px] transition-colors cursor-pointer"
+                  >
+                    {locale === 'sr'
+                      ? 'Učitaj kalendar'
+                      : locale === 'ru'
+                        ? 'Загрузить календарь'
+                        : 'Load calendar'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={openCookieSettings}
+                    className="px-4 py-2.5 rounded-[8px] bg-[#1d1e22] hover:bg-[#25272c] border border-white/[0.1] text-neutral-200 font-medium text-[13px] transition-colors cursor-pointer"
+                  >
+                    {t.footer.cookieSettings}
+                  </button>
+                </div>
+              </div>
+            )}
             {/* Cal inline embed code ends */}
 
             {/* Quick Direct Action Buttons Footer inside Card */}

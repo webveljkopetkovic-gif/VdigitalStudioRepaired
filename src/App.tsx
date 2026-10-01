@@ -236,10 +236,15 @@ export default function App() {
         <Route path="/sr/privatnost/" element={<PrivacyPageRoute locale="sr" />} />
         <Route path="/sr/privacy" element={<PrivacyPageRoute locale="sr" />} />
         <Route path="/sr/privacy/" element={<PrivacyPageRoute locale="sr" />} />
+        <Route path="/politika-privatnosti" element={<PrivacyPageRoute locale="sr" />} />
+        <Route path="/sr/politika-privatnosti" element={<PrivacyPageRoute locale="sr" />} />
         <Route path="/ru/konfidencialnost" element={<PrivacyPageRoute locale="ru" />} />
         <Route path="/ru/konfidencialnost/" element={<PrivacyPageRoute locale="ru" />} />
         <Route path="/ru/privacy" element={<PrivacyPageRoute locale="ru" />} />
         <Route path="/ru/privacy/" element={<PrivacyPageRoute locale="ru" />} />
+        <Route path="/politika-konfidencialnosti" element={<PrivacyPageRoute locale="ru" />} />
+        <Route path="/politika-konfidencijalnosti" element={<PrivacyPageRoute locale="ru" />} />
+        <Route path="/ru/politika-konfidencialnosti" element={<PrivacyPageRoute locale="ru" />} />
 
         <Route path="*" element={<NotFoundPageRoute />} />
       </Routes>
