@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform, MotionValue } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
-import { useI18n } from '../i18n';
+import { getServicePath, ServiceSlug, useI18n } from '../i18n';
 import { trackBookCallClick } from '../utils/analytics';
 
 interface StackingCardData {
@@ -45,14 +45,20 @@ const CARD_STYLES = [
   },
 ];
 
+const SERVICE_SLUGS: ServiceSlug[] = [
+  'web-development',
+  'video-social-media',
+  'marketing-automation',
+  'cold-calling',
+];
+
 interface StackingCardItemProps {
   service: StackingCardData;
   index: number;
   total: number;
   scrollYProgress: MotionValue<number>;
   cardButtonLabel: string;
-  contactPath: string;
-  onBookCall: () => void;
+  serviceUrl: string;
 }
 
 const StackingCardItem: React.FC<StackingCardItemProps> = ({
@@ -61,9 +67,9 @@ const StackingCardItem: React.FC<StackingCardItemProps> = ({
   total,
   scrollYProgress,
   cardButtonLabel,
-  contactPath,
-  onBookCall,
+  serviceUrl,
 }) => {
+  const navigate = useNavigate();
   const step = 1 / total;
   const enterStart = Math.max(0, index * step - 0.05);
   const enterEnd = index * step + step * 0.68;
@@ -138,15 +144,20 @@ const StackingCardItem: React.FC<StackingCardItemProps> = ({
         {/* Top-Right CTA Button */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <a
-            href={contactPath}
+            href={serviceUrl}
             onClick={(e) => {
               e.preventDefault();
-              onBookCall();
+              navigate(serviceUrl);
             }}
             className="group inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/10 hover:bg-[#a8f300] text-white hover:text-black border border-white/15 hover:border-[#a8f300] text-[12px] sm:text-[13px] font-medium transition-all duration-200 cursor-pointer"
           >
             <span>{cardButtonLabel}</span>
-            <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <span
+              aria-hidden="true"
+              className="text-[#a8f300] group-hover:text-black font-bold transition-transform group-hover:translate-x-0.5"
+            >
+              →
+            </span>
           </a>
         </div>
       </div>
@@ -189,7 +200,7 @@ interface StickyServicesSectionProps {
 export const StickyServicesSection: React.FC<StickyServicesSectionProps> = ({
   onBookCall,
 }) => {
-  const { t, contactPath } = useI18n();
+  const { locale, t, contactPath } = useI18n();
   const navigate = useNavigate();
   const containerRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -246,18 +257,21 @@ export const StickyServicesSection: React.FC<StickyServicesSectionProps> = ({
 
           {/* Stacking Cards Deck Container */}
           <div className="relative w-full h-[460px] sm:h-[500px] md:h-[520px]">
-            {cards.map((service, index) => (
-              <StackingCardItem
-                key={service.id}
-                service={service}
-                index={index}
-                total={cards.length}
-                scrollYProgress={scrollYProgress}
-                cardButtonLabel={t.services.cardButton}
-                contactPath={contactPath}
-                onBookCall={handleBookCall}
-              />
-            ))}
+            {cards.map((service, index) => {
+              const slug = SERVICE_SLUGS[index % SERVICE_SLUGS.length];
+              const serviceUrl = getServicePath(slug, locale);
+              return (
+                <StackingCardItem
+                  key={service.id}
+                  service={service}
+                  index={index}
+                  total={cards.length}
+                  scrollYProgress={scrollYProgress}
+                  cardButtonLabel={t.services.cardButton}
+                  serviceUrl={serviceUrl}
+                />
+              );
+            })}
           </div>
         </div>
       </div>

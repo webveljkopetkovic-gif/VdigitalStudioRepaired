@@ -10,9 +10,12 @@ import {
   TIKTOK_URL,
 } from '../config';
 import {
+  getAboutPath,
   getContactPath,
   getHomePath,
   getPrivacyPath,
+  getServicePath,
+  ServiceSlug,
   useI18n,
 } from '../i18n';
 import { openCookieSettings, trackMessengerClick } from '../utils/analytics';
@@ -25,12 +28,16 @@ export const Footer: React.FC = () => {
     homePath,
     contactPath,
     privacyPath,
+    aboutPath,
+    getEquivalentPath,
     isContactPage,
+    isAboutPage,
+    isServicePage,
     isPrivacyPage,
     isNotFoundPage,
   } = useI18n();
   const navigate = useNavigate();
-  const isSubPage = isContactPage || isPrivacyPage || isNotFoundPage;
+  const isSubPage = isContactPage || isAboutPage || isServicePage || isPrivacyPage || isNotFoundPage;
 
   const getSectionHref = (sectionId: string) =>
     isSubPage ? `${homePath}#${sectionId}` : `#${sectionId}`;
@@ -40,6 +47,10 @@ export const Footer: React.FC = () => {
     sectionId: string
   ) => {
     e.preventDefault();
+    if (sectionId === 'about') {
+      navigate(aboutPath);
+      return;
+    }
     if (sectionId === 'contact') {
       navigate(contactPath);
       return;
@@ -69,33 +80,44 @@ export const Footer: React.FC = () => {
     }
   };
 
+  const serviceLinks: { slug: ServiceSlug; label: string; href: string }[] = [
+    {
+      slug: 'web-development',
+      label: t.navbar.dropdown.webDev,
+      href: getServicePath('web-development', locale),
+    },
+    {
+      slug: 'video-social-media',
+      label: t.navbar.dropdown.videoSocial,
+      href: getServicePath('video-social-media', locale),
+    },
+    {
+      slug: 'marketing-automation',
+      label: t.navbar.dropdown.marketingAuto,
+      href: getServicePath('marketing-automation', locale),
+    },
+    {
+      slug: 'cold-calling',
+      label: t.navbar.dropdown.coldCalling,
+      href: getServicePath('cold-calling', locale),
+    },
+  ];
+
   const languages: { code: 'en' | 'sr' | 'ru'; label: string; href: string }[] = [
     {
       code: 'en',
       label: 'EN',
-      href: isPrivacyPage
-        ? getPrivacyPath('en')
-        : isContactPage
-          ? getContactPath('en')
-          : getHomePath('en'),
+      href: getEquivalentPath('en'),
     },
     {
       code: 'sr',
       label: 'SR',
-      href: isPrivacyPage
-        ? getPrivacyPath('sr')
-        : isContactPage
-          ? getContactPath('sr')
-          : getHomePath('sr'),
+      href: getEquivalentPath('sr'),
     },
     {
       code: 'ru',
       label: 'RU',
-      href: isPrivacyPage
-        ? getPrivacyPath('ru')
-        : isContactPage
-          ? getContactPath('ru')
-          : getHomePath('ru'),
+      href: getEquivalentPath('ru'),
     },
   ];
 
@@ -112,57 +134,59 @@ export const Footer: React.FC = () => {
           {/* Left Column: Semantic Navigation Links */}
           <nav
             aria-label="Footer navigation"
-            className="flex flex-col items-start space-y-2.5 text-[14px] sm:text-[14.5px]"
+            className="flex flex-col items-start space-y-4 text-[14px] sm:text-[14.5px]"
           >
-            <a
-              href={getSectionHref('services')}
-              onClick={(e) => handleNavClick(e, 'services')}
-              className="text-white hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
-            >
-              {t.navbar.links.services}
-            </a>
-            <a
-              href={getSectionHref('process')}
-              onClick={(e) => handleNavClick(e, 'process')}
-              className="text-white hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
-            >
-              {t.navbar.links.process}
-            </a>
-            <a
-              href={getSectionHref('team')}
-              onClick={(e) => handleNavClick(e, 'team')}
-              className="text-white hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
-            >
-              {t.navbar.links.team}
-            </a>
-            <a
-              href={getSectionHref('pricing')}
-              onClick={(e) => handleNavClick(e, 'pricing')}
-              className="text-white hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
-            >
-              {t.navbar.links.pricing}
-            </a>
-            <a
-              href={getSectionHref('faq')}
-              onClick={(e) => handleNavClick(e, 'faq')}
-              className="text-white hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
-            >
-              {t.navbar.links.faq}
-            </a>
-            <a
-              href={contactPath}
-              onClick={(e) => handleNavClick(e, 'contact')}
-              className="text-white hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
-            >
-              {t.navbar.links.contact}
-            </a>
-            <a
-              href={privacyPath}
-              onClick={(e) => handleNavClick(e, 'privacy')}
-              className="text-neutral-400 hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
-            >
-              {t.footer.privacy}
-            </a>
+            {/* Services group */}
+            <div className="flex flex-col space-y-2">
+              <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#9ce607]">
+                {t.navbar.links.services}
+              </span>
+              {serviceLinks.map((service) => (
+                <a
+                  key={service.slug}
+                  href={service.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate(service.href);
+                  }}
+                  className="text-white hover:text-[#9ce607] transition-colors cursor-pointer font-normal text-[13.5px] sm:text-[14px]"
+                >
+                  {service.label}
+                </a>
+              ))}
+            </div>
+
+            {/* General Navigation group */}
+            <div className="flex flex-col space-y-2 pt-2 border-t border-white/[0.06] w-full max-w-[220px]">
+              <a
+                href={getSectionHref('process')}
+                onClick={(e) => handleNavClick(e, 'process')}
+                className="text-neutral-300 hover:text-[#9ce607] transition-colors cursor-pointer font-normal text-[13.5px] sm:text-[14px]"
+              >
+                {t.navbar.links.process}
+              </a>
+              <a
+                href={aboutPath}
+                onClick={(e) => handleNavClick(e, 'about')}
+                className="text-neutral-300 hover:text-[#9ce607] transition-colors cursor-pointer font-normal text-[13.5px] sm:text-[14px]"
+              >
+                {t.navbar.links.about}
+              </a>
+              <a
+                href={contactPath}
+                onClick={(e) => handleNavClick(e, 'contact')}
+                className="text-neutral-300 hover:text-[#9ce607] transition-colors cursor-pointer font-normal text-[13.5px] sm:text-[14px]"
+              >
+                {t.navbar.links.contact}
+              </a>
+              <a
+                href={privacyPath}
+                onClick={(e) => handleNavClick(e, 'privacy')}
+                className="text-neutral-400 hover:text-[#9ce607] transition-colors cursor-pointer font-normal text-[13.5px] sm:text-[14px]"
+              >
+                {t.footer.privacy}
+              </a>
+            </div>
           </nav>
 
           {/* Center Column: Studio Summary + Email/Phone + 4 Social Icons */}
@@ -348,7 +372,9 @@ export const Footer: React.FC = () => {
         {/* TIER 3: CENTERED GIANT BOTTOM VDigital. LOGOTYPE                  */}
         {/* ================================================================= */}
         <div
-          aria-hidden="true"
+          role="img"
+          aria-label="VDigital"
+          title="VDigital"
           className="w-full pt-2 pb-4 sm:pb-6 flex justify-center items-center select-none overflow-visible"
         >
           <div

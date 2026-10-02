@@ -4,6 +4,7 @@ export interface TeamMemberTranslation {
   role: string;
   text: string;
   photo: string;
+  photoAlt: string;
   portfolioUrl?: string;
   portfolioLabel?: string;
 }
@@ -14,11 +15,18 @@ export const en = {
     links: {
       services: 'Services',
       process: 'Process',
-      projects: 'Projects',
+      about: 'About',
       team: 'Team',
       pricing: 'Pricing',
       faq: 'FAQ',
       contact: 'Contact',
+    },
+    dropdown: {
+      servicesTitle: 'Our Services',
+      webDev: 'Web Development',
+      videoSocial: 'Video & Social Media',
+      marketingAuto: 'Marketing & Automation',
+      coldCalling: 'B2B Sales & Outreach',
     },
     cta: 'Book a call',
   },
@@ -28,7 +36,7 @@ export const en = {
     line3: 'that bring you new clients',
     line4: 'while you focus on your work',
     leftText:
-      "We're a team of three: a full-stack developer, a video creator and a sales specialist. Together we build the whole system that turns strangers into your clients.",
+      'VDigital is a Niš-based digital studio crafting websites, video and marketing for doctors and health coaches. We build the full client acquisition system while you focus on your work.',
     rightText:
       'From the first call to a fully running system in 3 weeks. You keep full access to every account, number and result.',
     primaryCta: 'Book a free call',
@@ -87,7 +95,7 @@ export const en = {
     label: 'Services',
     heading: 'One team. The whole system.',
     hint: 'Scroll to see all services',
-    cardButton: 'Book a call',
+    cardButton: 'Learn more',
     cards: [
       {
         id: 'web-development',
@@ -177,6 +185,7 @@ export const en = {
         role: 'Founder · Full-Stack Developer',
         text: 'Builds websites, web apps and automations. Building for the web since 2020, with 30+ projects delivered.',
         photo: '/images/team-veljko.jpg',
+        photoAlt: 'Veljko Petković, founder of VDigital',
         portfolioUrl: 'https://www.veljkopetkovic.com',
         portfolioLabel: 'See my work →',
       },
@@ -186,6 +195,7 @@ export const en = {
         role: 'Video & Social Media',
         text: 'Films, edits and runs content that makes people stop scrolling and start trusting you.',
         photo: '/images/team-velimir.jpg',
+        photoAlt: 'Velimir Nikolić, video & social media at VDigital',
       },
       {
         id: 'member3',
@@ -193,6 +203,7 @@ export const en = {
         role: 'Sales & Outreach',
         text: 'Handles cold calling and follow-ups, turning interest into booked appointments.',
         photo: '/images/team-vuk.jpg',
+        photoAlt: 'Vuk Stefanović, sales & cold outreach at VDigital',
       },
     ] as TeamMemberTranslation[],
   },
@@ -283,7 +294,7 @@ export const en = {
   footer: {
     text: 'VDigital: websites, video and marketing for doctors, health coaches and experts.',
     location: 'Niš, Serbia · Working with clients worldwide',
-    copyright: '© 2026 VDigital. All rights reserved.',
+    copyright: '© 2026 VDigital — Niš, Serbia',
     privacy: 'Privacy Policy',
     cookieSettings: 'Cookie settings',
   },

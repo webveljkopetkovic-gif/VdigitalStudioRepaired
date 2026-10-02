@@ -1,11 +1,6 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import {
-  CONTACT_EMAIL,
-  PHONE_DISPLAY,
-  SOCIAL_URLS,
-} from './config';
-import { getContactPath, I18nProvider, SupportedLocale } from './i18n';
+import { getContactPath, I18nProvider, ServiceSlug, SupportedLocale } from './i18n';
 import { HeaderLogo } from './components/HeaderLogo';
 import { HeroTypography } from './components/HeroTypography';
 import { KineticCarouselText } from './components/KineticCarouselText';
@@ -22,6 +17,8 @@ import { RevenueCTASection } from './components/RevenueCTASection';
 import { FAQSection } from './components/FAQSection';
 import { ContactSection } from './components/ContactSection';
 import { ContactPage } from './components/ContactPage';
+import { AboutPage } from './components/AboutPage';
+import { ServicePage } from './components/ServicePage';
 import { PrivacyPage } from './components/PrivacyPage';
 import { NotFoundPage } from './components/NotFoundPage';
 import { Footer } from './components/Footer';
@@ -56,37 +53,9 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
     }
   }, [location.hash]);
 
-  const organizationSchema = {
-    '@context': 'https://schema.org',
-    '@type': ['Organization', 'ProfessionalService'],
-    name: 'VDigital',
-    url: 'https://vdigital.dev',
-    logo: 'https://vdigital.dev/favicon.svg',
-    image: 'https://vdigital.dev/og-image.png',
-    email: CONTACT_EMAIL,
-    telephone: PHONE_DISPLAY,
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Niš',
-      addressCountry: 'RS',
-    },
-    areaServed: ['RS', 'Worldwide'],
-    founder: {
-      '@type': 'Person',
-      name: 'Veljko Petković',
-      url: 'https://www.veljkopetkovic.com',
-    },
-    sameAs: SOCIAL_URLS,
-  };
-
   return (
     <I18nProvider locale={locale}>
       <div className="min-h-screen w-full bg-[#060709] text-white selection:bg-[#a8f300] selection:text-black relative flex flex-col overflow-x-clip scroll-smooth">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-        />
-
         <main id="main-viewport" className="w-full flex flex-col">
           {/* 1 & 2 & 3. Navbar + Hero (#top) + Trust Bar (#trust) */}
           <section
@@ -163,6 +132,25 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
   );
 };
 
+const AboutPageRoute: React.FC<{ locale: SupportedLocale }> = ({ locale }) => (
+  <I18nProvider locale={locale}>
+    <AboutPage />
+    <LanguageSuggestionBanner />
+    <CookieConsentBanner />
+  </I18nProvider>
+);
+
+const ServicePageRoute: React.FC<{ locale: SupportedLocale; slug: ServiceSlug }> = ({
+  locale,
+  slug,
+}) => (
+  <I18nProvider locale={locale}>
+    <ServicePage slug={slug} />
+    <LanguageSuggestionBanner />
+    <CookieConsentBanner />
+  </I18nProvider>
+);
+
 const ContactPageRoute: React.FC<{ locale: SupportedLocale }> = ({ locale }) => (
   <I18nProvider locale={locale}>
     <ContactPage />
@@ -210,18 +198,81 @@ export default function App() {
     <>
       <Preloader />
       <Routes>
+        {/* Home */}
         <Route path="/" element={<LandingPageContent locale="en" />} />
         <Route path="/sr" element={<LandingPageContent locale="sr" />} />
         <Route path="/ru" element={<LandingPageContent locale="ru" />} />
 
+        {/* About */}
+        <Route path="/about" element={<AboutPageRoute locale="en" />} />
+        <Route path="/sr/o-nama" element={<AboutPageRoute locale="sr" />} />
+        <Route path="/ru/o-nas" element={<AboutPageRoute locale="ru" />} />
+
+        {/* Services - SR */}
+        <Route
+          path="/sr/usluge/izrada-sajtova"
+          element={<ServicePageRoute locale="sr" slug="web-development" />}
+        />
+        <Route
+          path="/sr/usluge/video-i-drustvene-mreze"
+          element={<ServicePageRoute locale="sr" slug="video-social-media" />}
+        />
+        <Route
+          path="/sr/usluge/marketing-i-automatizacija"
+          element={<ServicePageRoute locale="sr" slug="marketing-automation" />}
+        />
+        <Route
+          path="/sr/usluge/hladni-pozivi"
+          element={<ServicePageRoute locale="sr" slug="cold-calling" />}
+        />
+
+        {/* Services - EN */}
+        <Route
+          path="/services/web-development"
+          element={<ServicePageRoute locale="en" slug="web-development" />}
+        />
+        <Route
+          path="/services/video-social-media"
+          element={<ServicePageRoute locale="en" slug="video-social-media" />}
+        />
+        <Route
+          path="/services/marketing-automation"
+          element={<ServicePageRoute locale="en" slug="marketing-automation" />}
+        />
+        <Route
+          path="/services/cold-calling"
+          element={<ServicePageRoute locale="en" slug="cold-calling" />}
+        />
+
+        {/* Services - RU */}
+        <Route
+          path="/ru/uslugi/sozdanie-sajtov"
+          element={<ServicePageRoute locale="ru" slug="web-development" />}
+        />
+        <Route
+          path="/ru/uslugi/video-i-socseti"
+          element={<ServicePageRoute locale="ru" slug="video-social-media" />}
+        />
+        <Route
+          path="/ru/uslugi/marketing-i-avtomatizaciya"
+          element={<ServicePageRoute locale="ru" slug="marketing-automation" />}
+        />
+        <Route
+          path="/ru/uslugi/holodnye-zvonki"
+          element={<ServicePageRoute locale="ru" slug="cold-calling" />}
+        />
+
+        {/* Contact */}
         <Route path="/contact" element={<ContactPageRoute locale="en" />} />
         <Route path="/sr/kontakt" element={<ContactPageRoute locale="sr" />} />
         <Route path="/ru/kontakty" element={<ContactPageRoute locale="ru" />} />
 
+        {/* Privacy */}
         <Route path="/privacy" element={<PrivacyPageRoute locale="en" />} />
         <Route path="/sr/privatnost" element={<PrivacyPageRoute locale="sr" />} />
         <Route path="/ru/konfidencialnost" element={<PrivacyPageRoute locale="ru" />} />
 
+        {/* 404 Not Found */}
         <Route path="/sr/*" element={<NotFoundPageRoute forcedLocale="sr" />} />
         <Route path="/en/*" element={<NotFoundPageRoute forcedLocale="en" />} />
         <Route path="/ru/*" element={<NotFoundPageRoute forcedLocale="ru" />} />

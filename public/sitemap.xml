@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- 1. Home Pages -->
   <url>
     <loc>https://vdigital.dev/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/" />
     <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr" />
     <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/" />
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-02</lastmod>
   </url>
   <url>
     <loc>https://vdigital.dev/sr</loc>
@@ -15,7 +16,7 @@
     <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr" />
     <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/" />
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-02</lastmod>
   </url>
   <url>
     <loc>https://vdigital.dev/ru</loc>
@@ -23,15 +24,147 @@
     <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr" />
     <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/" />
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-02</lastmod>
   </url>
+
+  <!-- 2. About Pages -->
+  <url>
+    <loc>https://vdigital.dev/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/about" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/o-nama" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/o-nas" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/about" />
+    <lastmod>2026-10-02</lastmod>
+  </url>
+  <url>
+    <loc>https://vdigital.dev/sr/o-nama</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/about" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/o-nama" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/o-nas" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/about" />
+    <lastmod>2026-10-02</lastmod>
+  </url>
+  <url>
+    <loc>https://vdigital.dev/ru/o-nas</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/about" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/o-nama" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/o-nas" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/about" />
+    <lastmod>2026-10-02</lastmod>
+  </url>
+
+  <!-- 3. Service: Web Development -->
+  <url>
+    <loc>https://vdigital.dev/services/web-development</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/services/web-development" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/usluge/izrada-sajtova" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/uslugi/sozdanie-sajtov" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/services/web-development" />
+    <lastmod>2026-10-02</lastmod>
+  </url>
+  <url>
+    <loc>https://vdigital.dev/sr/usluge/izrada-sajtova</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/services/web-development" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/usluge/izrada-sajtova" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/uslugi/sozdanie-sajtov" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/services/web-development" />
+    <lastmod>2026-10-02</lastmod>
+  </url>
+  <url>
+    <loc>https://vdigital.dev/ru/uslugi/sozdanie-sajtov</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/services/web-development" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/usluge/izrada-sajtova" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/uslugi/sozdanie-sajtov" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/services/web-development" />
+    <lastmod>2026-10-02</lastmod>
+  </url>
+
+  <!-- 4. Service: Video & Social Media -->
+  <url>
+    <loc>https://vdigital.dev/services/video-social-media</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/services/video-social-media" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/usluge/video-i-drustvene-mreze" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/uslugi/video-i-socseti" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/services/video-social-media" />
+    <lastmod>2026-10-02</lastmod>
+  </url>
+  <url>
+    <loc>https://vdigital.dev/sr/usluge/video-i-drustvene-mreze</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/services/video-social-media" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/usluge/video-i-drustvene-mreze" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/uslugi/video-i-socseti" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/services/video-social-media" />
+    <lastmod>2026-10-02</lastmod>
+  </url>
+  <url>
+    <loc>https://vdigital.dev/ru/uslugi/video-i-socseti</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/services/video-social-media" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/usluge/video-i-drustvene-mreze" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/uslugi/video-i-socseti" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/services/video-social-media" />
+    <lastmod>2026-10-02</lastmod>
+  </url>
+
+  <!-- 5. Service: Marketing & Automation -->
+  <url>
+    <loc>https://vdigital.dev/services/marketing-automation</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/services/marketing-automation" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/usluge/marketing-i-automatizacija" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/uslugi/marketing-i-avtomatizaciya" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/services/marketing-automation" />
+    <lastmod>2026-10-02</lastmod>
+  </url>
+  <url>
+    <loc>https://vdigital.dev/sr/usluge/marketing-i-automatizacija</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/services/marketing-automation" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/usluge/marketing-i-automatizacija" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/uslugi/marketing-i-avtomatizaciya" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/services/marketing-automation" />
+    <lastmod>2026-10-02</lastmod>
+  </url>
+  <url>
+    <loc>https://vdigital.dev/ru/uslugi/marketing-i-avtomatizaciya</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/services/marketing-automation" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/usluge/marketing-i-automatizacija" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/uslugi/marketing-i-avtomatizaciya" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/services/marketing-automation" />
+    <lastmod>2026-10-02</lastmod>
+  </url>
+
+  <!-- 6. Service: Cold Calling -->
+  <url>
+    <loc>https://vdigital.dev/services/cold-calling</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/services/cold-calling" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/usluge/hladni-pozivi" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/uslugi/holodnye-zvonki" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/services/cold-calling" />
+    <lastmod>2026-10-02</lastmod>
+  </url>
+  <url>
+    <loc>https://vdigital.dev/sr/usluge/hladni-pozivi</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/services/cold-calling" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/usluge/hladni-pozivi" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/uslugi/holodnye-zvonki" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/services/cold-calling" />
+    <lastmod>2026-10-02</lastmod>
+  </url>
+  <url>
+    <loc>https://vdigital.dev/ru/uslugi/holodnye-zvonki</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/services/cold-calling" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/usluge/hladni-pozivi" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/uslugi/holodnye-zvonki" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/services/cold-calling" />
+    <lastmod>2026-10-02</lastmod>
+  </url>
+
+  <!-- 7. Contact Pages -->
   <url>
     <loc>https://vdigital.dev/contact</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/contact" />
     <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/kontakt" />
     <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/kontakty" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/contact" />
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-02</lastmod>
   </url>
   <url>
     <loc>https://vdigital.dev/sr/kontakt</loc>
@@ -39,7 +172,7 @@
     <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/kontakt" />
     <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/kontakty" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/contact" />
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-02</lastmod>
   </url>
   <url>
     <loc>https://vdigital.dev/ru/kontakty</loc>
@@ -47,15 +180,17 @@
     <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/kontakt" />
     <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/kontakty" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/contact" />
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-02</lastmod>
   </url>
+
+  <!-- 8. Privacy Pages -->
   <url>
     <loc>https://vdigital.dev/privacy</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://vdigital.dev/privacy" />
     <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/privatnost" />
     <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/konfidencialnost" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/privacy" />
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-02</lastmod>
   </url>
   <url>
     <loc>https://vdigital.dev/sr/privatnost</loc>
@@ -63,7 +198,7 @@
     <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/privatnost" />
     <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/konfidencialnost" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/privacy" />
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-02</lastmod>
   </url>
   <url>
     <loc>https://vdigital.dev/ru/konfidencialnost</loc>
@@ -71,6 +206,6 @@
     <xhtml:link rel="alternate" hreflang="sr" href="https://vdigital.dev/sr/privatnost" />
     <xhtml:link rel="alternate" hreflang="ru" href="https://vdigital.dev/ru/konfidencialnost" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://vdigital.dev/privacy" />
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-02</lastmod>
   </url>
 </urlset>

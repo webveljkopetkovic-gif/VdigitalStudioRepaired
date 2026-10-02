@@ -6,11 +6,18 @@ export const sr: Translations = {
     links: {
       services: 'Usluge',
       process: 'Proces',
-      projects: 'Projekti',
+      about: 'O nama',
       team: 'Tim',
       pricing: 'Modeli saradnje',
       faq: 'FAQ',
       contact: 'Kontakt',
+    },
+    dropdown: {
+      servicesTitle: 'Naše usluge',
+      webDev: 'Izrada sajtova',
+      videoSocial: 'Video i društvene mreže',
+      marketingAuto: 'Marketing i automatizacija',
+      coldCalling: 'B2B prodaja i hladni pozivi',
     },
     cta: 'Zakažite poziv',
   },
@@ -20,7 +27,7 @@ export const sr: Translations = {
     line3: 'a da ne gubite vreme',
     line4: 'na marketing.',
     leftText:
-      'Mi smo tim od troje ljudi: full-stack developer, video kreator i stručnjak za prodaju. Zajedno gradimo ceo sistem koji nepoznate ljude pretvara u vaše klijente.',
+      'VDigital je studio iz Niša koji pravi sajtove, video i marketing za doktore i koučeve. Naš tročlani tim gradi ceo sistem koji nepoznate ljude pretvara u verne pacijente i klijente.',
     rightText:
       'Od prvog poziva do potpuno funkcionalnog sistema za 3 nedelje. Zadržavate pun pristup svakom nalogu, broju i rezultatu.',
     primaryCta: 'Zakažite besplatan poziv',
@@ -79,7 +86,7 @@ export const sr: Translations = {
     label: 'Usluge',
     heading: 'Jedan tim. Ceo sistem.',
     hint: 'Skrolujte da vidite sve usluge',
-    cardButton: 'Zakažite poziv',
+    cardButton: 'Saznajte više',
     cards: [
       {
         id: 'web-development',
@@ -169,6 +176,7 @@ export const sr: Translations = {
         role: 'Osnivač · Full-Stack Developer',
         text: 'Gradi veb-sajtove, veb aplikacije i automatizacije. Na vebu gradi od 2020. godine, sa više od 30 isporučenih projekata.',
         photo: '/images/team-veljko.jpg',
+        photoAlt: 'Veljko Petković, osnivač VDigital',
         portfolioUrl: 'https://www.veljkopetkovic.com',
         portfolioLabel: 'Pogledajte radove →',
       },
@@ -178,6 +186,7 @@ export const sr: Translations = {
         role: 'Video i Društvene mreže',
         text: 'Snima, montira i vodi sadržaj zbog kog ljudi prestaju da skroluju i počinju da vam veruju.',
         photo: '/images/team-velimir.jpg',
+        photoAlt: 'Velimir Nikolić, video i društvene mreže u VDigital',
       },
       {
         id: 'member3',
@@ -185,6 +194,7 @@ export const sr: Translations = {
         role: 'Prodaja i hladni pozivi',
         text: 'Vodi hladne pozive i follow-up komunikaciju, pretvarajući interesovanje u zakazane termine.',
         photo: '/images/team-vuk.jpg',
+        photoAlt: 'Vuk Stefanović, prodaja i hladni pozivi u VDigital',
       },
     ],
   },
@@ -275,7 +285,7 @@ export const sr: Translations = {
   footer: {
     text: 'VDigital: sajtovi, video i marketing za doktore, health koučeve i eksperte.',
     location: 'Niš, Srbija · Radimo sa klijentima širom sveta',
-    copyright: '© 2026 VDigital. Sva prava zadržana.',
+    copyright: '© 2026 VDigital — Niš, Srbija',
     privacy: 'Politika privatnosti',
     cookieSettings: 'Podešavanje kolačića',
   },

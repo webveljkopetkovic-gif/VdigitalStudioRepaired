@@ -153,6 +153,12 @@ const NOT_FOUND_META: Record<
   },
 };
 
+export type ServiceSlug =
+  | 'web-development'
+  | 'video-social-media'
+  | 'marketing-automation'
+  | 'cold-calling';
+
 export function getHomePath(locale: SupportedLocale): string {
   if (locale === 'sr') return '/sr';
   if (locale === 'ru') return '/ru';
@@ -171,9 +177,128 @@ export function getPrivacyPath(locale: SupportedLocale): string {
   return '/privacy';
 }
 
+export function getAboutPath(locale: SupportedLocale): string {
+  if (locale === 'sr') return '/sr/o-nama';
+  if (locale === 'ru') return '/ru/o-nas';
+  return '/about';
+}
+
+export function getServicePath(slug: ServiceSlug, locale: SupportedLocale): string {
+  if (locale === 'sr') {
+    switch (slug) {
+      case 'web-development':
+        return '/sr/usluge/izrada-sajtova';
+      case 'video-social-media':
+        return '/sr/usluge/video-i-drustvene-mreze';
+      case 'marketing-automation':
+        return '/sr/usluge/marketing-i-automatizacija';
+      case 'cold-calling':
+        return '/sr/usluge/hladni-pozivi';
+    }
+  }
+  if (locale === 'ru') {
+    switch (slug) {
+      case 'web-development':
+        return '/ru/uslugi/sozdanie-sajtov';
+      case 'video-social-media':
+        return '/ru/uslugi/video-i-socseti';
+      case 'marketing-automation':
+        return '/ru/uslugi/marketing-i-avtomatizaciya';
+      case 'cold-calling':
+        return '/ru/uslugi/holodnye-zvonki';
+    }
+  }
+  switch (slug) {
+    case 'web-development':
+      return '/services/web-development';
+    case 'video-social-media':
+      return '/services/video-social-media';
+    case 'marketing-automation':
+      return '/services/marketing-automation';
+    case 'cold-calling':
+      return '/services/cold-calling';
+  }
+}
+
+export function getEquivalentPath(pathname: string, targetLocale: SupportedLocale): string {
+  const clean = pathname.replace(/\/+$/, '') || '/';
+
+  if (clean === '/about' || clean === '/sr/o-nama' || clean === '/ru/o-nas') {
+    return getAboutPath(targetLocale);
+  }
+
+  if (
+    clean === '/contact' ||
+    clean === '/sr/kontakt' ||
+    clean === '/ru/kontakty' ||
+    clean === '/en/contact'
+  ) {
+    return getContactPath(targetLocale);
+  }
+
+  if (
+    clean === '/privacy' ||
+    clean === '/sr/privatnost' ||
+    clean === '/ru/konfidencialnost' ||
+    clean === '/en/privacy' ||
+    clean.includes('privatnost') ||
+    clean.includes('konfidencialnost')
+  ) {
+    return getPrivacyPath(targetLocale);
+  }
+
+  if (
+    clean === '/services/web-development' ||
+    clean === '/sr/usluge/izrada-sajtova' ||
+    clean === '/ru/uslugi/sozdanie-sajtov'
+  ) {
+    return getServicePath('web-development', targetLocale);
+  }
+
+  if (
+    clean === '/services/video-social-media' ||
+    clean === '/sr/usluge/video-i-drustvene-mreze' ||
+    clean === '/ru/uslugi/video-i-socseti'
+  ) {
+    return getServicePath('video-social-media', targetLocale);
+  }
+
+  if (
+    clean === '/services/marketing-automation' ||
+    clean === '/sr/usluge/marketing-i-automatizacija' ||
+    clean === '/ru/uslugi/marketing-i-avtomatizaciya'
+  ) {
+    return getServicePath('marketing-automation', targetLocale);
+  }
+
+  if (
+    clean === '/services/cold-calling' ||
+    clean === '/sr/usluge/hladni-pozivi' ||
+    clean === '/ru/uslugi/holodnye-zvonki'
+  ) {
+    return getServicePath('cold-calling', targetLocale);
+  }
+
+  return getHomePath(targetLocale);
+}
+
 export function isHomeRoute(pathname: string): boolean {
   const clean = pathname.replace(/\/+$/, '') || '/';
   return clean === '/' || clean === '/en' || clean === '/sr' || clean === '/ru';
+}
+
+export function isAboutRoute(pathname: string): boolean {
+  const clean = pathname.replace(/\/+$/, '');
+  return clean === '/about' || clean === '/sr/o-nama' || clean === '/ru/o-nas';
+}
+
+export function isServiceRoute(pathname: string): boolean {
+  const clean = pathname.replace(/\/+$/, '');
+  return (
+    clean.startsWith('/services/') ||
+    clean.startsWith('/sr/usluge/') ||
+    clean.startsWith('/ru/uslugi/')
+  );
 }
 
 export function isContactRoute(pathname: string): boolean {
@@ -210,8 +335,13 @@ interface I18nContextValue {
   homePath: string;
   contactPath: string;
   privacyPath: string;
+  aboutPath: string;
+  getServicePath: (slug: ServiceSlug) => string;
+  getEquivalentPath: (targetLocale: SupportedLocale) => string;
   isContactPage: boolean;
   isPrivacyPage: boolean;
+  isAboutPage: boolean;
+  isServicePage: boolean;
   isNotFoundPage: boolean;
 }
 
@@ -222,8 +352,13 @@ const I18nContext = createContext<I18nContextValue>({
   homePath: '/',
   contactPath: '/contact',
   privacyPath: '/privacy',
+  aboutPath: '/about',
+  getServicePath: () => '/services/web-development',
+  getEquivalentPath: () => '/',
   isContactPage: false,
   isPrivacyPage: false,
+  isAboutPage: false,
+  isServicePage: false,
   isNotFoundPage: false,
 });
 
@@ -236,146 +371,29 @@ export const I18nProvider: React.FC<{
   const t = dictionaries[locale] || en;
   const isContactPage = isContactRoute(location.pathname);
   const isPrivacyPage = isPrivacyRoute(location.pathname);
+  const isAboutPage = isAboutRoute(location.pathname);
+  const isServicePage = isServiceRoute(location.pathname);
   const isNotFoundPage =
-    !isHomeRoute(location.pathname) && !isContactPage && !isPrivacyPage;
+    !isHomeRoute(location.pathname) &&
+    !isContactPage &&
+    !isPrivacyPage &&
+    !isAboutPage &&
+    !isServicePage;
+
   const homePath = getHomePath(locale);
   const contactPath = getContactPath(locale);
   const privacyPath = getPrivacyPath(locale);
+  const aboutPath = getAboutPath(locale);
 
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      document.documentElement.lang = locale;
-      const metaGroup = isNotFoundPage
-        ? NOT_FOUND_META
-        : isPrivacyPage
-          ? PRIVACY_META
-          : isContactPage
-            ? CONTACT_META
-            : HOME_META;
-      const meta = metaGroup[locale] || metaGroup.en;
-      document.title = meta.title;
+  const getServicePathForCurrentLocale = (slug: ServiceSlug) =>
+    getServicePath(slug, locale);
 
-      const setMeta = (selector: string, attr: string, value: string) => {
-        const el = document.querySelector(selector);
-        if (el) el.setAttribute(attr, value);
-      };
-
-      const upsertLink = (
-        selector: string,
-        attrs: Record<string, string>
-      ) => {
-        let el = document.querySelector(selector) as HTMLLinkElement | null;
-        if (!el) {
-          el = document.createElement('link');
-          document.head.appendChild(el);
-        }
-        Object.entries(attrs).forEach(([k, v]) => el!.setAttribute(k, v));
-      };
-
-      setMeta('meta[name="description"]', 'content', meta.description);
-      setMeta(
-        'meta[name="robots"]',
-        'content',
-        'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-      );
-      upsertLink('link[rel="canonical"]', {
-        rel: 'canonical',
-        href: meta.canonical,
-      });
-      setMeta('meta[property="og:title"]', 'content', meta.title);
-      setMeta('meta[property="og:description"]', 'content', meta.description);
-      setMeta('meta[property="og:url"]', 'content', meta.canonical);
-      setMeta('meta[property="og:locale"]', 'content', meta.ogLocale);
-      const alternateOgLocales = ['en_US', 'sr_RS', 'ru_RU'].filter(
-        (loc) => loc !== meta.ogLocale
-      );
-      const altLocaleEls = document.querySelectorAll(
-        'meta[property="og:locale:alternate"]'
-      );
-      alternateOgLocales.forEach((altLoc, idx) => {
-        if (altLocaleEls[idx]) {
-          altLocaleEls[idx].setAttribute('content', altLoc);
-        }
-      });
-      setMeta('meta[property="og:image:alt"]', 'content', meta.title);
-      setMeta('meta[name="twitter:title"]', 'content', meta.title);
-      setMeta('meta[name="twitter:description"]', 'content', meta.description);
-      setMeta('meta[name="twitter:image:alt"]', 'content', meta.title);
-
-      if (isPrivacyPage) {
-        upsertLink('link[rel="alternate"][hreflang="en"]', {
-          rel: 'alternate',
-          hreflang: 'en',
-          href: 'https://vdigital.dev/privacy',
-        });
-        upsertLink('link[rel="alternate"][hreflang="sr"]', {
-          rel: 'alternate',
-          hreflang: 'sr',
-          href: 'https://vdigital.dev/sr/privatnost',
-        });
-        upsertLink('link[rel="alternate"][hreflang="ru"]', {
-          rel: 'alternate',
-          hreflang: 'ru',
-          href: 'https://vdigital.dev/ru/konfidencialnost',
-        });
-        upsertLink('link[rel="alternate"][hreflang="x-default"]', {
-          rel: 'alternate',
-          hreflang: 'x-default',
-          href: 'https://vdigital.dev/privacy',
-        });
-      } else if (isContactPage) {
-        upsertLink('link[rel="alternate"][hreflang="en"]', {
-          rel: 'alternate',
-          hreflang: 'en',
-          href: 'https://vdigital.dev/contact',
-        });
-        upsertLink('link[rel="alternate"][hreflang="sr"]', {
-          rel: 'alternate',
-          hreflang: 'sr',
-          href: 'https://vdigital.dev/sr/kontakt',
-        });
-        upsertLink('link[rel="alternate"][hreflang="ru"]', {
-          rel: 'alternate',
-          hreflang: 'ru',
-          href: 'https://vdigital.dev/ru/kontakty',
-        });
-        upsertLink('link[rel="alternate"][hreflang="x-default"]', {
-          rel: 'alternate',
-          hreflang: 'x-default',
-          href: 'https://vdigital.dev/contact',
-        });
-      } else {
-        upsertLink('link[rel="alternate"][hreflang="en"]', {
-          rel: 'alternate',
-          hreflang: 'en',
-          href: 'https://vdigital.dev/',
-        });
-        upsertLink('link[rel="alternate"][hreflang="sr"]', {
-          rel: 'alternate',
-          hreflang: 'sr',
-          href: 'https://vdigital.dev/sr',
-        });
-        upsertLink('link[rel="alternate"][hreflang="ru"]', {
-          rel: 'alternate',
-          hreflang: 'ru',
-          href: 'https://vdigital.dev/ru',
-        });
-        upsertLink('link[rel="alternate"][hreflang="x-default"]', {
-          rel: 'alternate',
-          hreflang: 'x-default',
-          href: 'https://vdigital.dev/',
-        });
-      }
-    }
-  }, [locale, isContactPage, isPrivacyPage, isNotFoundPage]);
+  const getEquivalentPathForCurrentRoute = (targetLocale: SupportedLocale) =>
+    getEquivalentPath(location.pathname, targetLocale);
 
   const selectLocale = (nextLocale: SupportedLocale) => {
     saveLanguageChoice(nextLocale);
-    const targetPath = isPrivacyPage
-      ? getPrivacyPath(nextLocale)
-      : isContactPage
-        ? getContactPath(nextLocale)
-        : getHomePath(nextLocale);
+    const targetPath = getEquivalentPath(location.pathname, nextLocale);
     navigate(`${targetPath}${location.search}`);
   };
 
@@ -388,8 +406,13 @@ export const I18nProvider: React.FC<{
         homePath,
         contactPath,
         privacyPath,
+        aboutPath,
+        getServicePath: getServicePathForCurrentLocale,
+        getEquivalentPath: getEquivalentPathForCurrentRoute,
         isContactPage,
         isPrivacyPage,
+        isAboutPage,
+        isServicePage,
         isNotFoundPage,
       }}
     >

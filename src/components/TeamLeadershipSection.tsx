@@ -14,9 +14,10 @@ interface TeamPhotoCardProps {
   name: string;
   role: string;
   photo: string;
+  photoAlt?: string;
 }
 
-const TeamPhotoCard: React.FC<TeamPhotoCardProps> = ({ name, role, photo }) => {
+const TeamPhotoCard: React.FC<TeamPhotoCardProps> = ({ name, role, photo, photoAlt }) => {
   const [imageError, setImageError] = useState(false);
   const initials = getInitials(name);
 
@@ -50,7 +51,7 @@ const TeamPhotoCard: React.FC<TeamPhotoCardProps> = ({ name, role, photo }) => {
         {!imageError && (
           <img
             src={photo}
-            alt={`${name} — ${role}`}
+            alt={photoAlt || `${name} — ${role}`}
             width={512}
             height={512}
             loading="lazy"
@@ -135,6 +136,7 @@ export const TeamLeadershipSection: React.FC = () => {
                 name={member.name}
                 role={member.role}
                 photo={member.photo}
+                photoAlt={member.photoAlt}
               />
 
               {/* Name */}
