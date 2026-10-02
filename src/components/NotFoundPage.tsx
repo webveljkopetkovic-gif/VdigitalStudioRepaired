@@ -6,7 +6,7 @@ import { HeaderLogo } from './HeaderLogo';
 import { Footer } from './Footer';
 import { FloatingChatButton } from './FloatingChatButton';
 
-const NOT_FOUND_ILLUSTRATION_URL = '/images/404-illustration.png';
+const NOT_FOUND_ILLUSTRATION_URL = '/images/404-illustration.webp';
 
 export const NotFoundPage: React.FC = () => {
   const { locale, t, homePath, contactPath } = useI18n();

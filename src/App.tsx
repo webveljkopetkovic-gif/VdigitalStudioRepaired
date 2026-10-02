@@ -3,7 +3,6 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import {
   CONTACT_EMAIL,
   PHONE_DISPLAY,
-  SHOW_PROJECTS,
   SOCIAL_URLS,
 } from './config';
 import { getContactPath, I18nProvider, SupportedLocale } from './i18n';
@@ -17,7 +16,6 @@ import { WordByWordStatement } from './components/WordByWordStatement';
 import { PainPointsSection } from './components/PainPointsSection';
 import { StickyServicesSection } from './components/StickyServicesSection';
 import { WorkflowPlan } from './components/WorkflowPlan';
-import { ProjectsSection } from './components/ProjectsSection';
 import { TeamLeadershipSection } from './components/TeamLeadershipSection';
 import { FoundingClientsSection } from './components/FoundingClientsSection';
 import { RevenueCTASection } from './components/RevenueCTASection';
@@ -135,11 +133,6 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
           {/* 7. Process (#process) */}
           <WorkflowPlan />
 
-          {/* Hidden unless SHOW_PROJECTS === true in src/config.ts */}
-          {SHOW_PROJECTS && (
-            <ProjectsSection onExploreClick={goToContactPage} />
-          )}
-
           {/* 8. Team (#team) */}
           <TeamLeadershipSection />
 
@@ -218,39 +211,16 @@ export default function App() {
       <Preloader />
       <Routes>
         <Route path="/" element={<LandingPageContent locale="en" />} />
-        <Route path="/en" element={<LandingPageContent locale="en" />} />
-        <Route path="/en/" element={<LandingPageContent locale="en" />} />
         <Route path="/sr" element={<LandingPageContent locale="sr" />} />
-        <Route path="/sr/" element={<LandingPageContent locale="sr" />} />
         <Route path="/ru" element={<LandingPageContent locale="ru" />} />
-        <Route path="/ru/" element={<LandingPageContent locale="ru" />} />
 
         <Route path="/contact" element={<ContactPageRoute locale="en" />} />
-        <Route path="/contact/" element={<ContactPageRoute locale="en" />} />
-        <Route path="/en/contact" element={<ContactPageRoute locale="en" />} />
-        <Route path="/en/contact/" element={<ContactPageRoute locale="en" />} />
         <Route path="/sr/kontakt" element={<ContactPageRoute locale="sr" />} />
-        <Route path="/sr/kontakt/" element={<ContactPageRoute locale="sr" />} />
         <Route path="/ru/kontakty" element={<ContactPageRoute locale="ru" />} />
-        <Route path="/ru/kontakty/" element={<ContactPageRoute locale="ru" />} />
 
         <Route path="/privacy" element={<PrivacyPageRoute locale="en" />} />
-        <Route path="/privacy/" element={<PrivacyPageRoute locale="en" />} />
-        <Route path="/en/privacy" element={<PrivacyPageRoute locale="en" />} />
-        <Route path="/en/privacy/" element={<PrivacyPageRoute locale="en" />} />
         <Route path="/sr/privatnost" element={<PrivacyPageRoute locale="sr" />} />
-        <Route path="/sr/privatnost/" element={<PrivacyPageRoute locale="sr" />} />
-        <Route path="/sr/privacy" element={<PrivacyPageRoute locale="sr" />} />
-        <Route path="/sr/privacy/" element={<PrivacyPageRoute locale="sr" />} />
-        <Route path="/politika-privatnosti" element={<PrivacyPageRoute locale="sr" />} />
-        <Route path="/sr/politika-privatnosti" element={<PrivacyPageRoute locale="sr" />} />
         <Route path="/ru/konfidencialnost" element={<PrivacyPageRoute locale="ru" />} />
-        <Route path="/ru/konfidencialnost/" element={<PrivacyPageRoute locale="ru" />} />
-        <Route path="/ru/privacy" element={<PrivacyPageRoute locale="ru" />} />
-        <Route path="/ru/privacy/" element={<PrivacyPageRoute locale="ru" />} />
-        <Route path="/politika-konfidencialnosti" element={<PrivacyPageRoute locale="ru" />} />
-        <Route path="/politika-konfidencijalnosti" element={<PrivacyPageRoute locale="ru" />} />
-        <Route path="/ru/politika-konfidencialnosti" element={<PrivacyPageRoute locale="ru" />} />
 
         <Route path="/sr/*" element={<NotFoundPageRoute forcedLocale="sr" />} />
         <Route path="/en/*" element={<NotFoundPageRoute forcedLocale="en" />} />

@@ -6,7 +6,6 @@ import {
   LINKEDIN_URL,
   PHONE_DISPLAY,
   PHONE_URL,
-  SHOW_PROJECTS,
   TELEGRAM_URL,
   TIKTOK_URL,
 } from '../config';
@@ -129,15 +128,6 @@ export const Footer: React.FC = () => {
             >
               {t.navbar.links.process}
             </a>
-            {SHOW_PROJECTS && (
-              <a
-                href={getSectionHref('projects')}
-                onClick={(e) => handleNavClick(e, 'projects')}
-                className="text-white hover:text-[#9ce607] transition-colors cursor-pointer font-normal"
-              >
-                {t.navbar.links.projects}
-              </a>
-            )}
             <a
               href={getSectionHref('team')}
               onClick={(e) => handleNavClick(e, 'team')}

@@ -1,17 +1,50 @@
 import React, { useEffect, useState } from 'react';
 
 export const Preloader: React.FC = () => {
-  const isSSR = typeof window === 'undefined';
+  const [mounted, setMounted] = useState(false);
+  const [show, setShow] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
   const [isRemoved, setIsRemoved] = useState(false);
 
   useEffect(() => {
-    const duration = 1100; // 0 -> 100% fill duration in ms
+    let allowShow = false;
+    try {
+      const ua = (typeof navigator !== 'undefined' ? navigator.userAgent : '') || '';
+      const isBot = /bot|crawler|spider|crawling|googlebot|bingbot|yandex|duckduckbot|slurp|baiduspider/i.test(ua);
+      const reducedMotion =
+        typeof window !== 'undefined' &&
+        window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const seen = typeof sessionStorage !== 'undefined' && sessionStorage.getItem('vd_preloader_seen');
+
+      if (!isBot && !reducedMotion && !seen) {
+        sessionStorage.setItem('vd_preloader_seen', 'true');
+        allowShow = true;
+      }
+    } catch {
+      allowShow = false;
+    }
+
+    setMounted(true);
+
+    if (!allowShow) {
+      setIsRemoved(true);
+      return;
+    }
+
+    setShow(true);
+
+    const duration = 380; // duration to 100% in ms
     const startTime = performance.now();
     let rafId: number;
     let exitTimeout: ReturnType<typeof setTimeout>;
     let removeTimeout: ReturnType<typeof setTimeout>;
+
+    // Hard ceiling guarantee at 600ms total
+    const maxTimeout = setTimeout(() => {
+      setIsRemoved(true);
+    }, 600);
 
     const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
@@ -30,8 +63,8 @@ export const Preloader: React.FC = () => {
           setIsExiting(true);
           removeTimeout = setTimeout(() => {
             setIsRemoved(true);
-          }, 420);
-        }, 140);
+          }, 180);
+        }, 40);
       }
     };
 
@@ -41,20 +74,21 @@ export const Preloader: React.FC = () => {
       cancelAnimationFrame(rafId);
       clearTimeout(exitTimeout);
       clearTimeout(removeTimeout);
+      clearTimeout(maxTimeout);
     };
   }, []);
 
-  if (isSSR || isRemoved) return null;
+  if (!mounted || !show || isRemoved) return null;
 
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#060709] select-none pointer-events-none transition-opacity duration-400 ease-out ${
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#060709] select-none pointer-events-none transition-opacity duration-200 ease-out ${
         isExiting ? 'opacity-0' : 'opacity-100'
       }`}
     >
       <div
-        className={`relative inline-flex items-baseline font-geist text-[46px] sm:text-[64px] md:text-[76px] font-bold tracking-[-0.04em] leading-none transition-transform duration-400 ease-out ${
+        className={`relative inline-flex items-baseline font-geist text-[46px] sm:text-[64px] md:text-[76px] font-bold tracking-[-0.04em] leading-none transition-transform duration-200 ease-out ${
           isExiting ? 'scale-[1.04]' : 'scale-100'
         }`}
         style={{

@@ -101,12 +101,6 @@ export default async function handler(req: any, res: any) {
     ''
   ).trim();
 
-  if (req.method === 'GET') {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    return res.end(JSON.stringify({ ok: true, accessKey: web3FormsKey }));
-  }
-
   let body = req.body || {};
   if (typeof body === 'string') {
     try {

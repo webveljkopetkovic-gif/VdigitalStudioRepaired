@@ -15,8 +15,6 @@ import {
   PHONE_URL,
   TELEGRAM_URL,
   VIBER_URL,
-  WEB3FORMS_ACCESS_KEY,
-  WEB3FORMS_ENDPOINT,
   WHATSAPP_URL,
 } from '../config';
 import { useI18n } from '../i18n';
@@ -68,36 +66,17 @@ export const ContactSection: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      let accessKey = WEB3FORMS_ACCESS_KEY;
-      if (!accessKey) {
-        const keyRes = await fetch(FORM_ENDPOINT, { method: 'GET' }).catch(() => null);
-        if (keyRes && keyRes.ok) {
-          const keyData = await keyRes.json().catch(() => ({}));
-          if (typeof keyData?.accessKey === 'string') {
-            accessKey = keyData.accessKey.trim();
-          }
-        }
-      }
-
-      if (!accessKey) {
-        setErrorMsg(t.contact.form.errorGeneric);
-        return;
-      }
-
-      const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(trimmedContact);
-      const payload: Record<string, string> = {
-        access_key: accessKey,
-        from_name: 'VDigital Website',
-        subject: `VDigital Inquiry — ${trimmedName} (${profession})`,
+      const payload = {
         name: trimmedName,
-        ...(isEmail ? { email: trimmedContact } : { phone: trimmedContact }),
         contact: trimmedContact,
         profession,
-        message: message.trim() || '-',
-        locale: locale.toUpperCase(),
+        message: message.trim(),
+        botcheck: botcheck.trim(),
+        locale,
+        formType: 'inquiry',
       };
 
-      const response = await fetch(WEB3FORMS_ENDPOINT, {
+      const response = await fetch(FORM_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -108,7 +87,7 @@ export const ContactSection: React.FC = () => {
 
       const data = await response.json().catch(() => ({}));
 
-      if (response.ok && data.success !== false) {
+      if (response.ok && data.ok) {
         trackFormSubmit('contact_inquiry_form');
         window.ym?.(113158297, "reachGoal", "quote_request");
         setIsSubmitted(true);

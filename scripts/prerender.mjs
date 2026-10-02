@@ -103,9 +103,79 @@ const ROUTE_SEO = {
       'Узнайте, как VDigital собирает, использует и защищает ваши персональные данные в соответствии с законом Сербии (ZZPL) и GDPR.',
     pageType: 'privacy',
   },
+  notFound: {
+    url: '/404',
+    lang: 'sr',
+    ogLocale: 'sr_RS',
+    title: '404: Stranica nije pronađena | VDigital',
+    titleHtml: '404: Stranica nije pronađena | VDigital',
+    description:
+      'Stranica koju tražite ne postoji, premeštena je ili je privremeno nedostupna.',
+    pageType: '404',
+    is404: true,
+  },
 };
 
 function buildLocalizedHead(meta) {
+  if (meta.is404) {
+    return `<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google Consent Mode v2 (strictly local default — zero network requests before consent) -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'wait_for_update': 500
+      });
+    </script>
+    <title>${meta.titleHtml}</title>
+    <meta
+      name="description"
+      content="${meta.description}"
+    />
+    <meta name="application-name" content="VDigital" />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#0a0a0a" />
+
+    <!-- Favicons & Web App Manifest -->
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Preload Self-Hosted Critical WOFF2 Fonts -->
+    <link
+      rel="preload"
+      href="/fonts/Geist-Variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/Newsreader-Italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/GeistMono-Variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />`;
+  }
   let hreflangs = '';
   if (meta.pageType === 'contact') {
     hreflangs = `    <link rel="alternate" hreflang="en" href="https://vdigital.dev/contact" />
@@ -362,82 +432,75 @@ export async function runPrerender() {
     const serverEntryUrl = `${pathToFileURL(serverEntryPath).href}?t=${Date.now()}`;
     const { render } = await import(serverEntryUrl);
 
+    const legacyPaths = [
+      'en.html',
+      'en',
+      'contact/index.html',
+      'contact',
+      'privacy/index.html',
+      'privacy',
+      'politika-privatnosti.html',
+      'politika-privatnosti',
+      'politika-konfidencialnosti.html',
+      'politika-konfidencialnosti',
+      'sr/index.html',
+      'sr/kontakt/index.html',
+      'sr/privatnost/index.html',
+      'sr/politika-privatnosti.html',
+      'sr/politika-privatnosti',
+      'ru/index.html',
+      'ru/kontakty/index.html',
+      'ru/konfidencialnost/index.html',
+      'ru/politika-konfidencialnosti.html',
+      'ru/politika-konfidencialnosti',
+    ];
+    for (const rel of legacyPaths) {
+      const full = path.resolve(distDir, rel);
+      if (fs.existsSync(full)) {
+        fs.rmSync(full, { recursive: true, force: true });
+      }
+    }
+
     const routes = [
       {
         meta: ROUTE_SEO.en,
-        outFiles: [
-          path.resolve(distDir, 'index.html'),
-          path.resolve(distDir, 'en.html'),
-          path.resolve(distDir, 'en/index.html'),
-        ],
+        outFile: path.resolve(distDir, 'index.html'),
       },
       {
         meta: ROUTE_SEO.sr,
-        outFiles: [
-          path.resolve(distDir, 'sr.html'),
-          path.resolve(distDir, 'sr/index.html'),
-        ],
+        outFile: path.resolve(distDir, 'sr.html'),
       },
       {
         meta: ROUTE_SEO.ru,
-        outFiles: [
-          path.resolve(distDir, 'ru.html'),
-          path.resolve(distDir, 'ru/index.html'),
-        ],
+        outFile: path.resolve(distDir, 'ru.html'),
       },
       {
         meta: ROUTE_SEO.contactEn,
-        outFiles: [
-          path.resolve(distDir, 'contact.html'),
-          path.resolve(distDir, 'contact/index.html'),
-          path.resolve(distDir, 'en/contact.html'),
-          path.resolve(distDir, 'en/contact/index.html'),
-        ],
+        outFile: path.resolve(distDir, 'contact.html'),
       },
       {
         meta: ROUTE_SEO.contactSr,
-        outFiles: [
-          path.resolve(distDir, 'sr/kontakt.html'),
-          path.resolve(distDir, 'sr/kontakt/index.html'),
-        ],
+        outFile: path.resolve(distDir, 'sr/kontakt.html'),
       },
       {
         meta: ROUTE_SEO.contactRu,
-        outFiles: [
-          path.resolve(distDir, 'ru/kontakty.html'),
-          path.resolve(distDir, 'ru/kontakty/index.html'),
-        ],
+        outFile: path.resolve(distDir, 'ru/kontakty.html'),
       },
       {
         meta: ROUTE_SEO.privacyEn,
-        outFiles: [
-          path.resolve(distDir, 'privacy.html'),
-          path.resolve(distDir, 'privacy/index.html'),
-          path.resolve(distDir, 'en/privacy.html'),
-          path.resolve(distDir, 'en/privacy/index.html'),
-        ],
+        outFile: path.resolve(distDir, 'privacy.html'),
       },
       {
         meta: ROUTE_SEO.privacySr,
-        outFiles: [
-          path.resolve(distDir, 'sr/privatnost.html'),
-          path.resolve(distDir, 'sr/privatnost/index.html'),
-          path.resolve(distDir, 'politika-privatnosti.html'),
-          path.resolve(distDir, 'politika-privatnosti/index.html'),
-          path.resolve(distDir, 'sr/politika-privatnosti.html'),
-          path.resolve(distDir, 'sr/politika-privatnosti/index.html'),
-        ],
+        outFile: path.resolve(distDir, 'sr/privatnost.html'),
       },
       {
         meta: ROUTE_SEO.privacyRu,
-        outFiles: [
-          path.resolve(distDir, 'ru/konfidencialnost.html'),
-          path.resolve(distDir, 'ru/konfidencialnost/index.html'),
-          path.resolve(distDir, 'politika-konfidencialnosti.html'),
-          path.resolve(distDir, 'politika-konfidencialnosti/index.html'),
-          path.resolve(distDir, 'ru/politika-konfidencialnosti.html'),
-          path.resolve(distDir, 'ru/politika-konfidencialnosti/index.html'),
-        ],
+        outFile: path.resolve(distDir, 'ru/konfidencialnost.html'),
+      },
+      {
+        meta: ROUTE_SEO.notFound,
+        outFile: path.resolve(distDir, '404.html'),
       },
     ];
 
@@ -450,13 +513,11 @@ export async function runPrerender() {
         .replace(/<head>[\s\S]*?<\/head>/i, localizedHead)
         .replace('<div id="root"></div>', `<div id="root">${renderedAppHtml}</div>`);
 
-      for (const outFile of route.outFiles) {
-        fs.mkdirSync(path.dirname(outFile), { recursive: true });
-        fs.writeFileSync(outFile, routeHtml, 'utf-8');
-        console.log(
-          `[prerender] Prerendered ${route.meta.url} (lang="${route.meta.lang}", canonical="${route.meta.canonical}") -> ${path.relative(rootDir, outFile)}`
-        );
-      }
+      fs.mkdirSync(path.dirname(route.outFile), { recursive: true });
+      fs.writeFileSync(route.outFile, routeHtml, 'utf-8');
+      console.log(
+        `[prerender] Prerendered ${route.meta.url} (lang="${route.meta.lang}", canonical="${route.meta.canonical || 'none'}") -> ${path.relative(rootDir, route.outFile)}`
+      );
     }
   } finally {
     fs.rmSync(ssrOutDir, { recursive: true, force: true });

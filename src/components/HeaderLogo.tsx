@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SHOW_PROJECTS } from '../config';
 import {
   getContactPath,
   getHomePath,
@@ -41,16 +40,6 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
       href: isSubPage ? `${homePath}#process` : '#process',
       isRoute: false,
     },
-    ...(SHOW_PROJECTS
-      ? [
-          {
-            label: t.navbar.links.projects,
-            id: 'projects',
-            href: isSubPage ? `${homePath}#projects` : '#projects',
-            isRoute: false,
-          },
-        ]
-      : []),
     {
       label: t.navbar.links.team,
       id: 'team',

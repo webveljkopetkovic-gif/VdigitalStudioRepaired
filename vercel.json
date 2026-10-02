@@ -8,44 +8,56 @@
       "has": [{ "type": "host", "value": "v-digital-studio.vercel.app" }],
       "destination": "https://vdigital.dev/:path*",
       "statusCode": 301
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/sr",
-      "destination": "/sr.html"
     },
     {
-      "source": "/ru",
-      "destination": "/ru.html"
+      "source": "/en",
+      "destination": "/",
+      "permanent": true
     },
     {
-      "source": "/contact",
-      "destination": "/contact.html"
+      "source": "/en/contact",
+      "destination": "/contact",
+      "permanent": true
     },
     {
-      "source": "/sr/kontakt",
-      "destination": "/sr/kontakt.html"
+      "source": "/en/privacy",
+      "destination": "/privacy",
+      "permanent": true
     },
     {
-      "source": "/ru/kontakty",
-      "destination": "/ru/kontakty.html"
+      "source": "/politika-privatnosti",
+      "destination": "/sr/privatnost",
+      "permanent": true
     },
     {
-      "source": "/privacy",
-      "destination": "/privacy.html"
+      "source": "/sr/politika-privatnosti",
+      "destination": "/sr/privatnost",
+      "permanent": true
     },
     {
-      "source": "/sr/privatnost",
-      "destination": "/sr/privatnost.html"
+      "source": "/sr/privacy",
+      "destination": "/sr/privatnost",
+      "permanent": true
     },
     {
-      "source": "/ru/konfidencialnost",
-      "destination": "/ru/konfidencialnost.html"
+      "source": "/politika-konfidencialnosti",
+      "destination": "/ru/konfidencialnost",
+      "permanent": true
     },
     {
-      "source": "/(.*)",
-      "destination": "/"
+      "source": "/politika-konfidencijalnosti",
+      "destination": "/ru/konfidencialnost",
+      "permanent": true
+    },
+    {
+      "source": "/ru/politika-konfidencialnosti",
+      "destination": "/ru/konfidencialnost",
+      "permanent": true
+    },
+    {
+      "source": "/ru/privacy",
+      "destination": "/ru/konfidencialnost",
+      "permanent": true
     }
   ],
   "headers": [
@@ -70,7 +82,7 @@
         },
         {
           "key": "Content-Security-Policy-Report-Only",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://mc.yandex.ru https://analytics.ahrefs.com https://cal.com https://app.cal.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://api.web3forms.com https://www.google-analytics.com https://region1.google-analytics.com https://mc.yandex.ru https://analytics.ahrefs.com https://cal.com https://app.cal.com; frame-src 'self' https://cal.com https://app.cal.com https://www.youtube-nocookie.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://mc.yandex.ru https://analytics.ahrefs.com https://cal.com https://app.cal.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://mc.yandex.ru https://analytics.ahrefs.com https://cal.com https://app.cal.com; frame-src 'self' https://cal.com https://app.cal.com https://www.youtube-nocookie.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
         }
       ]
     },
