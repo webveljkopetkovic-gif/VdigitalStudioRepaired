@@ -20,28 +20,28 @@ interface StackingCardData {
 
 const CARD_STYLES = [
   {
-    bgGradient: 'linear-gradient(135deg, #211f16 0%, #171611 45%, #11110e 100%)',
+    bgGradient: 'linear-gradient(135deg, var(--vd-211f16) 0%, var(--vd-171611) 45%, var(--vd-11110e) 100%)',
     glowColor: 'rgba(234, 179, 8, 0.14)',
     borderColor: 'rgba(253, 224, 71, 0.16)',
     accentDotColor: '#facc15',
   },
   {
-    bgGradient: 'linear-gradient(135deg, #241914 0%, #181210 45%, #110e0d 100%)',
+    bgGradient: 'linear-gradient(135deg, var(--vd-241914) 0%, var(--vd-181210) 45%, var(--vd-110e0d) 100%)',
     glowColor: 'rgba(249, 115, 22, 0.16)',
     borderColor: 'rgba(251, 146, 60, 0.18)',
     accentDotColor: '#fb923c',
   },
   {
-    bgGradient: 'linear-gradient(135deg, #12211e 0%, #0e1816 45%, #0b1110 100%)',
-    glowColor: 'rgba(20, 184, 166, 0.16)',
-    borderColor: 'rgba(45, 212, 191, 0.18)',
-    accentDotColor: '#2dd4bf',
+    bgGradient: 'linear-gradient(135deg, var(--vd-12211e) 0%, var(--vd-0e1816) 45%, var(--vd-0b1110) 100%)',
+    glowColor: 'color-mix(in srgb, var(--vd-14b8a6) 16%, transparent)',
+    borderColor: 'color-mix(in srgb, var(--vd-2dd4bf) 18%, transparent)',
+    accentDotColor: 'var(--vd-2dd4bf)',
   },
   {
-    bgGradient: 'linear-gradient(135deg, #182311 0%, #11190d 45%, #0b1009 100%)',
-    glowColor: 'rgba(168, 243, 0, 0.16)',
-    borderColor: 'rgba(168, 243, 0, 0.22)',
-    accentDotColor: '#a8f300',
+    bgGradient: 'linear-gradient(135deg, var(--vd-182311) 0%, var(--vd-11190d) 45%, var(--vd-0b1009) 100%)',
+    glowColor: 'color-mix(in srgb, var(--vd-a8f300) 16%, transparent)',
+    borderColor: 'color-mix(in srgb, var(--vd-a8f300) 22%, transparent)',
+    accentDotColor: 'var(--vd-a8f300)',
   },
 ];
 
@@ -112,7 +112,7 @@ const StackingCardItem: React.FC<StackingCardItemProps> = ({
         background: service.bgGradient,
         borderColor: service.borderColor,
       }}
-      className="absolute inset-x-0 mx-auto w-full h-[380px] sm:h-[420px] md:h-[440px] rounded-[28px] sm:rounded-[36px] border p-6 sm:p-10 md:p-12 flex flex-col justify-between shadow-[0_-20px_60px_rgba(0,0,0,0.85),0_30px_70px_rgba(0,0,0,0.95)] overflow-hidden select-none origin-top backdrop-blur-xl"
+      className="absolute inset-x-0 mx-auto w-full h-[380px] sm:h-[420px] md:h-[440px] rounded-[28px] sm:rounded-[36px] border p-6 sm:p-10 md:p-12 flex flex-col justify-between shadow-[0_-20px_60px_color-mix(in_srgb,var(--vd-000000)_85%,transparent),0_30px_70px_color-mix(in_srgb,var(--vd-000000)_95%,transparent)] overflow-hidden select-none origin-top backdrop-blur-xl"
     >
       {/* Internal Radial Warm Glow matching reference image */}
       <div
@@ -158,12 +158,12 @@ const StackingCardItem: React.FC<StackingCardItemProps> = ({
               e.preventDefault();
               navigate(serviceUrl);
             }}
-            className="group inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/10 hover:bg-[#a8f300] text-white hover:text-black border border-white/15 hover:border-[#a8f300] text-[12px] sm:text-[13px] font-medium transition-all duration-200 cursor-pointer"
+            className="group inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/10 hover:bg-[color:var(--vd-a8f300)] text-white hover:text-black border border-white/15 hover:border-[color:var(--vd-a8f300)] text-[12px] sm:text-[13px] font-medium transition-all duration-200 cursor-pointer"
           >
             <span>{cardButtonLabel}</span>
             <span
               aria-hidden="true"
-              className="text-[#a8f300] group-hover:text-black font-bold transition-transform group-hover:translate-x-0.5"
+              className="text-[color:var(--vd-a8f300)] group-hover:text-black font-bold transition-transform group-hover:translate-x-0.5"
             >
               →
             </span>
@@ -236,13 +236,13 @@ export const StickyServicesSection: React.FC<StickyServicesSectionProps> = ({
       ref={containerRef}
       id="services"
       aria-label={t.services.label}
-      className="relative w-full h-[520vh] bg-[#060709]"
+      className="relative w-full h-[520vh] bg-[color:var(--vd-060709)]"
     >
       {/* Pinned Sticky Viewport */}
       <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden px-4 sm:px-8 lg:px-16">
         {/* Subtle Background Ambient Glow */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[420px] rounded-full bg-[#a8f300]/[0.03] blur-[140px] pointer-events-none"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[420px] rounded-full bg-[color:var(--vd-a8f300)]/[0.03] blur-[140px] pointer-events-none"
           aria-hidden="true"
         />
 
@@ -250,8 +250,8 @@ export const StickyServicesSection: React.FC<StickyServicesSectionProps> = ({
           {/* Compact Section Header */}
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-3">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-[#a8f300] text-[10px] font-mono uppercase tracking-[0.2em] mb-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#a8f300] animate-pulse" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-[color:var(--vd-a8f300)] text-[10px] font-mono uppercase tracking-[0.2em] mb-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[color:var(--vd-a8f300)] animate-pulse" />
                 {t.services.label}
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-geist font-semibold tracking-tight text-white leading-[1.08]">

@@ -24,7 +24,7 @@ export const RevenueCTASection: React.FC = () => {
           strokeWidth="1.6"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="w-6 h-6 text-[#0a0c09]"
+          className="w-6 h-6 text-[color:var(--vd-0a0c09)]"
         >
           <path d="M7.5 8.5L12 10.8L12 16.2L7.5 13.9L7.5 8.5Z" />
           <path d="M7.5 8.5L12 6.2L16.5 8.5L12 10.8L7.5 8.5Z" />
@@ -47,7 +47,7 @@ export const RevenueCTASection: React.FC = () => {
           strokeWidth="1.6"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="w-6 h-6 text-[#0a0c09]"
+          className="w-6 h-6 text-[color:var(--vd-0a0c09)]"
         >
           <line x1="5" y1="9" x2="19" y2="9" />
           <circle cx="4.5" cy="9" r="1" fill="currentColor" />
@@ -71,7 +71,7 @@ export const RevenueCTASection: React.FC = () => {
           strokeWidth="1.6"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="w-6 h-6 text-[#0a0c09]"
+          className="w-6 h-6 text-[color:var(--vd-0a0c09)]"
         >
           <ellipse cx="13.5" cy="7.5" rx="2.2" ry="1.4" transform="rotate(-15 13.5 7.5)" />
           <ellipse cx="16.2" cy="10.2" rx="2.2" ry="1.4" transform="rotate(12 16.2 10.2)" />
@@ -90,10 +90,10 @@ export const RevenueCTASection: React.FC = () => {
   return (
     <section
       id="pricing"
-      className="relative w-full bg-[#040506] text-white py-24 sm:py-32 lg:py-40 px-4 sm:px-8 lg:px-12 overflow-hidden select-none border-t border-white/[0.06]"
+      className="relative w-full bg-[color:var(--vd-040506)] text-white py-24 sm:py-32 lg:py-40 px-4 sm:px-8 lg:px-12 overflow-hidden select-none border-t border-white/[0.06]"
     >
       {/* ===================================================================== */}
-      {/* ANIMATED #9ce607 3D RIBBED VERTICAL LOUVER / SLAT BACKGROUND           */}
+      {/* ANIMATED var(--vd-9ce607) 3D RIBBED VERTICAL LOUVER / SLAT BACKGROUND           */}
       {/* ===================================================================== */}
       <div
         className="absolute inset-0 pointer-events-none flex w-full h-full z-0 overflow-hidden"
@@ -117,7 +117,7 @@ export const RevenueCTASection: React.FC = () => {
           className="absolute -right-[10%] top-0 bottom-0 w-[65%] pointer-events-none"
           style={{
             background:
-              'radial-gradient(ellipse at 85% 50%, rgba(156, 230, 7, 0.42) 0%, rgba(156, 230, 7, 0.16) 45%, transparent 75%)',
+              'radial-gradient(ellipse at 85% 50%, color-mix(in srgb, var(--vd-9ce607) 42%, transparent) 0%, color-mix(in srgb, var(--vd-9ce607) 16%, transparent) 45%, transparent 75%)',
             filter: 'blur(70px)',
           }}
         />
@@ -135,11 +135,11 @@ export const RevenueCTASection: React.FC = () => {
               className="flex-1 h-full relative overflow-hidden"
               style={{
                 background:
-                  'linear-gradient(90deg, rgba(4, 5, 6, 1) 0%, rgba(8, 12, 6, 1) 92%, rgba(2, 3, 4, 1) 100%)',
+                  'linear-gradient(90deg, color-mix(in srgb, var(--vd-060709) 100%, transparent) 0%, color-mix(in srgb, var(--vd-060709) 100%, transparent) 92%, rgba(2, 3, 4, 1) 100%)',
                 borderRight:
                   idx >= 9
-                    ? '1px solid rgba(0, 0, 0, 0.72)'
-                    : '1px solid rgba(255, 255, 255, 0.014)',
+                    ? '1px solid color-mix(in srgb, var(--vd-000000) 72%, transparent)'
+                    : '1px solid color-mix(in srgb, var(--vd-ffffff) 1.4%, transparent)',
               }}
             >
               <motion.div
@@ -160,11 +160,11 @@ export const RevenueCTASection: React.FC = () => {
                 className="absolute inset-0 w-full h-full"
                 style={{
                   background: `linear-gradient(90deg, 
-                    rgba(6, 10, 4, 0.96) 0%, 
-                    rgba(156, 230, 7, ${leftStopAlpha.toFixed(3)}) 24%, 
-                    rgba(156, 230, 7, ${midStopAlpha.toFixed(3)}) 68%, 
-                    rgba(156, 230, 7, ${peakStopAlpha.toFixed(3)}) 94%, 
-                    rgba(8, 14, 4, 0.92) 100%)`,
+                    color-mix(in srgb, var(--vd-060709) 96%, transparent) 0%, 
+                    color-mix(in srgb, var(--vd-9ce607) ${(leftStopAlpha * 100).toFixed(1)}%, transparent) 24%, 
+                    color-mix(in srgb, var(--vd-9ce607) ${(midStopAlpha * 100).toFixed(1)}%, transparent) 68%, 
+                    color-mix(in srgb, var(--vd-9ce607) ${(peakStopAlpha * 100).toFixed(1)}%, transparent) 94%, 
+                    color-mix(in srgb, var(--vd-060709) 92%, transparent) 100%)`,
                 }}
               />
 
@@ -182,9 +182,9 @@ export const RevenueCTASection: React.FC = () => {
                   }}
                   className="absolute inset-x-0 -top-1/4 h-[150%] pointer-events-none"
                   style={{
-                    background: `radial-gradient(ellipse at 88% 50%, rgba(156, 230, 7, ${(
-                      intensity * 0.55
-                    ).toFixed(3)}) 0%, transparent 65%)`,
+                    background: `radial-gradient(ellipse at 88% 50%, color-mix(in srgb, var(--vd-9ce607) ${(
+                      intensity * 55
+                    ).toFixed(1)}%, transparent) 0%, transparent 65%)`,
                   }}
                 />
               )}
@@ -196,7 +196,7 @@ export const RevenueCTASection: React.FC = () => {
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(180deg, rgba(4,5,6,0.5) 0%, rgba(4,5,6,0) 16%, rgba(4,5,6,0) 84%, rgba(4,5,6,0.5) 100%)',
+              'linear-gradient(180deg, color-mix(in srgb, var(--vd-060709) 50%, transparent) 0%, color-mix(in srgb, var(--vd-060709) 0%, transparent) 16%, color-mix(in srgb, var(--vd-060709) 0%, transparent) 84%, color-mix(in srgb, var(--vd-060709) 50%, transparent) 100%)',
           }}
         />
       </div>
@@ -214,7 +214,7 @@ export const RevenueCTASection: React.FC = () => {
           className="font-geist font-normal text-[30px] sm:text-[42px] md:text-[50px] lg:text-[56px] leading-[1.16] tracking-[-0.025em] text-white max-w-[860px] mb-12 sm:mb-14 lg:mb-16"
         >
           {t.howWeWork.headingBefore}{' '}
-          <span className="text-[#9ce607] font-normal drop-shadow-[0_0_20px_rgba(156,230,7,0.3)]">
+          <span className="text-[color:var(--vd-9ce607)] font-normal drop-shadow-[0_0_20px_color-mix(in_srgb,var(--vd-9ce607)_30%,transparent)]">
             {t.howWeWork.headingHighlight}
           </span>{' '}
           {t.howWeWork.headingAfter}
@@ -242,15 +242,15 @@ export const RevenueCTASection: React.FC = () => {
                   scrollToContact();
                 }
               }}
-              className="group relative flex items-center gap-4 sm:gap-4.5 px-5 py-5 sm:px-6 sm:py-6 rounded-[18px] bg-[#141815]/70 hover:bg-[#191f1b]/80 backdrop-blur-md border border-white/[0.09] hover:border-[#9ce607]/40 transition-all duration-200 shadow-[0_12px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] cursor-pointer"
+              className="group relative flex items-center gap-4 sm:gap-4.5 px-5 py-5 sm:px-6 sm:py-6 rounded-[18px] bg-[color:var(--vd-141815)]/70 hover:bg-[color:var(--vd-191f1b)]/80 backdrop-blur-md border border-white/[0.09] hover:border-[color:var(--vd-9ce607)]/40 transition-all duration-200 shadow-[0_12px_32px_color-mix(in_srgb,var(--vd-000000)_45%,transparent),inset_0_1px_0_color-mix(in_srgb,var(--vd-ffffff)_8%,transparent)] cursor-pointer"
             >
-              {/* Neon Lime (#9ce607) Squircle Icon Box */}
-              <div className="w-12 h-12 sm:w-[52px] sm:h-[52px] rounded-[12px] bg-[#9ce607] group-hover:bg-[#abf50a] flex items-center justify-center shrink-0 shadow-[0_4px_16px_rgba(156,230,7,0.3)] transition-transform duration-200 group-hover:scale-[1.03]">
+              {/* Neon Lime (var(--vd-9ce607)) Squircle Icon Box */}
+              <div className="w-12 h-12 sm:w-[52px] sm:h-[52px] rounded-[12px] bg-[color:var(--vd-9ce607)] group-hover:bg-[color:var(--vd-abf50a)] flex items-center justify-center shrink-0 shadow-[0_4px_16px_color-mix(in_srgb,var(--vd-9ce607)_30%,transparent)] transition-transform duration-200 group-hover:scale-[1.03]">
                 {card.renderIcon()}
               </div>
 
               {/* Card Text */}
-              <p className="font-geist text-[13.5px] sm:text-[14.5px] leading-[1.5] text-[#d6dfd0] group-hover:text-white font-normal tracking-[-0.01em] transition-colors">
+              <p className="font-geist text-[13.5px] sm:text-[14.5px] leading-[1.5] text-[color:var(--vd-d6dfd0)] group-hover:text-white font-normal tracking-[-0.01em] transition-colors">
                 {card.text}
               </p>
             </motion.div>
@@ -263,7 +263,7 @@ export const RevenueCTASection: React.FC = () => {
           whileInView={isSSR ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-10 sm:mt-12 font-geist text-[14px] sm:text-[15.5px] leading-[1.65] text-[#d6dfd0] max-w-3xl"
+          className="mt-10 sm:mt-12 font-geist text-[14px] sm:text-[15.5px] leading-[1.65] text-[color:var(--vd-d6dfd0)] max-w-3xl"
         >
           {t.howWeWork.bottomLine}
         </motion.p>

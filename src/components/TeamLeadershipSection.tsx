@@ -25,23 +25,23 @@ const TeamPhotoCard: React.FC<TeamPhotoCardProps> = ({ name, role, photo, photoA
     <div className="relative w-56 h-56 sm:w-60 sm:h-60 lg:w-64 lg:h-64 mb-7 flex items-center justify-center">
       {/* Offset Lime-Green Rounded Backdrop */}
       <div
-        className="absolute inset-0 rounded-[32px] sm:rounded-[36px] bg-[#bef264] transition-transform duration-300 group-hover:scale-105 group-hover:rotate-1"
+        className="absolute inset-0 rounded-[32px] sm:rounded-[36px] bg-[color:var(--vd-bef264)] transition-transform duration-300 group-hover:scale-105 group-hover:rotate-1"
         style={{
           transform: 'translate(10px, -6px) rotate(4deg)',
-          boxShadow: '0 12px 30px rgba(190, 242, 100, 0.25)',
+          boxShadow: '0 12px 30px color-mix(in srgb, var(--vd-bef264) 25%, transparent)',
         }}
         aria-hidden="true"
       />
 
       {/* Foreground Card Frame: Clean Initials Placeholder + Real Photo */}
-      <div className="relative w-full h-full rounded-[28px] sm:rounded-[32px] overflow-hidden bg-[#121614] border border-white/20 shadow-2xl z-10 transition-transform duration-300 group-hover:-translate-y-1 flex items-center justify-center">
+      <div className="relative w-full h-full rounded-[28px] sm:rounded-[32px] overflow-hidden bg-[color:var(--vd-121614)] border border-white/20 shadow-2xl z-10 transition-transform duration-300 group-hover:-translate-y-1 flex items-center justify-center">
         {/* Clean Initials Fallback inside the card frame */}
         {imageError && (
           <div
-            className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#192117] via-[#111512] to-[#0a0d0b] select-none"
+            className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[color:var(--vd-192117)] via-[color:var(--vd-111512)] to-[color:var(--vd-0a0d0b)] select-none"
             aria-label={name}
           >
-            <span className="font-geist font-bold text-[52px] sm:text-[60px] tracking-[-0.04em] text-[#9ce607] drop-shadow-[0_0_24px_rgba(156,230,7,0.3)]">
+            <span className="font-geist font-bold text-[52px] sm:text-[60px] tracking-[-0.04em] text-[color:var(--vd-9ce607)] drop-shadow-[0_0_24px_color-mix(in_srgb,var(--vd-9ce607)_30%,transparent)]">
               {initials}
             </span>
           </div>
@@ -75,14 +75,14 @@ export const TeamLeadershipSection: React.FC = () => {
   return (
     <section
       id="team"
-      className="relative w-full bg-[#060709] text-white py-24 sm:py-32 lg:py-36 px-4 sm:px-6 lg:px-8 border-t border-white/[0.07] overflow-hidden select-none"
+      className="relative w-full bg-[color:var(--vd-060709)] text-white py-24 sm:py-32 lg:py-36 px-4 sm:px-6 lg:px-8 border-t border-white/[0.07] overflow-hidden select-none"
     >
       {/* Soft atmospheric ambient glow */}
       <div
         className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[950px] h-[450px] pointer-events-none -z-0 opacity-15"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(168, 243, 0, 0.22) 0%, transparent 70%)',
+            'radial-gradient(ellipse at center, color-mix(in srgb, var(--vd-a8f300) 22%, transparent) 0%, transparent 70%)',
           filter: 'blur(100px)',
         }}
         aria-hidden="true"
@@ -103,11 +103,11 @@ export const TeamLeadershipSection: React.FC = () => {
           >
             <span>{t.team.headingBefore} </span>
             <span className="inline-flex items-baseline font-geist font-bold tracking-[-0.04em]">
-              <span className="text-[#9ce607] drop-shadow-[0_0_16px_rgba(156,230,7,0.35)]">
+              <span className="text-[color:var(--vd-9ce607)] drop-shadow-[0_0_16px_color-mix(in_srgb,var(--vd-9ce607)_35%,transparent)]">
                 V
               </span>
               <span className="text-white">Digital</span>
-              <span className="text-[#9ce607] drop-shadow-[0_0_14px_rgba(156,230,7,0.5)]">
+              <span className="text-[color:var(--vd-9ce607)] drop-shadow-[0_0_14px_color-mix(in_srgb,var(--vd-9ce607)_50%,transparent)]">
                 .
               </span>
             </span>
@@ -145,7 +145,7 @@ export const TeamLeadershipSection: React.FC = () => {
               </h3>
 
               {/* Role / Job Title */}
-              <p className="text-[13px] sm:text-[14px] text-[#9ce607] font-geist mt-1.5 leading-snug font-medium">
+              <p className="text-[13px] sm:text-[14px] text-[color:var(--vd-9ce607)] font-geist mt-1.5 leading-snug font-medium">
                 {member.role}
               </p>
 

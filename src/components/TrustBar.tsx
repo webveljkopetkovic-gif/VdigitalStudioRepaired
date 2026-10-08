@@ -15,7 +15,7 @@ export const TrustBar: React.FC = () => {
             <span className="whitespace-nowrap">{item}</span>
             {idx < t.trustBar.items.length - 1 && (
               <span
-                className="text-[#9ce607] font-bold select-none"
+                className="text-[color:var(--vd-9ce607)] font-bold select-none"
                 aria-hidden="true"
               >
                 ·

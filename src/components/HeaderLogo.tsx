@@ -122,7 +122,7 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
         id="navbar-backdrop-bar"
         className="relative w-full flex items-center justify-between md:grid md:grid-cols-[1fr_auto_1fr] gap-4"
       >
-        {/* Left: VDigital. Brand Logotype combining #9ce607 and white */}
+        {/* Left: VDigital. Brand Logotype combining var(--vd-9ce607) and white */}
         <div className="flex items-center justify-self-start">
           <a
             href={homePath}
@@ -140,11 +140,11 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
             title="VDigital"
             aria-label="VDigital"
           >
-            <span className="text-[#9ce607] drop-shadow-[0_0_12px_rgba(156,230,7,0.35)]">
+            <span className="text-[color:var(--vd-9ce607)] drop-shadow-[0_0_12px_color-mix(in_srgb,var(--vd-9ce607)_35%,transparent)]">
               V
             </span>
             <span className="text-white">Digital</span>
-            <span className="text-[#9ce607] drop-shadow-[0_0_10px_rgba(156,230,7,0.5)]">
+            <span className="text-[color:var(--vd-9ce607)] drop-shadow-[0_0_10px_color-mix(in_srgb,var(--vd-9ce607)_50%,transparent)]">
               .
             </span>
           </a>
@@ -180,18 +180,18 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
               <span>{t.navbar.links.services}</span>
               <ChevronDown
                 className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                  dropdownOpen ? 'rotate-180 text-[#9ce607]' : 'text-neutral-500'
+                  dropdownOpen ? 'rotate-180 text-[color:var(--vd-9ce607)]' : 'text-neutral-500'
                 }`}
               />
               {isServicePage && (
-                <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[#a8f300] rounded-full" />
+                <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[color:var(--vd-a8f300)] rounded-full" />
               )}
             </button>
 
             {/* Dropdown Container */}
             {dropdownOpen && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 rounded-[18px] bg-[#0c0e12]/95 border border-white/15 p-2 shadow-[0_16px_40px_rgba(0,0,0,0.85)] backdrop-blur-xl z-50 animate-in fade-in slide-in-from-top-1 duration-150">
-                <div className="px-3 py-1.5 text-[10px] font-mono uppercase tracking-[0.2em] text-[#9ce607] border-b border-white/[0.08] mb-1">
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 rounded-[18px] bg-[color:var(--vd-0c0e12)]/95 border border-white/15 p-2 shadow-[0_16px_40px_color-mix(in_srgb,var(--vd-000000)_85%,transparent)] backdrop-blur-xl z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                <div className="px-3 py-1.5 text-[10px] font-mono uppercase tracking-[0.2em] text-[color:var(--vd-9ce607)] border-b border-white/[0.08] mb-1">
                   {t.navbar.dropdown.servicesTitle}
                 </div>
                 {serviceLinks.map((service) => (
@@ -205,7 +205,7 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
                     }}
                     className={`flex items-center justify-between px-3 py-2.5 rounded-[12px] text-[13px] transition-colors ${
                       location.pathname === service.href
-                        ? 'bg-[#9ce607]/15 text-[#9ce607] font-medium'
+                        ? 'bg-[color:var(--vd-9ce607)]/15 text-[color:var(--vd-9ce607)] font-medium'
                         : 'text-neutral-300 hover:text-white hover:bg-white/[0.06]'
                     }`}
                   >
@@ -244,7 +244,7 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
           >
             {t.navbar.links.about}
             {isAboutPage && (
-              <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[#a8f300] rounded-full" />
+              <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[color:var(--vd-a8f300)] rounded-full" />
             )}
           </a>
 
@@ -263,7 +263,7 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
           >
             {t.navbar.links.contact}
             {isContactPage && (
-              <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[#a8f300] rounded-full" />
+              <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[color:var(--vd-a8f300)] rounded-full" />
             )}
           </a>
         </nav>
@@ -287,7 +287,7 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
                   }}
                   className={`transition-colors cursor-pointer ${
                     locale === lang.code
-                      ? 'text-[#9ce607] font-semibold'
+                      ? 'text-[color:var(--vd-9ce607)] font-semibold'
                       : 'text-neutral-400 hover:text-white'
                   }`}
                 >
@@ -314,11 +314,11 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
                 navigate(contactPath);
               }
             }}
-            className="hidden sm:inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full border border-white/20 bg-neutral-900/60 hover:bg-neutral-800/90 text-white text-[12px] font-medium tracking-tight transition-all duration-200 hover:border-white/40 cursor-pointer shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+            className="hidden sm:inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full border border-white/20 bg-neutral-900/60 hover:bg-neutral-800/90 text-white text-[12px] font-medium tracking-tight transition-all duration-200 hover:border-white/40 cursor-pointer shadow-[0_2px_10px_color-mix(in_srgb,var(--vd-000000)_50%,transparent)]"
           >
             <span>{t.navbar.cta}</span>
             <span
-              className="transition-transform duration-200 group-hover:translate-x-0.5 text-[#9ce607]"
+              className="transition-transform duration-200 group-hover:translate-x-0.5 text-[color:var(--vd-9ce607)]"
               aria-hidden="true"
             >
               →
@@ -339,10 +339,10 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-3 rounded-[20px] bg-[#0c0e12]/98 border border-white/15 p-5 shadow-2xl backdrop-blur-2xl">
+        <div className="md:hidden mt-3 rounded-[20px] bg-[color:var(--vd-0c0e12)]/98 border border-white/15 p-5 shadow-2xl backdrop-blur-2xl">
           <div className="flex flex-col space-y-4 text-[14px]">
             <div>
-              <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#9ce607]">
+              <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[color:var(--vd-9ce607)]">
                 {t.navbar.links.services}
               </span>
               <div className="mt-2 pl-2 border-l border-white/10 space-y-2">
@@ -357,7 +357,7 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
                     }}
                     className={`block py-1 text-[13px] ${
                       location.pathname === s.href
-                        ? 'text-[#9ce607] font-semibold'
+                        ? 'text-[color:var(--vd-9ce607)] font-semibold'
                         : 'text-neutral-300 hover:text-white'
                     }`}
                   >
@@ -387,7 +387,7 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
               }}
               className={`py-1 ${
                 isAboutPage
-                  ? 'text-[#9ce607] font-semibold'
+                  ? 'text-[color:var(--vd-9ce607)] font-semibold'
                   : 'text-neutral-300 hover:text-white'
               }`}
             >
@@ -403,7 +403,7 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
               }}
               className={`py-1 ${
                 isContactPage
-                  ? 'text-[#9ce607] font-semibold'
+                  ? 'text-[color:var(--vd-9ce607)] font-semibold'
                   : 'text-neutral-300 hover:text-white'
               }`}
             >
@@ -418,7 +418,7 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
                   setMobileMenuOpen(false);
                   navigate(contactPath);
                 }}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#9ce607] text-neutral-950 font-semibold text-[13px]"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[color:var(--vd-9ce607)] text-neutral-950 font-semibold text-[13px]"
               >
                 <span>{t.navbar.cta}</span>
                 <span>→</span>

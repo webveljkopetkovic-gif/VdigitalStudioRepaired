@@ -227,15 +227,15 @@ export const LanguageSuggestionBanner: React.FC = () => {
             }`
       }`}
     >
-      <div className="pointer-events-auto inline-flex items-center justify-between gap-2 pl-4 pr-1.5 py-1.5 rounded-[12px] bg-[#141416]/95 backdrop-blur-md border border-white/[0.12] shadow-[0_14px_38px_rgba(0,0,0,0.65)] font-geist text-white max-w-full">
+      <div className="pointer-events-auto inline-flex items-center justify-between gap-2 pl-4 pr-1.5 py-1.5 rounded-[12px] bg-[color:var(--vd-141416)]/95 backdrop-blur-md border border-white/[0.12] shadow-[0_14px_38px_color-mix(in_srgb,var(--vd-000000)_65%,transparent)] font-geist text-white max-w-full">
         <a
           href={copy.href}
           lang={suggestedLang}
           hrefLang={suggestedLang}
           onClick={handleSelectSuggested}
-          className="inline-flex items-center gap-1.5 py-2 pr-1 text-[13.5px] sm:text-[14px] font-medium text-neutral-100 hover:text-[#9ce607] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9ce607] rounded-[6px] transition-colors"
+          className="inline-flex items-center gap-1.5 py-2 pr-1 text-[13.5px] sm:text-[14px] font-medium text-neutral-100 hover:text-[color:var(--vd-9ce607)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--vd-9ce607)] rounded-[6px] transition-colors"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#9ce607] shrink-0" aria-hidden="true" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[color:var(--vd-9ce607)] shrink-0" aria-hidden="true" />
           <span>{copy.text}</span>
         </a>
 
@@ -244,7 +244,7 @@ export const LanguageSuggestionBanner: React.FC = () => {
           onClick={handleDismiss}
           aria-label={closeAriaLabel}
           title={closeAriaLabel}
-          className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-[8px] inline-flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/[0.06] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9ce607] transition-colors cursor-pointer shrink-0 text-[18px] leading-none"
+          className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-[8px] inline-flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/[0.06] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--vd-9ce607)] transition-colors cursor-pointer shrink-0 text-[18px] leading-none"
         >
           <span aria-hidden="true">×</span>
         </button>

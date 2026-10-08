@@ -15,14 +15,14 @@ export const PrivacyPage: React.FC = () => {
   }, [locale]);
 
   return (
-    <div className="min-h-screen w-full bg-[#060709] text-white selection:bg-[#b6ff00] selection:text-black relative flex flex-col overflow-x-clip font-geist">
+    <div className="min-h-screen w-full bg-[color:var(--vd-060709)] text-white selection:bg-[color:var(--vd-b6ff00)] selection:text-black relative flex flex-col overflow-x-clip font-geist">
       {/* Subtle architectural dark grid backdrop */}
       <div
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 z-0 opacity-[0.18]"
         style={{
           backgroundImage:
-            'linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)',
+            'linear-gradient(to right, color-mix(in srgb, var(--vd-ffffff) 4%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--vd-ffffff) 4%, transparent) 1px, transparent 1px)',
           backgroundSize: '64px 64px',
         }}
       />
@@ -33,7 +33,7 @@ export const PrivacyPage: React.FC = () => {
         className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[420px] opacity-20 z-0"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(182, 255, 0, 0.14) 0%, transparent 70%)',
+            'radial-gradient(ellipse at center, color-mix(in srgb, var(--vd-b6ff00) 14%, transparent) 0%, transparent 70%)',
           filter: 'blur(90px)',
         }}
       />
@@ -41,7 +41,7 @@ export const PrivacyPage: React.FC = () => {
       <HeaderLogo />
 
       <main className="relative z-10 flex-1 w-full max-w-[920px] mx-auto px-5 sm:px-8 pt-10 sm:pt-16 lg:pt-20 pb-20 sm:pb-28">
-        <span className="text-[11px] uppercase tracking-[0.15em] text-[#9ce607] font-mono font-semibold">
+        <span className="text-[11px] uppercase tracking-[0.15em] text-[color:var(--vd-9ce607)] font-mono font-semibold">
           {t.privacyPage.label}
         </span>
 
@@ -57,7 +57,7 @@ export const PrivacyPage: React.FC = () => {
           <button
             type="button"
             onClick={openCookieSettings}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-[10px] bg-[#161b17] hover:bg-[#1e2620] border border-[#9ce607]/40 text-[#9ce607] font-geist font-semibold text-[13px] transition-colors cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-[10px] bg-[color:var(--vd-161b17)] hover:bg-[color:var(--vd-1e2620)] border border-[color:var(--vd-9ce607)]/40 text-[color:var(--vd-9ce607)] font-geist font-semibold text-[13px] transition-colors cursor-pointer"
           >
             <span>{t.privacyPage.manageCookiesCta}</span>
           </button>
@@ -71,7 +71,7 @@ export const PrivacyPage: React.FC = () => {
           {t.privacyPage.sections.map((sec, idx) => (
             <section
               key={idx}
-              className="rounded-[16px] bg-[#111512]/75 border border-white/[0.07] p-6 sm:p-7"
+              className="rounded-[16px] bg-[color:var(--vd-111512)]/75 border border-white/[0.07] p-6 sm:p-7"
             >
               <h2 className="font-geist font-semibold text-[18px] sm:text-[20px] text-white tracking-[-0.015em]">
                 {sec.heading}
@@ -83,7 +83,7 @@ export const PrivacyPage: React.FC = () => {
           ))}
 
           {/* Complete Cookie & Tracker Audit Table */}
-          <section className="rounded-[16px] bg-[#111512]/75 border border-white/[0.07] p-6 sm:p-7 overflow-hidden">
+          <section className="rounded-[16px] bg-[color:var(--vd-111512)]/75 border border-white/[0.07] p-6 sm:p-7 overflow-hidden">
             <div className="flex flex-wrap items-center justify-between gap-4 mb-5">
               <h2 className="font-geist font-semibold text-[18px] sm:text-[20px] text-white tracking-[-0.015em]">
                 {t.privacyPage.cookieTableTitle}
@@ -91,7 +91,7 @@ export const PrivacyPage: React.FC = () => {
               <button
                 type="button"
                 onClick={openCookieSettings}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-[8px] bg-[#9ce607] hover:bg-[#abf50a] text-[#0a0c09] font-geist font-semibold text-[12.5px] transition-colors cursor-pointer"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-[8px] bg-[color:var(--vd-9ce607)] hover:bg-[color:var(--vd-abf50a)] text-[color:var(--vd-0a0c09)] font-geist font-semibold text-[12.5px] transition-colors cursor-pointer"
               >
                 <span>{t.privacyPage.manageCookiesCta}</span>
               </button>
@@ -121,7 +121,7 @@ export const PrivacyPage: React.FC = () => {
                 <tbody className="divide-y divide-white/[0.06] text-neutral-200">
                   {t.privacyPage.cookieTableRows.map((row, i) => (
                     <tr key={i} className="align-top">
-                      <td className="py-3.5 pr-4 font-mono text-[12.5px] text-[#9ce607] whitespace-nowrap">
+                      <td className="py-3.5 pr-4 font-mono text-[12.5px] text-[color:var(--vd-9ce607)] whitespace-nowrap">
                         {row.name}
                       </td>
                       <td className="py-3.5 px-4 text-neutral-300">
