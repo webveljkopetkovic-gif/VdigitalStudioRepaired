@@ -143,7 +143,7 @@ export const ContactPage: React.FC = () => {
     href: `mailto:${CONTACT_EMAIL}`,
     label: CONTACT_EMAIL,
     external: false,
-    icon: <Mail className="w-3.5 h-3.5 text-[#b6ff00] shrink-0" />,
+    icon: <Mail className="w-3.5 h-3.5 text-[color:var(--vd-b6ff00)] shrink-0" />,
   };
 
   const whatsappItem = {
@@ -151,7 +151,7 @@ export const ContactPage: React.FC = () => {
     href: whatsappPrefilledHref,
     label: `WhatsApp: ${PHONE_DISPLAY}`,
     external: true,
-    icon: <WhatsAppIcon className="w-3.5 h-3.5 text-[#b6ff00] shrink-0" />,
+    icon: <WhatsAppIcon className="w-3.5 h-3.5 text-[color:var(--vd-b6ff00)] shrink-0" />,
   };
 
   const viberItem = {
@@ -159,7 +159,7 @@ export const ContactPage: React.FC = () => {
     href: VIBER_URL,
     label: `Viber: ${PHONE_DISPLAY}`,
     external: false,
-    icon: <ViberIcon className="w-3.5 h-3.5 text-[#b6ff00] shrink-0" />,
+    icon: <ViberIcon className="w-3.5 h-3.5 text-[color:var(--vd-b6ff00)] shrink-0" />,
   };
 
   const telegramItem = {
@@ -169,7 +169,7 @@ export const ContactPage: React.FC = () => {
       ? `Telegram: @${TELEGRAM_USERNAME.trim()}`
       : 'Telegram: @veljkopetkovic',
     external: true,
-    icon: <Send className="w-3.5 h-3.5 text-[#b6ff00] shrink-0" />,
+    icon: <Send className="w-3.5 h-3.5 text-[color:var(--vd-b6ff00)] shrink-0" />,
   };
 
   // On /ru show Telegram first; on / and /sr show Email first
@@ -181,14 +181,14 @@ export const ContactPage: React.FC = () => {
   const hasBookingUrl = Boolean(BOOKING_URL.trim());
 
   return (
-    <div className="min-h-screen w-full bg-[#060709] text-white selection:bg-[#b6ff00] selection:text-black relative flex flex-col overflow-x-clip font-geist">
+    <div className="min-h-screen w-full bg-[color:var(--vd-060709)] text-white selection:bg-[color:var(--vd-b6ff00)] selection:text-black relative flex flex-col overflow-x-clip font-geist">
       {/* Subtle architectural dark grid backdrop */}
       <div
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 z-0 opacity-[0.18]"
         style={{
           backgroundImage:
-            'linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)',
+            'linear-gradient(to right, color-mix(in srgb, var(--vd-ffffff) 4%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--vd-ffffff) 4%, transparent) 1px, transparent 1px)',
           backgroundSize: '64px 64px',
         }}
       />
@@ -199,7 +199,7 @@ export const ContactPage: React.FC = () => {
         className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[420px] opacity-20 z-0"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(182, 255, 0, 0.16) 0%, transparent 70%)',
+            'radial-gradient(ellipse at center, color-mix(in srgb, var(--vd-b6ff00) 16%, transparent) 0%, transparent 70%)',
           filter: 'blur(90px)',
         }}
       />
@@ -222,7 +222,7 @@ export const ContactPage: React.FC = () => {
             {/* 2. H1 (~56-64px, tight line-height, regular sans + italic serif ending with period) */}
             <h1 className="font-geist font-normal text-[40px] sm:text-[52px] lg:text-[58px] xl:text-[62px] leading-[1.05] tracking-[-0.03em] text-white mt-3">
               {`${t.contactPage.h1Regular} `}
-              <span className="font-editorial italic font-normal text-[#b6ff00]">
+              <span className="font-editorial italic font-normal text-[color:var(--vd-b6ff00)]">
                 {t.contactPage.h1Italic}
               </span>
             </h1>
@@ -241,7 +241,7 @@ export const ContactPage: React.FC = () => {
             <ol className="mt-4 space-y-3.5">
               {/* Step 1: depends on BOOKING_URL */}
               <li className="flex items-start gap-3">
-                <span className="w-[18px] h-[18px] rounded-full border border-[#b6ff00] text-[#b6ff00] text-[10.5px] font-mono tabular-nums flex items-center justify-center shrink-0 mt-[2px]">
+                <span className="w-[18px] h-[18px] rounded-full border border-[color:var(--vd-b6ff00)] text-[color:var(--vd-b6ff00)] text-[10.5px] font-mono tabular-nums flex items-center justify-center shrink-0 mt-[2px]">
                   1
                 </span>
                 <span className="text-[14px] leading-[1.5] text-neutral-200">
@@ -251,7 +251,7 @@ export const ContactPage: React.FC = () => {
                       target="_blank"
                       rel="noopener"
                       onClick={() => trackBookCallClick('contact_page_step1')}
-                      className="text-[#b6ff00] hover:underline inline-flex items-center gap-1"
+                      className="text-[color:var(--vd-b6ff00)] hover:underline inline-flex items-center gap-1"
                     >
                       <span>{t.contactPage.step1Booking}</span>
                       <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
@@ -264,7 +264,7 @@ export const ContactPage: React.FC = () => {
 
               {/* Step 2 */}
               <li className="flex items-start gap-3">
-                <span className="w-[18px] h-[18px] rounded-full border border-[#b6ff00] text-[#b6ff00] text-[10.5px] font-mono tabular-nums flex items-center justify-center shrink-0 mt-[2px]">
+                <span className="w-[18px] h-[18px] rounded-full border border-[color:var(--vd-b6ff00)] text-[color:var(--vd-b6ff00)] text-[10.5px] font-mono tabular-nums flex items-center justify-center shrink-0 mt-[2px]">
                   2
                 </span>
                 <span className="text-[14px] leading-[1.5] text-neutral-200">
@@ -274,7 +274,7 @@ export const ContactPage: React.FC = () => {
 
               {/* Step 3 */}
               <li className="flex items-start gap-3">
-                <span className="w-[18px] h-[18px] rounded-full border border-[#b6ff00] text-[#b6ff00] text-[10.5px] font-mono tabular-nums flex items-center justify-center shrink-0 mt-[2px]">
+                <span className="w-[18px] h-[18px] rounded-full border border-[color:var(--vd-b6ff00)] text-[color:var(--vd-b6ff00)] text-[10.5px] font-mono tabular-nums flex items-center justify-center shrink-0 mt-[2px]">
                   3
                 </span>
                 <span className="text-[14px] leading-[1.5] text-neutral-200">
@@ -305,7 +305,7 @@ export const ContactPage: React.FC = () => {
                       trackMessengerClick(item.key, 'contact_page_links');
                     }
                   }}
-                  className="group inline-flex items-center gap-2.5 text-[14px] text-neutral-200 hover:text-[#b6ff00] transition-colors w-fit"
+                  className="group inline-flex items-center gap-2.5 text-[14px] text-neutral-200 hover:text-[color:var(--vd-b6ff00)] transition-colors w-fit"
                 >
                   {item.icon}
                   <span>{item.label}</span>
@@ -326,7 +326,7 @@ export const ContactPage: React.FC = () => {
                   rel="noopener noreferrer"
                   aria-label="VDigital on Instagram"
                   title="VDigital on Instagram"
-                  className="group w-10 h-10 rounded-[10px] bg-[#141416] hover:bg-[#1c1d21] border border-white/[0.06] hover:border-[#b6ff00]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5"
+                  className="group w-10 h-10 rounded-[10px] bg-[color:var(--vd-141416)] hover:bg-[color:var(--vd-1c1d21)] border border-white/[0.06] hover:border-[color:var(--vd-b6ff00)]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -336,7 +336,7 @@ export const ContactPage: React.FC = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     aria-hidden="true"
-                    className="w-4 h-4 text-neutral-300 group-hover:text-[#b6ff00] transition-colors"
+                    className="w-4 h-4 text-neutral-300 group-hover:text-[color:var(--vd-b6ff00)] transition-colors"
                   >
                     <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
                     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
@@ -351,13 +351,13 @@ export const ContactPage: React.FC = () => {
                   rel="noopener noreferrer"
                   aria-label="VDigital on TikTok"
                   title="VDigital on TikTok"
-                  className="group w-10 h-10 rounded-[10px] bg-[#141416] hover:bg-[#1c1d21] border border-white/[0.06] hover:border-[#b6ff00]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5"
+                  className="group w-10 h-10 rounded-[10px] bg-[color:var(--vd-141416)] hover:bg-[color:var(--vd-1c1d21)] border border-white/[0.06] hover:border-[color:var(--vd-b6ff00)]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5"
                 >
                   <svg
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
-                    className="w-4 h-4 text-neutral-300 group-hover:text-[#b6ff00] transition-colors"
+                    className="w-4 h-4 text-neutral-300 group-hover:text-[color:var(--vd-b6ff00)] transition-colors"
                   >
                     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
                   </svg>
@@ -370,13 +370,13 @@ export const ContactPage: React.FC = () => {
                   rel="noopener noreferrer"
                   aria-label="VDigital on LinkedIn"
                   title="VDigital on LinkedIn"
-                  className="group w-10 h-10 rounded-[10px] bg-[#141416] hover:bg-[#1c1d21] border border-white/[0.06] hover:border-[#b6ff00]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5"
+                  className="group w-10 h-10 rounded-[10px] bg-[color:var(--vd-141416)] hover:bg-[color:var(--vd-1c1d21)] border border-white/[0.06] hover:border-[color:var(--vd-b6ff00)]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5"
                 >
                   <svg
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
-                    className="w-4 h-4 text-neutral-300 group-hover:text-[#b6ff00] transition-colors"
+                    className="w-4 h-4 text-neutral-300 group-hover:text-[color:var(--vd-b6ff00)] transition-colors"
                   >
                     <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
                   </svg>
@@ -390,13 +390,13 @@ export const ContactPage: React.FC = () => {
                   aria-label="VDigital on Telegram"
                   title="VDigital on Telegram"
                   onClick={() => trackMessengerClick('telegram', 'contact_page_socials')}
-                  className="group w-10 h-10 rounded-[10px] bg-[#141416] hover:bg-[#1c1d21] border border-white/[0.06] hover:border-[#b6ff00]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5"
+                  className="group w-10 h-10 rounded-[10px] bg-[color:var(--vd-141416)] hover:bg-[color:var(--vd-1c1d21)] border border-white/[0.06] hover:border-[color:var(--vd-b6ff00)]/50 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5"
                 >
                   <svg
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
-                    className="w-4 h-4 text-neutral-300 group-hover:text-[#b6ff00] transition-colors"
+                    className="w-4 h-4 text-neutral-300 group-hover:text-[color:var(--vd-b6ff00)] transition-colors"
                   >
                     <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
                   </svg>
@@ -410,13 +410,13 @@ export const ContactPage: React.FC = () => {
           {/* =============================================================== */}
           <div
             id="contact-page-form"
-            className="w-full rounded-[14px] bg-[#141416] border border-white/[0.06] p-5 sm:p-8 flex flex-col justify-between relative overflow-hidden"
+            className="w-full rounded-[14px] bg-[color:var(--vd-141416)] border border-white/[0.06] p-5 sm:p-8 flex flex-col justify-between relative overflow-hidden"
           >
             {/* Card Header */}
             <div className="border-b border-white/[0.06] pb-5 mb-6 flex items-center justify-between flex-wrap gap-4">
               <div>
                 <div className="flex items-center gap-2.5 mb-2">
-                  <div className="w-6 h-6 rounded-full bg-[#0a0a0a] border border-[#b6ff00]/60 flex items-center justify-center text-[11px] font-bold text-[#b6ff00]">
+                  <div className="w-6 h-6 rounded-full bg-[color:var(--vd-0a0a0a)] border border-[color:var(--vd-b6ff00)]/60 flex items-center justify-center text-[11px] font-bold text-[color:var(--vd-b6ff00)]">
                     V
                   </div>
                   <span className="text-[13px] text-neutral-400 font-medium">
@@ -434,7 +434,7 @@ export const ContactPage: React.FC = () => {
                   target="_blank"
                   rel="noopener"
                   onClick={() => trackBookCallClick('contact_page_header')}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-[8px] bg-[#b6ff00] hover:bg-[#c6ff26] text-[#0a0a0a] font-semibold text-[13px] transition-colors"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-[8px] bg-[color:var(--vd-b6ff00)] hover:bg-[color:var(--vd-c6ff26)] text-[color:var(--vd-0a0a0a)] font-semibold text-[13px] transition-colors"
                 >
                   <span>{t.contactPage.step1Booking}</span>
                   <ArrowUpRight className="w-4 h-4" />
@@ -450,8 +450,8 @@ export const ContactPage: React.FC = () => {
                 className="w-full min-h-[580px]"
               />
             ) : (
-              <div className="w-full min-h-[420px] rounded-[12px] bg-[#0e1012] border border-white/[0.08] p-6 sm:p-10 flex flex-col items-center justify-center text-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#b6ff00]/15 border border-[#b6ff00]/40 flex items-center justify-center text-[#b6ff00]">
+              <div className="w-full min-h-[420px] rounded-[12px] bg-[color:var(--vd-0e1012)] border border-white/[0.08] p-6 sm:p-10 flex flex-col items-center justify-center text-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-[color:var(--vd-b6ff00)]/15 border border-[color:var(--vd-b6ff00)]/40 flex items-center justify-center text-[color:var(--vd-b6ff00)]">
                   <Calendar className="w-6 h-6" />
                 </div>
                 <div className="max-w-md space-y-2">
@@ -477,7 +477,7 @@ export const ContactPage: React.FC = () => {
                       acceptCategoryConsent('marketing');
                       setCalAllowed(true);
                     }}
-                    className="px-5 py-2.5 rounded-[8px] bg-[#b6ff00] hover:bg-[#c6ff26] text-[#0a0a0a] font-semibold text-[13.5px] transition-colors cursor-pointer"
+                    className="px-5 py-2.5 rounded-[8px] bg-[color:var(--vd-b6ff00)] hover:bg-[color:var(--vd-c6ff26)] text-[color:var(--vd-0a0a0a)] font-semibold text-[13.5px] transition-colors cursor-pointer"
                   >
                     {locale === 'sr'
                       ? 'Učitaj kalendar'
@@ -488,7 +488,7 @@ export const ContactPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={openCookieSettings}
-                    className="px-4 py-2.5 rounded-[8px] bg-[#1d1e22] hover:bg-[#25272c] border border-white/[0.1] text-neutral-200 font-medium text-[13px] transition-colors cursor-pointer"
+                    className="px-4 py-2.5 rounded-[8px] bg-[color:var(--vd-1d1e22)] hover:bg-[color:var(--vd-25272c)] border border-white/[0.1] text-neutral-200 font-medium text-[13px] transition-colors cursor-pointer"
                   >
                     {t.footer.cookieSettings}
                   </button>
@@ -506,9 +506,9 @@ export const ContactPage: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackMessengerClick('whatsapp', 'contact_page_card')}
-                  className="h-10 px-4 rounded-[8px] bg-[#1d1e22] hover:bg-[#25272c] border border-white/[0.08] hover:border-[#b6ff00]/50 text-white font-medium text-[13px] flex items-center justify-center gap-2 transition-all duration-200"
+                  className="h-10 px-4 rounded-[8px] bg-[color:var(--vd-1d1e22)] hover:bg-[color:var(--vd-25272c)] border border-white/[0.08] hover:border-[color:var(--vd-b6ff00)]/50 text-white font-medium text-[13px] flex items-center justify-center gap-2 transition-all duration-200"
                 >
-                  <WhatsAppIcon className="w-4 h-4 text-[#b6ff00] shrink-0" />
+                  <WhatsAppIcon className="w-4 h-4 text-[color:var(--vd-b6ff00)] shrink-0" />
                   <span>WhatsApp</span>
                 </a>
 
@@ -516,18 +516,18 @@ export const ContactPage: React.FC = () => {
                 <a
                   href={VIBER_URL}
                   onClick={() => trackMessengerClick('viber', 'contact_page_card')}
-                  className="h-10 px-4 rounded-[8px] bg-[#1d1e22] hover:bg-[#25272c] border border-white/[0.08] hover:border-[#b6ff00]/50 text-white font-medium text-[13px] flex items-center justify-center gap-2 transition-all duration-200"
+                  className="h-10 px-4 rounded-[8px] bg-[color:var(--vd-1d1e22)] hover:bg-[color:var(--vd-25272c)] border border-white/[0.08] hover:border-[color:var(--vd-b6ff00)]/50 text-white font-medium text-[13px] flex items-center justify-center gap-2 transition-all duration-200"
                 >
-                  <ViberIcon className="w-4 h-4 text-[#b6ff00] shrink-0" />
+                  <ViberIcon className="w-4 h-4 text-[color:var(--vd-b6ff00)] shrink-0" />
                   <span>Viber</span>
                 </a>
 
                 {/* Email Button */}
                 <a
                   href={`mailto:${CONTACT_EMAIL}`}
-                  className="h-10 px-4 rounded-[8px] bg-[#1d1e22] hover:bg-[#25272c] border border-white/[0.08] hover:border-[#b6ff00]/50 text-white font-medium text-[13px] flex items-center justify-center gap-2 transition-all duration-200"
+                  className="h-10 px-4 rounded-[8px] bg-[color:var(--vd-1d1e22)] hover:bg-[color:var(--vd-25272c)] border border-white/[0.08] hover:border-[color:var(--vd-b6ff00)]/50 text-white font-medium text-[13px] flex items-center justify-center gap-2 transition-all duration-200"
                 >
-                  <Mail className="w-4 h-4 text-[#b6ff00] shrink-0" />
+                  <Mail className="w-4 h-4 text-[color:var(--vd-b6ff00)] shrink-0" />
                   <span>{CONTACT_EMAIL}</span>
                 </a>
               </div>

@@ -47,14 +47,14 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
     locale === 'sr' ? 'Usluge' : locale === 'ru' ? 'Услуги' : 'Services';
 
   return (
-    <div className="min-h-screen w-full bg-[#060709] text-white selection:bg-[#9ce607] selection:text-black relative flex flex-col overflow-x-clip font-geist">
+    <div className="min-h-screen w-full bg-[color:var(--vd-060709)] text-white selection:bg-[color:var(--vd-9ce607)] selection:text-black relative flex flex-col overflow-x-clip font-geist">
       {/* Subtle architectural dark grid backdrop */}
       <div
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 z-0 opacity-[0.16]"
         style={{
           backgroundImage:
-            'linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)',
+            'linear-gradient(to right, color-mix(in srgb, var(--vd-ffffff) 4%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--vd-ffffff) 4%, transparent) 1px, transparent 1px)',
           backgroundSize: '64px 64px',
         }}
       />
@@ -65,7 +65,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
         className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[920px] h-[480px] opacity-20 z-0"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(156, 230, 7, 0.18) 0%, transparent 70%)',
+            'radial-gradient(ellipse at center, color-mix(in srgb, var(--vd-9ce607) 18%, transparent) 0%, transparent 70%)',
           filter: 'blur(90px)',
         }}
       />
@@ -85,7 +85,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
               e.preventDefault();
               navigate(homePath);
             }}
-            className="hover:text-[#9ce607] transition-colors inline-flex items-center gap-1.5"
+            className="hover:text-[color:var(--vd-9ce607)] transition-colors inline-flex items-center gap-1.5"
           >
             <Home className="w-3.5 h-3.5" />
             <span>Home</span>
@@ -97,20 +97,20 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
               e.preventDefault();
               navigate(`${homePath}#services`);
             }}
-            className="hover:text-[#9ce607] transition-colors"
+            className="hover:text-[color:var(--vd-9ce607)] transition-colors"
           >
             {servicesNavLabel}
           </a>
           <ChevronRight className="w-3.5 h-3.5 text-neutral-600" />
-          <span className="text-[#9ce607] font-semibold truncate max-w-[280px] sm:max-w-none">
+          <span className="text-[color:var(--vd-9ce607)] font-semibold truncate max-w-[280px] sm:max-w-none">
             {service.h1}
           </span>
         </nav>
 
         {/* Section 1: Hero */}
         <div className="max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#9ce607]/10 border border-[#9ce607]/30 text-[#9ce607] text-[11px] font-mono uppercase tracking-[0.2em] mb-5">
-            <span className="w-2 h-2 rounded-full bg-[#9ce607] shadow-[0_0_8px_#9ce607]" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[color:var(--vd-9ce607)]/10 border border-[color:var(--vd-9ce607)]/30 text-[color:var(--vd-9ce607)] text-[11px] font-mono uppercase tracking-[0.2em] mb-5">
+            <span className="w-2 h-2 rounded-full bg-[color:var(--vd-9ce607)] shadow-[0_0_8px_var(--vd-9ce607)]" />
             {service.badge}
           </div>
 
@@ -126,7 +126,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
             <a
               href={contactPath}
               onClick={handleCtaClick}
-              className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-[#9ce607] hover:bg-[#abf50a] text-[#0a0c09] font-geist font-bold text-[15px] tracking-[-0.01em] transition-all duration-200 cursor-pointer shadow-[0_8px_28px_rgba(156,230,7,0.35)] hover:scale-[1.02] active:scale-[0.98]"
+              className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-[color:var(--vd-9ce607)] hover:bg-[color:var(--vd-abf50a)] text-[color:var(--vd-0a0c09)] font-geist font-bold text-[15px] tracking-[-0.01em] transition-all duration-200 cursor-pointer shadow-[0_8px_28px_color-mix(in_srgb,var(--vd-9ce607)_35%,transparent)] hover:scale-[1.02] active:scale-[0.98]"
             >
               <span>{service.cta.button}</span>
               <ArrowUpRight className="w-4 h-4 stroke-[2.5] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -139,9 +139,9 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
           {service.stats.map((stat, idx) => (
             <div
               key={idx}
-              className="rounded-[20px] bg-[#101311]/85 border border-white/[0.08] p-6 sm:p-8 flex flex-col justify-between"
+              className="rounded-[20px] bg-[color:var(--vd-101311)]/85 border border-white/[0.08] p-6 sm:p-8 flex flex-col justify-between"
             >
-              <span className="font-geist text-[34px] sm:text-[42px] font-bold text-[#9ce607] tracking-tight">
+              <span className="font-geist text-[34px] sm:text-[42px] font-bold text-[color:var(--vd-9ce607)] tracking-tight">
                 {stat.value}
               </span>
               <span className="text-[13.5px] font-geist text-neutral-300 mt-2">
@@ -152,9 +152,9 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
         </div>
 
         {/* Section 2: Problem Section */}
-        <div className="mt-20 sm:mt-28 rounded-[28px] bg-[#101311]/90 border border-white/[0.08] p-8 sm:p-12 lg:p-14">
+        <div className="mt-20 sm:mt-28 rounded-[28px] bg-[color:var(--vd-101311)]/90 border border-white/[0.08] p-8 sm:p-12 lg:p-14">
           <div className="max-w-3xl mb-10">
-            <div className="inline-flex items-center gap-2 text-[12px] font-mono uppercase tracking-[0.18em] text-[#ff6b6b] mb-3">
+            <div className="inline-flex items-center gap-2 text-[12px] font-mono uppercase tracking-[0.18em] text-[color:var(--vd-ff6b6b)] mb-3">
               <Zap className="w-4 h-4" />
               <span>
                 {locale === 'sr'
@@ -176,9 +176,9 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
             {service.problem.points.map((point, idx) => (
               <div
                 key={idx}
-                className="rounded-[20px] bg-[#090c0a]/90 border border-white/[0.06] p-6 flex flex-col justify-start"
+                className="rounded-[20px] bg-[color:var(--vd-090c0a)]/90 border border-white/[0.06] p-6 flex flex-col justify-start"
               >
-                <div className="w-8 h-8 rounded-lg bg-[#ff6b6b]/15 text-[#ff6b6b] flex items-center justify-center font-mono text-[13px] font-bold mb-4">
+                <div className="w-8 h-8 rounded-lg bg-[color:var(--vd-ff6b6b)]/15 text-[color:var(--vd-ff6b6b)] flex items-center justify-center font-mono text-[13px] font-bold mb-4">
                   0{idx + 1}
                 </div>
                 <h3 className="font-geist font-semibold text-[17px] text-white tracking-tight mb-2">
@@ -195,7 +195,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
         {/* Section 3: Deliverables / What's Included */}
         <div className="mt-20 sm:mt-28">
           <div className="max-w-2xl mb-12">
-            <div className="inline-flex items-center gap-2 text-[12px] font-mono uppercase tracking-[0.18em] text-[#9ce607] mb-3">
+            <div className="inline-flex items-center gap-2 text-[12px] font-mono uppercase tracking-[0.18em] text-[color:var(--vd-9ce607)] mb-3">
               <ShieldCheck className="w-4 h-4" />
               <span>
                 {locale === 'sr'
@@ -217,9 +217,9 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
             {service.deliverables.items.map((item, idx) => (
               <div
                 key={idx}
-                className="rounded-[24px] bg-[#111512]/80 border border-white/[0.08] p-7 sm:p-8 flex flex-col justify-start transition-all hover:border-[#9ce607]/40"
+                className="rounded-[24px] bg-[color:var(--vd-111512)]/80 border border-white/[0.08] p-7 sm:p-8 flex flex-col justify-start transition-all hover:border-[color:var(--vd-9ce607)]/40"
               >
-                <div className="w-10 h-10 rounded-xl bg-[#9ce607]/10 text-[#9ce607] flex items-center justify-center mb-4">
+                <div className="w-10 h-10 rounded-xl bg-[color:var(--vd-9ce607)]/10 text-[color:var(--vd-9ce607)] flex items-center justify-center mb-4">
                   <CheckCircle2 className="w-5 h-5 stroke-[2.5]" />
                 </div>
                 <h3 className="font-geist font-semibold text-[19px] text-white tracking-tight mb-2">
@@ -234,9 +234,9 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
         </div>
 
         {/* Section 4: 3-Week Process */}
-        <div className="mt-20 sm:mt-28 rounded-[28px] bg-gradient-to-b from-[#111512] to-[#0c0e0c] border border-white/[0.08] p-8 sm:p-12 lg:p-14">
+        <div className="mt-20 sm:mt-28 rounded-[28px] bg-gradient-to-b from-[color:var(--vd-111512)] to-[color:var(--vd-0c0e0c)] border border-white/[0.08] p-8 sm:p-12 lg:p-14">
           <div className="max-w-2xl mb-12">
-            <div className="inline-flex items-center gap-2 text-[12px] font-mono uppercase tracking-[0.18em] text-[#9ce607] mb-3">
+            <div className="inline-flex items-center gap-2 text-[12px] font-mono uppercase tracking-[0.18em] text-[color:var(--vd-9ce607)] mb-3">
               <Clock className="w-4 h-4" />
               <span>
                 {locale === 'sr'
@@ -258,11 +258,11 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
             {service.process.steps.map((step, idx) => (
               <div
                 key={idx}
-                className="rounded-[22px] bg-[#090c0a]/90 border border-white/[0.08] p-7 flex flex-col justify-between"
+                className="rounded-[22px] bg-[color:var(--vd-090c0a)]/90 border border-white/[0.08] p-7 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="font-mono text-[22px] font-bold text-[#9ce607]">
+                    <span className="font-mono text-[22px] font-bold text-[color:var(--vd-9ce607)]">
                       {step.step}
                     </span>
                     <span className="px-2.5 py-1 rounded-full bg-white/[0.06] text-neutral-300 text-[11px] font-mono">
@@ -284,7 +284,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
         {/* Section 5: Pricing Models */}
         <div className="mt-20 sm:mt-28">
           <div className="max-w-2xl mb-12">
-            <div className="inline-flex items-center gap-2 text-[12px] font-mono uppercase tracking-[0.18em] text-[#9ce607] mb-3">
+            <div className="inline-flex items-center gap-2 text-[12px] font-mono uppercase tracking-[0.18em] text-[color:var(--vd-9ce607)] mb-3">
               <Sparkles className="w-4 h-4" />
               <span>
                 {locale === 'sr'
@@ -306,13 +306,13 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
             {service.pricingModels.models.map((model, idx) => (
               <div
                 key={idx}
-                className="rounded-[24px] bg-[#111512]/85 border border-white/[0.08] p-7 sm:p-8 flex flex-col justify-between transition-all hover:border-[#9ce607]/40 shadow-lg"
+                className="rounded-[24px] bg-[color:var(--vd-111512)]/85 border border-white/[0.08] p-7 sm:p-8 flex flex-col justify-between transition-all hover:border-[color:var(--vd-9ce607)]/40 shadow-lg"
               >
                 <div>
                   <h3 className="font-geist font-bold text-[20px] text-white tracking-tight">
                     {model.title}
                   </h3>
-                  <p className="font-mono text-[12px] text-[#9ce607] uppercase tracking-wider mt-1 mb-4">
+                  <p className="font-mono text-[12px] text-[color:var(--vd-9ce607)] uppercase tracking-wider mt-1 mb-4">
                     {model.subtitle}
                   </p>
                   <p className="text-[14px] leading-[1.65] text-neutral-300 mb-6">
@@ -323,7 +323,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
                 <div className="pt-4 border-t border-white/[0.08] space-y-2">
                   {model.highlights.map((h, hIdx) => (
                     <div key={hIdx} className="flex items-center gap-2 text-[13px] text-neutral-200">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#9ce607]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[color:var(--vd-9ce607)]" />
                       <span>{h}</span>
                     </div>
                   ))}
@@ -336,7 +336,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
         {/* Section 6: FAQs */}
         <div className="mt-20 sm:mt-28 max-w-3xl mx-auto">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 text-[12px] font-mono uppercase tracking-[0.18em] text-[#9ce607] mb-3">
+            <div className="inline-flex items-center gap-2 text-[12px] font-mono uppercase tracking-[0.18em] text-[color:var(--vd-9ce607)] mb-3">
               <HelpCircle className="w-4 h-4" />
               <span>FAQ</span>
             </div>
@@ -355,7 +355,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
               return (
                 <div
                   key={idx}
-                  className="rounded-[18px] bg-[#111512]/80 border border-white/[0.08] overflow-hidden transition-colors"
+                  className="rounded-[18px] bg-[color:var(--vd-111512)]/80 border border-white/[0.08] overflow-hidden transition-colors"
                 >
                   <button
                     type="button"
@@ -364,7 +364,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
                   >
                     <span>{faq.question}</span>
                     <ChevronDown
-                      className={`w-5 h-5 text-[#9ce607] transition-transform duration-200 shrink-0 ${
+                      className={`w-5 h-5 text-[color:var(--vd-9ce607)] transition-transform duration-200 shrink-0 ${
                         isOpen ? 'rotate-180' : ''
                       }`}
                     />
@@ -381,7 +381,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
         </div>
 
         {/* Section 7: Final CTA */}
-        <div className="mt-20 sm:mt-28 rounded-[28px] bg-gradient-to-b from-[#141815] to-[#0c0f0d] border border-[#9ce607]/30 p-8 sm:p-12 lg:p-16 text-center flex flex-col items-center">
+        <div className="mt-20 sm:mt-28 rounded-[28px] bg-gradient-to-b from-[color:var(--vd-141815)] to-[color:var(--vd-0c0f0d)] border border-[color:var(--vd-9ce607)]/30 p-8 sm:p-12 lg:p-16 text-center flex flex-col items-center">
           <h2 className="font-geist font-semibold text-[28px] sm:text-[38px] text-white tracking-tight max-w-xl">
             {service.cta.heading}
           </h2>
@@ -391,7 +391,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
           <a
             href={contactPath}
             onClick={handleCtaClick}
-            className="group mt-8 inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-[#9ce607] hover:bg-[#abf50a] text-[#0a0c09] font-geist font-bold text-[15px] tracking-[-0.01em] transition-all duration-200 cursor-pointer shadow-[0_8px_28px_rgba(156,230,7,0.35)] hover:scale-[1.02] active:scale-[0.98]"
+            className="group mt-8 inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-[color:var(--vd-9ce607)] hover:bg-[color:var(--vd-abf50a)] text-[color:var(--vd-0a0c09)] font-geist font-bold text-[15px] tracking-[-0.01em] transition-all duration-200 cursor-pointer shadow-[0_8px_28px_color-mix(in_srgb,var(--vd-9ce607)_35%,transparent)] hover:scale-[1.02] active:scale-[0.98]"
           >
             <span>{service.cta.button}</span>
             <ArrowUpRight className="w-4 h-4 stroke-[2.5] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

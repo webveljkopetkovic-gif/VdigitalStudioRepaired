@@ -18,10 +18,10 @@ export const KineticCarouselText: React.FC = () => {
           className="inline-block mx-6 sm:mx-10 md:mx-16 text-[250px] sm:text-[320px] md:text-[380px] lg:text-[420px] xl:text-[460px] font-geist font-black tracking-[-0.04em] leading-none select-none"
           style={{
             // 3D volumetric neon-lime gradient and deep ambient drop shadow matching original
-            background: 'linear-gradient(180deg, #dcfce7 0%, #bef264 15%, #a8f300 45%, #65a30d 80%, #203a05 100%)',
+            background: 'linear-gradient(180deg, var(--vd-kinetic-1) 0%, var(--vd-kinetic-2) 15%, var(--vd-kinetic-3) 45%, var(--vd-kinetic-4) 80%, var(--vd-kinetic-5) 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            filter: 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.9))',
+            filter: 'drop-shadow(0 20px 40px color-mix(in srgb, var(--vd-kinetic-shadow) 90%, transparent))',
           }}
         >
           {word}
@@ -49,19 +49,19 @@ export const KineticCarouselText: React.FC = () => {
       
       {/* 1. Far Left Ambient Glow - Shifted far outside to the left margin */}
       <div 
-        className="absolute top-[-60px] -left-48 w-80 h-80 sm:w-96 sm:h-96 rounded-full bg-[#bef264]/12 blur-[100px] pointer-events-none opacity-80" 
+        className="absolute top-[-60px] -left-48 w-80 h-80 sm:w-96 sm:h-96 rounded-full bg-[color:var(--vd-bef264)]/12 blur-[100px] pointer-events-none opacity-80" 
         aria-hidden="true"
       />
 
       {/* 2. Top-Right Ambient Glow - Lifted high into the upper right corner */}
       <div 
-        className="absolute -top-44 right-[6%] w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-[#a8f300]/15 blur-[90px] pointer-events-none opacity-80" 
+        className="absolute -top-44 right-[6%] w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-[color:var(--vd-a8f300)]/15 blur-[90px] pointer-events-none opacity-80" 
         aria-hidden="true"
       />
 
       {/* 3. Bottom-Right Ambient Glow - Pushed low down into the outer corner */}
       <div 
-        className="absolute -bottom-40 -right-40 w-80 h-80 sm:w-96 sm:h-96 rounded-full bg-[#84cc16]/15 blur-[110px] pointer-events-none opacity-80" 
+        className="absolute -bottom-40 -right-40 w-80 h-80 sm:w-96 sm:h-96 rounded-full bg-[color:var(--vd-84cc16)]/15 blur-[110px] pointer-events-none opacity-80" 
         aria-hidden="true"
       />
     </div>

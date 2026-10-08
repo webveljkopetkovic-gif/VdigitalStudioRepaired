@@ -83,7 +83,7 @@ export const Preloader: React.FC = () => {
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#060709] select-none pointer-events-none transition-opacity duration-200 ease-out ${
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[color:var(--vd-060709)] select-none pointer-events-none transition-opacity duration-200 ease-out ${
         isExiting ? 'opacity-0' : 'opacity-100'
       }`}
     >
@@ -96,11 +96,11 @@ export const Preloader: React.FC = () => {
         }}
       >
         <span className="inline-flex items-baseline">
-          <span className="text-[#9ce607] drop-shadow-[0_0_18px_rgba(156,230,7,0.45)]">
+          <span className="text-[color:var(--vd-9ce607)] drop-shadow-[0_0_18px_color-mix(in_srgb,var(--vd-9ce607)_45%,transparent)]">
             V
           </span>
           <span className="text-white">Digital</span>
-          <span className="text-[#9ce607] drop-shadow-[0_0_14px_rgba(156,230,7,0.6)]">
+          <span className="text-[color:var(--vd-9ce607)] drop-shadow-[0_0_14px_color-mix(in_srgb,var(--vd-9ce607)_60%,transparent)]">
             .
           </span>
         </span>

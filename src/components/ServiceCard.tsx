@@ -23,8 +23,8 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       onClick={() => onSelect(item.id)}
       className={`group relative w-full min-w-0 transition-all duration-300 ease-out cursor-pointer select-none rounded-2xl overflow-hidden border ${
         isActive
-          ? 'z-30 h-[260px] sm:h-[285px] bg-[#12141a] border-white/25 shadow-[0_20px_50px_rgba(0,0,0,0.85)] scale-[1.02] sm:scale-[1.03] -translate-y-2 sm:-translate-y-3'
-          : 'z-10 h-[205px] sm:h-[225px] bg-[#0c0e12]/90 border-white/[0.08] hover:border-white/20 hover:bg-[#101217]'
+          ? 'z-30 h-[260px] sm:h-[285px] bg-[color:var(--vd-12141a)] border-white/25 shadow-[0_20px_50px_color-mix(in_srgb,var(--vd-000000)_85%,transparent)] scale-[1.02] sm:scale-[1.03] -translate-y-2 sm:-translate-y-3'
+          : 'z-10 h-[205px] sm:h-[225px] bg-[color:var(--vd-0c0e12)]/90 border-white/[0.08] hover:border-white/20 hover:bg-[color:var(--vd-101217)]'
       }`}
     >
       {/* Background visual artwork for active or image cards */}

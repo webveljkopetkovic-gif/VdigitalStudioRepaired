@@ -51,12 +51,12 @@ export const SunburstRays: React.FC<{ className?: string }> = ({ className = '' 
             cy="0" 
             r="380"
           >
-            <stop offset="0%" stopColor="#ecfccb" stopOpacity="1" />
-            <stop offset="18%" stopColor="#bef264" stopOpacity="0.98" />
-            <stop offset="45%" stopColor="#a8f300" stopOpacity="0.95" />
-            <stop offset="72%" stopColor="#65a30d" stopOpacity="0.8" />
-            <stop offset="90%" stopColor="#365314" stopOpacity="0.45" />
-            <stop offset="100%" stopColor="#142602" stopOpacity="0" />
+            <stop offset="0%" style={{ stopColor: 'var(--vd-ecfccb)' }} stopOpacity="1" />
+            <stop offset="18%" style={{ stopColor: 'var(--vd-bef264)' }} stopOpacity="0.98" />
+            <stop offset="45%" style={{ stopColor: 'var(--vd-a8f300)' }} stopOpacity="0.95" />
+            <stop offset="72%" style={{ stopColor: 'var(--vd-65a30d)' }} stopOpacity="0.8" />
+            <stop offset="90%" style={{ stopColor: 'var(--vd-365314)' }} stopOpacity="0.45" />
+            <stop offset="100%" style={{ stopColor: 'var(--vd-142602)' }} stopOpacity="0" />
           </radialGradient>
 
           {/* Central circular atmospheric glow behind rays */}
@@ -67,10 +67,10 @@ export const SunburstRays: React.FC<{ className?: string }> = ({ className = '' 
             cy="400" 
             r="320"
           >
-            <stop offset="0%" stopColor="#a8f300" stopOpacity="0.3" />
-            <stop offset="35%" stopColor="#bef264" stopOpacity="0.15" />
-            <stop offset="65%" stopColor="#65a30d" stopOpacity="0.06" />
-            <stop offset="100%" stopColor="#060709" stopOpacity="0" />
+            <stop offset="0%" style={{ stopColor: 'var(--vd-a8f300)' }} stopOpacity="0.3" />
+            <stop offset="35%" style={{ stopColor: 'var(--vd-bef264)' }} stopOpacity="0.15" />
+            <stop offset="65%" style={{ stopColor: 'var(--vd-65a30d)' }} stopOpacity="0.06" />
+            <stop offset="100%" style={{ stopColor: 'var(--vd-060709)' }} stopOpacity="0" />
           </radialGradient>
 
           {/* Glow filter for neon rays */}

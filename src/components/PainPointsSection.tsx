@@ -25,7 +25,7 @@ export const PainPointsSection: React.FC = () => {
             strokeWidth="1.75"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-7 h-7 text-[#9ce607]"
+            className="w-7 h-7 text-[color:var(--vd-9ce607)]"
             aria-hidden="true"
           >
             <path d="M14 4L24 9.5L14 15L4 9.5L14 4Z" />
@@ -42,7 +42,7 @@ export const PainPointsSection: React.FC = () => {
             strokeWidth="1.75"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-7 h-7 text-[#9ce607]"
+            className="w-7 h-7 text-[color:var(--vd-9ce607)]"
             aria-hidden="true"
           >
             <path d="M16.5 11.5L19 9" />
@@ -61,7 +61,7 @@ export const PainPointsSection: React.FC = () => {
             strokeWidth="1.75"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-7 h-7 text-[#9ce607]"
+            className="w-7 h-7 text-[color:var(--vd-9ce607)]"
             aria-hidden="true"
           >
             <rect x="4.5" y="4.5" width="7.5" height="7.5" rx="2" />
@@ -78,7 +78,7 @@ export const PainPointsSection: React.FC = () => {
             strokeWidth="1.75"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-7 h-7 text-[#9ce607]"
+            className="w-7 h-7 text-[color:var(--vd-9ce607)]"
             aria-hidden="true"
           >
             <circle cx="14" cy="14" r="9.5" />
@@ -95,14 +95,14 @@ export const PainPointsSection: React.FC = () => {
   return (
     <section
       id="problems"
-      className="relative w-full bg-[#060709] text-white py-24 sm:py-32 lg:py-36 px-4 sm:px-8 lg:px-12 border-b border-[#181d26] overflow-hidden select-none"
+      className="relative w-full bg-[color:var(--vd-060709)] text-white py-24 sm:py-32 lg:py-36 px-4 sm:px-8 lg:px-12 border-b border-[color:var(--vd-181d26)] overflow-hidden select-none"
     >
       {/* Subtle Ambient Background Glow */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[780px] h-[480px] pointer-events-none opacity-15"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(156, 230, 7, 0.22) 0%, transparent 70%)',
+            'radial-gradient(ellipse at center, color-mix(in srgb, var(--vd-9ce607) 22%, transparent) 0%, transparent 70%)',
           filter: 'blur(100px)',
         }}
         aria-hidden="true"
@@ -131,7 +131,7 @@ export const PainPointsSection: React.FC = () => {
               className="font-geist font-normal text-[38px] sm:text-[48px] xl:text-[56px] leading-[1.06] tracking-[-0.03em] text-white max-w-[440px]"
             >
               <span className="block">{t.painPoints.headingMain}{' '}</span>
-              <span className="block font-editorial italic font-normal text-[#9ce607] mt-1.5 tracking-[-0.015em]">
+              <span className="block font-editorial italic font-normal text-[color:var(--vd-9ce607)] mt-1.5 tracking-[-0.015em]">
                 {t.painPoints.headingItalic}
               </span>
             </h2>
@@ -146,7 +146,7 @@ export const PainPointsSection: React.FC = () => {
               <a
                 href={contactPath}
                 onClick={handleBookCall}
-                className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-[10px] bg-[#9ce607] hover:bg-[#abf50a] text-[#0a0c09] font-geist font-semibold text-[13.5px] sm:text-[14px] tracking-[-0.01em] transition-all duration-200 shadow-[0_8px_24px_rgba(156,230,7,0.28)] hover:scale-[1.02] active:scale-[0.98] cursor-pointer whitespace-nowrap"
+                className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-[10px] bg-[color:var(--vd-9ce607)] hover:bg-[color:var(--vd-abf50a)] text-[color:var(--vd-0a0c09)] font-geist font-semibold text-[13.5px] sm:text-[14px] tracking-[-0.01em] transition-all duration-200 shadow-[0_8px_24px_color-mix(in_srgb,var(--vd-9ce607)_28%,transparent)] hover:scale-[1.02] active:scale-[0.98] cursor-pointer whitespace-nowrap"
               >
                 <span>{t.navbar.cta}</span>
                 <span
@@ -178,7 +178,7 @@ export const PainPointsSection: React.FC = () => {
                     delay: 0.08 * index,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className={`group relative flex flex-col justify-between p-7 sm:p-8 lg:p-9 min-h-[270px] sm:min-h-[295px] rounded-[20px] bg-[#111513]/95 hover:bg-[#151b17] border border-white/[0.08] hover:border-[#9ce607]/35 transition-colors duration-200 shadow-[0_18px_45px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.06)] ${
+                  className={`group relative flex flex-col justify-between p-7 sm:p-8 lg:p-9 min-h-[270px] sm:min-h-[295px] rounded-[20px] bg-[color:var(--vd-111513)]/95 hover:bg-[color:var(--vd-151b17)] border border-white/[0.08] hover:border-[color:var(--vd-9ce607)]/35 transition-colors duration-200 shadow-[0_18px_45px_color-mix(in_srgb,var(--vd-000000)_55%,transparent),inset_0_1px_0_color-mix(in_srgb,var(--vd-ffffff)_6%,transparent)] ${
                     isRightColumnCard ? 'sm:translate-y-12 lg:translate-y-16' : ''
                   }`}
                 >

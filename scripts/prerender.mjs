@@ -960,7 +960,7 @@ export async function runPrerender() {
       const localizedHead = `${buildLocalizedHead(route.meta)}\n${viteAssetTags.join('\n')}\n  </head>`;
 
       const routeHtml = templateHtml
-        .replace(/<html lang="[^"]*">/i, `<html lang="${route.meta.lang}">`)
+        .replace(/<html lang="[^"]*"/i, `<html lang="${route.meta.lang}"`)
         .replace(/<head>[\s\S]*?<\/head>/i, localizedHead)
         .replace(
           '<div id="root"></div>',

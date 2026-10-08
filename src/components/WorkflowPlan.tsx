@@ -69,14 +69,14 @@ export const WorkflowPlan: React.FC = () => {
   return (
     <section
       id="process"
-      className="relative w-full min-h-screen flex flex-col justify-center bg-[#07080a] text-white py-20 sm:py-28 lg:py-32 px-6 sm:px-10 lg:px-16 overflow-hidden select-none border-b border-white/[0.06]"
+      className="relative w-full min-h-screen flex flex-col justify-center bg-[color:var(--vd-07080a)] text-white py-20 sm:py-28 lg:py-32 px-6 sm:px-10 lg:px-16 overflow-hidden select-none border-b border-white/[0.06]"
     >
       {/* Background: Subtle Vertical Grid Hairlines */}
       <div
         className="absolute inset-0 pointer-events-none z-0 opacity-35"
         style={{
           backgroundImage:
-            'linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px)',
+            'linear-gradient(to right, color-mix(in srgb, var(--vd-ffffff) 4%, transparent) 1px, transparent 1px)',
           backgroundSize: 'calc(100% / 12) 100%',
         }}
         aria-hidden="true"
@@ -87,7 +87,7 @@ export const WorkflowPlan: React.FC = () => {
         className="absolute -top-32 right-1/4 w-[600px] h-[360px] rounded-full pointer-events-none z-0 opacity-15"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(163, 230, 53, 0.35) 0%, transparent 70%)',
+            'radial-gradient(ellipse at center, color-mix(in srgb, var(--vd-a3e635) 35%, transparent) 0%, transparent 70%)',
           filter: 'blur(90px)',
         }}
         aria-hidden="true"
@@ -105,8 +105,8 @@ export const WorkflowPlan: React.FC = () => {
           {/* Left: Eyebrow + Main Display Headline */}
           <div className="max-w-3xl">
             <div className="flex items-center gap-2.5 mb-4">
-              <span className="w-2 h-2 rounded-full bg-[#a3e635] shadow-[0_0_10px_#a3e635]" />
-              <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-[#a3e635] font-semibold">
+              <span className="w-2 h-2 rounded-full bg-[color:var(--vd-a3e635)] shadow-[0_0_10px_var(--vd-a3e635)]" />
+              <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-[color:var(--vd-a3e635)] font-semibold">
                 {t.process.label}
               </span>
             </div>
@@ -114,9 +114,9 @@ export const WorkflowPlan: React.FC = () => {
             <h2 className="font-geist font-semibold text-[34px] sm:text-[48px] md:text-[56px] lg:text-[64px] leading-[1.06] tracking-[-0.03em] text-white">
               {t.process.headingBefore}{' '}
               <span
-                className="font-editorial italic font-normal text-[#a3e635] px-1 inline-block"
+                className="font-editorial italic font-normal text-[color:var(--vd-a3e635)] px-1 inline-block"
                 style={{
-                  textShadow: '0 0 36px rgba(163, 230, 53, 0.35)',
+                  textShadow: '0 0 36px color-mix(in srgb, var(--vd-a3e635) 35%, transparent)',
                 }}
               >
                 {t.process.headingHighlight}
@@ -127,7 +127,7 @@ export const WorkflowPlan: React.FC = () => {
 
           {/* Right: Supporting Editorial Paragraph */}
           <div className="max-w-md lg:text-right self-start lg:self-end">
-            <p className="font-geist text-[14px] sm:text-[15px] leading-[1.65] text-[#9ca3af] font-normal">
+            <p className="font-geist text-[14px] sm:text-[15px] leading-[1.65] text-[color:var(--vd-9ca3af)] font-normal">
               {t.process.sideText}
             </p>
           </div>
@@ -135,7 +135,7 @@ export const WorkflowPlan: React.FC = () => {
 
         {/* TIMELINE GRID: 3-COLUMN DESKTOP / 1-COLUMN MOBILE */}
         <div className="relative w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-white/[0.08] border border-white/[0.08] rounded-2xl bg-[#0a0c10]/70 backdrop-blur-md shadow-[0_24px_80px_rgba(0,0,0,0.65)] overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-white/[0.08] border border-white/[0.08] rounded-2xl bg-[color:var(--vd-0a0c10)]/70 backdrop-blur-md shadow-[0_24px_80px_color-mix(in_srgb,var(--vd-000000)_65%,transparent)] overflow-hidden">
             {t.process.weeks.map((week, colIdx) => {
               const verticalCascadeSpaces = [
                 'pt-0',
@@ -158,10 +158,10 @@ export const WorkflowPlan: React.FC = () => {
                     <div className="flex items-center">
                       <div className="flex items-center gap-2.5">
                         <span
-                          className="w-2.5 h-2.5 rounded-full bg-[#a3e635] shrink-0"
+                          className="w-2.5 h-2.5 rounded-full bg-[color:var(--vd-a3e635)] shrink-0"
                           style={{
                             boxShadow:
-                              '0 0 10px rgba(163, 230, 53, 0.8), 0 0 20px rgba(163, 230, 53, 0.4)',
+                              '0 0 10px color-mix(in srgb, var(--vd-a3e635) 80%, transparent), 0 0 20px color-mix(in srgb, var(--vd-a3e635) 40%, transparent)',
                           }}
                         />
                         <h3 className="font-mono text-[13px] uppercase tracking-[0.2em] text-white font-bold m-0">
@@ -170,7 +170,7 @@ export const WorkflowPlan: React.FC = () => {
                       </div>
                     </div>
 
-                    <p className="font-geist text-[15px] text-[#9ca3af] font-normal mt-2 pl-5">
+                    <p className="font-geist text-[15px] text-[color:var(--vd-9ca3af)] font-normal mt-2 pl-5">
                       {week.title}
                     </p>
                   </div>
@@ -200,10 +200,10 @@ export const WorkflowPlan: React.FC = () => {
                             style={{
                               marginLeft: shiftLeft,
                             }}
-                            className="max-sm:!ml-0 w-fit max-w-full group relative rounded-[10px] bg-[#16181d]/90 hover:bg-[#1c1f26] border border-white/[0.08] hover:border-[#a3e635]/50 px-4 py-3 sm:px-4.5 sm:py-3.5 transition-colors duration-250 cursor-default shadow-[0_8px_20px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.06)]"
+                            className="max-sm:!ml-0 w-fit max-w-full group relative rounded-[10px] bg-[color:var(--vd-16181d)]/90 hover:bg-[color:var(--vd-1c1f26)] border border-white/[0.08] hover:border-[color:var(--vd-a3e635)]/50 px-4 py-3 sm:px-4.5 sm:py-3.5 transition-colors duration-250 cursor-default shadow-[0_8px_20px_color-mix(in_srgb,var(--vd-000000)_45%,transparent),inset_0_1px_0_color-mix(in_srgb,var(--vd-ffffff)_6%,transparent)]"
                           >
                             <span
-                              className="absolute left-0 top-2.5 bottom-2.5 w-[2.5px] rounded-r-full bg-[#a3e635]/40 group-hover:bg-[#a3e635] group-hover:shadow-[0_0_10px_#a3e635] transition-all duration-250"
+                              className="absolute left-0 top-2.5 bottom-2.5 w-[2.5px] rounded-r-full bg-[color:var(--vd-a3e635)]/40 group-hover:bg-[color:var(--vd-a3e635)] group-hover:shadow-[0_0_10px_var(--vd-a3e635)] transition-all duration-250"
                               aria-hidden="true"
                             />
 
@@ -211,11 +211,11 @@ export const WorkflowPlan: React.FC = () => {
                               style={{ gap: innerGap }}
                               className="flex items-center justify-between pl-1.5"
                             >
-                              <span className="font-geist font-semibold text-[13.5px] sm:text-[14.5px] text-white group-hover:text-[#f8fafc] tracking-[-0.01em] leading-snug">
+                              <span className="font-geist font-semibold text-[13.5px] sm:text-[14.5px] text-white group-hover:text-[color:var(--vd-f8fafc)] tracking-[-0.01em] leading-snug">
                                 {task.title}
                               </span>
                               <span className="sr-only">{' — '}</span>
-                              <span className="shrink-0 inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/[0.06] group-hover:bg-[#a3e635]/15 border border-white/[0.08] group-hover:border-[#a3e635]/40 font-mono text-[11px] text-[#9ca3af] group-hover:text-[#a3e635] transition-colors duration-250 whitespace-nowrap">
+                              <span className="shrink-0 inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/[0.06] group-hover:bg-[color:var(--vd-a3e635)]/15 border border-white/[0.08] group-hover:border-[color:var(--vd-a3e635)]/40 font-mono text-[11px] text-[color:var(--vd-9ca3af)] group-hover:text-[color:var(--vd-a3e635)] transition-colors duration-250 whitespace-nowrap">
                                 {task.duration}
                               </span>
                             </div>

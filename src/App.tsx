@@ -55,7 +55,7 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
 
   return (
     <I18nProvider locale={locale}>
-      <div className="min-h-screen w-full bg-[#060709] text-white selection:bg-[#a8f300] selection:text-black relative flex flex-col overflow-x-clip scroll-smooth">
+      <div className="min-h-screen w-full bg-[color:var(--vd-060709)] text-white selection:bg-[color:var(--vd-a8f300)] selection:text-black relative flex flex-col overflow-x-clip scroll-smooth">
         <main id="main-viewport" className="w-full flex flex-col">
           {/* 1 & 2 & 3. Navbar + Hero (#top) + Trust Bar (#trust) */}
           <section
