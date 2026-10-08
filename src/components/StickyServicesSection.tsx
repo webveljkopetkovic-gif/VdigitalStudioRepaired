@@ -130,18 +130,27 @@ const StackingCardItem: React.FC<StackingCardItemProps> = ({
         aria-hidden="true"
       />
 
-      {/* Top Area: Large 2-Line Headline + Book a call button */}
+      {/* Top Area: Large 2-Line Headline + Service Page Link button */}
       <div className="flex items-start justify-between gap-4 relative z-10">
         <h3>
-          <span className="block font-geist text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight leading-[1.04]">
-            {service.titleWhite}{' '}
-          </span>
-          <span className="block font-geist text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-normal text-neutral-400 tracking-tight leading-[1.04] mt-0.5">
-            {service.titleGrey}
-          </span>
+          <a
+            href={serviceUrl}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(serviceUrl);
+            }}
+            className="group/heading block cursor-pointer transition-opacity hover:opacity-90"
+          >
+            <span className="block font-geist text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight leading-[1.04]">
+              {service.titleWhite}{' '}
+            </span>
+            <span className="block font-geist text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-normal text-neutral-400 tracking-tight leading-[1.04] mt-0.5">
+              {service.titleGrey}
+            </span>
+          </a>
         </h3>
 
-        {/* Top-Right CTA Button */}
+        {/* Top-Right CTA Button linking to service page */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <a
             href={serviceUrl}

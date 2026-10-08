@@ -12,21 +12,22 @@ function buildJsonLdGraph(meta) {
     ru: 'VDigital — цифровое агентство из Ниша (Сербия), создающее высокоскоростные сайты, видеопроизводство и маркетинговые системы для врачей и коучей.',
   };
 
+  const siteUrl =
+    meta.pageType === 'home'
+      ? meta.canonical
+      : meta.lang === 'sr'
+        ? 'https://vdigital.dev/sr'
+        : meta.lang === 'ru'
+          ? 'https://vdigital.dev/ru'
+          : 'https://vdigital.dev/';
+
   const organizationNode = {
     '@type': ['Organization', 'ProfessionalService'],
     '@id': 'https://vdigital.dev/#organization',
     name: 'VDigital',
     alternateName: ['V Digital', 'VDigital Studio', 'VDigital agencija', 'ВДиджитал'],
     url: 'https://vdigital.dev/',
-    logo: {
-      '@type': 'ImageObject',
-      '@id': 'https://vdigital.dev/#logo',
-      url: 'https://vdigital.dev/logo.png',
-      contentUrl: 'https://vdigital.dev/logo.png',
-      caption: 'VDigital',
-      width: 512,
-      height: 512,
-    },
+    logo: 'https://vdigital.dev/logo.png',
     description: orgDescription[meta.lang] || orgDescription.en,
     email: 'hello@vdigital.dev',
     telephone: '+381 65 913 1103',
@@ -67,16 +68,15 @@ function buildJsonLdGraph(meta) {
       'https://www.instagram.com/vdigital.dev/',
       'https://www.tiktok.com/@vdigital.studio',
       'https://www.linkedin.com/company/vdigital-dev',
-      'https://t.me/veljkopetkovic',
     ],
   };
 
   const webSiteNode = {
     '@type': 'WebSite',
-    '@id': 'https://vdigital.dev/#website',
+    '@id': `${siteUrl}#website`,
     name: 'VDigital',
     alternateName: ['V Digital', 'vdigital.dev'],
-    url: 'https://vdigital.dev/',
+    url: siteUrl,
     publisher: {
       '@id': 'https://vdigital.dev/#organization',
     },
@@ -95,7 +95,7 @@ function buildJsonLdGraph(meta) {
     name: meta.titleHtml,
     description: meta.description,
     isPartOf: {
-      '@id': 'https://vdigital.dev/#website',
+      '@id': `${siteUrl}#website`,
     },
     about: {
       '@id': 'https://vdigital.dev/#organization',
@@ -227,6 +227,7 @@ function buildLocalizedHead(meta) {
     <!-- Favicons & Web App Manifest -->
     <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -339,6 +340,7 @@ ${hreflangs}
     <!-- Favicons & Web App Manifest -->
     <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -537,8 +539,8 @@ export async function runPrerender() {
           lang: 'en',
           ogLocale: 'en_US',
           canonical: 'https://vdigital.dev/',
-          title: 'VDigital: Websites & Marketing for Doctors and Coaches',
-          titleHtml: 'VDigital: Websites & Marketing for Doctors and Coaches',
+          title: 'VDigital | Websites & Marketing for Doctors and Coaches',
+          titleHtml: 'VDigital | Websites & Marketing for Doctors and Coaches',
           description:
             'We build websites, video content and marketing for doctors and health coaches. Strategy, ads and cold calling: a full client system in 3 weeks.',
           pageType: 'home',
@@ -552,8 +554,8 @@ export async function runPrerender() {
           lang: 'sr',
           ogLocale: 'sr_RS',
           canonical: 'https://vdigital.dev/sr',
-          title: 'VDigital: Sajtovi i marketing za doktore i koučeve',
-          titleHtml: 'VDigital: Sajtovi i marketing za doktore i koučeve',
+          title: 'VDigital | Sajtovi i marketing za doktore i koučeve',
+          titleHtml: 'VDigital | Sajtovi i marketing za doktore i koučeve',
           description:
             'Pravimo sajtove, video sadržaj i marketing za doktore i health koučeve. Strategija, reklame i hladni pozivi: ceo sistem za nove klijente za 3 nedelje.',
           pageType: 'home',
@@ -567,8 +569,8 @@ export async function runPrerender() {
           lang: 'ru',
           ogLocale: 'ru_RU',
           canonical: 'https://vdigital.dev/ru',
-          title: 'VDigital: Сайты и маркетинг для врачей и коучей',
-          titleHtml: 'VDigital: Сайты и маркетинг для врачей и коучей',
+          title: 'VDigital | Сайты и маркетинг для врачей и коучей',
+          titleHtml: 'VDigital | Сайты и маркетинг для врачей и коучей',
           description:
             'Создаём сайты, видео и маркетинг для врачей и коучей. Стратегия, реклама и холодные звонки: полная система привлечения клиентов за 3 недели.',
           pageType: 'home',
@@ -794,7 +796,7 @@ export async function runPrerender() {
           titleHtml: SERVICES_DATA.en['cold-calling'].metaTitle,
           description: SERVICES_DATA.en['cold-calling'].metaDescription,
           serviceType: SERVICES_DATA.en['cold-calling'].serviceType,
-          breadcrumbTitle: 'B2B Sales & Outreach',
+          breadcrumbTitle: 'Cold Calling',
           pageType: 'service',
           faqs: SERVICES_DATA.en['cold-calling'].faqs,
           alternates: callingAlternates,
@@ -843,8 +845,8 @@ export async function runPrerender() {
           lang: 'en',
           ogLocale: 'en_US',
           canonical: 'https://vdigital.dev/contact',
-          title: 'Contact & Book a Free Call | VDigital',
-          titleHtml: 'Contact & Book a Free Call | VDigital',
+          title: 'Contact | VDigital',
+          titleHtml: 'Contact | VDigital',
           description:
             'Book a free 30-minute call with VDigital, or reach us on WhatsApp, Viber, Telegram or email. We reply within 24 hours on working days.',
           breadcrumbTitle: 'Contact',
@@ -859,8 +861,8 @@ export async function runPrerender() {
           lang: 'sr',
           ogLocale: 'sr_RS',
           canonical: 'https://vdigital.dev/sr/kontakt',
-          title: 'Kontakt i besplatan poziv | VDigital',
-          titleHtml: 'Kontakt i besplatan poziv | VDigital',
+          title: 'Kontakt | VDigital',
+          titleHtml: 'Kontakt | VDigital',
           description:
             'Zakažite besplatan poziv od 30 minuta sa VDigital timom ili nam pišite na WhatsApp, Viber, Telegram ili email. Odgovaramo u roku od 24 sata.',
           breadcrumbTitle: 'Kontakt',
@@ -875,8 +877,8 @@ export async function runPrerender() {
           lang: 'ru',
           ogLocale: 'ru_RU',
           canonical: 'https://vdigital.dev/ru/kontakty',
-          title: 'Контакты и бесплатная консультация | VDigital',
-          titleHtml: 'Контакты и бесплатная консультация | VDigital',
+          title: 'Контакты | VDigital',
+          titleHtml: 'Контакты | VDigital',
           description:
             'Запишитесь на бесплатный 30-минутный звонок с VDigital или напишите нам в Telegram, WhatsApp, Viber или на email. Отвечаем в течение 24 часов.',
           breadcrumbTitle: 'Контакты',
@@ -942,8 +944,8 @@ export async function runPrerender() {
           url: '/404',
           lang: 'sr',
           ogLocale: 'sr_RS',
-          title: '404: Stranica nije pronađena | VDigital',
-          titleHtml: '404: Stranica nije pronađena | VDigital',
+          title: '404 | VDigital',
+          titleHtml: '404 | VDigital',
           description:
             'Stranica koju tražite ne postoji, premeštena je ili je privremeno nedostupna.',
           pageType: '404',
