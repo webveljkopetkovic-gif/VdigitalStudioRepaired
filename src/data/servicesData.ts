@@ -50,1784 +50,1801 @@ export interface ServiceDetail {
 }
 
 export const SERVICES_DATA: Record<SupportedLocale, Record<ServiceSlug, ServiceDetail>> = {
-  sr: {
-    'web-development': {
-      slug: 'web-development',
-      serviceType: 'Izrada sajtova i web aplikacija',
-      badge: 'Web Development & Dizajn',
-      title: 'Izrada sajtova za doktore | VDigital',
-      metaTitle: 'Izrada sajtova za doktore | VDigital',
-      metaDescription:
-        'Izrada profesionalnih i brzih sajtova za lekare, stomatologe i health koučeve. Prilagođeno pacijentima, sa integrisanim zakazivanjem i SEO optimizacijom.',
-      h1: 'Izrada sajtova za doktore i koučeve',
-      lead:
-        'Pravimo moderne, brze i medicinski prilagođene web sajtove koji grade poverenje pacijenata i pretvaraju posete u zakazane preglede i konsultacije.',
-      stats: [
-        { value: '3 nedelje', label: 'Rok izrade od ideje do lansiranja' },
-        { value: '100/100', label: 'Optimizacija performansi i mobilni prikaz' },
-        { value: '100%', label: 'Prilagođeno medicinskim standardima' },
-      ],
-      problem: {
-        heading: 'Zašto generički sajtovi ne donose pacijente?',
-        description:
-          'Većina digitalnih agencija koristi generičke WordPress šablone koji su spori, pretrpani dodacima i ne razumeju specifičnosti privatne medicinske prakse.',
-        points: [
-          {
-            title: 'Nedostatak poverenja na prvi pogled',
-            text:
-              'Pacijenti traže stručnost, sigurnost i transparentnost. Šablonski sajtovi sa lošim rasporedom informacija stvaraju sumnju umesto autoriteta.',
-          },
-          {
-            title: 'Komplikovan proces zakazivanja',
-            text:
-              'Ako pacijent mora da traži kontakt telefon ili popunjava dugu formu od deset polja, napustiće sajt i otići kod druge ordinacije.',
-          },
-          {
-            title: 'Sporo učitavanje na mobilnim telefonima',
-            text:
-              'Preko 75% pacijenata traži lekara preko telefona. Sajt koji se učitava duže od 2.5 sekunde gubi većinu potencijalnih pacijenata pre nego što vide ponudu.',
-          },
-        ],
-      },
-      deliverables: {
-        heading: 'Šta je sve uključeno u izradu sajta?',
-        description:
-          'Kompletan sistem „ključ u ruke“ koji rešava tehničke, dizajnerske i konverzijske potrebe vaše ordinacije ili koučing prakse.',
-        items: [
-          {
-            title: 'Autorski dizajn usklađen sa vašim brendom',
-            text:
-              'Kreiramo jedinstven vizuelni identitet prilagođen vašoj specijalnosti — bez gotovih šablona koje koriste stotine drugih sajtova.',
-          },
-          {
-            title: 'Interaktivno zakazivanje termina',
-            text:
-              'Direktna integracija sa Google kalendarom, Cal.com ili prilagođenim sistemom, uz automatske email i SMS potvrde pacijentima.',
-          },
-          {
-            title: 'Medicinski copywriting i struktura usluga',
-            text:
-              'Pomažemo u strukturiranju tekstova tako da medicinski zahvati budu objašnjeni jasno, razumljivo i etički, bez zbunjujućeg žargona.',
-          },
-          {
-            title: 'Lokalni SEO i Google Maps priprema',
-            text:
-              'Strukturirani podaci (Schema.org MedicalBusiness), indeksiranje na Google pretraživaču i optimizacija za lokalne pretrage u vašem gradu.',
-          },
-          {
-            title: 'Pravna usklađenost (ZZPL i GDPR)',
-            text:
-              'Podešena politika privatnosti, režim pristanka na kolačiće (Google Consent Mode v2) i bezbedan prenos podataka putem SSL enkripcije.',
-          },
-          {
-            title: 'Mobilna brzina i stabilan hosting',
-            text:
-              'Moderan kod (React/TypeScript, Tailwind) hostovan na globalnoj CDN mreži sa vremenom odziva ispod jedne sekunde.',
-          },
-        ],
-      },
-      process: {
-        heading: 'Kako izgleda proces saradnje u 3 nedelje',
-        description:
-          'Strukturiran i transparentan proces bez beskrajnih sastanaka, gde vi trošite minimalno vreme, a dobijate gotov sajt.',
-        steps: [
-          {
-            step: '01',
-            title: 'Strategija, struktura i sadržaj',
-            duration: '1. nedelja',
-            text:
-              'Analiziramo vašu ciljnu grupu pacijenata, definišemo ključne usluge, pišemo prodajne poruke i pripremamo vizuelni koncept.',
-          },
-          {
-            step: '02',
-            title: 'Dizajn i tehnička izrada',
-            duration: '2. nedelja',
-            text:
-              'Programiramo responzivan sajt, povezujemo kalendar i formu za zakazivanje, optimizujemo fotografije i testiramo na svim uređajima.',
-          },
-          {
-            step: '03',
-            title: 'Podešavanje analitike i lansiranje',
-            duration: '3. nedelja',
-            text:
-              'Povezujemo Google analitiku, postavljamo Schema.org kod, puštamo sajt u rad na vašem domenu i obučavamo vas za izmene sadržaja.',
-          },
-        ],
-      },
-      pricingModels: {
-        heading: 'Modeli saradnje i formiranja cene',
-        description:
-          'Svaka ordinacija i praksa ima različite ciljeve. Nudimo jasne i predvidive modele saradnje bez skrivenih troškova.',
-        models: [
-          {
-            title: 'Fiksni projekat (Turnkey Sprint)',
-            subtitle: 'Za ordinacije i koučeve koji žele gotov sajt u 3 nedelje',
-            description:
-              'Definisan obim posla, jasan rok isporuke i fiksna cena podeljena u dve rate (avans i predaja projekta). Uključuje kompletan dizajn, kod, optimizaciju i lansiranje.',
-            highlights: ['Jasno definisani rokovi', 'Fiksna investicija', 'Vlasništvo nad celim kodom'],
-          },
-          {
-            title: 'Partnerstvo sa podelom prihoda (Revenue Share)',
-            subtitle: 'Za odabrane stručnjake i visoko-profitne edukacije',
-            description:
-              'Manja početna investicija u izradu sajta uz procenat od novih klijenata generisanih kroz kreirani sistem akvizicije.',
-            highlights: ['Minimalan rizik za vas', 'Zajednički cilj rasta', 'Dugoročna posvećenost'],
-          },
-          {
-            title: 'Hibridni model (Sajt + Mesečno održavanje)',
-            subtitle: 'Za ordinacije koje žele stalnu tehničku podršku i SEO',
-            description:
-              'Izrada sajta uz mesečni paket tehničkog održavanja, ažuriranja sadržaja, analize poseta i kontinuiranog rasta na Google pretrazi.',
-            highlights: ['Kontinuirani tehnički nadzor', 'Redovna ažuriranja', 'SEO optimizacija'],
-          },
-        ],
-      },
-      faqs: [
-        {
-          question: 'Koliko traje izrada sajta?',
-          answer:
-            'Kompletan projekat završavamo za tačno 3 nedelje, pod uslovom da blagovremeno dobijemo osnovne informacije o vašim uslugama i timu.',
-        },
-        {
-          question: 'Da li mi je potreban poseban softver za zakazivanje?',
-          answer:
-            'Ne. Mi integrišemo rešenje koje vama najviše odgovara — od besplatnog Google kalendara do platformi poput Cal.com ili prilagođenih formi koje šalju notifikacije direktno na vaš telefon ili email.',
-        },
-        {
-          question: 'Da li sam ja vlasnik sajta nakon izrade?',
-          answer:
-            'Apsolutno. Celokupan izvorni kod, domen i nalozi pripadaju vama. Niste vezani nikakvim ugovorima koji vas primoravaju da ostanete kod nas ukoliko to ne želite.',
-        },
-        {
-          question: 'Šta ako već imam stari sajt?',
-          answer:
-            'Možemo sačuvati postojeći domen i postojeću SEO poziciju, dok kompletan vizuelni izgled, kod i brzinu zamenjujemo modernom platformom.',
-        },
-      ],
-      cta: {
-        heading: 'Spremni za sajt koji donosi nove pacijente?',
-        description:
-          'Zakažite besplatan poziv od 30 minuta. Pregledaćemo vaše trenutno prisustvo na internetu i predložiti konkretan plan.',
-        button: 'Zakažite besplatan poziv',
-      },
-    },
-    'video-social-media': {
-      slug: 'video-social-media',
-      serviceType: 'Video produkcija i vođenje društvenih mreža',
-      badge: 'Video & Društvene Mreže',
-      title: 'Video i društvene mreže za doktore | VDigital',
-      metaTitle: 'Video i društvene mreže za doktore | VDigital',
-      metaDescription:
-        'Kreiranje kratkih video formata (Reels, TikTok, Shorts) i vođenje društvenih mreža za lekare i koučeve. Izgradnja stručnog autoriteta i privlačenje novih pacijenata.',
-      h1: 'Video produkcija i društvene mreže za doktore i koučeve',
-      lead:
-        'Pomažemo lekarima i stručnjacima da kroz edukativan i etički video sadržaj izgrade autoritet na društvenim mrežama i privuku idealne pacijente.',
-      stats: [
-        { value: '30-45s', label: 'Optimalno trajanje reels/short formata' },
-        { value: '1 snimanje', label: 'Dovoljno za mesečni paket od 12 do 16 videa' },
-        { value: '100% etično', label: 'Usklađeno sa lekarskim kodeksom' },
-      ],
-      problem: {
-        heading: 'Zašto doktori gube vreme na društvenim mrežama bez rezultata?',
-        description:
-          'Većina lekara nema vremena za svakodnevno kreiranje objava, a agencije često forsiraju neautentične trendove koji narušavaju profesionalni ugled.',
-        points: [
-          {
-            title: 'Sadržaj bez medicinske težine',
-            text:
-              'Plesanje i neozbiljni trendovi ne privlače pacijente koji traže ozbiljnog hirurga ili stomatologa. Potreban je balans edukacije i pristupačnosti.',
-          },
-          {
-            title: 'Previše utrošenog vremena',
-            text:
-              'Lekari troše sate smišljajući šta da objave, umesto da snime sve u jednom danu sa gotovim scenarijima i profesionalnim timom.',
-          },
-          {
-            title: 'Gledaoci ne postaju pacijenti',
-            text:
-              'Pregledi bez jasnog poziva na akciju i bez povezanog web sajta ostaju samo prolazne brojke bez uticaja na prihod ordinacije.',
-          },
-        ],
-      },
-      deliverables: {
-        heading: 'Šta obuhvata naša video i social media usluga?',
-        description:
-          'Kompletan sistem u kome vi samo stanete ispred kamere na 2 do 3 sata mesečno, a mi radimo sve ostalo.',
-        items: [
-          {
-            title: 'Priprema scenarija i tema',
-            text:
-              'Istražujemo najčešća pitanja vaših pacijenata i pišemo strukturirane skripte koje zvuče prirodno i stručno.',
-          },
-          {
-            title: 'Profesionalna montaža i dinamični titlovi',
-            text:
-              'Rezanje pauza, dodavanje zvučnih efekata, medicinskih ilustracija i čitljivih titlova jer 80% ljudi gleda video bez zvuka.',
-          },
-          {
-            title: 'Optimizacija za Reels, TikTok i YouTube Shorts',
-            text:
-              'Formatiranje i priprema za sve relevantne platforme sa privlačnim naslovnim fotografijama (thumbnails) i opisima.',
-          },
-          {
-            title: 'Strategija konverzije posetilaca',
-            text:
-              'Uvezivanje profila sa vašim web sajtom i automatizacija direktnih poruka kako bi zainteresovani gledaoci lako zakazali pregled.',
-          },
-        ],
-      },
-      process: {
-        heading: 'Mesečni ciklus kreiranja sadržaja',
-        description:
-          'Sistem koji štedi vaše vreme i osigurava konstantno prisustvo bez stresa oko objava.',
-        steps: [
-          {
-            step: '01',
-            title: 'Plan tema i priprema skripti',
-            duration: 'Dan 1–3',
-            text:
-              'Pripremamo 12–16 kratkih tema baziranih na procedurama koje donose najveću vrednost vašoj praksi.',
-          },
-          {
-            step: '02',
-            title: 'Snimanje (jedna sesija)',
-            duration: '2-3 sata',
-            text:
-              'U jednom snimanju prolazimo kroz sve teme u opuštenoj atmosferi uz našu režiju i asistenciju.',
-          },
-          {
-            step: '03',
-            title: 'Montaža, odobrenje i distribucija',
-            duration: 'Tokom meseca',
-            text:
-              'Montiramo video materijal, šaljemo vam na pregled i vodimo publikaciju po optimalnom rasporedu.',
-          },
-        ],
-      },
-      pricingModels: {
-        heading: 'Modeli saradnje za video i društvene mreže',
-        description:
-          'Prilagođavamo se vašim kapacitetima — od jednokratnih produkcijskih paketa do dugoročnog vođenja kanala.',
-        models: [
-          {
-            title: 'Mesečni paket sadržaja',
-            subtitle: '12 do 16 profesionalnih kratkih videa mesečno',
-            description:
-              'Kompletno istraživanje tema, pisanje skripti, vođenje snimanja, montaža i objava. Idealan format za stabilan priliv pacijenata.',
-            highlights: ['Fiksna mesečna pretplata', 'Sveobuhvatna produkcija', 'Nema dugoročnog vezivanja'],
-          },
-          {
-            title: 'Hibridni rast (Video + Plaćeni oglasi)',
-            subtitle: 'Maksimalan doseg u vašem gradu ili regionu',
-            description:
-              'Kombinacija organskog video sadržaja sa ciljanim promovisanjem najuspešnijih videa prema pacijentima u vašoj geografskoj zoni.',
-            highlights: ['Ciljano na vaš grad', 'Merenje cene po upitu', 'Brzi rezultati'],
-          },
-          {
-            title: 'Edukativni masterclass i video kursevi',
-            subtitle: 'Za koučeve i lekare koji monetizuju znanje',
-            description:
-              'Produkcija dužih video materijala, online kurseva i webinara sa vrhunskim zvukom, osvetljenjem i prezentacionim materijalima.',
-            highlights: ['Visoka vrednost produkcije', 'Strukturisane lekcije', 'Podrška za platforme'],
-          },
-        ],
-      },
-      faqs: [
-        {
-          question: 'Šta ako nemam iskustva u stajanju ispred kamere?',
-          answer:
-            'Većina naših klijenata nikada ranije nije snimala video. Naš tim vas vodi kroz ceo proces pitanje po pitanje, tako da zvučite kao u razgovoru sa pacijentom.',
-        },
-        {
-          question: 'Gde se snima video materijal?',
-          answer:
-            'Najbolji rezultati se postižu direktno u vašoj ordinaciji, jer to stvara autentičnost i poverenje. Po potrebi obezbeđujemo i studijski prostor.',
-        },
-        {
-          question: 'Da li moram sam da pišem scenarije?',
-          answer:
-            'Ne. Mi pripremamo kompletne teze i skripte na osnovu intervjua sa vama i analize pretraga vaših pacijenata.',
-        },
-      ],
-      cta: {
-        heading: 'Želite video sadržaj koji gradi autoritet?',
-        description:
-          'Zakažite razgovor sa našim video timom i saznajte koje teme u vašoj specijalnosti imaju najveći potencijal.',
-        button: 'Zakažite besplatne konsultacije',
-      },
-    },
-    'marketing-automation': {
-      slug: 'marketing-automation',
-      serviceType: 'Marketing kampanje i automatizacija procesa',
-      badge: 'Marketing & Automatizacija',
-      title: 'Marketing i automatizacija | VDigital',
-      metaTitle: 'Marketing i automatizacija | VDigital',
-      metaDescription:
-        'Plaćene Google i Meta reklame, automatizacija email i SMS poruka i CRM sistemi za privatne lekarske ordinacije i koučeve. Skalabilan priliv novih klijenata.',
-      h1: 'Marketing i automatizacija za doktore i privatne prakse',
-      lead:
-        'Gradimo automatizovane marketinške levke (funnels) koji dovode kvalifikovane pacijente i eliminišu manuelni rad vašeg osoblja.',
-      stats: [
-        { value: '3x', label: 'Prosečno povećanje konverzije posetilaca' },
-        { value: '24/7', label: 'Automatizovan odgovor na upite pacijenata' },
-        { value: '0%', label: 'Zaboravljenih termina uz SMS podsetnike' },
-      ],
-      problem: {
-        heading: 'Gde privatne prakse gube novac u marketingu?',
-        description:
-          'Novac uložen u reklame često propada jer ordinacija nema sistem koji brzo preuzima upit i vodi pacijenta do dolaska na pregled.',
-        points: [
-          {
-            title: 'Spor odgovor na upite',
-            text:
-              'Ako pacijent pošalje upit u 21h, a odgovor dobije sutra u podne, u 70% slučajeva je već zakazao kod konkurenta koji mu se javio odmah.',
-          },
-          {
-            title: 'Reklame bez preciznog ciljanja',
-            text:
-              'Trošenje budžeta na opšte fraze dovodi publiku koja traži besplatne savete, a ne pacijente spremne da plate kvalitetan zahvat ili tretman.',
-          },
-          {
-            title: 'Nedolazak pacijenata na zakazani termin (No-shows)',
-            text:
-              'Prazan termin u rasporedu je direktan gubitak. Bez automatizovanih podsetnika putem SMS-a i WhatsApp-a, stopa nedolazaka dostiže 25%.',
-          },
-        ],
-      },
-      deliverables: {
-        heading: 'Šta sadrži kompletan sistem automatizacije?',
-        description:
-          'Povezujemo oglašavanje, obradu kontakata i zadržavanje pacijenata u jedinstvenu celinu.',
-        items: [
-          {
-            title: 'Ciljane Google Ads i Meta kampanje',
-            text:
-              'Prikazujemo vaše usluge ljudima koji aktivno traže rešenje za svoj zdravstveni ili estetski problem u vašoj regiji.',
-          },
-          {
-            title: 'Automatizovani SMS i WhatsApp podsetnici',
-            text:
-              'Sistem automatski šalje potvrdu zakazanog pregleda, podsetnik 24h pre termina i uputstvo za dolazak, smanjujući no-show stopu na minimum.',
-          },
-          {
-            title: 'CRM postavka za praćenje pacijenata',
-            text:
-              'Centralizovan pregled svih pristiglih upita po fazama: novi upit, zakazano, obavljen pregled, kontrola.',
-          },
-          {
-            title: 'Sakupljanje Google recenzija nakon pregleda',
-            text:
-              'Automatizovan zahtev zadovoljnim pacijentima da ostave ocenu na Google profilu ordinacije, što drastično diže lokalni SEO rang.',
-          },
-        ],
-      },
-      process: {
-        heading: 'Implementacija sistema u 3 faze',
-        description:
-          'Brza i bezbedna integracija sa vašim postojećim načinom rada bez ometanja svakodnevne ordinacijske rutine.',
-        steps: [
-          {
-            step: '01',
-            title: 'Mapiranje toka pacijenta',
-            duration: '1. nedelja',
-            text:
-              'Analiziramo kako pacijent dolazi do vas, gde nastaju zastoji i koji kanali donose najprofitabilnije usluge.',
-          },
-          {
-            step: '02',
-            title: 'Podešavanje automatizacija i alata',
-            duration: '2. nedelja',
-            text:
-              'Postavljamo email/SMS sekvence, povezujemo web sajt sa CRM-om i testiramo sve scenarije komunikacije.',
-          },
-          {
-            step: '03',
-            title: 'Pokretanje kampanja i optimizacija',
-            duration: '3. nedelja',
-            text:
-              'Puštamo oglasne kampanje, pratimo cenu po zakazanom pregledu i fino podešavamo poruke za maksimalan povrat investicije.',
-          },
-        ],
-      },
-      pricingModels: {
-        heading: 'Modeli saradnje za marketing i automatizaciju',
-        description:
-          'Strukturisane opcije prema fazi rasta vaše ordinacije i marketinškom budžetu.',
-        models: [
-          {
-            title: 'Kompletna postavka sistema (One-off Setup)',
-            subtitle: 'Za prakse sa sopstvenim timom za prijem upita',
-            description:
-              'Konfigurišemo celokupnu infrastrukturu: CRM, SMS/email automatizacije, obrasce na sajtu i predajemo vam sistem uz detaljnu obuku osoblja.',
-            highlights: ['Jednokratna investicija', 'Trajno vlasništvo', 'Obuka vašeg tima'],
-          },
-          {
-            title: 'Upravljanje kampanjama i optimizacija (Mesečni retainer)',
-            subtitle: 'Za kontinuiran dotok novih pacijenata',
-            description:
-              'Stalno vođenje i optimizacija Google i Meta kampanja, A/B testiranje odredišnih stranica i nedeljni izveštaji o broju zakazanih pregleda.',
-            highlights: ['Aktivno upravljanje budžetom', 'A/B testiranje', 'Transparentni izveštaji'],
-          },
-          {
-            title: 'Performans model (Podela rizika)',
-            subtitle: 'Za specifične visoko-tarifatne medicinske procedure',
-            description:
-              'Rad baziran na broju realizovanih pregleda ili novih pacijenata, uz prethodnu analizu kapaciteta ordinacije.',
-            highlights: ['Plaćanje po rezultatu', 'Direktno uvezani interesi', 'Stroga selekcija partnera'],
-          },
-        ],
-      },
-      faqs: [
-        {
-          question: 'Koji budžet za oglašavanje je potreban na početku?',
-          answer:
-            'Za lokalno oglašavanje u Srbiji optimalan početni budžet za medije kreće se od 300 do 600 evra mesečno, što omogućava dovoljno podataka za optimizaciju.',
-        },
-        {
-          question: 'Da li je automatizacija komplikovana za moje medicinske sestre?',
-          answer:
-            'Ne. Sistem je dizajniran da smanji njihov rad — umesto da ručno zovu pacijente i šalju poruke, sistem radi u pozadini, a one vide samo jasan kalendar.',
-        },
-        {
-          question: 'Koliko brzo se vide prvi rezultati?',
-          answer:
-            'Nakon lansiranja kampanja i automatizacija u trećoj nedelji, prvi upiti i zakazivanja obično stižu već u prvih 48 do 72 sata.',
-        },
-      ],
-      cta: {
-        heading: 'Želite automatizovan sistem koji puni raspored?',
-        description:
-          'Zakažite razgovor i saznajte kako marketing automatizacija može rasteretiti vašu ordinaciju i doneti predvidiv rast.',
-        button: 'Zakažite analizu ordinacije',
-      },
-    },
-    'cold-calling': {
-      slug: 'cold-calling',
-      serviceType: 'Direktna prodaja i B2B akvizicija',
-      badge: 'B2B Prodaja & Akvizicija',
-      title: 'Hladni pozivi za koučeve | VDigital',
-      metaTitle: 'Hladni pozivi za koučeve | VDigital',
-      metaDescription:
-        'Direktna prodaja, B2B hladni pozivi i personalizovani outreach za koučeve, edukatore i specijalizovane medicinske klinike. Popunjavamo kalendar kvalifikovanim sastancima.',
-      h1: 'Direktna prodaja i hladni pozivi za edukacije i koučeve',
-      lead:
-        'Preuzimamo kompletan proces direktne komunikacije, telefonskih poziva i zakazivanja sastanaka sa premijum klijentima i korporativnim kupcima.',
-      stats: [
-        { value: '1 na 1', label: 'Personalizovan pristup bez spama' },
-        { value: '15-25%', label: 'Stopa zakazanih sastanaka na ciljanim listama' },
-        { value: 'Kvalifikovani', label: 'Razgovarate samo sa klijentima koji imaju budžet' },
-      ],
-      problem: {
-        heading: 'Zašto masovne poruke i generički outreach propadaju?',
-        description:
-          'Automatizovane bot poruke na LinkedInu i generički cold emailovi danas završavaju u spamu i narušavaju reputaciju ozbiljnih edukatora i stručnjaka.',
-        points: [
-          {
-            title: 'Svi prepoznaju šablonski spam',
-            text:
-              'Kada donosilac odluka dobije poruku očigledno poslatu na još hiljadu adresa, odmah je briše. Potrebno je prethodno istraživanje svake kompanije.',
-          },
-          {
-            title: 'Strah od telefonskih poziva i manjak vremena',
-            text:
-              'Edukatori i koučevi su eksperti u svojoj oblasti, a ne prodavci. Ne žele da provode dane pozivajući hladne kontakte.',
-          },
-          {
-            title: 'Sastanci sa nekvalifikovanim ljudima',
-            text:
-              'Trošenje 45 minuta na razgovor sa nekim ko nema budžet za vaš koučing program ili edukaciju je najbrži put do iscrpljenosti.',
-          },
-        ],
-      },
-      deliverables: {
-        heading: 'Šta obuhvata naša usluga direktne prodaje?',
-        description:
-          'Iskusan prodajni tim koji zastupa vaš brend profesionalno, etički i sa fokusom na visokokvalitetne sastanke.',
-        items: [
-          {
-            title: 'Kreiranje visoko-precizne baze kontakata',
-            text:
-              'Ručno pronalazimo i verifikujemo donosioce odluka u kompanijama ili pojedince koji savršeno odgovaraju vašem profilu idealnog kupca.',
-          },
-          {
-            title: 'Priprema personalizovanih prodajnih scenarija',
-            text:
-              'Pisanje razgovornih skripti i email sekvenci koje komuniciraju vrednost bez agresivnog pritiska.',
-          },
-          {
-            title: 'Direktni telefonski pozivi i kvalifikacija',
-            text:
-              'Naš obučeni prodajni predstavnik poziva kontakte, kvalifikuje njihove potrebe i direktno upisuje termin u vaš kalendar.',
-          },
-          {
-            title: 'Nedeljni izveštaji i analiza prigovora',
-            text:
-              'Detaljan uvid u razloge zašto pojedini kontakti odbijaju, što vam daje dragocene podatke za unapređenje same ponude.',
-          },
-        ],
-      },
-      process: {
-        heading: 'Kako izgleda proces akvizicije',
-        description:
-          'Transparentni koraci koji vaš raspored pune sastancima sa zainteresovanim kupcima.',
-        steps: [
-          {
-            step: '01',
-            title: 'Definisanje ponude i idealnog klijenta',
-            duration: '1. nedelja',
-            text:
-              'Definišemo ključne benefite vaše edukacije ili programa i kriterijume koje kontakt mora da zadovolji pre nego što zakažemo sastanak.',
-          },
-          {
-            step: '02',
-            title: 'Kreiranje baze i test faza',
-            duration: '2. nedelja',
-            text:
-              'Generišemo prvu listu od 100 do 200 ciljanih kontakata, testiramo skripte i merimo stopu odgovora.',
-          },
-          {
-            step: '03',
-            title: 'Pun kapacitet poziva i punjenje kalendara',
-            duration: 'Od 3. nedelje',
-            text:
-              'Skaliramo broj poziva, a vi se fokusirate isključivo na vođenje prodajnih razgovora sa ljudima koji vas već čekaju.',
-          },
-        ],
-      },
-      pricingModels: {
-        heading: 'Modeli saradnje za direktnu prodaju',
-        description:
-          'Jasne opcije prilagođene ceni vašeg programa i željenoj brzini rasta.',
-        models: [
-          {
-            title: 'Retainer + Bonus po zakazanom sastanku',
-            subtitle: 'Balansirana raspodela rizika i nagrade',
-            description:
-              'Mesečna baza koja pokriva pripremu lista i sate rada prodajnog predstavnika, uz bonus za svaki kvalifikovan i održan sastanak.',
-            highlights: ['Posvećen prodajni agent', 'Verifikovane liste', 'Motivacija za rezultat'],
-          },
-          {
-            title: 'Čist provizijski model (Commission-only)',
-            subtitle: 'Za verifikovane programe sa visokom cenom (High-Ticket)',
-            description:
-              'Dostupno isključivo za edukacije i programe sa dokazanom prodajnom istorijom i cenom iznad 2.000 evra po klijentu.',
-            highlights: ['Nula početnog troška', 'Plaćanje isključivo od realizacije', 'Stroga selekcija'],
-          },
-          {
-            title: 'Postavka i obuka internog prodavca',
-            subtitle: 'Za klinike i akademije koje žele sopstveni tim',
-            description:
-              'Pomažemo vam da zaposlite, obučite i opremite prodajnog predstavnika skriptama i CRM procedurama za dugoročnu samostalnost.',
-            highlights: ['Stalna interna imovina', 'Standardizovani procesi', 'Kompletni priručnici'],
-          },
-        ],
-      },
-      faqs: [
-        {
-          question: 'Da li hladni pozivi mogu narušiti moj ugled?',
-          answer:
-            'Ne, jer ne radimo agresivnu prodaju. Naš ton je profesionalan, edukativan i konsultativan. Zovemo isključivo relevantne osobe i poštujemo njihovo vreme.',
-        },
-        {
-          question: 'Koliko sastanaka mogu da očekujem mesečno?',
-          answer:
-            'U zavisnosti od tržišne niše i atraktivnosti vaše ponude, na mesečnom nivou generišemo između 15 i 35 kvalifikovanih sastanaka.',
-        },
-        {
-          question: 'Šta se dešava ako se klijent ne pojavi na zakazanom sastanku?',
-          answer:
-            'Za nepojavljene termine ne naplaćujemo bonus, i naš tim odmah kontaktira osobu kako bi ponudio alternativni termin.',
-        },
-      ],
-      cta: {
-        heading: 'Želite pun kalendar sastanaka sa premijum klijentima?',
-        description:
-          'Zakažite strateški poziv i saznajte da li je vaša ponuda pogodna za naš sistem direktne akvizicije.',
-        button: 'Zakažite strateški poziv',
-      },
-    },
-  },
   en: {
     'web-development': {
       slug: 'web-development',
-      serviceType: 'Web Development & Custom Digital Applications',
-      badge: 'Web Development & Design',
-      title: 'Web Development for Doctors | VDigital',
-      metaTitle: 'Web Development for Doctors | VDigital',
+      serviceType: 'Web Development',
+      badge: 'Web & development',
+      title: 'Web Development & Web Apps | VDigital',
+      metaTitle: 'Web Development & Web Apps | VDigital',
       metaDescription:
-        'High-performance custom websites for medical practices, clinics, and health coaches. Seamless online booking, mobile-first design, and medical SEO.',
-      h1: 'Web Development for Doctors and Health Coaches',
+        'Fast custom websites, online shops and web apps that turn visitors into inquiries, bookings and sales. Mobile-first, SEO-ready from day one, built in 3 weeks.',
+      h1: 'Websites that bring you clients, not just compliments',
       lead:
-        'We build modern, blazing-fast, and patient-centered websites that establish medical authority, communicate trust, and convert visitors into confirmed appointments.',
+        'We design and build fast, custom websites, online shops and web apps that build trust and turn visitors into inquiries, bookings and sales.',
       stats: [
-        { value: '3 Weeks', label: 'Full delivery from concept to live deployment' },
-        { value: '100/100', label: 'Mobile performance and Core Web Vitals' },
-        { value: '100%', label: 'Tailored for healthcare compliance & privacy' },
+        { value: '3 weeks', label: 'From first call to live site' },
+        { value: '100%', label: 'You own the code, domain and content' },
+        { value: 'Mobile-first', label: 'Built for the phone first, where most of your visitors are' },
       ],
       problem: {
-        heading: 'Why Generic Agency Websites Fail Medical Practitioners',
+        heading: "Why most websites don't bring in clients",
         description:
-          'Most agencies rely on bloated WordPress templates loaded with vulnerable plugins. They simply do not understand patient psychology or healthcare workflows.',
+          'Too many sites are built from heavy templates and left alone after launch. They look decent, but nobody calls.',
         points: [
           {
-            title: 'Lack of Instant Clinical Trust',
+            title: 'No reason to trust you',
             text:
-              'Patients seeking medical or wellness advice scrutinize credentials, cleanliness, and professionalism. Cluttered, outdated websites cause immediate abandonment.',
+              'Visitors decide in seconds. An outdated or cluttered site makes them leave before they even see what you offer.',
           },
           {
-            title: 'Friction-Heavy Booking Workflows',
+            title: 'Too hard to take action',
             text:
-              'If a patient has to hunt for a phone number or fill out an intrusive 10-field form, they click back to Google and book with a competing clinic.',
+              'If people have to hunt for a phone number or fill out a long form, they head back to Google and pick a competitor.',
           },
           {
-            title: 'Slow Mobile Loading Times',
+            title: 'Slow on mobile',
             text:
-              'Over 75% of healthcare searches occur on smartphones. A website taking more than 2.5 seconds to load loses prospective patients before they even see your treatments.',
+              'Most people find you on a phone. A slow site loses them before the page even loads.',
           },
         ],
       },
       deliverables: {
-        heading: "What's Included in Your Complete Web System?",
+        heading: 'What goes into your website',
         description:
-          'A complete turnkey web application engineered specifically for the operational and commercial realities of modern private healthcare and coaching.',
+          'A complete site built around how your business actually gets clients.',
         items: [
           {
-            title: 'Custom Brand-Aligned Visual Design',
-            text:
-              'Distinctive typography, color harmony, and layouts tailored to your medical specialty — zero pre-made off-the-shelf templates.',
+            title: 'Custom design',
+            text: 'Layout, colors and typography tailored to your brand. No off-the-shelf templates.',
           },
           {
-            title: 'Seamless Online Booking & Calendar Sync',
+            title: 'Booking, ordering & payments',
             text:
-              'Direct integration with Google Calendar, Cal.com, or custom booking pipelines with automatic email and SMS appointment confirmations.',
+              'Online booking synced to your calendar, inquiry forms, online store or card payments, depending on what you sell. Automatic email or SMS confirmations.',
           },
           {
-            title: 'Patient-Friendly Clinical Copywriting',
+            title: 'Copy that sells',
             text:
-              'We structure complex medical terminology into clear, accessible, and ethical explanations that reassure anxious patients.',
+              'We write clear, simple copy that explains what you do and why clients should choose you.',
           },
           {
-            title: 'Local Healthcare SEO & Schema.org',
+            title: 'SEO from day one',
             text:
-              'MedicalBusiness structured data, Google Maps readiness, and local search engine indexing for high visibility in your metropolitan area.',
+              'Structured data, Google Business Profile setup and local SEO so you get found when people search in your city or niche. Ready for AI search too.',
           },
           {
-            title: 'Strict Privacy & Regulatory Compliance',
+            title: 'Privacy & security',
             text:
-              'Zero non-essential tracker cookies loaded before consent (Google Consent Mode v2), compliant privacy documentation, and SSL encryption.',
+              'Cookie consent configured properly (Google Consent Mode v2), privacy policy and SSL on every page.',
           },
           {
-            title: 'Sub-Second Global Edge Hosting',
+            title: 'Fast hosting',
             text:
-              'Modern React & Tailwind architecture deployed to global edge CDNs for lightning-fast responsiveness on every mobile device.',
+              'A modern React stack on a global CDN so the site loads fast on every phone.',
           },
         ],
       },
       process: {
-        heading: 'Our 3-Week Delivery Sprint',
-        description:
-          'A rigorous, transparent process that respects your clinical schedule while delivering a world-class digital flagship.',
+        heading: 'How we build it in 3 weeks',
+        description: "A clear process that doesn't eat up your schedule.",
         steps: [
           {
             step: '01',
-            title: 'Clinical Strategy & Architecture',
+            title: 'Strategy & structure',
             duration: 'Week 1',
             text:
-              'We define your primary treatment categories, profile your ideal patients, write conversion copy, and produce interactive wireframes.',
+              'We define your offer, your ideal clients and what the site needs to do, then write the copy and plan every page.',
           },
           {
             step: '02',
-            title: 'Full-Stack Development & Integrations',
+            title: 'Design & build',
             duration: 'Week 2',
             text:
-              'We engineer responsive layouts, wire up the interactive scheduling pipeline, optimize all image assets, and test across 20+ mobile screens.',
+              'We design the pages, build the site, hook up booking, forms or payments and test across phones and screens.',
           },
           {
             step: '03',
-            title: 'Analytics, Quality Assurance & Handover',
+            title: 'Testing & launch',
             duration: 'Week 3',
             text:
-              'We configure analytics tracking, test edge deployments, verify Schema.org structured data, and launch your site on your primary domain.',
+              'We set up analytics, test SEO and speed, polish the details and launch on your domain.',
           },
         ],
       },
       pricingModels: {
-        heading: 'Transparent Pricing & Engagement Models',
+        heading: 'Three ways to work together',
         description:
-          'Predictable models designed around your practice stage, with no surprises or lock-ins.',
+          'Choose the model that fits where your business is today. No long-term contracts.',
         models: [
           {
-            title: 'Turnkey 3-Week Sprint (Fixed Price)',
-            subtitle: 'Best for established clinics and solo practitioners',
+            title: 'Fixed price',
+            subtitle: 'Clear scope & date',
             description:
-              'Clear deliverables, a guaranteed 3-week timeline, and a fixed investment split into milestone payments. Complete ownership of code and assets.',
-            highlights: ['Guaranteed delivery date', 'Fixed predictable budget', '100% code ownership'],
+              'Best when you know exactly what you need. Clear scope, fixed price and an agreed launch date. Everything we build is yours.',
+            highlights: ['Agreed launch date', 'Full code & domain ownership', 'No hidden fees'],
           },
           {
-            title: 'Revenue Share Partnership',
-            subtitle: 'For qualified high-ticket practitioners and educators',
+            title: 'Revenue share',
+            subtitle: 'Performance-aligned',
             description:
-              'A reduced upfront setup fee paired with a performance-based percentage from qualified patient leads generated by the new digital system.',
-            highlights: ['Aligned growth incentives', 'Lower upfront barrier', 'Long-term engineering support'],
+              'Lower upfront cost, and we earn a percentage of the sales the new system brings in. We only win when you win.',
+            highlights: ['Lower upfront commitment', 'Aligned incentives', 'Full transparency'],
           },
           {
-            title: 'Hybrid Growth (Build + Monthly Retainer)',
-            subtitle: 'For clinics demanding continuous SEO and technical oversight',
+            title: 'Hybrid (build + monthly growth)',
+            subtitle: 'Launch + ongoing support',
             description:
-              'Sprint deployment combined with an ongoing monthly retainer for SEO content publication, performance monitoring, and booking optimizations.',
-            highlights: ['Continuous local SEO', 'Technical updates & backups', 'Conversion rate optimization'],
+              'The site plus ongoing work after launch: SEO content, updates, backups and improvements so the same traffic brings more inquiries.',
+            highlights: ['Continuous SEO updates', 'Technical maintenance', 'Conversion improvements'],
           },
         ],
       },
       faqs: [
         {
-          question: 'How much time do I need to invest during the 3 weeks?',
+          question: 'How much of my time is needed?',
           answer:
-            'Approximately 2 to 3 hours total. We conduct one strategic intake call, and you review drafts at two key checkpoints. We handle all writing, coding, and setup.',
+            'Around 2 to 3 hours total: one kickoff call and two short reviews. We handle the writing, design and setup.',
         },
         {
-          question: 'Do I own the source code and domain?',
+          question: 'Do I own the website and the domain?',
           answer:
-            'Yes. You retain full 100% intellectual property ownership of the source code, content, domain, and accounts. There are zero proprietary vendor lock-ins.',
+            'Yes. The code, domain, content and accounts are 100% yours. If you ever stop working with us, you take everything with you.',
         },
         {
-          question: 'Can you migrate my existing website and patient testimonials?',
+          question: 'Can you redesign my existing website?',
           answer:
-            'Absolutely. We preserve your existing domain authority, redirect older URLs to prevent broken links, and re-format your clinical credentials and patient reviews.',
+            "Yes. We keep what is working, transfer your content and reviews, and set up redirects so you don't lose any Google rankings.",
         },
       ],
       cta: {
-        heading: 'Ready for a website that converts visitors into patients?',
+        heading: 'Ready for a website that brings you clients?',
         description:
-          'Book a free 30-minute discovery call. We will review your current online presence and provide a clear roadmap.',
-        button: 'Book a Free Consultation',
+          "Book a free 30-minute call. We'll look at your current online presence and show you what we'd change.",
+        button: 'Book a free consultation',
       },
     },
     'video-social-media': {
       slug: 'video-social-media',
-      serviceType: 'Short-Form Video Production & Healthcare Social Media',
-      badge: 'Video & Social Media',
-      title: 'Video & Social Media for Doctors | VDigital',
-      metaTitle: 'Video & Social Media for Doctors | VDigital',
+      serviceType: 'Video Production & Social Media',
+      badge: 'Video & social media',
+      title: 'Video Production & Social Media Management | VDigital',
+      metaTitle: 'Video Production & Social Media Management | VDigital',
       metaDescription:
-        'Engaging short-form video production (Reels, TikTok, Shorts) and ethical social media management for medical doctors and wellness coaches.',
-      h1: 'Video Production & Social Media for Doctors and Coaches',
+        'Short-form video for Instagram Reels, TikTok and YouTube Shorts. We plan, film, edit and publish content that turns viewers into clients.',
+      h1: 'Video content that makes people stop scrolling and start buying',
       lead:
-        'We help medical professionals build commanding authority on modern social channels with patient-educating short-form video content.',
+        'We plan, film, edit and publish short-form video that shows what you do, builds trust and brings people to your site, your inbox or your door.',
       stats: [
-        { value: '30-45s', label: 'Ideal retention length for short-form video' },
-        { value: '1 Session', label: 'Produces an entire month of 12-16 videos' },
-        { value: '100% Ethical', label: 'Fully compliant with medical advertising codes' },
+        { value: '1 shoot', label: 'A full month of content from a single shoot day' },
+        { value: '12 to 16', label: 'Short-form videos per month' },
+        { value: 'Faceless options', label: 'Content can work without you on camera' },
       ],
       problem: {
-        heading: 'Why Typical Social Media Tactics Damage Doctor Reputations',
+        heading: 'Why most business social media goes nowhere',
         description:
-          'Standard marketing agencies treat clinics like retail stores, pushing cringe trends and generic graphics that erode professional authority.',
+          'Posting without a plan takes hours and brings likes at best, not clients.',
         points: [
           {
-            title: 'Trivializing Clinical Knowledge',
+            title: 'Random posts, no plan',
             text:
-              'Dancing and meme formats do not build confidence for complex surgical or therapeutic procedures. Patients need clarity, empathy, and evidence.',
+              "A post here, a post there, copied trends and stock graphics. People scroll past because nothing says why you're different.",
           },
           {
-            title: 'Exhausting Doctor Time Constraints',
+            title: 'No time to film',
             text:
-              'Physicians cannot waste hours filming daily TikToks. Without a systematic recording process, social media becomes an unsustainable chore.',
+              "Running a business doesn't leave hours for daily filming. Without a system, social media becomes a chore you keep putting off.",
           },
           {
-            title: 'Views That Never Convert into Patients',
+            title: 'Views that never become clients',
             text:
-              'Viral view counts mean nothing if viewers live thousands of miles away and have no streamlined way to book a clinical consultation.',
+              "Views mean nothing if viewers don't have a clear way to contact you, book or buy.",
           },
         ],
       },
       deliverables: {
-        heading: 'Our End-to-End Video Production Package',
+        heading: 'End-to-end video production',
         description:
-          'A done-for-you system where you speak on camera for just 2 hours a month, while our team handles scripting, editing, and distribution.',
+          'You spend around 2 hours on camera a month, or none at all. We handle everything else.',
         items: [
           {
-            title: 'Clinical Scripting & Topic Research',
+            title: 'Topics & scripts',
             text:
-              'We uncover the exact questions and anxieties your prospective patients search for, crafting natural, bulleted speaking outlines.',
+              'We find the questions your clients ask and the reasons they buy, then turn them into simple scripts and hooks.',
           },
           {
-            title: 'Dynamic Editing & Synchronized Subtitles',
+            title: 'Filming',
             text:
-              'Color grading, pacing cuts, medical motion graphics, and bold subtitles tailored for the 80% of viewers watching with audio muted.',
+              'On-location or remote with our direction. We guide you so you sound natural, not rehearsed.',
           },
           {
-            title: 'Multi-Platform Distribution',
+            title: 'Editing & captions',
             text:
-              'Finished assets formatted with custom thumbnails, descriptions, and hashtags for Instagram Reels, YouTube Shorts, and TikTok.',
+              'Fast pacing, clean color, animated graphics and captions for the majority who watch with sound off.',
           },
           {
-            title: 'Inquiry Conversion Funnel',
+            title: 'Publishing',
             text:
-              'Connecting profile bios and automated message triggers directly into your booking system to convert passive viewers into clinic inquiries.',
+              'Videos formatted and posted to Instagram Reels, TikTok and YouTube Shorts, with captions, covers and hashtags.',
+          },
+          {
+            title: 'Viewer-to-client flow',
+            text:
+              'Bio links, automated DM replies and booking links so people who liked the video can actually reach you.',
           },
         ],
       },
       process: {
-        heading: 'The Monthly Content Production Rhythm',
-        description:
-          'Engineered for maximum physician efficiency with zero creative fatigue.',
+        heading: 'How a month of content works',
+        description: 'Built to fit into your business, not take it over.',
         steps: [
           {
             step: '01',
-            title: 'Topic Strategy & Briefs',
-            duration: 'Days 1–3',
-            text:
-              'We deliver 12 to 16 targeted treatment briefs designed to showcase your expertise in high-margin clinical procedures.',
+            title: 'The plan',
+            duration: 'Days 1 to 3',
+            text: 'We send you 12 to 16 video ideas built around your best products or services.',
           },
           {
             step: '02',
-            title: 'The Monthly Filming Block',
-            duration: '2 Hours',
-            text:
-              'A guided remote or on-site shoot where our director coaches your delivery so you sound authoritative, warm, and natural.',
+            title: 'Filming',
+            duration: 'One day',
+            text: 'One focused shoot, in person or remote, with our director walking you through every shot.',
           },
           {
             step: '03',
-            title: 'Post-Production & Publishing',
-            duration: 'Rolling',
-            text:
-              'We deliver polished cuts for your approval and schedule publication across all relevant social channels throughout the month.',
+            title: 'Edit & publish',
+            duration: 'Rest of month',
+            text: 'You approve the edits, we publish on schedule and report what worked.',
           },
         ],
       },
       pricingModels: {
-        heading: 'Engagement Models for Healthcare Video',
+        heading: 'How we can work together on video',
         description:
-          'Scalable packages matching your geographic reach and growth ambitions.',
+          'Fixed price, revenue share or a combination, just like every VDigital service.',
         models: [
           {
-            title: 'Monthly Authority Retainer',
-            subtitle: '12 to 16 professional short-form videos per month',
+            title: 'Monthly content plan',
+            subtitle: 'Turnkey short-form',
             description:
-              'Complete research, scripting assistance, professional post-production, and multi-channel publication management on a recurring monthly plan.',
-            highlights: ['Consistent organic presence', 'Zero filming burnout', 'Monthly performance reviews'],
+              '12 to 16 short-form videos a month, from idea to publication, with monthly performance reviews.',
+            highlights: ['12 to 16 videos/month', 'Full editing and captions', 'Publishing & analytics'],
           },
           {
-            title: 'Amplified Local Reach (Video + Paid Ads)',
-            subtitle: 'Target prospective patients in your immediate city',
+            title: 'Content + paid ads',
+            subtitle: 'Amplify top performers',
             description:
-              'We take your best-performing educational videos and amplify them directly to demographic groups within a 20-mile radius of your clinic.',
-            highlights: ['Geographic targeting', 'Measurable cost per patient inquiry', 'Immediate reach'],
+              'We boost your best-performing videos to the right people in your city, country or market. You see what each lead costs.',
+            highlights: ['Targeted ad campaigns', 'Lead cost reporting', 'Creative testing'],
           },
           {
-            title: 'Signature Video Course & Masterclass',
-            subtitle: 'For health coaches and doctors monetizing education',
+            title: 'One-off production',
+            subtitle: 'Brand, promo or course',
             description:
-              'Full studio production of long-form modules, slides, and learning materials for online patient education or practitioner academies.',
-            highlights: ['High-end production value', 'Curriculum structuring', 'Learning platform setup'],
+              'Brand video, product videos, an event promo or an online course. Planned, filmed and edited from start to finish.',
+            highlights: ['Complete single production', 'Professional cinematography', 'All raw footage delivered'],
           },
         ],
       },
       faqs: [
         {
-          question: 'What if I am uncomfortable speaking on camera?',
+          question: "What if I'm not comfortable on camera?",
           answer:
-            'Most physicians feel awkward on their first take. Our interview-style coaching feels like answering a patient question in your office, eliminating camera anxiety.',
+            "Most people aren't at first. We film like a conversation: you answer the questions you already answer for clients every day. And many videos can be made entirely without your face.",
         },
         {
-          question: 'Where does the recording take place?',
+          question: 'Where do we film?',
           answer:
-            'Filming in your clinic or private office yields the highest trust. We provide clear lighting and audio guidance for remote shoots or provide on-location crews.',
+            'At your space, on location, or remotely with simple instructions for lighting and sound. We pick whatever fits the content.',
         },
         {
-          question: 'Will the content comply with medical advertising regulations?',
+          question: 'Do I need to post every day?',
           answer:
-            'Yes. We avoid misleading guarantees, maintain ethical disclaimers, and focus on evidence-based health education that enhances your professional standing.',
+            'No. Consistency matters more than volume. For most businesses, 3 to 4 good videos a week is plenty.',
         },
       ],
       cta: {
-        heading: 'Establish undisputed medical authority in your city',
+        heading: 'Ready to be the business people see first?',
         description:
-          'Schedule a call with our creative team to discover which clinical topics hold the highest conversion potential for your specialty.',
-        button: 'Schedule a Video Strategy Call',
+          "Book a call with our team and we'll show you what video ideas fit your business best.",
+        button: 'Book a video strategy call',
       },
     },
     'marketing-automation': {
       slug: 'marketing-automation',
-      serviceType: 'Performance Advertising & Practice Workflow Automation',
-      badge: 'Marketing & Automation',
-      title: 'Marketing & Automation | VDigital',
-      metaTitle: 'Marketing & Automation | VDigital',
+      serviceType: 'Marketing & Automation',
+      badge: 'Marketing & automation',
+      title: 'Paid Ads, CRM & Marketing Automation | VDigital',
+      metaTitle: 'Paid Ads, CRM & Marketing Automation | VDigital',
       metaDescription:
-        'Targeted Google & Meta advertising, automated SMS/email reminders, and CRM pipelines for medical practices and health coaches. Predictable patient growth.',
-      h1: 'Marketing & Workflow Automation for Doctors and Coaches',
+        'Google and Meta ads, a CRM pipeline and automated replies and reminders so every lead gets answered and you know where your clients come from.',
+      h1: 'Ads that bring people in. Automation that turns them into buyers.',
       lead:
-        'We build automated acquisition and retention systems that capture high-intent patients and eliminate repetitive administrative overhead.',
+        'We run your Google and Meta ads and connect them to a CRM and automated follow-ups, so no inquiry is ever forgotten and you always know what each client cost you.',
       stats: [
-        { value: '3x', label: 'Average lift in consultation conversion rate' },
-        { value: '24/7', label: 'Instant response time for patient inquiries' },
-        { value: '<5%', label: 'Appointment no-show rate with automated SMS' },
+        { value: '24/7', label: 'Every inquiry gets an instant response' },
+        { value: '1 dashboard', label: 'All leads, calls and sales in one place' },
+        { value: 'Live', label: 'You see every number, including ad spend' },
       ],
       problem: {
-        heading: 'Where Medical Practices Bleed Revenue',
+        heading: 'Where most businesses lose money',
         description:
-          'Running ads without automated follow-up leaks revenue at every stage of the patient inquiry journey.',
+          'Running ads without follow-up is like paying people to visit your store and keeping the door locked.',
         points: [
           {
-            title: 'Delayed Inquiry Responses',
+            title: 'Slow replies',
             text:
-              'When an anxious patient submits an inquiry after hours and waits 18 hours for an email reply, they have already booked with a responsive competitor.',
+              "Someone reaches out in the evening, and doesn't get a reply until tomorrow afternoon. By then, they've already bought from someone faster.",
           },
           {
-            title: 'Broad, Unfocused Ad Spending',
+            title: 'Ads for everyone and no one',
             text:
-              'Spending money on broad search terms attracts casual browsers rather than patients prepared to pay for high-value treatments.',
+              'Broad targeting brings clicks from people who were never going to buy. Budget gone, phone silent.',
           },
           {
-            title: 'High No-Show and Cancellation Rates',
+            title: 'No-shows and forgotten leads',
             text:
-              'Empty slots in your clinical calendar are unrecoverable losses. Without automated two-way SMS confirmations, no-show rates hover near 25%.',
+              'Booked calls and appointments get missed, and interested people never get a second message. Every one of them is lost revenue.',
           },
         ],
       },
       deliverables: {
-        heading: 'The Complete Healthcare Growth Engine',
+        heading: 'A complete growth system',
         description:
-          'Unifying targeted advertising, immediate lead qualification, and automated patient relationship management.',
+          'Ads, instant replies and a clear pipeline, connected into one system.',
         items: [
           {
-            title: 'High-Intent Google & Meta Ad Campaigns',
+            title: 'Google & Meta ads',
             text:
-              'Displaying your treatments exclusively to people actively searching for medical solutions within your geographic market.',
+              'Campaigns shown to people already looking for what you sell, in your city, country or market.',
           },
           {
-            title: 'Automated Two-Way SMS & WhatsApp Reminders',
+            title: 'Automated replies & reminders',
             text:
-              'Automated appointment confirmations, 24-hour pre-visit alerts, and directions that drop no-show rates to near zero.',
+              'Instant responses to new inquiries, plus email, SMS or WhatsApp confirmations and reminders that reduce no-shows.',
           },
           {
-            title: 'Centralized Patient Pipeline CRM',
+            title: 'CRM pipeline',
             text:
-              'A unified dashboard tracking every patient stage: New Inquiry, Call Scheduled, Consultation Completed, and Treatment Started.',
+              'Every lead in one place, from first message to closed sale, so nothing slips through and you see exactly where people drop off.',
           },
           {
-            title: 'Automated 5-Star Google Review Engine',
+            title: 'Review requests',
             text:
-              'Polite, automated prompts sent to satisfied patients post-treatment to consistently build five-star reviews on your Google Business Profile.',
+              'Automated, polite messages to happy clients asking for a Google review, so your rating keeps climbing.',
+          },
+          {
+            title: 'Market & competitor analysis',
+            text:
+              'We look at what competitors are doing, where the gaps are and how to position your offer before spending ad money.',
           },
         ],
       },
       process: {
-        heading: '3-Stage System Implementation',
-        description:
-          'Seamless integration into your front-desk workflow without disrupting ongoing patient care.',
+        heading: 'How we set it up in 3 weeks',
+        description: 'Built into the way you already work, without slowing your team down.',
         steps: [
           {
             step: '01',
-            title: 'Patient Journey Mapping',
+            title: 'Mapping the client journey',
             duration: 'Week 1',
             text:
-              'We examine your intake bottlenecks, identify your most profitable treatments, and map out the ideal automated communication flow.',
+              'We find where leads get stuck, which products or services make you the most money, and what follow-up should look like.',
           },
           {
             step: '02',
-            title: 'Automation & Pipeline Buildout',
+            title: 'Building the system',
             duration: 'Week 2',
             text:
-              'We configure CRM pipelines, integrate website forms, draft compliance-ready SMS/email templates, and rigorously test every workflow.',
+              'We set up the CRM, connect forms from your site and channels, write message templates and test every workflow.',
           },
           {
             step: '03',
-            title: 'Campaign Activation & Optimization',
+            title: 'Launch & optimization',
             duration: 'Week 3',
             text:
-              'We launch targeted campaigns, monitor cost-per-scheduled-consultation, and fine-tune ad messaging for maximum return on ad spend.',
+              'We launch campaigns, track cost per lead and sale, and continually improve what is working.',
           },
         ],
       },
       pricingModels: {
-        heading: 'Partnership Models for Practice Growth',
-        description:
-          'Tailored to your clinical capacity and existing administrative team.',
+        heading: 'Three ways to work together',
+        description: 'No long-term contracts. Full access to every account and number.',
         models: [
           {
-            title: 'Turnkey System Setup (One-Off)',
-            subtitle: 'For clinics with an existing front desk team',
+            title: 'One-time setup',
+            subtitle: 'Built and handed over',
             description:
-              'We build the entire automated CRM, appointment confirmation, and review collection system, followed by thorough staff training.',
-            highlights: ['One-time investment', 'Permanent asset', 'Full staff documentation'],
+              'We build the CRM, automations and review system, train your team and hand it over. It stays yours.',
+            highlights: ['Custom CRM configuration', 'Automated workflows', 'Team training included'],
           },
           {
-            title: 'Managed Growth Retainer',
-            subtitle: 'For ongoing advertising management and optimization',
+            title: 'Monthly management',
+            subtitle: 'Continuous optimization',
             description:
-              'Complete ongoing management of Google & Meta ads, monthly landing page optimizations, and weekly conversion metrics reporting.',
-            highlights: ['Active ad budget management', 'A/B landing page testing', 'Transparent ROI reporting'],
+              'Ongoing ad management, testing and improvements, with a clear monthly report showing what each client cost you.',
+            highlights: ['Full ad account management', 'Ongoing copy and creative tests', 'Monthly performance reporting'],
           },
           {
-            title: 'Performance-Shared Growth',
-            subtitle: 'For specific high-ticket medical specialties',
+            title: 'Revenue share',
+            subtitle: 'Shared upside',
             description:
-              'Compensation structured around realized consultations and patient starts, following strict capacity and qualification audits.',
-            highlights: ['Aligned upside', 'Strict patient qualification', 'Selective partner criteria'],
+              'Lower fixed fee plus a percentage of the sales the system brings in. Available after we review your offer and numbers together.',
+            highlights: ['Lower upfront retainer', 'Tied to verified sales', 'Shared growth incentives'],
           },
         ],
       },
       faqs: [
         {
-          question: 'What monthly ad budget do we need to begin?',
+          question: 'How much should I spend on ads?',
           answer:
-            'For local clinical campaigns, we typically recommend starting with $600 to $1,200 per month in direct ad spend to acquire statistically meaningful patient data.',
+            'It depends on your market and goals. After the week 1 analysis, we recommend a starting budget. You can start small and put more behind what works.',
         },
         {
-          question: 'Will our front-desk staff be overwhelmed by new software?',
+          question: 'Will my team have to learn complicated software?',
           answer:
-            'No. The automation handles the repetitive tasks behind the scenes. Your staff simply interacts with a clear daily appointment calendar.',
+            'No. We set up simple tools, show your team how to use them, and write short guides. Most of the work runs on its own.',
         },
         {
-          question: 'How quickly do new patient inquiries start arriving?',
+          question: 'When do new inquiries start coming in?',
           answer:
-            'Once ad campaigns and automations go live in week 3, qualified inquiries typically begin landing in your CRM within 48 to 72 hours.',
+            'Usually in the first days after ads go live in week 3. The first weeks are for testing, and results grow as we learn what works for your business.',
         },
       ],
       cta: {
-        heading: 'Automate your patient acquisition pipeline',
+        heading: 'Stop losing clients you already paid for',
         description:
-          'Book an architectural call to see how smart automation can free your staff from manual follow-ups and pack your consultation calendar.',
-        button: 'Request a Practice Audit',
+          "Book a call and we'll show you where your leads are leaking today and how to fix it.",
+        button: 'Request a free audit',
       },
     },
     'cold-calling': {
       slug: 'cold-calling',
-      serviceType: 'B2B Sales Outreach & Executive Calling',
-      badge: 'B2B Sales & Outreach',
-      title: 'Cold Calling for Coaches | VDigital',
-      metaTitle: 'Cold Calling for Coaches | VDigital',
+      serviceType: 'Cold Calling & Sales',
+      badge: 'Cold calling & sales',
+      title: 'Cold Calling & Appointment Setting | VDigital',
+      metaTitle: 'Cold Calling & Appointment Setting | VDigital',
       metaDescription:
-        'Direct executive calling, personalized B2B outreach, and appointment setting for leadership coaches, wellness educators, and specialized healthcare clinics.',
-      h1: 'Direct Sales & Cold Outreach for Coaches and Educators',
+        'Cold calling for your business: we reach out to potential clients, qualify them and book appointments straight into your calendar. For B2B and B2C.',
+      h1: "We call your future clients so you don't have to",
       lead:
-        'We manage personalized outreach and phone representation to secure qualified appointments with high-value clients and corporate decision-makers.',
+        'Our sales specialist reaches out to the right people, qualifies their interest and books appointments directly into your calendar. You only speak with people who actually need what you offer.',
       stats: [
-        { value: '1-on-1', label: 'Bespoke research per target decision-maker' },
-        { value: '15-25%', label: 'Appointment booking rate on qualified lists' },
-        { value: 'Qualified', label: 'You only meet buyers with confirmed budget' },
+        { value: '1-on-1', label: 'Every list researched by hand' },
+        { value: 'Qualified', label: 'Budget and need verified before the meeting' },
+        { value: 'Weekly', label: 'Reports on calls, bookings and objections' },
       ],
       problem: {
-        heading: 'Why Generic Mass Email Outreach Is Dead',
+        heading: 'Why blast emails and spam messages no longer work',
         description:
-          'Automated bot messages on LinkedIn and blast cold emails now land directly in spam folders, destroying the credibility of high-end educators.',
+          'Generic outreach goes to spam and does more damage to your reputation than good.',
         points: [
           {
-            title: 'Immediate Recognition of Template Spam',
+            title: 'People spot templates instantly',
             text:
-              'Corporate buyers delete generic pitches in seconds. High-ticket contracts require thoughtful, bespoke research into the target company.',
+              'Copy-paste messages get deleted in seconds. A real conversation starts with real research.',
           },
           {
-            title: 'Discomfort With Cold Telephone Outreach',
+            title: "You don't have time to call",
             text:
-              'Coaches and clinical specialists are educators, not telemarketers. Spending hours prospecting on the phone leads directly to burnout.',
+              "You're good at your work, not at spending hours cold-calling strangers. Prospecting gets pushed to \"next week\" forever.",
           },
           {
-            title: 'Wasting Hours with Unqualified Prospects',
+            title: 'Meetings with the wrong people',
             text:
-              'Spending 45 minutes on a discovery call only to discover the prospect lacks budget drains time away from paying clients.',
+              'An hour on a call with someone who has neither budget nor need is an hour taken from paying clients.',
           },
         ],
       },
       deliverables: {
-        heading: 'What Our Dedicated Sales Representation Delivers',
+        heading: 'Your dedicated sales team',
         description:
-          'An articulate, trained sales team acting as professional brand ambassadors to book confirmed meetings in your calendar.',
+          'A trained specialist who represents your business professionally and fills your calendar with real meetings.',
         items: [
           {
-            title: 'Laser-Targeted Decision-Maker Databases',
+            title: 'Targeted contact lists',
             text:
-              'We hand-curate and verify senior executives, HR directors, or corporate leaders that match your exact Ideal Client Profile.',
+              'We build and verify lists of companies or people that match your ideal client: industry, size, location and title.',
           },
           {
-            title: 'Consultative Value-First Call Scripts',
+            title: 'Human-sounding scripts',
             text:
-              'Custom conversational scripts designed to uncover executive pain points without aggressive or spammy sales tactics.',
+              "Conversational scripts built around your clients' problems, without pushy sales tricks.",
           },
           {
-            title: 'Direct Phone Calling & Discovery Qualification',
+            title: 'Calls & qualification',
             text:
-              'Our sales specialists conduct direct phone conversations, qualify budget and timeline, and schedule appointments on your calendar.',
+              'We make the calls, verify need, budget and timing, and book the meeting on your calendar.',
           },
           {
-            title: 'Weekly Analytics & Market Intelligence',
+            title: 'Follow-up',
             text:
-              'Granular insights into common corporate objections, giving you invaluable feedback to continually sharpen your program pricing and positioning.',
+              'Anyone who says "not right now" gets a polite check-in at the right time, by phone, email or message.',
+          },
+          {
+            title: 'Weekly reporting',
+            text:
+              'Call volume, booked meetings and the objections we hear most often, so you can sharpen your offer and pricing.',
           },
         ],
       },
       process: {
-        heading: 'The 3-Step Client Acquisition Process',
-        description:
-          'A reliable system that populates your weekly calendar with qualified corporate and private buyers.',
+        heading: 'From first call to a full calendar',
+        description: 'A clear process that keeps your schedule filled with qualified meetings.',
         steps: [
           {
             step: '01',
-            title: 'Offer & Target ICP Alignment',
+            title: 'Offer & ideal client',
             duration: 'Week 1',
-            text:
-              'We dissect your coaching program or clinical retainer, define strict buyer criteria, and write consultative scripts.',
+            text: "We review your offer, define exactly who we're calling, and write the scripts.",
           },
           {
             step: '02',
-            title: 'Data Curation & Pilot Outreach',
+            title: 'Lists & test calls',
             duration: 'Week 2',
-            text:
-              'We build a verified list of 150 target prospects, launch initial phone touches, and optimize talking points based on real feedback.',
+            text: 'We build the first contact list, start calling and adjust the pitch based on real responses.',
           },
           {
             step: '03',
-            title: 'Full-Scale Calling & Calendar Filling',
-            duration: 'Week 3 Onward',
-            text:
-              'We scale daily outreach volume so you step into high-converting sales conversations with decision-makers who already know your value.',
+            title: 'Full outreach',
+            duration: 'From week 3',
+            text: "We ramp up daily call volume so you walk into meetings with people who already know why you're calling.",
           },
         ],
       },
       pricingModels: {
-        heading: 'Engagement Models for Direct Sales',
-        description:
-          'Structured around your program price point and desired pace of growth.',
+        heading: 'Three ways to work together',
+        description: "Tailored to your offer's price point and how fast you want to grow.",
         models: [
           {
-            title: 'Base Retainer + Performance Per Meeting',
-            subtitle: 'Our most popular balanced model',
+            title: 'Base fee + per meeting',
+            subtitle: 'Balanced risk & reward',
             description:
-              'A monthly management fee covering prospect list building and dedicated caller hours, combined with an incentive fee for every qualified meeting held.',
-            highlights: ['Dedicated caller hours', 'Verified bespoke lists', 'Aligned performance bonus'],
+              'A monthly fee for list building and call hours, plus a bonus for each qualified meeting that actually takes place. Our most balanced model.',
+            highlights: ['Dedicated call hours', 'Performance meeting bonus', 'Zero bonus for no-shows'],
           },
           {
-            title: 'Commission-Only Partnership',
-            subtitle: 'For validated high-ticket offers ($2,500+)',
+            title: 'Revenue share',
+            subtitle: 'Pure commission',
             description:
-              'Available exclusively for established programs with proven sales conversion history and strong market reputation.',
-            highlights: ['Zero upfront risk', 'Purely success-based', 'Selective intake process'],
+              'A percentage of the deals we help you close. Best for offers with a proven sales track record.',
+            highlights: ['Commission based on closed deals', 'Aligned incentives', 'Proven sales required'],
           },
           {
-            title: 'Internal Sales Playbook & Caller Training',
-            subtitle: 'For academies building an in-house sales team',
+            title: 'Playbook & sales training',
+            subtitle: 'In-house enablement',
             description:
-              'We help you recruit, train, and equip your own in-house sales development representative with our proprietary scripts and CRM pipelines.',
-            highlights: ['Permanent internal asset', 'Standardized phone scripts', 'Complete training manual'],
+              'For businesses building their own sales team. We hand over our scripts, CRM setup and training so your people can run it themselves.',
+            highlights: ['Complete phone scripts', 'CRM setup and pipelines', 'Sales training sessions'],
           },
         ],
       },
       faqs: [
         {
-          question: 'Will cold calling hurt my professional brand image?',
+          question: 'Will cold calling damage my reputation?',
           answer:
-            'Never. Our approach is consultative and conversational. We treat every executive with dignity, respect their time, and represent your brand with polish.',
+            "No. Our calls are short, polite and helpful. We respect people's time and represent your business the same way you would.",
         },
         {
-          question: 'How many qualified meetings can I expect each month?',
+          question: 'How many meetings can I expect?',
           answer:
-            'Depending on your niche and offer clarity, our clients typically receive 15 to 30 highly qualified, pre-vetted discovery meetings every month.',
+            'It depends on your market, offer and pricing. After the first two weeks of test calls, we can give you a realistic monthly estimate.',
         },
         {
-          question: 'What happens if a prospect cancels or no-shows?',
+          question: "What if someone cancels or doesn't show?",
           answer:
-            'No meeting fee is charged for no-shows, and our team immediately initiates friendly follow-up to reschedule the appointment.',
+            'We follow up and try to reschedule. With the pay-per-meeting model, you only pay the meeting bonus for calls that actually happen.',
+        },
+        {
+          question: 'Do you call in other languages?',
+          answer: 'Yes. We make calls in Serbian, English and Russian.',
         },
       ],
       cta: {
-        heading: 'Ready for a steady stream of corporate coaching clients?',
+        heading: 'Ready for a calendar full of real sales meetings?',
         description:
-          'Schedule a strategy call to evaluate if your program is primed for our direct outreach system.',
-        button: 'Schedule a Strategy Session',
+          "Book a strategy call and we'll tell you honestly if your offer is ready for cold calling.",
+        button: 'Book a strategy call',
+      },
+    },
+  },
+  sr: {
+    'web-development': {
+      slug: 'web-development',
+      serviceType: 'Veb i programiranje',
+      badge: 'Veb i programiranje',
+      title: 'Izrada sajtova i veb aplikacija | VDigital',
+      metaTitle: 'Izrada sajtova i veb aplikacija | VDigital',
+      metaDescription:
+        'Brzi sajtovi po meri, online prodavnice i veb aplikacije koje posetioce pretvaraju u upite, zakazivanja i prodaju. Prilagođeni telefonu, spremni za SEO, gotovi za 3 nedelje.',
+      h1: 'Sajtovi koji vam donose klijente, ne samo komplimente',
+      lead:
+        'Dizajniramo i pravimo brze sajtove po meri, online prodavnice i veb aplikacije koji ulivaju poverenje i pretvaraju posetioce u upite, zakazivanja i prodaju.',
+      stats: [
+        { value: '3 nedelje', label: 'Od prvog poziva do sajta koji je online' },
+        { value: '100%', label: 'Kod, domen i sadržaj su vaši' },
+        { value: 'Mobile-first', label: 'Pravljeno prvo za telefon, gde je većina vaših posetilaca' },
+      ],
+      problem: {
+        heading: 'Zašto većina sajtova ne dovodi klijente',
+        description:
+          'Mnogi sajtovi su napravljeni od teških šablona i ostavljeni sami posle lansiranja. Izgledaju solidno, ali niko ne zove.',
+        points: [
+          {
+            title: 'Nema razloga da vam veruju',
+            text:
+              'Posetioci odlučuju za par sekundi. Zastareo ili pretrpan sajt ih tera da odu pre nego što vide šta nudite.',
+          },
+          {
+            title: 'Previše je teško javiti se',
+            text:
+              'Ako ljudi moraju da traže broj telefona ili da popune dugu formu, vrate se na Google i izaberu konkurenciju.',
+          },
+          {
+            title: 'Spor na telefonu',
+            text:
+              'Većina ljudi vas pronalazi preko mobilnog. Spor sajt ih izgubi pre nego što se stranica uopšte učita.',
+          },
+        ],
+      },
+      deliverables: {
+        heading: 'Šta sve ulazi u vaš sajt',
+        description:
+          'Kompletan sajt napravljen oko toga kako vaša firma zaista dobija klijente.',
+        items: [
+          {
+            title: 'Dizajn po meri',
+            text: 'Raspored, boje i tipografija napravljeni za vaš brend. Bez gotovih šablona.',
+          },
+          {
+            title: 'Zakazivanje, porudžbine i plaćanje',
+            text:
+              'Online zakazivanje povezano sa kalendarom, kontakt forme, online prodavnica ili plaćanje karticom, u zavisnosti od toga šta prodajete. Automatske potvrde mejlom ili SMS-om.',
+          },
+          {
+            title: 'Tekstovi koji prodaju',
+            text:
+              'Pišemo jasne, jednostavne tekstove koji objašnjavaju šta radite i zašto da izaberu baš vas.',
+          },
+          {
+            title: 'SEO od prvog dana',
+            text:
+              'Strukturisani podaci, podešavanje Google Business Profile-a i lokalni SEO, da vas pronađu kada traže u vašem gradu ili delatnosti. Spremno i za AI pretragu.',
+          },
+          {
+            title: 'Privatnost i bezbednost',
+            text:
+              'Pravilno podešena saglasnost za kolačiće (Google Consent Mode v2), politika privatnosti i SSL na svakoj stranici.',
+          },
+          {
+            title: 'Brz hosting',
+            text:
+              'Moderan React stack na globalnom CDN-u, da se sajt brzo učitava na svakom telefonu.',
+          },
+        ],
+      },
+      process: {
+        heading: 'Kako ga pravimo za 3 nedelje',
+        description: 'Jasan proces koji vam ne oduzima ceo raspored.',
+        steps: [
+          {
+            step: '01',
+            title: 'Strategija i struktura',
+            duration: 'Nedelja 1',
+            text:
+              'Definišemo vašu ponudu, idealne klijente i šta sajt treba da radi, pa pišemo tekstove i planiramo svaku stranicu.',
+          },
+          {
+            step: '02',
+            title: 'Dizajn i izrada',
+            duration: 'Nedelja 2',
+            text:
+              'Dizajniramo stranice, pravimo sajt, povezujemo zakazivanje, forme ili plaćanje i testiramo na raznim telefonima i ekranima.',
+          },
+          {
+            step: '03',
+            title: 'Testiranje i lansiranje',
+            duration: 'Nedelja 3',
+            text:
+              'Podešavamo analitiku, proveravamo SEO i brzinu, sređujemo poslednje detalje i puštamo sajt na vaš domen.',
+          },
+        ],
+      },
+      pricingModels: {
+        heading: 'Tri načina saradnje',
+        description:
+          'Izaberite model koji odgovara trenutnoj fazi vaše firme. Bez dugoročnih ugovora.',
+        models: [
+          {
+            title: 'Fiksna cena',
+            subtitle: 'Jasna cena i rok',
+            description:
+              'Najbolje kada tačno znate šta vam treba. Jasan obim posla, fiksna cena i dogovoren datum lansiranja. Sve što napravimo je vaše.',
+            highlights: ['Fiksiran datum lansiranja', 'Potpuno vlasništvo nad kodom', 'Bez skrivenih troškova'],
+          },
+          {
+            title: 'Revenue share',
+            subtitle: 'Povezan sa uspehom',
+            description:
+              'Manji trošak na početku, a mi zarađujemo procenat od prodaje koju novi sistem donese. Mi dobijamo samo kad i vi dobijate.',
+            highlights: ['Manje početno ulaganje', 'Zajednički cilj', 'Potpuna transparentnost'],
+          },
+          {
+            title: 'Hibridni model (izrada + održavanje)',
+            subtitle: 'Lansiranje + stalan rast',
+            description:
+              'Sajt plus stalni rad posle lansiranja: SEO sadržaj, ažuriranja, bekapi i unapređenja, da isti broj posetilaca donese više upita.',
+            highlights: ['Redovno SEO održavanje', 'Tehnička podrška', 'Kontinuirana unapređenja'],
+          },
+        ],
+      },
+      faqs: [
+        {
+          question: 'Koliko mog vremena je potrebno?',
+          answer:
+            'Oko 2 do 3 sata ukupno: jedan poziv na početku i dva kratka pregleda verzija. Pisanje, dizajn i podešavanje radimo mi.',
+        },
+        {
+          question: 'Da li sam ja vlasnik sajta i domena?',
+          answer:
+            'Da. Kod, domen, sadržaj i nalozi su vaši. Ako ikada prestanete da radite sa nama, sve nosite sa sobom.',
+        },
+        {
+          question: 'Možete li da redizajnirate moj postojeći sajt?',
+          answer:
+            'Možemo. Zadržimo ono što radi, prebacimo vaš sadržaj i recenzije i podesimo preusmerenja, tako da ne izgubite pozicije na Google-u.',
+        },
+      ],
+      cta: {
+        heading: 'Spremni za sajt koji vam donosi klijente?',
+        description:
+          'Zakažite besplatan poziv od 30 minuta. Pogledaćemo vaše trenutno prisustvo na internetu i pokazati vam šta bismo promenili.',
+        button: 'Zakažite besplatne konsultacije',
+      },
+    },
+    'video-social-media': {
+      slug: 'video-social-media',
+      serviceType: 'Video i društvene mreže',
+      badge: 'Video i društvene mreže',
+      title: 'Video produkcija i vođenje društvenih mreža | VDigital',
+      metaTitle: 'Video produkcija i vođenje društvenih mreža | VDigital',
+      metaDescription:
+        'Kratki video snimci za Instagram Reels, TikTok i YouTube Shorts. Planiramo, snimamo, montiramo i objavljujemo sadržaj koji gledaoce pretvara u klijente.',
+      h1: 'Video sadržaj zbog kog ljudi prestaju da skroluju i počinju da kupuju',
+      lead:
+        'Planiramo, snimamo, montiramo i objavljujemo kratke video snimke koji pokazuju šta radite, grade poverenje i dovode ljude na vaš sajt, u inbox ili na vrata.',
+      stats: [
+        { value: '1 snimanje', label: 'Sadržaj za ceo mesec iz jednog dana snimanja' },
+        { value: '12 do 16', label: 'Kratkih videa mesečno' },
+        { value: 'Bez lica', label: 'Sadržaj može da radi i bez vas pred kamerom' },
+      ],
+      problem: {
+        heading: 'Zašto većina firmi na društvenim mrežama ne ide nikuda',
+        description:
+          'Objavljivanje bez plana oduzima vreme i donosi lajkove u najboljem slučaju, ne klijente.',
+        points: [
+          {
+            title: 'Nasumične objave, nema plana',
+            text:
+              'Objava tu i tamo, kopirani trendovi i stock grafike. Ljudi skroluju dalje jer ništa ne govori po čemu ste drugačiji.',
+          },
+          {
+            title: 'Nema vremena za snimanje',
+            text:
+              'Vođenje firme ne ostavlja sate za svakodnevno snimanje. Bez sistema, mreže postaju obaveza koju stalno odlažete.',
+          },
+          {
+            title: 'Pregledi koji nikad ne postanu klijenti',
+            text:
+              'Pregledi ne znače ništa ako gledaoci nemaju jasan način da vas kontaktiraju, zakažu ili kupe.',
+          },
+        ],
+      },
+      deliverables: {
+        heading: 'Video produkcija od A do Ž',
+        description:
+          'Pred kamerom ste oko 2 sata mesečno, ili uopšte ne. Sve ostalo radimo mi.',
+        items: [
+          {
+            title: 'Teme i scenariji',
+            text:
+              'Pronalazimo pitanja koja vaši klijenti postavljaju i razloge zbog kojih kupuju, pa ih pretvaramo u jednostavne scenarije i hooks.',
+          },
+          {
+            title: 'Snimanje',
+            text:
+              'Snimanje kod vas ili na daljinu uz naše vođenje. Vodimo vas tako da zvučite prirodno, a ne naučeno.',
+          },
+          {
+            title: 'Montaža i titlovi',
+            text:
+              'Brz ritam, čiste boje, animirane grafike i titlovi za sve koji gledaju bez zvuka.',
+          },
+          {
+            title: 'Objavljivanje',
+            text:
+              'Video snimci prilagođeni i objavljeni za Instagram Reels, TikTok i YouTube Shorts, sa opisima, naslovnim slikama i hešteg-ovima.',
+          },
+          {
+            title: 'Od gledaoca do klijenta',
+            text:
+              'Linkovi u profilu, automatski odgovori na poruke i linkovi za zakazivanje, da ljudi kojima se video svideo zaista mogu da vas dobiju.',
+          },
+        ],
+      },
+      process: {
+        heading: 'Kako izgleda mesec sadržaja',
+        description: 'Napravljeno da se uklopi u vaš posao, a ne obrnuto.',
+        steps: [
+          {
+            step: '01',
+            title: 'Plan',
+            duration: 'Dani 1 do 3',
+            text: 'Šaljemo vam 12 do 16 ideja za video, napravljenih oko vaših najboljih proizvoda ili usluga.',
+          },
+          {
+            step: '02',
+            title: 'Snimanje',
+            duration: 'Jedan dan',
+            text: 'Jedno fokusirano snimanje, kod vas ili na daljinu, a naš režiser vas vodi kroz svaki kadar.',
+          },
+          {
+            step: '03',
+            title: 'Montaža i objave',
+            duration: 'Ostatak meseca',
+            text: 'Vi odobrite montažu, mi objavljujemo po planu i javljamo šta je dalo rezultat.',
+          },
+        ],
+      },
+      pricingModels: {
+        heading: 'Kako možemo da radimo zajedno na videu',
+        description:
+          'Fiksna cena, revenue share ili kombinacija, kao i za svaku VDigital uslugu.',
+        models: [
+          {
+            title: 'Mesečni plan sadržaja',
+            subtitle: 'Kompletna produkcija',
+            description:
+              '12 do 16 kratkih videa mesečno, od ideje do objave, uz mesečni pregled rezultata.',
+            highlights: ['12 do 16 videa mesečno', 'Montaža i titlovi', 'Objavljivanje i analiza'],
+          },
+          {
+            title: 'Sadržaj + plaćeni oglasi',
+            subtitle: 'Pojačavanje najboljih videa',
+            description:
+              'Najbolje video snimke promovišemo pravim ljudima u vašem gradu, zemlji ili tržištu. Vidite koliko košta svaki upit.',
+            highlights: ['Ciljano promovisanje', 'Praćenje cene upita', 'Testiranje sadržaja'],
+          },
+          {
+            title: 'Jednokratna produkcija',
+            subtitle: 'Video o brendu ili proizvodu',
+            description:
+              'Video o brendu, video snimci proizvoda, promo za događaj ili online kurs. Planirano, snimljeno i montirano od početka do kraja.',
+            highlights: ['Namenska produkcija', 'Visok kvalitet', 'Svi sirovi snimci uključeni'],
+          },
+        ],
+      },
+      faqs: [
+        {
+          question: 'Šta ako mi nije prijatno pred kamerom?',
+          answer:
+            'Većini ljudi nije u početku. Snimamo kao razgovor: odgovarate na pitanja koja klijentima ionako odgovarate svaki dan. A mnogi video snimci mogu da se naprave i potpuno bez vašeg lica.',
+        },
+        {
+          question: 'Gde snimamo?',
+          answer:
+            'U vašem prostoru, na lokaciji ili na daljinu uz jednostavna uputstva za svetlo i zvuk. Biramo ono što odgovara sadržaju.',
+        },
+        {
+          question: 'Da li moram da objavljujem svaki dan?',
+          answer:
+            'Ne. Doslednost je važnija od količine. Za većinu firmi dovoljno je 3 do 4 dobra videa nedeljno.',
+        },
+      ],
+      cta: {
+        heading: 'Spremni da budete firma koju ljudi prvu vide?',
+        description:
+          'Zakažite poziv sa našim timom i pokazaćemo vam koje ideje za video najviše odgovaraju vašem poslu.',
+        button: 'Zakažite poziv za video strategiju',
+      },
+    },
+    'marketing-automation': {
+      slug: 'marketing-automation',
+      serviceType: 'Marketing i automatizacija',
+      badge: 'Marketing i automatizacija',
+      title: 'Plaćeni oglasi, CRM i automatizacija marketinga | VDigital',
+      metaTitle: 'Plaćeni oglasi, CRM i automatizacija marketinga | VDigital',
+      metaDescription:
+        'Google i Meta oglasi, CRM pipeline i automatski odgovori i podsetnici, da svaki upit dobije odgovor i da znate odakle vam dolaze klijenti.',
+      h1: 'Reklame koje dovode ljude. Automatizacija koja ih pretvara u kupce.',
+      lead:
+        'Vodimo vaše Google i Meta oglase i povezujemo ih sa CRM-om i automatskim follow-up porukama, tako da nijedan upit ne bude zaboravljen i da uvek znate koliko vas je koštao svaki klijent.',
+      stats: [
+        { value: '24/7', label: 'Svaki upit dobija trenutni odgovor' },
+        { value: '1 dashboard', label: 'Svi potencijalni klijenti, pozivi i prodaje na jednom mestu' },
+        { value: 'Uživo', label: 'Vidite svaki broj, uključujući potrošnju na oglase' },
+      ],
+      problem: {
+        heading: 'Gde većina firmi gubi novac',
+        description:
+          'Reklame bez follow-up-a su kao da plaćate da vam ljudi dođu, a vrata ostavite zaključana.',
+        points: [
+          {
+            title: 'Spori odgovori',
+            text:
+              'Neko pošalje upit uveče, a odgovor dobije sutra popodne. Do tada je već kupio kod nekog bržeg.',
+          },
+          {
+            title: 'Oglasi za sve i nikoga',
+            text:
+              'Široko targetiranje donosi klikove od ljudi koji nikad nisu ni planirali da kupe. Budžet ode, a telefon ćuti.',
+          },
+          {
+            title: 'No-show i zaboravljeni upiti',
+            text:
+              'Zakazani pozivi i termini se propuštaju, a zainteresovani ljudi nikad ne dobiju drugu poruku. Svaki od njih je izgubljen novac.',
+          },
+        ],
+      },
+      deliverables: {
+        heading: 'Kompletan sistem za rast',
+        description:
+          'Oglasi, brzi odgovori i jasan pipeline, povezani u jedan sistem.',
+        items: [
+          {
+            title: 'Google i Meta oglasi',
+            text:
+              'Kampanje koje se prikazuju ljudima koji već traže ono što prodajete, u vašem gradu, zemlji ili tržištu.',
+          },
+          {
+            title: 'Automatski odgovori i podsetnici',
+            text:
+              'Trenutni odgovori na nove upite, plus potvrde i podsetnici mejlom, SMS-om ili preko WhatsApp-a koji smanjuju no-show.',
+          },
+          {
+            title: 'CRM pipeline',
+            text:
+              'Svaki potencijalni klijent na jednom mestu, od prve poruke do zaključene prodaje, tako da ništa ne promakne i tačno vidite gde ljudi odustaju.',
+          },
+          {
+            title: 'Zahtevi za recenzije',
+            text:
+              'Automatske, ljubazne poruke zadovoljnim klijentima sa molbom za Google recenziju, da vaša ocena stalno raste.',
+          },
+          {
+            title: 'Analiza tržišta i konkurencije',
+            text:
+              'Gledamo šta radi konkurencija, gde su praznine i kako da pozicioniramo vašu ponudu pre nego što potrošimo novac na oglase.',
+          },
+        ],
+      },
+      process: {
+        heading: 'Kako ga postavljamo za 3 nedelje',
+        description: 'Uklopljeno u način na koji već radite, bez usporavanja vašeg tima.',
+        steps: [
+          {
+            step: '01',
+            title: 'Mapiramo put klijenta',
+            duration: 'Nedelja 1',
+            text:
+              'Pronalazimo gde se upiti zaglavljuju, koji proizvodi ili usluge vam donose najviše novca i kako treba da izgleda follow-up.',
+          },
+          {
+            step: '02',
+            title: 'Pravimo sistem',
+            duration: 'Nedelja 2',
+            text:
+              'Podešavamo CRM, povezujemo forme sa sajta i kanale, pišemo šablone poruka i testiramo svaki tok.',
+          },
+          {
+            step: '03',
+            title: 'Pokretanje i optimizacija',
+            duration: 'Nedelja 3',
+            text:
+              'Pokrećemo kampanje, pratimo cenu po upitu i prodaji i stalno unapređujemo ono što radi.',
+          },
+        ],
+      },
+      pricingModels: {
+        heading: 'Tri načina saradnje',
+        description: 'Bez dugoročnih ugovora. Pun pristup svakom nalogu i broju.',
+        models: [
+          {
+            title: 'Jednokratno podešavanje',
+            subtitle: 'Postavljeno i predato',
+            description:
+              'Pravimo CRM, automatizacije i sistem za recenzije, obučimo vaš tim i predamo vam sve. Ostaje vaše.',
+            highlights: ['Podešavanje CRM sistema', 'Automatizovani tokovi poruka', 'Obuka vašeg tima'],
+          },
+          {
+            title: 'Mesečno vođenje',
+            subtitle: 'Stalna optimizacija',
+            description:
+              'Stalno vođenje oglasa, testiranje i unapređenja, uz jasan mesečni izveštaj koliko vas je koštao svaki klijent.',
+            highlights: ['Vođenje oglasnih naloga', 'Testiranje novih reklama', 'Mesečni izveštaji cene upita'],
+          },
+          {
+            title: 'Revenue share',
+            subtitle: 'Udeo u rezultatu',
+            description:
+              'Niža fiksna naknada plus procenat od prodaje koju sistem donese. Moguće nakon što zajedno pogledamo vašu ponudu i brojke.',
+            highlights: ['Manja fiksna naknada', 'Povezano sa prodatim', 'Zajednički rast'],
+          },
+        ],
+      },
+      faqs: [
+        {
+          question: 'Koliko treba da trošim na oglase?',
+          answer:
+            'Zavisi od vašeg tržišta i ciljeva. Posle analize u prvoj nedelji preporučujemo početni budžet. Možete početi sa malim i ulagati više u ono što radi.',
+        },
+        {
+          question: 'Da li će moj tim morati da uči komplikovan softver?',
+          answer:
+            'Ne. Podešavamo jednostavne alate, pokažemo vašem timu kako da ih koristi i napišemo kratka uputstva. Većina posla radi sama.',
+        },
+        {
+          question: 'Kada počinju da stižu novi upiti?',
+          answer:
+            'Obično u prvim danima nakon što oglasi krenu u trećoj nedelji. Prve nedelje služe za testiranje, a rezultati rastu kako učimo šta radi za vaš posao.',
+        },
+      ],
+      cta: {
+        heading: 'Prestanite da gubite klijente koje ste već platili',
+        description:
+          'Zakažite poziv i pokazaćemo vam gde vam danas cure upiti i kako to da rešimo.',
+        button: 'Zatražite besplatnu analizu',
+      },
+    },
+    'cold-calling': {
+      slug: 'cold-calling',
+      serviceType: 'Cold calling i prodaja',
+      badge: 'Cold calling i prodaja',
+      title: 'Cold calling i appointment setting | VDigital',
+      metaTitle: 'Cold calling i appointment setting | VDigital',
+      metaDescription:
+        'Cold calling (hladni pozivi) za vašu firmu: zovemo potencijalne klijente, proveravamo da li su pravi i zakazujemo sastanke u vašem kalendaru. Za B2B i B2C.',
+      h1: 'Mi zovemo vaše buduće klijente, da vi ne morate',
+      lead:
+        'Naš prodajni stručnjak kontaktira prave ljude, proverava da li su zainteresovani i zakazuje sastanke direktno u vašem kalendaru. Vi pričate samo sa ljudima kojima zaista treba ono što nudite.',
+      stats: [
+        { value: '1-na-1', label: 'Svaka lista ručno istražena' },
+        { value: 'Provereni', label: 'Budžet i potreba provereni pre sastanka' },
+        { value: 'Nedeljno', label: 'Izveštaji o pozivima, sastancima i prigovorima' },
+      ],
+      problem: {
+        heading: 'Zašto masovni mejlovi i spam poruke više ne rade',
+        description:
+          'Generičke poruke završe u spamu i više štete vašem imenu nego što pomažu.',
+        points: [
+          {
+            title: 'Ljudi odmah prepoznaju šablon',
+            text:
+              'Copy-paste poruke se brišu za par sekundi. Pravi razgovor počinje od pravog istraživanja.',
+          },
+          {
+            title: 'Nemate vremena da zovete',
+            text:
+              'Dobri ste u svom poslu, ne u satima telefoniranja nepoznatim ljudima. Traženje klijenata se stalno odlaže za "sledeću nedelju".',
+          },
+          {
+            title: 'Sastanci sa pogrešnim ljudima',
+            text:
+              'Sat vremena razgovora sa nekim ko nema ni budžet ni potrebu je sat oduzet klijentima koji plaćaju.',
+          },
+        ],
+      },
+      deliverables: {
+        heading: 'Vaš sopstveni prodajni tim',
+        description:
+          'Obučen prodavac koji profesionalno predstavlja vašu firmu i puni vam kalendar pravim sastancima.',
+        items: [
+          {
+            title: 'Ciljane liste kontakata',
+            text:
+              'Pravimo i proveravamo liste firmi ili ljudi koji odgovaraju vašem idealnom klijentu: delatnost, veličina, lokacija i pozicija.',
+          },
+          {
+            title: 'Skripte koje zvuče ljudski',
+            text:
+              'Skripte za razgovor napravljene oko problema vaših klijenata, bez napadnih prodajnih trikova.',
+          },
+          {
+            title: 'Pozivi i provera',
+            text:
+              'Mi zovemo, proveravamo potrebu, budžet i vreme, i zakazujemo sastanak u vašem kalendaru.',
+          },
+          {
+            title: 'Follow-up',
+            text:
+              'Ko kaže "ne sada" dobija podsetnik u pravom trenutku, telefonom, mejlom ili porukom.',
+          },
+          {
+            title: 'Nedeljni izveštaji',
+            text:
+              'Broj poziva, zakazanih sastanaka i prigovori koje najčešće čujemo, da možete da izoštrite ponudu i cene.',
+          },
+        ],
+      },
+      process: {
+        heading: 'Od prvog poziva do punog kalendara',
+        description: 'Jasan proces koji vam drži kalendar punim proverenih sastanaka.',
+        steps: [
+          {
+            step: '01',
+            title: 'Ponuda i idealni klijent',
+            duration: 'Nedelja 1',
+            text: 'Prolazimo kroz vašu ponudu, tačno definišemo koga zovemo i pišemo skripte.',
+          },
+          {
+            step: '02',
+            title: 'Liste i probni pozivi',
+            duration: 'Nedelja 2',
+            text: 'Pravimo prvu listu kontakata, krećemo sa pozivima i prilagođavamo pristup prema pravim odgovorima.',
+          },
+          {
+            step: '03',
+            title: 'Puni cold calling',
+            duration: 'Od nedelje 3',
+            text: 'Povećavamo broj poziva dnevno, tako da ulazite na sastanke sa ljudima koji već znaju zašto ih zovete.',
+          },
+        ],
+      },
+      pricingModels: {
+        heading: 'Tri načina saradnje',
+        description: 'Prilagođeno ceni vaše ponude i brzini kojom želite da rastete.',
+        models: [
+          {
+            title: 'Osnovna naknada + po sastanku',
+            subtitle: 'Balansiran rizik i nagrada',
+            description:
+              'Mesečna naknada za pravljenje lista i sate poziva, plus bonus za svaki provereni sastanak koji se zaista održi. Naš najizbalansiraniji model.',
+            highlights: ['Fokusirani sati poziva', 'Bonus samo za održane sastanke', 'Ručno istražene baze'],
+          },
+          {
+            title: 'Revenue share',
+            subtitle: 'Procenat od zaključenog',
+            description:
+              'Procenat od poslova koje pomognemo da zaključite. Za ponude koje već imaju dokazanu prodaju.',
+            highlights: ['Bez početnog rizika', 'Povezano sa prihodom', 'Za dokazane ponude'],
+          },
+          {
+            title: 'Prodajni priručnik i obuka',
+            subtitle: 'Za interni tim',
+            description:
+              'Za firme koje prave svoj prodajni tim. Predajemo naše skripte, CRM podešavanje i obuku, da vaši ljudi mogu sami da rade.',
+            highlights: ['Kompletne skripte', 'Podešen CRM tok', 'Obuka vaših prodavaca'],
+          },
+        ],
+      },
+      faqs: [
+        {
+          question: 'Da li će cold calling naštetiti mom ugledu?',
+          answer:
+            'Ne. Naši pozivi su kratki, ljubazni i korisni. Poštujemo tuđe vreme i predstavljamo vašu firmu onako kako biste vi.',
+        },
+        {
+          question: 'Koliko sastanaka mogu da očekujem?',
+          answer:
+            'Zavisi od tržišta, ponude i cene. Posle prve dve nedelje probnih poziva možemo da vam damo realnu mesečnu procenu.',
+        },
+        {
+          question: 'Šta ako neko otkaže ili se ne pojavi?',
+          answer:
+            'Javljamo se ponovo i pokušavamo da zakažemo novi termin. Kod modela po sastanku, bonus plaćate samo za sastanke koji se zaista održe.',
+        },
+        {
+          question: 'Da li zovete i na drugim jezicima?',
+          answer: 'Da. Zovemo na srpskom, engleskom i ruskom.',
+        },
+      ],
+      cta: {
+        heading: 'Spremni za kalendar pun pravih prodajnih sastanaka?',
+        description:
+          'Zakažite strateški poziv i iskreno ćemo vam reći da li je vaša ponuda spremna za cold calling.',
+        button: 'Zakažite strateški poziv',
       },
     },
   },
   ru: {
     'web-development': {
       slug: 'web-development',
-      serviceType: 'Разработка сайтов и веб-приложений',
-      badge: 'Веб-разработка и Дизайн',
-      title: 'Создание сайтов для врачей | VDigital',
-      metaTitle: 'Создание сайтов для врачей | VDigital',
+      serviceType: 'Веб и разработка',
+      badge: 'Веб и разработка',
+      title: 'Создание сайтов и веб-приложений | VDigital',
+      metaTitle: 'Создание сайтов и веб-приложений | VDigital',
       metaDescription:
-        'Разработка современных и быстрых сайтов для врачей, частных клиник и health-коучей. Онлайн-запись пациентов, адаптивный дизайн и медицинское SEO.',
-      h1: 'Создание сайтов для врачей и коучей',
+        'Быстрые сайты под ключ, интернет-магазины и веб-приложения, которые превращают посетителей в заявки, записи и продажи. Mobile-first, SEO с первого дня, запуск за 3 недели.',
+      h1: 'Сайты, которые приносят клиентов, а не только комплименты',
       lead:
-        'Создаём современные, быстрые и ориентированные на пациентов сайты, которые вызывают доверие и превращают посетителей в реальные записи на приём.',
+        'Мы проектируем и создаём быстрые сайты, интернет-магазины и веб-приложения, которые вызывают доверие и превращают посетителей в заявки, записи и продажи.',
       stats: [
-        { value: '3 недели', label: 'Срок разработки от идеи до запуска' },
-        { value: '100/100', label: 'Оценка производительности на смартфонах' },
-        { value: '100%', label: 'Соответствие стандартам конфиденциальности' },
+        { value: '3 недели', label: 'От первого звонка до запуска сайта' },
+        { value: '100%', label: 'Код, домен и контент принадлежат вам' },
+        { value: 'Mobile-first', label: 'Сначала для телефона, ведь там большинство ваших посетителей' },
       ],
       problem: {
-        heading: 'Почему шаблонные сайты не привлекают пациентов?',
+        heading: 'Почему большинство сайтов не приводят клиентов',
         description:
-          'Большинство агентств используют перегруженные шаблоны WordPress, которые медленно загружаются и не учитывают специфику частной медицины.',
+          'Многие сайты собраны из тяжёлых шаблонов и брошены после запуска. Выглядят нормально, но никто не звонит.',
         points: [
           {
-            title: 'Недоверие с первого взгляда',
+            title: 'Нет причин вам доверять',
             text:
-              'Пациенты ищут безопасность и экспертность. Устаревший или шаблонный сайт вызывает сомнения в квалификации врача.',
+              'Посетитель решает за секунды. Устаревший или перегруженный сайт заставляет уйти раньше, чем он увидит ваше предложение.',
           },
           {
-            title: 'Сложный процесс записи',
+            title: 'Слишком сложно сделать следующий шаг',
             text:
-              'Если пациенту трудно найти телефон или нужно заполнять огромную анкету, он уходит к конкуренту с удобной онлайн-записью.',
+              'Если нужно искать номер телефона или заполнять длинную форму, человек возвращается в поиск и выбирает конкурента.',
           },
           {
-            title: 'Медленная загрузка на телефонах',
+            title: 'Медленно на телефоне',
             text:
-              'Более 75% людей ищут врача со смартфона. Если сайт открывается дольше 2.5 секунд, большинство пользователей закрывают вкладку.',
+              'Большинство людей находят вас с мобильного. Медленный сайт теряет их ещё до загрузки страницы.',
           },
         ],
       },
       deliverables: {
-        heading: 'Что входит в разработку сайта «под ключ»?',
+        heading: 'Что входит в ваш сайт',
         description:
-          'Полноценная система, созданная с учётом практических потребностей клиники или эксперта.',
+          'Полноценный сайт, построенный вокруг того, как ваш бизнес на самом деле получает клиентов.',
         items: [
           {
-            title: 'Индивидуальный дизайн под ваш бренд',
-            text:
-              'Уникальная типографика и визуальный стиль, подчёркивающие вашу специализацию, без готовых типовых шаблонов.',
+            title: 'Индивидуальный дизайн',
+            text: 'Структура, цвета и типографика под ваш бренд. Без готовых шаблонов.',
           },
           {
-            title: 'Удобная онлайн-запись и интеграция с календарём',
+            title: 'Запись, заказы и оплата',
             text:
-              'Связка с Google Календарём, Cal.com или CRM с автоматическими уведомлениями на почту и в мессенджеры.',
+              'Онлайн-запись с синхронизацией календаря, формы заявок, интернет-магазин или оплата картой, в зависимости от того, что вы продаёте. Автоматические подтверждения по email или SMS.',
           },
           {
-            title: 'Медицинский копирайтинг',
+            title: 'Тексты, которые продают',
             text:
-              'Помогаем сформулировать описания услуг простым, понятным и этичным языком, без запутанной терминологии.',
+              'Пишем понятные, простые тексты о том, что вы делаете и почему выбрать стоит именно вас.',
           },
           {
-            title: 'Медицинское SEO и микроразметка Schema.org',
+            title: 'SEO с первого дня',
             text:
-              'Разметка MedicalBusiness, оптимизация под локальный поиск и индексация в поисковых системах Google и Яндекс.',
+              'Структурированные данные, настройка Google Business Profile и Яндекс Бизнеса, локальное SEO, чтобы вас находили в вашем городе или нише. Готово и для AI-поиска.',
           },
           {
-            title: 'Соответствие GDPR и законам о персональных данных',
+            title: 'Конфиденциальность и безопасность',
             text:
-              'Настроенное согласие на cookie (Google Consent Mode v2), прозрачная политика конфиденциальности и SSL-защита.',
+              'Правильное согласие на cookies (Google Consent Mode v2), политика конфиденциальности и SSL на каждой странице.',
           },
           {
-            title: 'Молниеносная скорость на глобальном CDN',
+            title: 'Быстрый хостинг',
             text:
-              'Современный стек (React, Tailwind) с оптимизированным кодом и временем отклика страницы менее одной секунды.',
+              'Современный стек на React и глобальный CDN, чтобы сайт быстро открывался на любом телефоне.',
           },
         ],
       },
       process: {
-        heading: 'Процесс разработки за 3 недели',
-        description:
-          'Чёткий и прозрачный спринт с минимальной нагрузкой на ваше расписание.',
+        heading: 'Как мы делаем сайт за 3 недели',
+        description: 'Понятный процесс, который не съедает ваше расписание.',
         steps: [
           {
             step: '01',
             title: 'Стратегия и структура',
-            duration: '1-я неделя',
+            duration: 'Неделя 1',
             text:
-              'Анализируем вашу аудиторию, формируем ключевые услуги, пишем тексты и согласовываем интерактивный прототип.',
+              'Определяем ваше предложение, идеальных клиентов и задачи сайта, затем пишем тексты и планируем каждую страницу.',
           },
           {
             step: '02',
-            title: 'Дизайн и программирование',
-            duration: '2-я неделя',
+            title: 'Дизайн и разработка',
+            duration: 'Неделя 2',
             text:
-              'Верстаем адаптивные страницы, подключаем форму записи, оптимизируем графику и тестируем отображение на всех устройствах.',
+              'Рисуем страницы, собираем сайт, подключаем запись, формы или оплату и тестируем на разных телефонах и экранах.',
           },
           {
             step: '03',
-            title: 'Аналитика и запуск сайта',
-            duration: '3-я неделя',
+            title: 'Тестирование и запуск',
+            duration: 'Неделя 3',
             text:
-              'Подключаем системы веб-аналитики, настраиваем микроразметку, привязываем домен и запускаем сайт в рабочий режим.',
+              'Настраиваем аналитику, проверяем SEO и скорость, доводим детали и запускаем сайт на вашем домене.',
           },
         ],
       },
       pricingModels: {
-        heading: 'Модели сотрудничества',
+        heading: 'Три формата работы',
         description:
-          'Прозрачные условия без скрытых платежей и навязанных услуг.',
+          'Выберите модель, которая подходит вашему бизнесу сейчас. Без долгосрочных контрактов.',
         models: [
           {
-            title: 'Фиксированный проект (3-недельный спринт)',
-            subtitle: 'Для клиник и экспертов, которым нужен готовый сайт в срок',
+            title: 'Фиксированная цена',
+            subtitle: 'Понятные сроки и бюджет',
             description:
-              'Чётко зафиксированный объём работ, гарантированный срок сдачи и оплата двумя частями (аванс и финальная сдача). Полная передача всех прав на код.',
-            highlights: ['Точные сроки сдачи', 'Фиксированный бюджет', '100% владение кодом'],
+              'Лучше всего, когда вы точно знаете, что нужно. Понятный объём, фиксированная цена и согласованная дата запуска. Всё, что мы делаем, принадлежит вам.',
+            highlights: ['Фиксированный срок', 'Полное владение кодом', 'Без скрытых платежей'],
           },
           {
-            title: 'Партнёрство с разделением дохода (Revenue Share)',
-            subtitle: 'Для масштабных проектов и онлайн-школ здоровья',
+            title: 'Revenue share',
+            subtitle: 'Процент от продаж',
             description:
-              'Сниженная стоимость разработки в обмен на процент от привлечённых через созданную систему клиентов.',
-            highlights: ['Минимальные риски', 'Общая цель роста', 'Долгосрочная поддержка'],
+              'Меньше затрат на старте, а мы получаем процент от продаж, которые принесёт новая система. Мы выигрываем, только когда выигрываете вы.',
+            highlights: ['Меньше затрат на старте', 'Общий результат', 'Полная прозрачность'],
           },
           {
-            title: 'Гибридный формат (Разработка + Поддержка)',
-            subtitle: 'Для постоянного роста позиций в поиске',
+            title: 'Гибрид (разработка + поддержка)',
+            subtitle: 'Запуск + развитие',
             description:
-              'Создание сайта с последующим ежемесячным техническим сопровождением, публикацией статей и поисковой оптимизацией.',
-            highlights: ['Постоянный контроль', 'Регулярные обновления', 'Рост в поиске'],
+              'Сайт плюс работа после запуска: SEO-контент, обновления, бэкапы и улучшения, чтобы тот же трафик приносил больше заявок.',
+            highlights: ['Регулярное SEO-развитие', 'Техническая поддержка', 'Оптимизация конверсий'],
           },
         ],
       },
       faqs: [
         {
-          question: 'Сколько времени мне нужно будет уделить разработке?',
+          question: 'Сколько моего времени это займёт?',
           answer:
-            'Около 2–3 часов за все 3 недели. Мы проводим одно установочное интервью, а затем вы утверждаете готовые этапы.',
+            'Около 2–3 часов в сумме: один звонок в начале и два коротких просмотра черновиков. Тексты, дизайн и настройку берём на себя.',
         },
         {
-          question: 'Буду ли я владельцем сайта после завершения?',
+          question: 'Сайт и домен будут моими?',
           answer:
-            'Да. Все исходные файлы, домен и доступы к сервисам передаются вам в полное владение без каких-либо скрытых условий.',
+            'Да. Код, домен, контент и аккаунты принадлежат вам. Если вы когда-нибудь перестанете с нами работать, всё остаётся у вас.',
         },
         {
-          question: 'Что делать, если у меня уже есть старый сайт?',
+          question: 'Можете переделать мой текущий сайт?',
           answer:
-            'Мы сохраним ваш домен и существующие позиции в поисковиках, полностью обновив дизайн, скорость и удобство для пациентов.',
+            'Да. Сохраняем то, что работает, переносим контент и отзывы и настраиваем редиректы, чтобы вы не потеряли позиции в поиске.',
         },
       ],
       cta: {
-        heading: 'Готовы к сайту, который стабильно приводит пациентов?',
+        heading: 'Готовы к сайту, который приносит клиентов?',
         description:
-          'Запишитесь на бесплатный 30-минутный разбор. Мы изучим ваше текущее присутствие в сети и предложим пошаговый план.',
-        button: 'Записаться на консультацию',
+          'Запишитесь на бесплатный 30-минутный звонок. Посмотрим на ваше текущее присутствие в интернете и покажем, что бы мы изменили.',
+        button: 'Записаться на бесплатную консультацию',
       },
     },
     'video-social-media': {
       slug: 'video-social-media',
-      serviceType: 'Видеопроизводство и ведение социальных сетей',
-      badge: 'Видео и Соцсети',
-      title: 'Видео и соцсети для врачей | VDigital',
-      metaTitle: 'Видео и соцсети для врачей | VDigital',
+      serviceType: 'Видео и соцсети',
+      badge: 'Видео и соцсети',
+      title: 'Видеопродакшн и ведение соцсетей | VDigital',
+      metaTitle: 'Видеопродакшн и ведение соцсетей | VDigital',
       metaDescription:
-        'Создание коротких экспертных видео (Reels, Shorts, TikTok) и ведение соцсетей для врачей и коучей. Построение личного бренда и привлечение пациентов.',
-      h1: 'Создание видео и ведение соцсетей для врачей и коучей',
+        'Короткие видео для Instagram Reels, TikTok и YouTube Shorts. Планируем, снимаем, монтируем и публикуем контент, который превращает зрителей в клиентов.',
+      h1: 'Видео, из-за которых люди перестают листать и начинают покупать',
       lead:
-        'Помогаем врачам и экспертам завоёвывать доверие в социальных сетях с помощью понятного, этичного и профессионального видеоконтента.',
+        'Планируем, снимаем, монтируем и публикуем короткие видео, которые показывают, что вы делаете, вызывают доверие и приводят людей на сайт, в директ или к вам в дверь.',
       stats: [
-        { value: '30-45 сек', label: 'Оптимальный хронометраж для вовлечения' },
-        { value: '1 съёмка', label: 'Обеспечивает 12–16 видео на целый месяц' },
-        { value: '100% этично', label: 'Строго в рамках врачебной этики' },
+        { value: '1 съёмка', label: 'Контент на весь месяц за один съёмочный день' },
+        { value: '12–16', label: 'Коротких видео в месяц' },
+        { value: 'Без лица', label: 'Контент может работать и без вас в кадре' },
       ],
       problem: {
-        heading: 'Почему стандартное ведение соцсетей не работает для врачей?',
+        heading: 'Почему соцсети большинства компаний никуда не ведут',
         description:
-          'Обычные SMM-агентства навязывают глупые тренды и танцы, которые вызывают недоумение у пациентов и разрушают репутацию врача.',
+          'Публикации без плана отнимают время и в лучшем случае приносят лайки, а не клиентов.',
         points: [
           {
-            title: 'Обесценивание экспертности',
+            title: 'Случайные посты, никакого плана',
             text:
-              'Пациенты ищут авторитет и доказательную медицину, а не развлекательный шум. Нужен баланс доступного языка и профессионализма.',
+              'Пост тут, пост там, скопированные тренды и стоковая графика. Люди листают дальше, потому что ничто не говорит, чем вы отличаетесь.',
           },
           {
-            title: 'Дефицит времени у врача',
+            title: 'Нет времени снимать',
             text:
-              'Врач не может тратить рабочие часы на монтаж и придумывание постов. Нужен отлаженный процесс: одна съёмка — готовый контент на месяц.',
+              'Управление бизнесом не оставляет часов на ежедневные съёмки. Без системы соцсети превращаются в обязанность, которую вы постоянно откладываете.',
           },
           {
-            title: 'Просмотры без записей на приём',
+            title: 'Просмотры, которые не становятся клиентами',
             text:
-              'Миллионные просмотры бесполезны, если в профиле нет понятной навигации и связки с сайтом для записи на консультацию.',
+              'Просмотры ничего не значат, если у зрителя нет понятного способа связаться с вами, записаться или купить.',
           },
         ],
       },
       deliverables: {
-        heading: 'Что входит в видеопроизводство?',
+        heading: 'Видеопродакшн под ключ',
         description:
-          'Полный цикл: от выбора тем до публикации готовых роликов с субтитрами.',
+          'Вы проводите перед камерой около 2 часов в месяц или не появляетесь вовсе. Всё остальное делаем мы.',
         items: [
           {
-            title: 'Сценарии и тезисы под запросы пациентов',
+            title: 'Темы и сценарии',
             text:
-              'Изучаем реальные страхи и вопросы ваших пациентов и составляем комфортные тезисные планы для записи.',
+              'Находим вопросы, которые задают ваши клиенты, и причины, по которым они покупают, и превращаем их в простые сценарии и hooks.',
           },
           {
-            title: 'Динамичный монтаж и крупные субтитры',
+            title: 'Съёмка',
             text:
-              'Профессиональная цветокоррекция, вырезание пауз, визуальные акценты и чёткие субтитры (80% людей смотрят видео без звука).',
+              'У вас на месте или удалённо с нашим сопровождением. Помогаем держаться естественно, а не заученно.',
           },
           {
-            title: 'Адаптация под Reels, Shorts и TikTok',
+            title: 'Монтаж и субтитры',
             text:
-              'Форматирование с яркими обложками, цепляющими заголовками и правильными тегами для максимального органического охвата.',
+              'Динамичный ритм, чистый цвет, моушн-графика и субтитры для всех, кто смотрит без звука.',
           },
           {
-            title: 'Воронка записи на консультацию',
+            title: 'Публикация',
             text:
-              'Настройка ссылок в шапке профиля и интеграция с сайтом для быстрого перехода зрителей в категорию пациентов.',
+              'Видео адаптированы и опубликованы в Instagram Reels, TikTok и YouTube Shorts, с подписями, обложками и хэштегами.',
+          },
+          {
+            title: 'От зрителя к клиенту',
+            text:
+              'Ссылки в профиле, автоответы в сообщениях и ссылки на запись, чтобы тот, кому понравилось видео, действительно мог до вас дойти.',
           },
         ],
       },
       process: {
-        heading: 'Ежемесячный цикл работы',
-        description:
-          'Минимум времени врача при стабильном присутствии в ленте.',
+        heading: 'Как устроен месяц контента',
+        description: 'Встраивается в ваш бизнес, а не наоборот.',
         steps: [
           {
             step: '01',
-            title: 'Утверждение тем и сценариев',
-            duration: '1–3 дня',
-            text:
-              'Подбираем 12–16 тем, раскрывающих ваши ключевые и наиболее маржинальные медицинские услуги.',
+            title: 'План',
+            duration: 'Дни 1–3',
+            text: 'Присылаем 12–16 идей для видео вокруг ваших лучших товаров или услуг.',
           },
           {
             step: '02',
-            title: 'Съёмочный пул',
-            duration: '2 часа',
-            text:
-              'В спокойном темпе записываем все ролики с суфлёром или наводящими вопросами нашего продюсера.',
+            title: 'Съёмка',
+            duration: 'Один день',
+            text: 'Одна сфокусированная съёмка, на месте или удалённо, наш режиссёр ведёт вас через каждый дубль.',
           },
           {
             step: '03',
             title: 'Монтаж и публикации',
-            duration: 'В течение месяца',
-            text:
-              'Высылаем ролики на согласование и ведём регулярный постинг по календарю наибольшей активности аудитории.',
+            duration: 'Остаток месяца',
+            text: 'Вы утверждаете монтаж, мы публикуем по графику и показываем, что сработало.',
           },
         ],
       },
       pricingModels: {
-        heading: 'Варианты сотрудничества по видеоконтенту',
+        heading: 'Как мы можем работать над видео',
         description:
-          'Гибкие пакеты под ваши цели в социальных сетях.',
+          'Фиксированная цена, revenue share или комбинация, как и с любой услугой VDigital.',
         models: [
           {
-            title: 'Ежемесячный пакет «Эксперт»',
-            subtitle: '12–16 готовых коротких роликов в месяц',
+            title: 'Ежемесячный контент-план',
+            subtitle: 'Полное ведение',
             description:
-              'Полный цикл сценариев, съёмки, монтажа и публикаций для стабильного притока пациентов из социальных сетей.',
-            highlights: ['Регулярный контент', 'Без отвлечения от приёма', 'Ежемесячный отчёт'],
+              '12–16 коротких видео в месяц, от идеи до публикации, с ежемесячным разбором результатов.',
+            highlights: ['12–16 видео в месяц', 'Полный монтаж и титры', 'Публикации и аналитика'],
           },
           {
-            title: 'Видео + Таргетированная реклама',
-            subtitle: 'Охват аудитории в вашем городе',
+            title: 'Контент + платная реклама',
+            subtitle: 'Трафик на лучшие видео',
             description:
-              'Запуск лучших образовательных видео в рекламу на жителей вашего района или города для быстрого роста записи.',
-            highlights: ['Локальный таргетинг', 'Прозрачная стоимость заявки', 'Быстрый эффект'],
+              'Продвигаем ваши лучшие видео нужной аудитории в вашем городе, стране или на вашем рынке. Вы видите стоимость каждой заявки.',
+            highlights: ['Таргетированная реклама', 'Отслеживание стоимости заявки', 'Тесты креативов'],
           },
           {
-            title: 'Запись онлайн-курсов и обучающих программ',
-            subtitle: 'Для врачей и коучей с образовательными продуктами',
+            title: 'Разовый продакшн',
+            subtitle: 'Имиджевый проект или курс',
             description:
-              'Профессиональная запись лекций, уроков и мастер-классов со студийным звуком и инфографикой.',
-            highlights: ['Высокое качество', 'Учебная структура', 'Подготовка материалов'],
+              'Имиджевое видео, видео товаров, промо мероприятия или онлайн-курс. Спланировано, снято и смонтировано от начала до конца.',
+            highlights: ['Проект под ключ', 'Кинематографичное качество', 'Все исходники включены'],
           },
         ],
       },
       faqs: [
         {
-          question: 'Что делать, если я боюсь камеры?',
+          question: 'А если мне некомфортно перед камерой?',
           answer:
-            'Наш продюсер ведёт съёмку в формате диалога. Вы просто отвечаете на вопросы, как на обычном приёме с пациентом.',
+            'Поначалу почти всем так. Мы снимаем как разговор: вы отвечаете на вопросы, на которые и так каждый день отвечаете клиентам. А многие видео можно сделать вообще без вашего лица.',
         },
         {
-          question: 'Где проходят съёмки?',
+          question: 'Где проходит съёмка?',
           answer:
-            'Съёмка прямо в вашем кабинете выглядит наиболее естественно и вызывает максимальное доверие. Также возможна аренда студии.',
+            'У вас, на локации или удалённо с простыми инструкциями по свету и звуку. Выбираем то, что подходит контенту.',
         },
         {
-          question: 'Нужно ли мне заучивать текст наизусть?',
+          question: 'Нужно ли публиковать каждый день?',
           answer:
-            'Ни в коем случае. Мы пишем удобные тезисы, по которым вы говорите своими словами, сохраняя живую речь.',
+            'Нет. Регулярность важнее количества. Большинству компаний хватает 3–4 хороших видео в неделю.',
         },
       ],
       cta: {
-        heading: 'Постройте сильный личный бренд врача',
+        heading: 'Готовы стать компанией, которую видят первой?',
         description:
-          'Обсудите с нашей командой темы, которые вызовут наибольший отклик у вашей целевой аудитории.',
-        button: 'Записаться на разбор тем',
+          'Запишитесь на звонок с нашей командой, и мы покажем, какие идеи для видео лучше всего подойдут вашему бизнесу.',
+        button: 'Записаться на звонок по видеостратегии',
       },
     },
     'marketing-automation': {
       slug: 'marketing-automation',
-      serviceType: 'Маркетинговые кампании и автоматизация клиники',
-      badge: 'Маркетинг и Автоматизация',
-      title: 'Маркетинг и автоматизация | VDigital',
-      metaTitle: 'Маркетинг и автоматизация | VDigital',
+      serviceType: 'Маркетинг и автоматизация',
+      badge: 'Маркетинг и автоматизация',
+      title: 'Платная реклама, CRM и автоматизация маркетинга | VDigital',
+      metaTitle: 'Платная реклама, CRM и автоматизация маркетинга | VDigital',
       metaDescription:
-        'Контекстная и таргетированная реклама, автоматические SMS и WhatsApp напоминания, внедрение CRM для врачей и частных клиник.',
-      h1: 'Маркетинг и автоматизация для врачей и коучей',
+        'Реклама в Google, Meta и Яндексе, CRM pipeline, автоответы и напоминания, чтобы каждая заявка получала ответ, а вы знали, откуда приходят клиенты.',
+      h1: 'Реклама, которая приводит людей. Автоматизация, которая превращает их в покупателей.',
       lead:
-        'Создаём автоматизированные воронки привлечения пациентов и устраняем рутину администраторов клиники.',
+        'Ведём вашу рекламу в Google и Meta и связываем её с CRM и автоматическими follow-up сообщениями, чтобы ни одна заявка не потерялась и вы всегда знали, во сколько обошёлся каждый клиент.',
       stats: [
-        { value: '3x', label: 'Рост конверсии обращений в реальные визиты' },
-        { value: '24/7', label: 'Мгновенные ответы на заявки пациентов' },
-        { value: '<5%', label: 'Минимум пропущенных приёмов с SMS-напоминаниями' },
+        { value: '24/7', label: 'Каждая заявка получает мгновенный ответ' },
+        { value: '1 dashboard', label: 'Все заявки, звонки и продажи в одном месте' },
+        { value: 'В реальном времени', label: 'Вы видите каждую цифру, включая расход на рекламу' },
       ],
       problem: {
-        heading: 'Где клиники теряют деньги на рекламе?',
+        heading: 'Где большинство компаний теряет деньги',
         description:
-          'Без автоматической обработки заявок и системы напоминаний бюджет на рекламу расходуется впустую.',
+          'Реклама без follow-up похожа на то, как если бы вы платили за посетителей и держали дверь закрытой.',
         points: [
           {
-            title: 'Запоздалая реакция на заявку',
+            title: 'Медленные ответы',
             text:
-              'Если пациент оставил заявку вечером, а перезвонили ему только в полдень следующего дня, он уже записался в другую клинику.',
+              'Человек оставляет заявку вечером, а ответ получает на следующий день после обеда. К этому времени он уже купил у того, кто ответил быстрее.',
           },
           {
-            title: 'Недоезды пациентов на приём',
+            title: 'Реклама для всех и ни для кого',
             text:
-              'Без системы напоминаний в мессенджерах до 25% пациентов забывают о времени консультации, оставляя врача без работы в этот час.',
+              'Широкий таргетинг приносит клики от людей, которые и не собирались покупать. Бюджет потрачен, телефон молчит.',
           },
           {
-            title: 'Реклама без точной аналитики',
+            title: 'No-show и забытые заявки',
             text:
-              'Клиники часто не знают, какая именно кампания принесла реального пациента, а какая привела людей за бесплатными советами.',
+              'Назначенные звонки и визиты срываются, а заинтересованные люди так и не получают второго сообщения. Каждый из них означает потерянные деньги.',
           },
         ],
       },
       deliverables: {
-        heading: 'Что включает система автоматизации?',
+        heading: 'Полная система роста',
         description:
-          'Объединение рекламы, приёма заявок и работы с постоянными пациентами в единый механизм.',
+          'Реклама, быстрые ответы и понятный pipeline, связанные в одну систему.',
         items: [
           {
-            title: 'Точная реклама в поиске и соцсетях',
+            title: 'Реклама в Google, Meta и Яндексе',
             text:
-              'Показываем ваши услуги людям, которые прямо сейчас ищут решение конкретной медицинской проблемы в вашем городе.',
+              'Кампании, которые видят люди, уже ищущие то, что вы продаёте, в вашем городе, стране или на вашем рынке.',
           },
           {
-            title: 'Автоматические напоминания в WhatsApp и SMS',
+            title: 'Автоответы и напоминания',
             text:
-              'Подтверждение записи сразу после звонка, напоминание за сутки и схема проезда, снижающие процент неявок почти до нуля.',
+              'Мгновенные ответы на новые заявки, а также подтверждения и напоминания по email, SMS, WhatsApp или Telegram, которые снижают no-show.',
           },
           {
-            title: 'Настройка CRM для администраторов',
+            title: 'CRM pipeline',
             text:
-              'Наглядный интерфейс, где виден статус каждого пациента: новая заявка, записан, приём состоялся, повторный визит.',
+              'Каждая заявка в одном месте, от первого сообщения до закрытой сделки, чтобы ничего не терялось и было видно, где люди отваливаются.',
           },
           {
-            title: 'Автоматический сбор отзывов на картах',
+            title: 'Запросы отзывов',
             text:
-              'Вежливый запрос отзыва довольному пациенту после приёма, что быстро выводит клинику в топ Google и Яндекс Карт.',
+              'Автоматические вежливые сообщения довольным клиентам с просьбой оставить отзыв в Google или на Яндекс Картах, чтобы рейтинг постоянно рос.',
+          },
+          {
+            title: 'Анализ рынка и конкурентов',
+            text:
+              'Смотрим, что делают конкуренты, где пробелы и как позиционировать ваше предложение, прежде чем тратить деньги на рекламу.',
           },
         ],
       },
       process: {
-        heading: 'Внедрение системы в 3 этапа',
-        description:
-          'Быстрый запуск без остановки текущей работы администраторов.',
+        heading: 'Как мы настраиваем это за 3 недели',
+        description: 'Встраиваем в то, как вы уже работаете, не замедляя команду.',
         steps: [
           {
             step: '01',
-            title: 'Аудит пути пациента',
-            duration: '1-я неделя',
+            title: 'Путь клиента',
+            duration: 'Неделя 1',
             text:
-              'Разбираем, как пациенты обращаются к вам сейчас, выявляем узкие места и настраиваем воронку.',
+              'Находим, где застревают заявки, какие товары или услуги приносят больше всего денег и как должен выглядеть follow-up.',
           },
           {
             step: '02',
-            title: 'Настройка CRM и сценариев связи',
-            duration: '2-я неделя',
+            title: 'Строим систему',
+            duration: 'Неделя 2',
             text:
-              'Прописываем тексты автоматических сообщений, подключаем формы на сайте и обучаем администраторов.',
+              'Настраиваем CRM, подключаем формы с сайта и каналы, пишем шаблоны сообщений и тестируем каждый сценарий.',
           },
           {
             step: '03',
-            title: 'Старт кампаний и аналитика',
-            duration: '3-я неделя',
+            title: 'Запуск и оптимизация',
+            duration: 'Неделя 3',
             text:
-              'Запускаем рекламные кампании, контролируем стоимость привлечённого пациента и корректируем настройки.',
+              'Запускаем кампании, отслеживаем стоимость заявки и продажи и постоянно улучшаем то, что работает.',
           },
         ],
       },
       pricingModels: {
-        heading: 'Форматы сотрудничества',
-        description:
-          'Варианты под разные масштабы частной практики.',
+        heading: 'Три формата работы',
+        description: 'Без долгосрочных контрактов. Полный доступ ко всем аккаунтам и цифрам.',
         models: [
           {
-            title: 'Внедрение системы «под ключ»',
-            subtitle: 'Для клиник с собственным отделом приёма звонков',
+            title: 'Разовая настройка',
+            subtitle: 'Настройка под ключ',
             description:
-              'Полная настройка CRM, сценариев сообщений, интеграции с сайтом и обучение персонала клиники.',
-            highlights: ['Разовая оплата', 'Система остаётся у вас', 'Инструкции для персонала'],
+              'Строим CRM, автоматизации и систему отзывов, обучаем вашу команду и передаём всё вам. Остаётся у вас.',
+            highlights: ['Настройка CRM-системы', 'Сценарии автоматизации', 'Обучение команды'],
           },
           {
-            title: 'Ведение и оптимизация рекламы',
-            subtitle: 'Для постоянного потока первичных пациентов',
+            title: 'Ежемесячное ведение',
+            subtitle: 'Постоянная оптимизация',
             description:
-              'Ежемесячное управление рекламными бюджетами, тестирование посадочных страниц и отчёты о стоимости записей.',
-            highlights: ['Управление кампаниями', 'A/B тесты страниц', 'Прозрачная окупаемость'],
+              'Постоянное ведение рекламы, тесты и улучшения, плюс понятный ежемесячный отчёт о том, во сколько обошёлся каждый клиент.',
+            highlights: ['Управление рекламой', 'Тестирование креативов', 'Отчёты о стоимости заявок'],
           },
           {
-            title: 'Оплата за результат (Performance)',
-            subtitle: 'Для высокомаржинальных медицинских направлений',
+            title: 'Revenue share',
+            subtitle: 'Процент от продаж',
             description:
-              'Формат с привязкой вознаграждения к числу проведённых консультаций после предварительного аудита.',
-            highlights: ['Оплата за результат', 'Единая цель роста', 'Тщательный отбор клиник'],
+              'Меньшая фиксированная оплата плюс процент от продаж, которые приносит система. Возможно после того, как мы вместе посмотрим на ваше предложение и цифры.',
+            highlights: ['Меньше фиксированных затрат', 'Привязка к продажам', 'Общий результат'],
           },
         ],
       },
       faqs: [
         {
-          question: 'Какой рекламный бюджет потребуется на старте?',
+          question: 'Сколько нужно тратить на рекламу?',
           answer:
-            'Для уверенного старта в крупном городе мы рекомендуем закладывать от $500–700 в месяц на прямые расходы рекламных систем.',
+            'Зависит от рынка и целей. После анализа на первой неделе мы порекомендуем стартовый бюджет. Можно начать с малого и вкладывать больше в то, что работает.',
         },
         {
-          question: 'Справятся ли наши администраторы с новой программой?',
+          question: 'Придётся ли моей команде осваивать сложные программы?',
           answer:
-            'Да. Мы настраиваем максимально простой интерфейс и обучаем сотрудников, чтобы они тратили меньше времени на рутину.',
+            'Нет. Мы настраиваем простые инструменты, показываем команде, как ими пользоваться, и пишем короткие инструкции. Большая часть работает сама.',
         },
         {
-          question: 'Когда появятся первые пациенты?',
+          question: 'Когда начнут приходить новые заявки?',
           answer:
-            'После включения рекламы и цепочек на третьей неделе первые обращения обычно приходят в течение 2–3 дней.',
+            'Обычно в первые дни после запуска рекламы на третьей неделе. Первые недели уходят на тесты, а результаты растут по мере того, как мы понимаем, что работает именно для вас.',
         },
       ],
       cta: {
-        heading: 'Автоматизируйте поток пациентов в клинику',
+        heading: 'Перестаньте терять клиентов, за которых уже заплатили',
         description:
-          'Запишитесь на аудит, чтобы узнать, как автоматизация может избавить персонал от хаоса и заполнить расписание приёмов.',
-        button: 'Записаться на аудит практики',
+          'Запишитесь на звонок, и мы покажем, где сегодня утекают заявки и как это исправить.',
+        button: 'Запросить бесплатный аудит',
       },
     },
     'cold-calling': {
       slug: 'cold-calling',
-      serviceType: 'B2B-продажи и прямой outreach',
-      badge: 'B2B-Продажи и Outreach',
-      title: 'Холодные звонки для коучей | VDigital',
-      metaTitle: 'Холодные звонки для коучей | VDigital',
+      serviceType: 'Cold calling и продажи',
+      badge: 'Cold calling и продажи',
+      title: 'Cold calling и appointment setting | VDigital',
+      metaTitle: 'Cold calling и appointment setting | VDigital',
       metaDescription:
-        'Прямые B2B-звонки, холодный аутрич и назначение встреч для коучей, экспертов и корпоративных тренеров. Заполняем календарь целевыми клиентами.',
-      h1: 'Холодные звонки и привлечение клиентов для коучей и курсов',
+        'Cold calling (холодные звонки) для вашего бизнеса: звоним потенциальным клиентам, квалифицируем их и назначаем встречи в вашем календаре. Для B2B и B2C.',
+      h1: 'Мы звоним вашим будущим клиентам, чтобы не пришлось вам',
       lead:
-        'Берём на себя персонализированные телефонные переговоры и назначение встреч с платежеспособными клиентами и корпоративными заказчиками.',
+        'Наш специалист по продажам связывается с нужными людьми, проверяет их интерес и назначает встречи прямо в вашем календаре. Вы говорите только с теми, кому действительно нужно ваше предложение.',
       stats: [
-        { value: '1 на 1', label: 'Индивидуальное изучение каждого контакта' },
-        { value: '15-25%', label: 'Конверсия в назначенные встречи' },
-        { value: 'Квалификация', label: 'Вы общаетесь только с теми, у кого есть бюджет' },
+        { value: '1-на-1', label: 'Каждый список собран вручную' },
+        { value: 'Квалифицированы', label: 'Бюджет и потребность проверены до встречи' },
+        { value: 'Еженедельно', label: 'Отчёты о звонках, встречах и возражениях' },
       ],
       problem: {
-        heading: 'Почему массовые рассылки больше не работают?',
+        heading: 'Почему массовые рассылки и спам больше не работают',
         description:
-          'Одинаковые шаблонные сообщения в LinkedIn и холодный спам по почте вызывают только раздражение и губят репутацию эксперта.',
+          'Шаблонные сообщения попадают в спам и вредят вашему имени больше, чем помогают.',
         points: [
           {
-            title: 'Люди моментально отличают спам-рассылку',
+            title: 'Шаблон видно сразу',
             text:
-              'Когда руководитель видит безликое письмо, он отправляет его в корзину. Премиальные клиенты требуют персонального внимания к их задачам.',
+              'Сообщения под копирку удаляют за секунды. Настоящий разговор начинается с настоящего исследования.',
           },
           {
-            title: 'Нежелание эксперта заниматься звонками',
+            title: 'У вас нет времени звонить',
             text:
-              'Коучи и доктора — специалисты в своём деле, а не операторы колл-центра. Звонки отнимают моральные силы и время от работы с клиентами.',
+              'Вы сильны в своём деле, а не в многочасовых звонках незнакомым людям. Поиск клиентов вечно откладывается «на следующую неделю».',
           },
           {
-            title: 'Встречи с теми, кто не может оплатить программу',
+            title: 'Встречи не с теми людьми',
             text:
-              'Проводить часовые консультации с людьми без бюджета — прямой путь к профессиональному выгоранию.',
+              'Час разговора с тем, у кого нет ни бюджета, ни потребности, это час, отнятый у платящих клиентов.',
           },
         ],
       },
       deliverables: {
-        heading: 'Что включает наша услуга прямого привлечения?',
+        heading: 'Ваш собственный отдел продаж',
         description:
-          'Опытные менеджеры, которые уважительно и грамотно представляют ваш бренд, договариваясь о встрече в вашем календаре.',
+          'Обученный специалист, который профессионально представляет ваш бизнес и заполняет календарь реальными встречами.',
         items: [
           {
-            title: 'Ручной сбор базы лиц, принимающих решения',
+            title: 'Целевые базы контактов',
             text:
-              'Находим прямые контакты топ-менеджеров, директоров по персоналу или частных клиентов, идеально подходящих под ваш профиль.',
+              'Собираем и проверяем списки компаний или людей, которые соответствуют вашему идеальному клиенту: сфера, размер, локация и должность.',
           },
           {
-            title: 'Разработка сценариев экспертного диалога',
+            title: 'Скрипты, которые звучат по-человечески',
             text:
-              'Пишем уважительные скрипты без давления, фокусируясь на проблемах собеседника и пользе вашего подхода.',
+              'Разговорные скрипты, построенные вокруг проблем ваших клиентов, без навязчивых приёмов продаж.',
           },
           {
-            title: 'Прямые звонки и предварительная квалификация',
+            title: 'Звонки и квалификация',
             text:
-              'Наш специалист звонит, выявляет потребность, проверяет готовность инвестировать и фиксирует дату встречи в вашем расписании.',
+              'Мы звоним, проверяем потребность, бюджет и сроки и назначаем встречу в вашем календаре.',
           },
           {
-            title: 'Аналитика и обратная связь с рынка',
+            title: 'Follow-up',
             text:
-              'Подробно фиксируем аргументы и возражения потенциальных клиентов, помогая вам докручивать саму ценность программы.',
+              'Те, кто говорит «не сейчас», получают напоминание в нужный момент, по телефону, email или в мессенджере.',
+          },
+          {
+            title: 'Еженедельные отчёты',
+            text:
+              'Количество звонков, назначенных встреч и самые частые возражения, чтобы вы могли отточить предложение и цены.',
           },
         ],
       },
       process: {
-        heading: 'Как выстраивается процесс привлечения',
+        heading: 'От первого звонка до заполненного календаря',
         description:
-          'Прозрачный путь от базы контактов до заполненного календаря консультаций.',
+          'Понятный процесс, который держит ваш календарь заполненным квалифицированными встречами.',
         steps: [
           {
             step: '01',
-            title: 'Формирование критериев отбора',
-            duration: '1-я неделя',
+            title: 'Предложение и идеальный клиент',
+            duration: 'Неделя 1',
             text:
-              'Определяем главные выгоды вашего продукта и строгие критерии, которым должен соответствовать контакт перед записью.',
+              'Разбираем ваше предложение, точно определяем, кому звонить, и пишем скрипты.',
           },
           {
             step: '02',
-            title: 'Тестовый пул звонков',
-            duration: '2-я неделя',
+            title: 'Базы и тестовые звонки',
+            duration: 'Неделя 2',
             text:
-              'Формируем первую выборку из 100–150 контактов, тестируем подачу и замеряем конверсию в согласие на созвон.',
+              'Собираем первую базу, начинаем звонить и корректируем подачу по реальным ответам.',
           },
           {
             step: '03',
-            title: 'Масштабирование и наполнение встреч',
-            duration: 'С 3-й недели',
+            title: 'Полный cold calling',
+            duration: 'С недели 3',
             text:
-              'Выходим на плановую нагрузку, пока вы проводите встречи только с тёплыми и подготовленными клиентами.',
+              'Увеличиваем число звонков в день, чтобы вы приходили на встречи с людьми, которые уже знают, зачем им звонили.',
           },
         ],
       },
       pricingModels: {
-        heading: 'Модели сотрудничества по прямым продажам',
-        description:
-          'Условия, зависящие от стоимости вашего продукта и целей по выручке.',
+        heading: 'Три формата работы',
+        description: 'Под цену вашего предложения и темп роста, который вы хотите.',
         models: [
           {
-            title: 'Фиксированная часть + Бонус за встречу',
-            subtitle: 'Оптимальный баланс для активного старта',
+            title: 'Базовая оплата + за встречу',
+            subtitle: 'Сбалансированная модель',
             description:
-              'Небольшой ежемесячный фикс, покрывающий сбор качественных баз и рабочие часы менеджера, плюс оплата за каждую состоявшуюся квалифицированную встречу.',
-            highlights: ['Выделенный менеджер', 'Проверенные базы', 'Мотивация на результат'],
+              'Ежемесячная оплата за сбор баз и часы звонков плюс бонус за каждую квалифицированную встречу, которая действительно состоялась. Наша самая сбалансированная модель.',
+            highlights: ['Часы работы специалиста', 'Бонус только за состоявшиеся встречи', 'Проверенные базы'],
           },
           {
-            title: 'Процент от заключённых сделок',
-            subtitle: 'Для дорогих программ с чеком от €2,000+',
+            title: 'Revenue share',
+            subtitle: 'Процент от закрытых сделок',
             description:
-              'Формат партнёрства для экспертов с подтверждённым опытом успешных продаж и готовыми кейсами.',
-            highlights: ['Без стартового риска', 'Оплата по факту сделки', 'Индивидуальный отбор'],
+              'Процент от сделок, которые мы помогли закрыть. Для предложений с подтверждённой историей продаж.',
+            highlights: ['Без стартового риска', 'Оплата от выручки', 'Для проверенных продуктов'],
           },
           {
-            title: 'Построение внутреннего отдела продаж',
-            subtitle: 'Для онлайн-школ и тренинговых центров',
+            title: 'Скрипты и обучение отдела продаж',
+            subtitle: 'Внедрение в вашу компанию',
             description:
-              'Помогаем нанять, обучить и ввести в строй штатного менеджера с готовыми скриптами и регламентами в CRM.',
-            highlights: ['Собственный сотрудник', 'Стандарты работы', 'Обучающие регламенты'],
+              'Для компаний, которые строят свой отдел продаж. Передаём наши скрипты, настройку CRM и обучение, чтобы ваши люди работали сами.',
+            highlights: ['Готовые разговорные скрипты', 'Настройка CRM и воронок', 'Обучение сотрудников'],
           },
         ],
       },
       faqs: [
         {
-          question: 'Не навредят ли звонки моей экспертной репутации?',
+          question: 'Не навредит ли cold calling моей репутации?',
           answer:
-            'Нет, потому что мы не занимаемся спамом. Разговор строится уважительно, кратко и исключительно по делу с теми, кому продукт действительно актуален.',
+            'Нет. Наши звонки короткие, вежливые и полезные. Мы уважаем чужое время и представляем ваш бизнес так, как это сделали бы вы.',
         },
         {
-          question: 'Сколько встреч можно ожидать в месяц?',
+          question: 'Сколько встреч можно ожидать?',
           answer:
-            'В зависимости от сегмента рынка и привлекательности оффера наши клиенты получают от 15 до 30 целевых созвонов ежемесячно.',
+            'Зависит от рынка, предложения и цены. После первых двух недель тестовых звонков дадим реалистичный прогноз на месяц.',
         },
         {
-          question: 'Что делать, если клиент не пришёл на встречу?',
+          question: 'Что если человек отменит встречу или не придёт?',
           answer:
-            'За несостоявшиеся созвоны бонус не начисляется, а наш менеджер оперативно связывается для переноса времени.',
+            'Мы связываемся снова и пытаемся перенести встречу. В модели с оплатой за встречу бонус оплачивается только за встречи, которые действительно состоялись.',
+        },
+        {
+          question: 'Вы звоните на других языках?',
+          answer: 'Да. Звоним на сербском, английском и русском.',
         },
       ],
       cta: {
-        heading: 'Хотите стабильный поток корпоративных клиентов?',
+        heading: 'Готовы к календарю, полному реальных встреч по продажам?',
         description:
-          'Запишитесь на стратегический созвон, чтобы оценить применимость прямого аутрича для вашей программы.',
-        button: 'Записаться на стратегический созвон',
+          'Запишитесь на стратегический звонок, и мы честно скажем, готово ли ваше предложение к cold calling.',
+        button: 'Записаться на стратегический звонок',
       },
     },
   },

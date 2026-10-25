@@ -28,7 +28,7 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
     <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-8 py-2 text-center select-none z-20">
       <div className="relative grid grid-cols-1 sm:grid-cols-2 xl:flex xl:items-center xl:justify-between gap-y-3 sm:gap-x-3 xl:gap-0 max-w-lg xl:max-w-none mx-auto">
         {/* Center Main 4-Line Headline with dedicated dark shadow layer behind <h1> */}
-        <div className="order-1 sm:col-span-2 xl:order-2 xl:flex-1 max-w-4xl mx-auto px-2 relative z-10 w-full">
+        <div className="order-1 sm:col-span-2 xl:order-2 xl:flex-1 max-w-4xl xl:max-w-5xl mx-auto px-1 sm:px-2 relative z-10 w-full">
           {/* Outer Ambient Black Shadow Layer behind <h1> */}
           <div
             aria-hidden="true"
@@ -52,8 +52,8 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
 
           <h1
             id="hero-title-main"
-            aria-label={`${t.hero.line1} ${t.hero.line2} ${t.hero.line3} ${t.hero.line4}`}
-            className="relative z-10 text-[24px] sm:text-[36px] md:text-[42px] lg:text-[48px] xl:text-[52px] leading-[1.14] sm:leading-[1.12] drop-shadow-[0_14px_32px_color-mix(in_srgb,var(--vd-hero-shadow)_100%,transparent)]"
+            aria-label={`${t.hero.line1} ${t.hero.line2} ${t.hero.line3}`}
+            className="relative z-10 text-[22px] min-[420px]:text-[26px] sm:text-[34px] md:text-[40px] lg:text-[46px] xl:text-[50px] leading-[1.16] sm:leading-[1.12] drop-shadow-[0_14px_32px_color-mix(in_srgb,var(--vd-hero-shadow)_100%,transparent)]"
             style={{
               textShadow:
                 '0 16px 44px color-mix(in srgb, var(--vd-hero-shadow) 100%, transparent), 0 8px 22px color-mix(in srgb, var(--vd-hero-shadow) 100%, transparent), 0 3px 8px color-mix(in srgb, var(--vd-hero-shadow) 100%, transparent)',
@@ -83,35 +83,19 @@ export const HeroTypography: React.FC<HeroTypographyProps> = ({ pairingMode = 'c
               </motion.span>
             </span>
 
-            {/* Line 3: Green Italic */}
+            {/* Line 3: Green Italic (single row) */}
             <span className="block overflow-hidden py-1.5 -my-1.5 mt-1">
               <motion.span
                 initial={isSSR ? false : { opacity: 0, y: 40, filter: 'blur(8px)' }}
                 animate={isSSR ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
                 transition={{ duration: 0.9, delay: 0.36, ease: smoothEase }}
-                className={`block text-[color:var(--vd-a8f300)] ${bottomLinesClass}`}
+                className={`block text-[color:var(--vd-a8f300)] ${bottomLinesClass} whitespace-nowrap`}
                 style={{
                   textShadow:
                     '0 14px 36px color-mix(in srgb, var(--vd-hero-shadow) 100%, transparent), 0 5px 14px color-mix(in srgb, var(--vd-hero-shadow) 98%, transparent), 0 0 30px color-mix(in srgb, var(--vd-a8f300) 28%, transparent)',
                 }}
               >
-                {t.hero.line3}{' '}
-              </motion.span>
-            </span>
-
-            {/* Line 4: Green Italic */}
-            <span className="block overflow-hidden py-1.5 -my-1.5">
-              <motion.span
-                initial={isSSR ? false : { opacity: 0, y: 40, filter: 'blur(8px)' }}
-                animate={isSSR ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.9, delay: 0.48, ease: smoothEase }}
-                className={`block text-[color:var(--vd-a8f300)] ${bottomLinesClass}`}
-                style={{
-                  textShadow:
-                    '0 14px 36px color-mix(in srgb, var(--vd-hero-shadow) 100%, transparent), 0 5px 14px color-mix(in srgb, var(--vd-hero-shadow) 98%, transparent), 0 0 30px color-mix(in srgb, var(--vd-a8f300) 28%, transparent)',
-                }}
-              >
-                {t.hero.line4}
+                {t.hero.line3}
               </motion.span>
             </span>
           </h1>

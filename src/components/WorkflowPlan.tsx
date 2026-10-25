@@ -214,7 +214,7 @@ export const WorkflowPlan: React.FC = () => {
                               <span className="font-geist font-semibold text-[13.5px] sm:text-[14.5px] text-white group-hover:text-[color:var(--vd-f8fafc)] tracking-[-0.01em] leading-snug">
                                 {task.title}
                               </span>
-                              <span className="sr-only">{' — '}</span>
+                              <span className="sr-only">{' - '}</span>
                               <span className="shrink-0 inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/[0.06] group-hover:bg-[color:var(--vd-a3e635)]/15 border border-white/[0.08] group-hover:border-[color:var(--vd-a3e635)]/40 font-mono text-[11px] text-[color:var(--vd-9ca3af)] group-hover:text-[color:var(--vd-a3e635)] transition-colors duration-250 whitespace-nowrap">
                                 {task.duration}
                               </span>

@@ -51,7 +51,7 @@ const TeamPhotoCard: React.FC<TeamPhotoCardProps> = ({ name, role, photo, photoA
         {!imageError && (
           <img
             src={photo}
-            alt={photoAlt || `${name} — ${role}`}
+            alt={photoAlt || `${name} - ${role}`}
             width={512}
             height={512}
             loading="lazy"

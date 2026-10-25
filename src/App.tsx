@@ -10,6 +10,7 @@ import { TrustBar } from './components/TrustBar';
 import { WordByWordStatement } from './components/WordByWordStatement';
 import { PainPointsSection } from './components/PainPointsSection';
 import { StickyServicesSection } from './components/StickyServicesSection';
+import { WhoWeWorkWithSection } from './components/WhoWeWorkWithSection';
 import { WorkflowPlan } from './components/WorkflowPlan';
 import { TeamLeadershipSection } from './components/TeamLeadershipSection';
 import { FoundingClientsSection } from './components/FoundingClientsSection';
@@ -98,6 +99,9 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
 
           {/* 6. Services (#services) */}
           <StickyServicesSection onBookCall={goToContactPage} />
+
+          {/* 6b. Who We Work With (#who-we-work-with) */}
+          <WhoWeWorkWithSection />
 
           {/* 7. Process (#process) */}
           <WorkflowPlan />

@@ -88,7 +88,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
             className="hover:text-[color:var(--vd-9ce607)] transition-colors inline-flex items-center gap-1.5"
           >
             <Home className="w-3.5 h-3.5" />
-            <span>Home</span>
+            <span>{locale === 'sr' ? 'Početna' : locale === 'ru' ? 'Главная' : 'Home'}</span>
           </a>
           <ChevronRight className="w-3.5 h-3.5 text-neutral-600" />
           <a

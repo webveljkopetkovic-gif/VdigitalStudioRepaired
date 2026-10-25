@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Stethoscope, PhoneCall } from 'lucide-react';
+import { Briefcase, PhoneCall } from 'lucide-react';
 import { useI18n } from '../i18n';
 import { trackBookCallClick } from '../utils/analytics';
 
@@ -111,7 +111,7 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
               </React.Fragment>
             ))}
 
-            {/* 1. Stethoscope Glowing Badge after "heal" */}
+            {/* 1. Briefcase Glowing Badge after "run / vodite / ведёте" */}
             <motion.span
               variants={activeBadgeVariants}
               whileHover={{ scale: 1.14, rotate: -3 }}
@@ -120,7 +120,7 @@ export const WordByWordStatement: React.FC<WordByWordStatementProps> = ({
             >
               <span className="absolute -inset-1.5 rounded-2xl bg-[color:var(--vd-00f5a0)]/40 blur-md pointer-events-none group-hover:bg-[color:var(--vd-00f5a0)]/60 transition-all duration-300" />
               <span className="relative w-9 h-9 sm:w-11 sm:h-11 md:w-13 md:h-13 lg:w-14 lg:h-14 rounded-xl sm:rounded-2xl bg-[color:var(--vd-091510)]/95 border border-[color:var(--vd-00f5a0)]/80 shadow-[0_0_24px_color-mix(in_srgb,var(--vd-00f5a0)_50%,transparent),inset_0_1px_1px_color-mix(in_srgb,var(--vd-ffffff)_20%,transparent)] flex items-center justify-center backdrop-blur-md">
-                <Stethoscope className="w-5 h-5 sm:w-7 sm:h-7 text-[color:var(--vd-00f5a0)] drop-shadow-[0_0_12px_color-mix(in_srgb,var(--vd-00f5a0)_90%,transparent)]" />
+                <Briefcase className="w-5 h-5 sm:w-7 sm:h-7 text-[color:var(--vd-00f5a0)] drop-shadow-[0_0_12px_color-mix(in_srgb,var(--vd-00f5a0)_90%,transparent)]" />
               </span>
             </motion.span>
 

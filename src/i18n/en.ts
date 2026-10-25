@@ -9,6 +9,20 @@ export interface TeamMemberTranslation {
   portfolioLabel?: string;
 }
 
+export interface IndustryCard {
+  title: string;
+  who: string;
+  text: string;
+}
+
+export interface WhoWeWorkWithTranslation {
+  eyebrow: string;
+  heading: string;
+  subheading: string;
+  cards: IndustryCard[];
+  footerLine: string;
+}
+
 export const en = {
   lang: 'en' as const,
   navbar: {
@@ -26,19 +40,18 @@ export const en = {
       webDev: 'Web Development',
       videoSocial: 'Video & Social Media',
       marketingAuto: 'Marketing & Automation',
-      coldCalling: 'B2B Sales & Outreach',
+      coldCalling: 'Cold Calling & Sales',
     },
     cta: 'Book a call',
   },
   hero: {
     line1: 'Websites, video & marketing',
-    line2: 'for doctors and coaches',
-    line3: 'that bring you new clients',
-    line4: 'while you focus on your work',
+    line2: 'that bring you new clients',
+    line3: 'while you run your business',
     leftText:
-      'VDigital is a Niš-based digital studio crafting websites, video and marketing for doctors and health coaches. We build the full client acquisition system while you focus on your work.',
+      'VDigital is a digital studio from Niš, Serbia. We build the full client acquisition system: website, content, ads, automation and sales calls. One team, one plan, running in 3 weeks.',
     rightText:
-      'From the first call to a fully running system in 3 weeks. You keep full access to every account, number and result.',
+      'You keep full access to every account, number and result.',
     primaryCta: 'Book a free call',
     secondaryCta: 'See how we work',
   },
@@ -51,10 +64,10 @@ export const en = {
     ],
   },
   statement: {
-    text: 'You heal, coach and change lives. We build the website, create the content and make the calls that bring new clients to your door.',
+    text: 'You run your business. We build the website, create the content and make the calls that bring new clients to your door.',
     words: {
-      row1: ['You', 'heal,'],
-      row1AfterHeal: ['coach', 'and', 'change', 'lives.'],
+      row1: ['You', 'run'],
+      row1AfterHeal: ['your', 'business.'],
       row2: ['We', 'build', 'the', 'website,'],
       row2AfterWebsite: ['create', 'the', 'content'],
       row3: ['and', 'make', 'the', 'calls'],
@@ -70,18 +83,18 @@ export const en = {
     cards: [
       {
         id: 'empty-calendar',
-        title: 'Great work, empty calendar',
-        text: "You're excellent at what you do, but new clients don't find you online.",
+        title: 'Great business, quiet phone',
+        text: "What you sell is high quality, but new clients don't find you online.",
       },
       {
         id: 'no-time',
         title: 'No time for marketing',
-        text: "Between patients and sessions, there's no energy left for posts, ads and messages.",
+        text: "Between clients, orders and running the business, there's no energy left for posts, ads and messages.",
       },
       {
         id: 'online-image',
-        title: "Your online image doesn't match your expertise",
-        text: 'An outdated website or random posts make you look less professional than you are.',
+        title: 'You look smaller online than you are',
+        text: 'An outdated website or random posts make your business look less professional than it actually is.',
       },
       {
         id: 'afraid-payoff',
@@ -102,8 +115,8 @@ export const en = {
         number: '01',
         titleWhite: 'Web &',
         titleGrey: 'Development',
-        tags: ['Websites', 'Landing pages', 'Web apps', 'Online booking', 'SEO'],
-        text: 'Fast, secure websites built to turn visitors into booked appointments, optimized for Google and AI search from day one.',
+        tags: ['Websites', 'Landing pages', 'Online shops', 'Web apps', 'Online booking & payments', 'SEO'],
+        text: 'Fast, secure websites built to turn visitors into inquiries, bookings and sales, optimized for Google and AI search from day one.',
       },
       {
         id: 'video-social',
@@ -111,7 +124,7 @@ export const en = {
         titleWhite: 'Video &',
         titleGrey: 'Social Media',
         tags: ['Filming', 'Video editing', 'Instagram Reels', 'TikTok', 'Content planning'],
-        text: 'We film, edit and publish content that shows your expertise and builds trust. Not comfortable on camera? We guide you through every step.',
+        text: 'We film, edit and publish content that shows what you do and why people should choose you. Not comfortable on camera? We guide you through every step, or create content without your face.',
       },
       {
         id: 'marketing-automation',
@@ -126,10 +139,50 @@ export const en = {
         number: '04',
         titleWhite: 'Cold Calling &',
         titleGrey: 'Sales',
-        tags: ['Cold calling', 'Lead generation', 'Follow-ups', 'Appointment setting'],
-        text: 'Our sales specialist reaches out to potential clients on your behalf and turns interest into booked calls and appointments.',
+        tags: ['Cold calling', 'Lead generation', 'Follow-up', 'Appointment setting'],
+        text: 'Our sales specialist reaches out to potential clients on your behalf and turns interest into booked calls, appointments and sales.',
       },
     ],
+  },
+  whoWeWorkWith: {
+    eyebrow: 'Who we work with',
+    heading: 'Different industries. Same problem: not enough clients.',
+    subheading:
+      'If people can find you online, call you, book with you or buy from you, we can build a system that brings more of them.',
+    cards: [
+      {
+        title: 'Health & wellness',
+        who: 'Clinics, dentists, physiotherapists, health coaches',
+        text: 'Websites and content people trust, turning searches into booked appointments.',
+      },
+      {
+        title: 'Coaches, courses & education',
+        who: 'Coaches, trainers, online schools, workshops',
+        text: 'Landing pages, video and follow-ups that fill your programs and cohorts.',
+      },
+      {
+        title: 'Local services',
+        who: 'Salons, gyms, contractors, cleaning, trades',
+        text: 'Get found on Google in your city, with a one-tap call or booking flow.',
+      },
+      {
+        title: 'Hospitality & tourism',
+        who: 'Restaurants, cafes, boutique rentals, tour operators',
+        text: 'Content people want to share, plus more direct bookings and fewer platform commissions.',
+      },
+      {
+        title: 'Online shops & brands',
+        who: 'E-commerce, product brands, local makers',
+        text: 'Fast stores, product video and ads that turn scrolling into orders.',
+      },
+      {
+        title: 'Startups & B2B',
+        who: 'SaaS, agencies, manufacturers, lawyers, accountants, real estate',
+        text: 'Clear websites, cold calling and a CRM pipeline that turns into sales meetings.',
+      },
+    ],
+    footerLine:
+      "Don't see your industry? Tell us what you sell and we'll tell you honestly if we can help.",
   },
   process: {
     label: 'Process',
@@ -146,7 +199,7 @@ export const en = {
           { title: 'Discovery call', duration: '1 day' },
           { title: 'Goals & KPIs', duration: '1 day' },
           { title: 'Market & competitor analysis', duration: '2 days' },
-          { title: 'Positioning & innovation plan', duration: '1 day' },
+          { title: 'Positioning & growth plan', duration: '1 day' },
           { title: 'Website & content structure', duration: '1 day' },
         ],
       },
@@ -166,7 +219,7 @@ export const en = {
         tasks: [
           { title: 'Website development', duration: '3 days' },
           { title: 'Automation & CRM setup', duration: '1 day' },
-          { title: 'Ads & outreach launch', duration: '1 day' },
+          { title: 'Ads & cold calling launch', duration: '1 day' },
           { title: 'Testing & launch', duration: '1 day' },
         ],
       },
@@ -177,7 +230,8 @@ export const en = {
   team: {
     heading: 'The people behind VDigital.',
     headingBefore: 'The people behind',
-    subheading: 'Three specialists, one direct line. You always talk to the people doing the work.',
+    subheading:
+      'Three specialists, one direct line. You always talk to the people doing the work.',
     members: [
       {
         id: 'member1',
@@ -200,18 +254,18 @@ export const en = {
       {
         id: 'member3',
         name: 'Vuk Stefanović',
-        role: 'Sales & Outreach',
-        text: 'Handles cold calling and follow-ups, turning interest into booked appointments.',
+        role: 'Sales & Cold Calling',
+        text: 'Handles cold calling and follow-up, turning interest into booked appointments and sales.',
         photo: '/images/team-vuk.jpg',
-        photoAlt: 'Vuk Stefanović, sales & cold outreach at VDigital',
+        photoAlt: 'Vuk Stefanović, sales & cold calling at VDigital',
       },
     ] as TeamMemberTranslation[],
   },
   founding: {
-    label: 'Founding clients',
-    heading: "We're taking on 3 founding clients",
-    headingItalic: 'from healthcare and coaching.',
-    text: 'VDigital is a new studio built by an experienced team. Our first clients get founding terms, our full attention and a partner who grows with them.',
+    label: 'Founding partners',
+    heading: "We're taking on 3 founding clients.",
+    headingItalic: '',
+    text: "VDigital is a new studio built by an experienced team. We're looking for 3 businesses, in any industry, to grow with. They get founding terms, our full attention and a partner who grows with them.",
     bullets: [
       'Founding terms on your first project',
       'Direct access to the whole team',
@@ -225,7 +279,7 @@ export const en = {
     headingAfter: 'with you.',
     card1: 'Fixed price: a clear price for a clearly defined scope.',
     card2: 'Revenue share: we earn a percentage of sales, only when you earn.',
-    card3: 'Hybrid: a lower fixed fee plus a percentage.',
+    card3: 'Hybrid model: a lower fixed fee plus a percentage.',
     bottomLine:
       'No long-term contracts. You stay because you see results, not because you have to. Full access to every account, analytics and sales, including our share.',
   },
@@ -234,16 +288,24 @@ export const en = {
     heading: 'Questions we hear most often',
     items: [
       {
+        q: 'Do you work with my industry?',
+        a: "Most likely yes. We work with any business that gets clients online or over the phone: clinics, coaches, local services, restaurants, online shops, startups and B2B companies. On the first call, we'll tell you honestly if we're the right fit.",
+      },
+      {
         q: 'How much does it cost?',
         a: 'It depends on the scope and the model you choose. After a free call and a short analysis, you get a precise offer with no obligation.',
       },
       {
-        q: 'How does the revenue share work?',
+        q: 'How does revenue share work?',
         a: 'You can pay a fixed price, a percentage of sales, or a combination. With the percentage model, we only earn when you do, and you see every number, including our share.',
       },
       {
+        q: 'We already have a website. Do we need a new one?',
+        a: 'Not always. We look at what you have first. If the site is working, we improve it and build the rest of the system around it.',
+      },
+      {
         q: 'Do I have to appear on camera?',
-        a: 'No. Our video creator guides you through filming step by step, and content can also be made without your face: your practice, graphics, text or animation.',
+        a: 'No. Our video creator guides you through filming step by step, and content can also be made without your face: your space, products, team, graphics or animation.',
       },
       {
         q: 'Who owns the website and the accounts?',
@@ -265,21 +327,24 @@ export const en = {
   },
   contact: {
     label: 'Contact',
-    heading: "Let's talk about your practice.",
+    heading: "Let's talk about your business.",
     text: "Book a free call. We'll look at where you are now, where your clients come from and what would bring you more of them.",
     primaryButton: 'Book a call',
     orText: 'Or reach us directly',
     form: {
       name: 'Full name',
       contact: 'Email or phone',
-      profession: 'What do you do?',
+      profession: 'Your industry',
       professionOptions: [
-        'Doctor',
-        'Health or life coach',
-        'Courses & education',
+        'Health & wellness',
+        'Coaching, courses & education',
+        'Local services',
+        'Hospitality & tourism',
+        'Online shop or brand',
+        'Startup or B2B',
         'Other',
       ],
-      message: 'Message (optional)',
+      message: "Tell us what you sell and what you'd like to improve (optional)",
       submit: 'Send inquiry',
       submitting: 'Sending...',
       success: "Thank you! We'll get back to you within 24 hours.",
@@ -287,14 +352,15 @@ export const en = {
       privacyAgreementPrefix: 'By sending, you agree to our ',
       privacyAgreementLink: 'Privacy Policy',
       privacyAgreementSuffix: '.',
-      errorRequired: 'Please enter your full name, email or phone, and select what you do.',
+      errorRequired:
+        'Please enter your full name, email or phone, and select your industry.',
       errorGeneric: 'Something went wrong. Please try again.',
     },
   },
   footer: {
-    text: 'VDigital: websites, video and marketing for doctors, health coaches and experts.',
+    text: 'VDigital: websites, video and marketing for businesses that want more clients.',
     location: 'Niš, Serbia · Working with clients worldwide',
-    copyright: '© 2026 VDigital — Niš, Serbia',
+    copyright: '© 2026 VDigital · Niš, Serbia',
     privacy: 'Privacy Policy',
     cookieSettings: 'Cookie settings',
   },
@@ -309,11 +375,11 @@ export const en = {
     h1Regular: 'Book a',
     h1Italic: 'free call.',
     intro:
-      "Tell us about your practice, where new clients should be coming from and what's holding you back. We'll talk it through and show you what a useful next step could look like.",
+      "Tell us about your business, where new clients should be coming from and what's holding you back. We'll talk it through and show you what a useful next step could look like.",
     stepsLabel: 'What happens next',
     step1: 'Send us a short message or request a call.',
     step1Booking: 'Pick a time that works for you.',
-    step2: 'We talk through your practice, your clients and your goals.',
+    step2: 'We talk through your business, your clients and your goals.',
     step3:
       'You get a concrete plan, and we decide together whether working together makes sense.',
     writeLabel: 'Prefer to write?',
@@ -408,7 +474,7 @@ export const en = {
       },
       {
         heading: '2. Personal Data We Collect',
-        body: '• Contact Form Data: When you submit an inquiry via our contact form, we collect the details you voluntarily provide: your full name, email address or phone number/messenger handle, your profession or field of work, and your message.\n• Technical & Analytics Data (Only With Prior Consent): When you first visit vdigital.dev, no non-essential cookies or third-party scripts are loaded. Only if you explicitly accept the "Analytics" or "Marketing" categories in our consent banner do we collect anonymized usage statistics (pages visited, referrer URL, browser/device type, and IP address processed by analytics providers). All fonts and images are self-hosted on vdigital.dev so no third-party font or image CDNs receive your IP address on page load.',
+        body: '• Contact Form Data: When you submit an inquiry via our contact form, we collect the details you voluntarily provide: your full name, email address or phone number/messenger handle, your industry or field of work, and your message.\n• Technical & Analytics Data (Only With Prior Consent): When you first visit vdigital.dev, no non-essential cookies or third-party scripts are loaded. Only if you explicitly accept the "Analytics" or "Marketing" categories in our consent banner do we collect anonymized usage statistics (pages visited, referrer URL, browser/device type, and IP address processed by analytics providers). All fonts and images are self-hosted on vdigital.dev so no third-party font or image CDNs receive your IP address on page load.',
       },
       {
         heading: '3. Purposes and Legal Basis for Processing',
@@ -416,7 +482,7 @@ export const en = {
       },
       {
         heading: '4. Third-Party Recipients & International Data Transfers',
-        body: 'Depending on the features you use and the consent categories you accept, data may be processed by:\n• Vercel Inc. (USA / EU Edge Network) — Website hosting and serverless API execution, protected under Standard Contractual Clauses (SCCs) and the EU-US Data Privacy Framework.\n• Vercel Web Analytics (cookieless, Vercel Inc., USA, EU-US DPF) — Anonymous, privacy-friendly website performance and traffic analytics without cookies or cross-site tracking.\n• Web3Forms (USA / EU) — Processes contact form data solely when you click "Send inquiry" to deliver your message to hello@vdigital.dev.\n• Google Ireland Limited / Google LLC (Ireland / USA) — Google Analytics 4 (gated behind "Analytics" consent; IP anonymization enabled; Google Consent Mode v2 defaults all storage to denied).\n• Yandex LLC (Russian Federation) — Yandex Metrica (strictly gated behind "Analytics" consent; zero data is sent to Russian servers unless you explicitly accept Analytics cookies pursuant to GDPR Art. 49(1)(a) / ZZPL).\n• Ahrefs Pte. Ltd. (Singapore / EU) — Cookieless web analytics (strictly gated behind "Analytics" consent).\n• Cal.com, Inc. (USA) — Interactive call booking calendar on the Contact page (gated behind consent or explicit click-to-load action).',
+        body: 'Depending on the features you use and the consent categories you accept, data may be processed by:\n• Vercel Inc. (USA / EU Edge Network) - Website hosting and serverless API execution, protected under Standard Contractual Clauses (SCCs) and the EU-US Data Privacy Framework.\n• Vercel Web Analytics (cookieless, Vercel Inc., USA, EU-US DPF) - Anonymous, privacy-friendly website performance and traffic analytics without cookies or cross-site tracking.\n• Web3Forms (USA / EU) - Processes contact form data solely when you click "Send inquiry" to deliver your message to hello@vdigital.dev.\n• Google Ireland Limited / Google LLC (Ireland / USA) - Google Analytics 4 (gated behind "Analytics" consent; IP anonymization enabled; Google Consent Mode v2 defaults all storage to denied).\n• Yandex LLC (Russian Federation) - Yandex Metrica (strictly gated behind "Analytics" consent; zero data is sent to Russian servers unless you explicitly accept Analytics cookies pursuant to GDPR Art. 49(1)(a) / ZZPL).\n• Ahrefs Pte. Ltd. (Singapore / EU) - Cookieless web analytics (strictly gated behind "Analytics" consent).\n• Cal.com, Inc. (USA) - Interactive call booking calendar on the Contact page (gated behind consent or explicit click-to-load action).',
       },
       {
         heading: '5. Data Retention',
@@ -424,7 +490,7 @@ export const en = {
       },
       {
         heading: '6. Your Rights Under GDPR & Serbian ZZPL',
-        body: 'Under the GDPR and the Serbian Law on Personal Data Protection (ZZPL), you have the right to: (a) request access to and a copy of your personal data; (b) request rectification of inaccurate data; (c) request erasure ("right to be forgotten"); (d) restrict or object to processing; (e) request data portability; and (f) withdraw your consent at any time without affecting the lawfulness of processing prior to withdrawal.\n\nTo exercise any of these rights, email hello@vdigital.dev. You also have the right to lodge a complaint with the Serbian Supervisory Authority — the Commissioner for Information of Public Importance and Personal Data Protection (Poverenik za informacije od javnog značaja i zaštitu podataka o ličnosti, Bulevar kralja Aleksandra 15, 11120 Belgrade, Serbia, www.poverenik.rs, office@poverenik.rs) — or with the data protection authority in your EU/EEA member state of residence.',
+        body: 'Under the GDPR and the Serbian Law on Personal Data Protection (ZZPL), you have the right to: (a) request access to and a copy of your personal data; (b) request rectification of inaccurate data; (c) request erasure ("right to be forgotten"); (d) restrict or object to processing; (e) request data portability; and (f) withdraw your consent at any time without affecting the lawfulness of processing prior to withdrawal.\n\nTo exercise any of these rights, email hello@vdigital.dev. You also have the right to lodge a complaint with the Serbian Supervisory Authority - the Commissioner for Information of Public Importance and Personal Data Protection (Poverenik za informacije od javnog značaja i zaštitu podataka o ličnosti, Bulevar kralja Aleksandra 15, 11120 Belgrade, Serbia, www.poverenik.rs, office@poverenik.rs) - or with the data protection authority in your EU/EEA member state of residence.',
       },
       {
         heading: '7. How to Change or Withdraw Cookie Consent',

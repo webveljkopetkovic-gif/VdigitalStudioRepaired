@@ -35,23 +35,23 @@ const HOME_META: Record<
   }
 > = {
   en: {
-    title: 'VDigital: Websites & Marketing for Doctors and Coaches',
+    title: 'VDigital | Websites, Video & Marketing for Growing Businesses',
     description:
-      'We build websites, video content and marketing for doctors and health coaches. Strategy, ads and cold calling: a full client system in 3 weeks.',
+      'We build websites, video content and marketing for businesses that want more clients. Strategy, ads, automation and cold calling, running in 3 weeks.',
     canonical: 'https://vdigital.dev/',
     ogLocale: 'en_US',
   },
   sr: {
-    title: 'VDigital: Sajtovi i marketing za doktore i koučeve',
+    title: 'VDigital | Sajtovi, video i marketing za rast biznisa',
     description:
-      'Pravimo sajtove, video sadržaj i marketing za doktore i health koučeve. Strategija, reklame i hladni pozivi: ceo sistem za nove klijente za 3 nedelje.',
+      'Pravimo sajtove, video sadržaj i marketing za firme koje žele više klijenata. Strategija, reklame, automatizacija i cold calling, sve za 3 nedelje.',
     canonical: 'https://vdigital.dev/sr',
     ogLocale: 'sr_RS',
   },
   ru: {
-    title: 'VDigital: Сайты и маркетинг для врачей и коучей',
+    title: 'VDigital | Сайты, видео и маркетинг для растущего бизнеса',
     description:
-      'Создаём сайты, видео и маркетинг для врачей и коучей. Стратегия, реклама и холодные звонки: полная система привлечения клиентов за 3 недели.',
+      'Создаём сайты, видеоконтент и маркетинг для бизнеса, которому нужно больше клиентов. Стратегия, реклама, автоматизация и cold calling за 3 недели.',
     canonical: 'https://vdigital.dev/ru',
     ogLocale: 'ru_RU',
   },
@@ -131,21 +131,21 @@ const NOT_FOUND_META: Record<
   }
 > = {
   en: {
-    title: '404 — Page Not Found | VDigital',
+    title: '404 - Page Not Found | VDigital',
     description:
       "The page you are looking for doesn't exist or has been moved. Return to the VDigital homepage.",
     canonical: 'https://vdigital.dev/',
     ogLocale: 'en_US',
   },
   sr: {
-    title: '404 — Stranica nije pronađena | VDigital',
+    title: '404 - Stranica nije pronađena | VDigital',
     description:
       'Stranica koju tražite ne postoji ili je premeštena. Vratite se na početnu stranicu VDigital studija.',
     canonical: 'https://vdigital.dev/sr',
     ogLocale: 'sr_RS',
   },
   ru: {
-    title: '404 — Страница не найдена | VDigital',
+    title: '404 - Страница не найдена | VDigital',
     description:
       'Запрашиваемая страница не существует или была перемещена. Вернитесь на главную страницу VDigital.',
     canonical: 'https://vdigital.dev/ru',

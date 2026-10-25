@@ -7,9 +7,9 @@ function buildJsonLdGraph(meta) {
   if (meta.is404) return '';
 
   const orgDescription = {
-    sr: 'VDigital je digitalni studio iz Niša koji pravi veb-sajtove, video produkciju i marketing sisteme za doktore, stomatologe i health koučeve.',
-    en: 'VDigital is a boutique digital studio from Niš, Serbia, crafting high-performance websites, video production, and client acquisition systems for doctors and health coaches.',
-    ru: 'VDigital — цифровое агентство из Ниша (Сербия), создающее высокоскоростные сайты, видеопроизводство и маркетинговые системы для врачей и коучей.',
+    sr: 'Pravimo sajtove, video sadržaj i marketing za firme koje žele više klijenata. Strategija, reklame, automatizacija i cold calling, sve za 3 nedelje.',
+    en: 'We build websites, video content and marketing for businesses that want more clients. Strategy, ads, automation and cold calling: a full client system in 3 weeks.',
+    ru: 'Создаём сайты, видеоконтент и маркетинг для бизнеса, которому нужно больше клиентов. Стратегия, реклама, автоматизация и cold calling за 3 недели.',
   };
 
   const siteUrl =
@@ -54,7 +54,7 @@ function buildJsonLdGraph(meta) {
       {
         '@type': 'Person',
         name: 'Vuk Stefanović',
-        jobTitle: 'Sales & Outreach',
+        jobTitle: 'Sales & Cold Calling',
       },
     ],
     contactPoint: {
@@ -203,7 +203,7 @@ function buildLocalizedHead(meta) {
     return `<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Google Consent Mode v2 (strictly local default — zero network requests before consent) -->
+    <!-- Google Consent Mode v2 (strictly local default - zero network requests before consent) -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -277,7 +277,7 @@ function buildLocalizedHead(meta) {
   return `<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Google Consent Mode v2 (strictly local default — zero network requests before consent) -->
+    <!-- Google Consent Mode v2 (strictly local default - zero network requests before consent) -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -289,7 +289,7 @@ function buildLocalizedHead(meta) {
         'wait_for_update': 500
       });
     </script>
-    <!-- Google tag (gtag.js) — gated behind "analytics" consent -->
+    <!-- Google tag (gtag.js) - gated behind "analytics" consent -->
     <script
       type="text/plain"
       data-category="analytics"
@@ -302,7 +302,7 @@ function buildLocalizedHead(meta) {
       gtag('js', new Date());
       gtag('config', 'G-NNXZ378TYV', { anonymize_ip: true });
     </script>
-    <!-- Ahrefs Analytics — gated behind "analytics" consent -->
+    <!-- Ahrefs Analytics - gated behind "analytics" consent -->
     <script
       type="text/plain"
       data-category="analytics"
@@ -310,7 +310,7 @@ function buildLocalizedHead(meta) {
       data-key="eb8zYfNi2/lC1GJjWzbHlw"
       async
     ></script>
-    <!-- Yandex.Metrika counter — gated behind "analytics" consent -->
+    <!-- Yandex.Metrika counter - gated behind "analytics" consent -->
     <script type="text/plain" data-category="analytics">
         (function(m,e,t,r,i,k,a){
             m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -539,10 +539,10 @@ export async function runPrerender() {
           lang: 'en',
           ogLocale: 'en_US',
           canonical: 'https://vdigital.dev/',
-          title: 'VDigital | Websites & Marketing for Doctors and Coaches',
-          titleHtml: 'VDigital | Websites & Marketing for Doctors and Coaches',
+          title: 'VDigital | Websites, Video & Marketing for Growing Businesses',
+          titleHtml: 'VDigital | Websites, Video & Marketing for Growing Businesses',
           description:
-            'We build websites, video content and marketing for doctors and health coaches. Strategy, ads and cold calling: a full client system in 3 weeks.',
+            'We build websites, video content and marketing for businesses that want more clients. Strategy, ads, automation and cold calling: a full client system in 3 weeks.',
           pageType: 'home',
           alternates: homeAlternates,
         },
@@ -554,10 +554,10 @@ export async function runPrerender() {
           lang: 'sr',
           ogLocale: 'sr_RS',
           canonical: 'https://vdigital.dev/sr',
-          title: 'VDigital | Sajtovi i marketing za doktore i koučeve',
-          titleHtml: 'VDigital | Sajtovi i marketing za doktore i koučeve',
+          title: 'VDigital | Sajtovi, video i marketing za firme koje žele da rastu',
+          titleHtml: 'VDigital | Sajtovi, video i marketing za firme koje žele da rastu',
           description:
-            'Pravimo sajtove, video sadržaj i marketing za doktore i health koučeve. Strategija, reklame i hladni pozivi: ceo sistem za nove klijente za 3 nedelje.',
+            'Pravimo sajtove, video sadržaj i marketing za firme koje žele više klijenata. Strategija, reklame, automatizacija i cold calling, sve za 3 nedelje.',
           pageType: 'home',
           alternates: homeAlternates,
         },
@@ -569,10 +569,10 @@ export async function runPrerender() {
           lang: 'ru',
           ogLocale: 'ru_RU',
           canonical: 'https://vdigital.dev/ru',
-          title: 'VDigital | Сайты и маркетинг для врачей и коучей',
-          titleHtml: 'VDigital | Сайты и маркетинг для врачей и коучей',
+          title: 'VDigital | Сайты, видео и маркетинг для растущего бизнеса',
+          titleHtml: 'VDigital | Сайты, видео и маркетинг для растущего бизнеса',
           description:
-            'Создаём сайты, видео и маркетинг для врачей и коучей. Стратегия, реклама и холодные звонки: полная система привлечения клиентов за 3 недели.',
+            'Создаём сайты, видеоконтент и маркетинг для бизнеса, которому нужно больше клиентов. Стратегия, реклама, автоматизация и cold calling за 3 недели.',
           pageType: 'home',
           alternates: homeAlternates,
         },
@@ -586,8 +586,8 @@ export async function runPrerender() {
           lang: 'en',
           ogLocale: 'en_US',
           canonical: 'https://vdigital.dev/about',
-          title: 'About Us | VDigital',
-          titleHtml: 'About Us | VDigital',
+          title: ABOUT_DATA.en.metaTitle,
+          titleHtml: ABOUT_DATA.en.metaTitle,
           description: ABOUT_DATA.en.metaDescription,
           breadcrumbTitle: 'About Us',
           pageType: 'about',
@@ -601,8 +601,8 @@ export async function runPrerender() {
           lang: 'sr',
           ogLocale: 'sr_RS',
           canonical: 'https://vdigital.dev/sr/o-nama',
-          title: 'O nama | VDigital',
-          titleHtml: 'O nama | VDigital',
+          title: ABOUT_DATA.sr.metaTitle,
+          titleHtml: ABOUT_DATA.sr.metaTitle,
           description: ABOUT_DATA.sr.metaDescription,
           breadcrumbTitle: 'O nama',
           pageType: 'about',
@@ -616,8 +616,8 @@ export async function runPrerender() {
           lang: 'ru',
           ogLocale: 'ru_RU',
           canonical: 'https://vdigital.dev/ru/o-nas',
-          title: 'О нас | VDigital',
-          titleHtml: 'О нас | VDigital',
+          title: ABOUT_DATA.ru.metaTitle,
+          titleHtml: ABOUT_DATA.ru.metaTitle,
           description: ABOUT_DATA.ru.metaDescription,
           breadcrumbTitle: 'О нас',
           pageType: 'about',
@@ -796,7 +796,7 @@ export async function runPrerender() {
           titleHtml: SERVICES_DATA.en['cold-calling'].metaTitle,
           description: SERVICES_DATA.en['cold-calling'].metaDescription,
           serviceType: SERVICES_DATA.en['cold-calling'].serviceType,
-          breadcrumbTitle: 'Cold Calling',
+          breadcrumbTitle: 'Cold Calling & Sales',
           pageType: 'service',
           faqs: SERVICES_DATA.en['cold-calling'].faqs,
           alternates: callingAlternates,
@@ -813,7 +813,7 @@ export async function runPrerender() {
           titleHtml: SERVICES_DATA.sr['cold-calling'].metaTitle,
           description: SERVICES_DATA.sr['cold-calling'].metaDescription,
           serviceType: SERVICES_DATA.sr['cold-calling'].serviceType,
-          breadcrumbTitle: 'Hladni pozivi',
+          breadcrumbTitle: 'Cold calling i prodaja',
           pageType: 'service',
           faqs: SERVICES_DATA.sr['cold-calling'].faqs,
           alternates: callingAlternates,
@@ -830,7 +830,7 @@ export async function runPrerender() {
           titleHtml: SERVICES_DATA.ru['cold-calling'].metaTitle,
           description: SERVICES_DATA.ru['cold-calling'].metaDescription,
           serviceType: SERVICES_DATA.ru['cold-calling'].serviceType,
-          breadcrumbTitle: 'Холодные звонки',
+          breadcrumbTitle: 'Cold calling и продажи',
           pageType: 'service',
           faqs: SERVICES_DATA.ru['cold-calling'].faqs,
           alternates: callingAlternates,
