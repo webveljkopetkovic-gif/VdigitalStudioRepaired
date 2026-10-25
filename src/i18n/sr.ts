@@ -455,7 +455,7 @@ export const sr: Translations = {
       },
       {
         heading: '3. Svrha i pravni osnov obrade',
-        body: '• Neophodno funkcionisanje: Čuvanje izbora o kolačićima i jeziku radi ispravnog funkcionisanja sajta.\n• Odgovor na upite: Obrada podataka iz kontakt forme radi odgovora na vašu poruku i zakazivanja konsultacija.\n• Analitika i marketing: Isključivo na osnovu vašeg prethodnog, slobodno datog pristanka.',
+        body: '• Neophodno funkcionisanje: Čuvanje izbora o kolačićima i jeziku radi ispravnog funkcionisanja sajta.\n• Odgovor na upite: Obrada podataka iz kontakt forme radi odgovora na vašu poruku i zakazivanja poziva.\n• Analitika i marketing: Isključivo na osnovu vašeg prethodnog, slobodno datog pristanka.',
       },
       {
         heading: '4. Primaoci podataka i međunarodni transfer',

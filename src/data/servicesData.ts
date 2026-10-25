@@ -201,7 +201,7 @@ export const SERVICES_DATA: Record<SupportedLocale, Record<ServiceSlug, ServiceD
         heading: 'Ready for a website that brings you clients?',
         description:
           "Book a free 30-minute call. We'll look at your current online presence and show you what we'd change.",
-        button: 'Book a free consultation',
+        button: 'Book a free call',
       },
     },
     'video-social-media': {
@@ -799,7 +799,7 @@ export const SERVICES_DATA: Record<SupportedLocale, Record<ServiceSlug, ServiceD
         heading: 'Spremni za sajt koji vam donosi klijente?',
         description:
           'Zakažite besplatan poziv od 30 minuta. Pogledaćemo vaše trenutno prisustvo na internetu i pokazati vam šta bismo promenili.',
-        button: 'Zakažite besplatne konsultacije',
+        button: 'Zakažite besplatan poziv',
       },
     },
     'video-social-media': {
@@ -1397,7 +1397,7 @@ export const SERVICES_DATA: Record<SupportedLocale, Record<ServiceSlug, ServiceD
         heading: 'Готовы к сайту, который приносит клиентов?',
         description:
           'Запишитесь на бесплатный 30-минутный звонок. Посмотрим на ваше текущее присутствие в интернете и покажем, что бы мы изменили.',
-        button: 'Записаться на бесплатную консультацию',
+        button: 'Записаться на бесплатный звонок',
       },
     },
     'video-social-media': {

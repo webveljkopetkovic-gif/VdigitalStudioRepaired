@@ -81,7 +81,7 @@ const CONTACT_META: Record<
     ogLocale: 'sr_RS',
   },
   ru: {
-    title: 'Контакты и бесплатная консультация | VDigital',
+    title: 'Контакты и бесплатный звонок | VDigital',
     description:
       'Запишитесь на бесплатный 30-минутный звонок с VDigital или напишите нам в Telegram, WhatsApp, Viber или на email. Отвечаем в течение 24 часов.',
     canonical: 'https://vdigital.dev/ru/kontakty',

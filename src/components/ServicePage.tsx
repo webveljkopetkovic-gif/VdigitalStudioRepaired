@@ -141,9 +141,14 @@ export const ServicePage: React.FC<ServicePageProps> = ({ slug }) => {
               key={idx}
               className="rounded-[20px] bg-[color:var(--vd-101311)]/85 border border-white/[0.08] p-6 sm:p-8 flex flex-col justify-between"
             >
-              <span className="font-geist text-[34px] sm:text-[42px] font-bold text-[color:var(--vd-9ce607)] tracking-tight">
-                {stat.value}
-              </span>
+              <div className="flex items-start justify-between gap-2 mb-2">
+                <span className="font-geist text-[34px] sm:text-[42px] font-bold text-[color:var(--vd-9ce607)] tracking-tight">
+                  {stat.value}
+                </span>
+                <span className="inline-flex items-center px-2 py-0.5 rounded text-[10.5px] font-mono uppercase tracking-wider text-neutral-400 bg-white/[0.04] border border-white/[0.08] shrink-0">
+                  {locale === 'sr' ? 'Primer podataka' : locale === 'ru' ? 'Пример данных' : 'Example data'}
+                </span>
+              </div>
               <span className="text-[13.5px] font-geist text-neutral-300 mt-2">
                 {stat.label}
               </span>
