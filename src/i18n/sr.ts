@@ -8,7 +8,7 @@ export const sr: Translations = {
       process: 'Proces',
       about: 'O nama',
       team: 'Tim',
-      pricing: 'Modeli saradnje',
+      pricing: 'Cenovnik',
       faq: 'FAQ',
       contact: 'Kontakt',
     },
@@ -270,11 +270,11 @@ export const sr: Translations = {
       },
       {
         q: 'Koliko ovo košta?',
-        a: 'Zavisi od obima posla i modela saradnje koji odaberete. Nakon besplatnog poziva i kratke analize dobijate preciznu ponudu, bez ikakve obaveze.',
+        a: 'Sve naše cene i paketi su jasno prikazani u cenovniku iznad. Birate samo usluge i model plaćanja koji vam odgovaraju, a cena se računa odmah.',
       },
       {
         q: 'Kako funkcioniše revenue share?',
-        a: 'Možete platiti fiksnu cenu, procenat od prodaje ili kombinaciju. Kod procentualnog modela zarađujemo samo kada i vi zarađujete, i vidite svaki broj, uključujući i naš udeo.',
+        a: 'Možete odabrati fiksno plaćanje, procenat od prodaje ili kombinaciju. Kod modela na procenat, mesečna naknada za usluge prodaje je 0 € i zarađujemo samo kada vi ostvarite prodaju, uz potpun uvid u sve brojeve.',
       },
       {
         q: 'Već imamo sajt. Da li nam treba novi?',

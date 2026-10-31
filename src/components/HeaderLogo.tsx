@@ -229,6 +229,18 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
             {t.navbar.links.process}
           </a>
 
+          {/* 2b. Cenovnik / Pricing (#pricing) */}
+          <a
+            href={isSubPage ? `${homePath}#pricing` : '#pricing'}
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('pricing');
+            }}
+            className="text-neutral-400 hover:text-white transition-colors cursor-pointer relative py-1 text-[13px] font-normal"
+          >
+            {t.navbar.links.pricing}
+          </a>
+
           {/* 3. O nama (about page) */}
           <a
             href={aboutPath}
@@ -376,6 +388,17 @@ export const HeaderLogo: React.FC<HeaderNavbarProps> = ({ onBookCall }) => {
               className="text-neutral-300 hover:text-white py-1"
             >
               {t.navbar.links.process}
+            </a>
+
+            <a
+              href={isSubPage ? `${homePath}#pricing` : '#pricing'}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('pricing');
+              }}
+              className="text-neutral-300 hover:text-white py-1"
+            >
+              {t.navbar.links.pricing}
             </a>
 
             <a

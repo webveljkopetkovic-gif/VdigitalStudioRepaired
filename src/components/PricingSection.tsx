@@ -1,0 +1,708 @@
+import { useMemo, useState } from "react";
+
+/* ============================================================
+   VDigital – Cenovnik (interaktivni izbor usluga)
+   Sve cene i procenti se menjaju OVDE, na jednom mestu.
+   Boje: dole u CSS-u, promenljive --vdp-* (usklađene sa vdigital.dev)
+   ============================================================ */
+
+export const PRICING_CONFIG = {
+  contactEmail: "hello@vdigital.dev",
+  contactAnchor: "#contact",
+  percentRate: 15, // "Procenat": 0 € mesečno za usluge prodaje + % od prodaje
+  hybridRate: 8, // "Kombinacija": % od prodaje + umanjena mesečna cena
+  hybridDiscount: 0.5, // "Kombinacija": mesečne usluge prodaje -50%
+};
+
+type Lang = "sr" | "en" | "ru";
+type Model = "fixed" | "percent" | "hybrid";
+type Group = "site" | "monthly" | "extra";
+
+type Item = {
+  id: string;
+  group: Group;
+  oldPrice: number; // precrtana cena
+  price: number; // prava cena
+  from?: boolean; // prikazuje "od"
+  salesDriven?: boolean; // na ovu uslugu se primenjuje procenat od prodaje
+  adBudgetNote?: boolean;
+};
+
+export const PRICING_ITEMS: Item[] = [
+  // Sajt (jednokratno, bira se jedna opcija)
+  { id: "landing", group: "site", oldPrice: 690, price: 390 },
+  { id: "business", group: "site", oldPrice: 1290, price: 790 },
+  { id: "webapp", group: "site", oldPrice: 2490, price: 1490, from: true },
+  // Mesečne usluge
+  { id: "video", group: "monthly", oldPrice: 450, price: 250, salesDriven: true },
+  { id: "metaAds", group: "monthly", oldPrice: 350, price: 200, salesDriven: true, adBudgetNote: true },
+  { id: "coldCalling", group: "monthly", oldPrice: 490, price: 290, salesDriven: true },
+  { id: "care", group: "monthly", oldPrice: 89, price: 49 },
+  // Dodatno (jednokratno)
+  { id: "automation", group: "extra", oldPrice: 590, price: 350, from: true },
+  { id: "securityAudit", group: "extra", oldPrice: 290, price: 150 },
+];
+
+const DEFAULT_SITE = "business";
+const DEFAULT_SELECTED = ["video", "metaAds"];
+
+const LOCALE: Record<Lang, string> = { sr: "sr-RS", en: "en-IE", ru: "ru-RU" };
+
+type Copy = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  models: Record<Model, { name: string; desc: string }>;
+  site: { title: string; desc: string; label: string; none: string };
+  growth: { title: string; desc: string; label: string; popular: string };
+  extras: string;
+  items: Record<string, { name: string; desc: string }>;
+  from: string;
+  perMonth: string;
+  oneTime: string;
+  plusPercent: (p: number) => string;
+  launchBadge: string;
+  regular: string;
+  total: string;
+  oneTimeTotal: string;
+  monthlyTotal: string;
+  youSave: string;
+  empty: string;
+  adBudget: string;
+  percentNote: string;
+  noContracts: string;
+  cta: string;
+  security: { title: string; text: string };
+  help: { title: string; text: string; cta: string };
+  mail: { subject: string; intro: string; model: string };
+};
+
+const COPY: Record<Lang, Copy> = {
+  sr: {
+    eyebrow: "Cenovnik",
+    title: "Cene za svaki korak rasta",
+    subtitle: "Izaberite samo ono što vam treba i način plaćanja koji vam odgovara. Cena se računa odmah.",
+    models: {
+      fixed: { name: "Fiksno", desc: "Jasna cena za jasno dogovoren posao." },
+      percent: {
+        name: "Procenat",
+        desc: `0 € mesečno za usluge prodaje. Uzimamo ${PRICING_CONFIG.percentRate}% od prodaje koju donesemo.`,
+      },
+      hybrid: { name: "Kombinacija", desc: `Upola niža mesečna cena + ${PRICING_CONFIG.hybridRate}% od prodaje.` },
+    },
+    site: { title: "Sajt", desc: "Jednokratno, sajt ostaje vaš", label: "Izaberite jednu opciju:", none: "bez sajta" },
+    growth: { title: "Rast", desc: "Mesečno, bez dugoročnog ugovora", label: "Čekirajte šta vam treba:", popular: "Najtraženije" },
+    extras: "Dodaci (jednokratno)",
+    items: {
+      landing: { name: "Landing stranica", desc: "1 stranica, mobilni, SEO, forma" },
+      business: { name: "Poslovni sajt", desc: "Do 6 stranica, SEO, analitika, zakazivanje" },
+      webapp: { name: "Web aplikacija / prodaja", desc: "Plaćanje, nalozi, baza, automatizacije" },
+      video: { name: "Video i društvene mreže", desc: "8 videa + 8 postova mesečno" },
+      metaAds: { name: "Meta Ads oglašavanje", desc: "Kampanje na Facebooku i Instagramu" },
+      coldCalling: { name: "Cold calling", desc: "Pozivi i zakazani sastanci za vas" },
+      care: { name: "Održavanje i zaštita sajta", desc: "Hosting, ažuriranja, sigurnosni nadzor" },
+      automation: { name: "Automatizacija", desc: "Chatbot, CRM, automatski mejlovi" },
+      securityAudit: { name: "Sigurnosni pregled sajta", desc: "Radi naš partner za sajber bezbednost" },
+    },
+    from: "od",
+    perMonth: "/mes",
+    oneTime: "jednokratno",
+    plusPercent: (p) => `+ ${p}% od prodaje`,
+    launchBadge: "Cena za prve klijente",
+    regular: "Redovna cena",
+    total: "Vaš izbor",
+    oneTimeTotal: "jednokratno",
+    monthlyTotal: "mesečno",
+    youSave: "Ušteda",
+    empty: "Izaberite bar jednu uslugu.",
+    adBudget: "Budžet za same oglase plaćate direktno Meti.",
+    percentNote: "Procenat se računa samo na prodaju koja se može pratiti.",
+    noContracts: "Bez dugoročnih ugovora. Pun pristup nalozima ostaje vama.",
+    cta: "Pošalji izbor",
+    security: {
+      title: "Vaši podaci su zaštićeni",
+      text: "Sarađujemo sa stručnjakom za sajber bezbednost. Podaci se čuvaju zaštićeni na cloud serveru.",
+    },
+    help: {
+      title: "Niste sigurni šta vam treba?",
+      text: "Zakažite besplatan poziv od 20 minuta i zajedno ćemo složiti plan.",
+      cta: "Zakaži besplatan poziv",
+    },
+    mail: { subject: "Upit sa sajta: izbor usluga", intro: "Zdravo, zanima me sledeće:", model: "Model plaćanja" },
+  },
+  en: {
+    eyebrow: "Pricing",
+    title: "Built for growth at every stage",
+    subtitle: "Pick only what you need and the payment model that suits you. The price updates instantly.",
+    models: {
+      fixed: { name: "Fixed", desc: "A clear price for a clearly defined scope." },
+      percent: {
+        name: "Revenue share",
+        desc: `€0 per month for sales services. We take ${PRICING_CONFIG.percentRate}% of the sales we bring in.`,
+      },
+      hybrid: { name: "Hybrid", desc: `Half the monthly price + ${PRICING_CONFIG.hybridRate}% of sales.` },
+    },
+    site: { title: "Website", desc: "One-time, the site stays yours", label: "Pick one option:", none: "no website" },
+    growth: { title: "Growth", desc: "Monthly, no long-term contract", label: "Tick what you need:", popular: "Most popular" },
+    extras: "Add-ons (one-time)",
+    items: {
+      landing: { name: "Landing page", desc: "1 page, mobile-first, SEO, form" },
+      business: { name: "Business website", desc: "Up to 6 pages, SEO, analytics, booking" },
+      webapp: { name: "Web app / online store", desc: "Payments, accounts, database, automations" },
+      video: { name: "Video & social media", desc: "8 videos + 8 posts per month" },
+      metaAds: { name: "Meta Ads management", desc: "Facebook and Instagram campaigns" },
+      coldCalling: { name: "Cold calling", desc: "Calls and booked meetings for you" },
+      care: { name: "Website care & security", desc: "Hosting, updates, security monitoring" },
+      automation: { name: "Automation", desc: "Chatbot, CRM, automated emails" },
+      securityAudit: { name: "Website security audit", desc: "Done by our cybersecurity partner" },
+    },
+    from: "from",
+    perMonth: "/mo",
+    oneTime: "one-time",
+    plusPercent: (p) => `+ ${p}% of sales`,
+    launchBadge: "Early client price",
+    regular: "Regular price",
+    total: "Your selection",
+    oneTimeTotal: "one-time",
+    monthlyTotal: "monthly",
+    youSave: "You save",
+    empty: "Pick at least one service.",
+    adBudget: "The ad budget itself is paid directly to Meta.",
+    percentNote: "The percentage applies only to trackable sales.",
+    noContracts: "No long-term contracts. You keep full access to your accounts.",
+    cta: "Send my selection",
+    security: {
+      title: "Your data is protected",
+      text: "We work with a cybersecurity specialist. Data is stored protected on a cloud server.",
+    },
+    help: {
+      title: "Not sure what you need?",
+      text: "Book a free 20-minute call and we'll put the plan together with you.",
+      cta: "Book a free call",
+    },
+    mail: { subject: "Website inquiry: selected services", intro: "Hi, I'm interested in the following:", model: "Payment model" },
+  },
+  ru: {
+    eyebrow: "Цены",
+    title: "Цены на каждом этапе роста",
+    subtitle: "Выберите только то, что нужно, и удобную модель оплаты. Цена считается сразу.",
+    models: {
+      fixed: { name: "Фиксированно", desc: "Понятная цена за чётко оговорённый объём работы." },
+      percent: {
+        name: "Процент",
+        desc: `0 € в месяц за услуги продаж. Мы берём ${PRICING_CONFIG.percentRate}% от продаж, которые приводим.`,
+      },
+      hybrid: { name: "Комбинация", desc: `Месячная цена в два раза ниже + ${PRICING_CONFIG.hybridRate}% от продаж.` },
+    },
+    site: { title: "Сайт", desc: "Разово, сайт остаётся вашим", label: "Выберите один вариант:", none: "без сайта" },
+    growth: { title: "Рост", desc: "Ежемесячно, без долгосрочного договора", label: "Отметьте, что нужно:", popular: "Популярное" },
+    extras: "Дополнительно (разово)",
+    items: {
+      landing: { name: "Лендинг", desc: "1 страница, мобильная версия, SEO, форма" },
+      business: { name: "Сайт для бизнеса", desc: "До 6 страниц, SEO, аналитика, онлайн-запись" },
+      webapp: { name: "Веб-приложение / магазин", desc: "Оплата, кабинеты, база данных, автоматизации" },
+      video: { name: "Видео и соцсети", desc: "8 видео + 8 постов в месяц" },
+      metaAds: { name: "Реклама Meta Ads", desc: "Кампании в Facebook и Instagram" },
+      coldCalling: { name: "Холодные звонки", desc: "Звонки и назначенные встречи для вас" },
+      care: { name: "Поддержка и защита сайта", desc: "Хостинг, обновления, мониторинг безопасности" },
+      automation: { name: "Автоматизация", desc: "Чат-бот, CRM, автоматические письма" },
+      securityAudit: { name: "Проверка безопасности сайта", desc: "Проводит наш партнёр по кибербезопасности" },
+    },
+    from: "от",
+    perMonth: "/мес",
+    oneTime: "разово",
+    plusPercent: (p) => `+ ${p}% от продаж`,
+    launchBadge: "Цена для первых клиентов",
+    regular: "Обычная цена",
+    total: "Ваш выбор",
+    oneTimeTotal: "разово",
+    monthlyTotal: "в месяц",
+    youSave: "Экономия",
+    empty: "Выберите хотя бы одну услугу.",
+    adBudget: "Рекламный бюджет оплачивается напрямую Meta.",
+    percentNote: "Процент считается только с продаж, которые можно отследить.",
+    noContracts: "Без долгосрочных договоров. Полный доступ к аккаунтам остаётся у вас.",
+    cta: "Отправить выбор",
+    security: {
+      title: "Ваши данные защищены",
+      text: "Мы работаем со специалистом по кибербезопасности. Данные хранятся на защищённом облачном сервере.",
+    },
+    help: {
+      title: "Не уверены, что вам нужно?",
+      text: "Запишитесь на бесплатный 20-минутный звонок, и мы вместе составим план.",
+      cta: "Записаться на звонок",
+    },
+    mail: { subject: "Заявка с сайта: выбранные услуги", intro: "Здравствуйте, меня интересует:", model: "Модель оплаты" },
+  },
+};
+
+type Props = {
+  lang?: Lang;
+  /** Ako postoji, poziva se umesto otvaranja mejla (npr. da popuni kontakt formu). */
+  onRequest?: (summary: string) => void;
+};
+
+export default function PricingSection({ lang = "sr", onRequest }: Props) {
+  const t = COPY[lang];
+  const [model, setModel] = useState<Model>("fixed");
+  const [site, setSite] = useState<string | null>(DEFAULT_SITE);
+  const [selected, setSelected] = useState<Set<string>>(new Set(DEFAULT_SELECTED));
+
+  const fmt = useMemo(
+    () => new Intl.NumberFormat(LOCALE[lang], { style: "currency", currency: "EUR", maximumFractionDigits: 0 }),
+    [lang]
+  );
+  const fmtBig = useMemo(
+    () => new Intl.NumberFormat(LOCALE[lang], { style: "currency", currency: "EUR", minimumFractionDigits: 2 }),
+    [lang]
+  );
+
+  const rate = model === "percent" ? PRICING_CONFIG.percentRate : model === "hybrid" ? PRICING_CONFIG.hybridRate : 0;
+
+  const priceOf = (item: Item) => {
+    if (item.group !== "monthly" || !item.salesDriven || model === "fixed") return item.price;
+    if (model === "percent") return 0;
+    return Math.round(item.price * (1 - PRICING_CONFIG.hybridDiscount));
+  };
+
+  const isOn = (item: Item) => (item.group === "site" ? site === item.id : selected.has(item.id));
+
+  const toggle = (item: Item) => {
+    if (item.group === "site") return setSite((cur) => (cur === item.id ? null : item.id));
+    setSelected((cur) => {
+      const next = new Set(cur);
+      next.has(item.id) ? next.delete(item.id) : next.add(item.id);
+      return next;
+    });
+  };
+
+  const byGroup = (g: Group) => PRICING_ITEMS.filter((i) => i.group === g);
+  const chosen = PRICING_ITEMS.filter(isOn);
+  const siteItem = PRICING_ITEMS.find((i) => i.id === site) || null;
+  const oneTimeItems = chosen.filter((i) => i.group !== "monthly");
+  const monthlyItems = chosen.filter((i) => i.group === "monthly");
+
+  const sum = (arr: Item[], f: (i: Item) => number) => arr.reduce((s, i) => s + f(i), 0);
+  const oneTime = sum(oneTimeItems, priceOf);
+  const oneTimeOld = sum(oneTimeItems, (i) => i.oldPrice);
+  const monthly = sum(monthlyItems, priceOf);
+  const monthlyOld = sum(monthlyItems, (i) => i.oldPrice);
+  const showPercent = rate > 0 && monthlyItems.some((i) => i.salesDriven);
+  const oneTimeFrom = oneTimeItems.some((i) => i.from);
+  const hasAdBudget = monthlyItems.some((i) => i.adBudgetNote);
+  const saved = oneTimeOld - oneTime + (monthlyOld - monthly);
+
+  /* "790" krupno, ",00 €" sitno i bledo, kao na referenci */
+  const bigPrice = (value: number, suffix?: string) => {
+    const parts = fmtBig.formatToParts(value);
+    const dec = parts.findIndex((p) => p.type === "decimal");
+    const head = parts.slice(0, dec).map((p) => p.value).join("");
+    const tail = parts.slice(dec).map((p) => p.value).join("");
+    return (
+      <span className="vdp-big">
+        <span className="vdp-big-num">{head}</span>
+        <span className="vdp-big-dec">{tail}</span>
+        {suffix && <span className="vdp-big-suf">{suffix}</span>}
+      </span>
+    );
+  };
+
+  const rowPrice = (item: Item) => {
+    const p = priceOf(item);
+    const pre = item.from ? t.from + " " : "";
+    return (
+      <span className="vdp-row-price">
+        <s aria-label={t.regular}>
+          {pre}
+          {fmt.format(item.oldPrice)}
+        </s>
+        <b>
+          {pre}
+          {fmt.format(p)}
+          {item.group === "monthly" && <small>{t.perMonth}</small>}
+        </b>
+        {item.group === "monthly" && item.salesDriven && rate > 0 && <em>{t.plusPercent(rate)}</em>}
+      </span>
+    );
+  };
+
+  const renderRow = (item: Item, radio?: boolean) => {
+    const on = isOn(item);
+    return (
+      <label key={item.id} className={`vdp-row ${on ? "is-on" : ""}`}>
+        <input
+          type="checkbox"
+          checked={on}
+          onChange={() => toggle(item)}
+          aria-describedby={`vdp-d-${item.id}`}
+        />
+        <span className={`vdp-tick ${radio ? "is-radio" : ""}`} aria-hidden="true">
+          <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2.4">
+            <path d="M3.5 8.5l3 3 6-7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+        <span className="vdp-row-text">
+          <span className="vdp-row-name">{t.items[item.id].name}</span>
+          <span className="vdp-row-desc" id={`vdp-d-${item.id}`}>
+            {t.items[item.id].desc}
+          </span>
+        </span>
+        {rowPrice(item)}
+      </label>
+    );
+  };
+
+  const buildSummary = () => {
+    const lines = chosen.map((i) => {
+      const pre = i.from ? t.from + " " : "";
+      const suf = i.group === "monthly" ? t.perMonth : ` (${t.oneTime})`;
+      const pct = i.group === "monthly" && i.salesDriven && rate > 0 ? ` ${t.plusPercent(rate)}` : "";
+      return `- ${t.items[i.id].name}: ${pre}${fmt.format(priceOf(i))}${suf}${pct}`;
+    });
+    const totals = [
+      oneTimeItems.length ? `${oneTimeFrom ? t.from + " " : ""}${fmt.format(oneTime)} ${t.oneTimeTotal}` : "",
+      monthlyItems.length ? `${fmt.format(monthly)} ${t.monthlyTotal}${showPercent ? " " + t.plusPercent(rate) : ""}` : "",
+    ].filter(Boolean);
+    return [t.mail.intro, "", ...lines, "", `${t.mail.model}: ${t.models[model].name}`, ...totals].join("\n");
+  };
+
+  const send = () => {
+    const summary = buildSummary();
+    if (onRequest) return onRequest(summary);
+    window.location.href = `mailto:${PRICING_CONFIG.contactEmail}?subject=${encodeURIComponent(
+      t.mail.subject
+    )}&body=${encodeURIComponent(summary)}`;
+  };
+
+  return (
+    <section id="pricing" className="vdp" aria-labelledby="vdp-title">
+      <style>{CSS}</style>
+      <div className="vdp-wrap">
+        {/* Naslov */}
+        <header className="vdp-head">
+          <span className="vdp-eyebrow">
+            <i aria-hidden="true" />
+            {t.eyebrow}
+          </span>
+          <h2 id="vdp-title">{t.title}</h2>
+          <p>{t.subtitle}</p>
+        </header>
+
+        {/* Model plaćanja */}
+        <div className="vdp-models" role="radiogroup" aria-label={t.mail.model}>
+          {(["fixed", "percent", "hybrid"] as Model[]).map((m) => (
+            <button
+              key={m}
+              type="button"
+              role="radio"
+              aria-checked={model === m}
+              className={model === m ? "is-on" : ""}
+              onClick={() => setModel(m)}
+            >
+              {t.models[m].name}
+            </button>
+          ))}
+        </div>
+        <p className="vdp-model-desc">{t.models[model].desc}</p>
+
+        {/* Kartice */}
+        <div className="vdp-shell">
+          <div className="vdp-cards">
+            {/* SAJT */}
+            <article className="vdp-card">
+              <div className="vdp-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <h3>{t.site.title}</h3>
+              <p className="vdp-card-desc">{t.site.desc}</p>
+
+              <div className="vdp-price-block">
+                {siteItem ? (
+                  <>
+                    <span className="vdp-old">
+                      <s>{fmt.format(siteItem.oldPrice)}</s>
+                      <span className="vdp-pill">{t.launchBadge}</span>
+                    </span>
+                    <span className="vdp-price-line">
+                      {siteItem.from && <span className="vdp-from">{t.from}</span>}
+                      {bigPrice(siteItem.price)}
+                    </span>
+                  </>
+                ) : (
+                  <span className="vdp-price-line">
+                    {bigPrice(0)}
+                    <span className="vdp-big-suf">{t.site.none}</span>
+                  </span>
+                )}
+              </div>
+
+              <hr />
+              <p className="vdp-list-label">{t.site.label}</p>
+              <div className="vdp-rows">
+                {byGroup("site").map((i) => (
+                  renderRow(i, true)
+                ))}
+              </div>
+            </article>
+
+            {/* RAST */}
+            <article className="vdp-card is-featured">
+              <span className="vdp-popular">
+                <svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true">
+                  <path d="M8 1l1.9 4.3 4.6.4-3.5 3 1.1 4.6L8 10.9l-4.1 2.4 1.1-4.6-3.5-3 4.6-.4z" />
+                </svg>
+                {t.growth.popular}
+              </span>
+              <div className="vdp-icon is-glow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 17l5-5 4 4 7-8M15 8h5v5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <h3>{t.growth.title}</h3>
+              <p className="vdp-card-desc">{t.growth.desc}</p>
+
+              <div className="vdp-price-block">
+                <span className="vdp-old">
+                  {monthlyItems.length > 0 && <s>{fmt.format(monthlyOld)}</s>}
+                  <span className="vdp-pill">{t.launchBadge}</span>
+                </span>
+                <span className="vdp-price-line">
+                  {bigPrice(monthly, t.perMonth)}
+                </span>
+                {showPercent && <span className="vdp-pct">{t.plusPercent(rate)}</span>}
+              </div>
+
+              <hr />
+              <p className="vdp-list-label">{t.growth.label}</p>
+              <div className="vdp-rows">
+                {byGroup("monthly").map((i) => (
+                  renderRow(i)
+                ))}
+              </div>
+            </article>
+          </div>
+
+          {/* Dodaci */}
+          <div className="vdp-extras">
+            <p className="vdp-list-label">{t.extras}</p>
+            <div className="vdp-extras-grid">
+              {byGroup("extra").map((i) => (
+                renderRow(i)
+              ))}
+            </div>
+          </div>
+
+          {/* Ukupno */}
+          <div className="vdp-total" aria-live="polite">
+            <div className="vdp-total-info">
+              <span className="vdp-list-label">{t.total}</span>
+              {chosen.length === 0 ? (
+                <span className="vdp-total-main">{t.empty}</span>
+              ) : (
+                <span className="vdp-total-main">
+                  {oneTimeItems.length > 0 && (
+                    <span>
+                      <b>
+                        {oneTimeFrom ? t.from + " " : ""}
+                        {fmt.format(oneTime)}
+                      </b>{" "}
+                      {t.oneTimeTotal}
+                    </span>
+                  )}
+                  {oneTimeItems.length > 0 && monthlyItems.length > 0 && <span className="vdp-dot">+</span>}
+                  {monthlyItems.length > 0 && (
+                    <span>
+                      <b>{fmt.format(monthly)}</b> {t.monthlyTotal}
+                      {showPercent && <em> {t.plusPercent(rate)}</em>}
+                    </span>
+                  )}
+                </span>
+              )}
+              {saved > 0 && (
+                <span className="vdp-save">
+                  {t.youSave}: {fmt.format(saved)}
+                </span>
+              )}
+            </div>
+            <button type="button" className="vdp-btn" onClick={send} disabled={chosen.length === 0}>
+              {t.cta}
+              <span className="vdp-btn-arrow" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+            </button>
+          </div>
+
+          <div className="vdp-notes">
+            {hasAdBudget && <span>{t.adBudget}</span>}
+            {showPercent && <span>{t.percentNote}</span>}
+            <span>{t.noContracts}</span>
+          </div>
+        </div>
+
+        {/* Bezbednost */}
+        <div className="vdp-security">
+          <span className="vdp-icon is-glow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 3l7 3v6c0 4.5-3 7.9-7 9-4-1.1-7-4.5-7-9V6l7-3z" />
+              <path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+          <span>
+            <b>{t.security.title}</b>
+            <span>{t.security.text}</span>
+          </span>
+        </div>
+
+        {/* Niste sigurni */}
+        <div className="vdp-help">
+          <div className="vdp-blob b1" />
+          <div className="vdp-blob b2" />
+          <div className="vdp-blob b3" />
+          <div className="vdp-help-inner">
+            <div className="vdp-avatars" aria-hidden="true">
+              <span>V</span>
+              <span className="vdp-phone">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2" />
+                </svg>
+              </span>
+            </div>
+            <h3>{t.help.title}</h3>
+            <p>{t.help.text}</p>
+            <a className="vdp-btn" href={PRICING_CONFIG.contactAnchor}>
+              {t.help.cta}
+              <span className="vdp-btn-arrow" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* Boje usklađene sa vdigital.dev (#F6FBF9 pozadina, #12312E tekst, #287A74 / #55A9A0 teal, mint gradijent) */
+const CSS = `
+.vdp{--vdp-bg:#F6FBF9;--vdp-ink:#12312E;--vdp-ink-2:#34524E;--vdp-muted:rgba(18,49,46,.58);--vdp-line:rgba(18,49,46,.09);
+--vdp-primary:#287A74;--vdp-accent:#55A9A0;--vdp-mint:#BDEEDB;--vdp-mint-2:#DCF6EB;--vdp-strike:#FB923C;--vdp-yellow:#FACC15;
+background:var(--vdp-bg);color:var(--vdp-ink);padding:110px 20px;font:inherit;-webkit-font-smoothing:antialiased}
+.vdp *{box-sizing:border-box}
+.vdp-wrap{max-width:1040px;margin:0 auto}
+.vdp-head{text-align:center;max-width:720px;margin:0 auto}
+.vdp-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:.75rem;font-weight:500;padding:5px 12px;border-radius:999px;background:#fff;border:1px solid var(--vdp-line);color:var(--vdp-ink-2);box-shadow:0 1px 2px rgba(18,49,46,.05)}
+.vdp-eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--vdp-primary)}
+.vdp-head h2{font-size:clamp(2.1rem,5vw,3.6rem);line-height:1.05;letter-spacing:-.035em;font-weight:500;margin:18px 0 14px}
+.vdp-head p{color:var(--vdp-muted);font-size:1rem;line-height:1.6;margin:0}
+
+.vdp-models{display:flex;width:max-content;max-width:100%;margin:36px auto 10px;padding:4px;border-radius:999px;background:rgba(18,49,46,.06);gap:2px}
+.vdp-models button{border:0;background:transparent;font:inherit;font-size:.8rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--vdp-muted);padding:9px 16px;border-radius:999px;cursor:pointer;transition:all .2s}
+.vdp-models button.is-on{background:#fff;color:var(--vdp-ink);box-shadow:0 1px 3px rgba(18,49,46,.12)}
+.vdp-models button:focus-visible{outline:2px solid var(--vdp-primary);outline-offset:2px}
+.vdp-model-desc{text-align:center;font-size:.85rem;color:var(--vdp-muted);margin:0 0 28px;min-height:1.3em}
+
+.vdp-shell{background:rgba(18,49,46,.045);border-radius:36px;padding:14px}
+.vdp-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.vdp-card{position:relative;background:rgba(255,255,255,.55);border-radius:26px;padding:28px}
+.vdp-card.is-featured{background:#fff;box-shadow:0 1px 2px rgba(18,49,46,.04),0 12px 32px -12px rgba(18,49,46,.16)}
+.vdp-popular{position:absolute;top:22px;right:22px;display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:600;padding:5px 10px;border-radius:999px;border:1px solid var(--vdp-line);background:#fff;color:var(--vdp-ink-2)}
+.vdp-popular svg{color:var(--vdp-yellow)}
+.vdp-icon{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--vdp-ink);color:#fff;flex:none}
+.vdp-icon.is-glow{background:radial-gradient(circle at 35% 30%,#fff 0%,var(--vdp-mint) 45%,var(--vdp-accent) 100%);color:var(--vdp-ink);box-shadow:0 0 0 4px rgba(189,238,219,.45),0 6px 18px rgba(85,169,160,.45)}
+.vdp-card h3{font-size:1.35rem;font-weight:600;letter-spacing:-.02em;margin:18px 0 4px}
+.vdp-card-desc{margin:0;color:var(--vdp-muted);font-size:.9rem}
+
+.vdp-price-block{margin:22px 0 20px;display:flex;flex-direction:column;gap:4px;min-height:96px;justify-content:flex-end}
+.vdp-old{display:flex;align-items:center;gap:8px;min-height:22px}
+.vdp-old s{color:var(--vdp-muted);font-size:.95rem;text-decoration-color:var(--vdp-strike);text-decoration-thickness:2px}
+.vdp-pill{font-size:.68rem;font-weight:600;padding:3px 8px;border-radius:999px;background:var(--vdp-mint-2);color:var(--vdp-primary)}
+.vdp-price-line{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.vdp-from{font-size:1rem;color:var(--vdp-muted);font-weight:500}
+.vdp-big{display:inline-flex;align-items:baseline;white-space:nowrap}
+.vdp-big-num{font-size:clamp(2.6rem,5vw,3.4rem);font-weight:600;letter-spacing:-.04em;line-height:1}
+.vdp-big-dec{font-size:clamp(2.6rem,5vw,3.4rem);font-weight:600;letter-spacing:-.04em;line-height:1;color:rgba(18,49,46,.22)}
+.vdp-big-suf{font-size:.9rem;color:var(--vdp-muted);margin-left:6px;font-weight:500}
+.vdp-pct{font-size:.9rem;font-weight:600;color:var(--vdp-primary)}
+
+.vdp-card hr{border:0;border-top:1px solid var(--vdp-line);margin:0 0 18px}
+.vdp-list-label{font-size:.78rem;font-weight:600;color:var(--vdp-ink);margin:0 0 10px}
+.vdp-rows{display:grid;gap:6px}
+
+.vdp-row{position:relative;display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 12px;border-radius:14px;border:1px solid transparent;cursor:pointer;transition:background .2s,border-color .2s}
+.vdp-row:hover{background:rgba(18,49,46,.035)}
+.vdp-row.is-on{background:rgba(189,238,219,.35);border-color:rgba(85,169,160,.35)}
+.vdp-row input{position:absolute;opacity:0;pointer-events:none}
+.vdp-row:focus-within{outline:2px solid var(--vdp-primary);outline-offset:1px}
+.vdp-tick{width:20px;height:20px;border-radius:6px;border:1.5px solid rgba(18,49,46,.25);display:grid;place-items:center;color:transparent;background:#fff;transition:all .2s}
+.vdp-tick.is-radio{border-radius:50%}
+.vdp-row.is-on .vdp-tick{background:var(--vdp-primary);border-color:var(--vdp-primary);color:#fff}
+.vdp-row-text{display:flex;flex-direction:column;gap:2px;min-width:0}
+.vdp-row-name{font-size:.9rem;font-weight:600;line-height:1.3}
+.vdp-row-desc{font-size:.78rem;color:var(--vdp-muted);line-height:1.35}
+.vdp-row-price{display:flex;flex-direction:column;align-items:flex-end;white-space:nowrap;line-height:1.25}
+.vdp-row-price s{font-size:.72rem;color:var(--vdp-muted);text-decoration-color:var(--vdp-strike);text-decoration-thickness:1.5px}
+.vdp-row-price b{font-size:.95rem;font-weight:650}
+.vdp-row-price small{font-size:.7rem;font-weight:500;color:var(--vdp-muted);margin-left:2px}
+.vdp-row-price em{font-style:normal;font-size:.7rem;font-weight:600;color:var(--vdp-primary)}
+
+.vdp-extras{padding:22px 14px 6px}
+.vdp-extras-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+.vdp-extras .vdp-row{background:rgba(255,255,255,.55)}
+.vdp-extras .vdp-row.is-on{background:rgba(189,238,219,.35)}
+
+.vdp-total{margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:20px;background:#fff;border-radius:22px;padding:16px 16px 16px 24px;box-shadow:0 1px 2px rgba(18,49,46,.04)}
+.vdp-total-info{display:flex;flex-direction:column;gap:2px;min-width:0}
+.vdp-total-info .vdp-list-label{margin:0;color:var(--vdp-muted);font-weight:500}
+.vdp-total-main{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;font-size:1rem;color:var(--vdp-ink-2)}
+.vdp-total-main b{font-size:1.35rem;font-weight:650;color:var(--vdp-ink);letter-spacing:-.02em}
+.vdp-total-main em{font-style:normal;font-weight:600;color:var(--vdp-primary);font-size:.9rem}
+.vdp-dot{color:var(--vdp-muted)}
+.vdp-save{font-size:.78rem;font-weight:600;color:var(--vdp-primary)}
+
+.vdp-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:999px;background:var(--vdp-ink);color:#fff;font:inherit;font-size:.92rem;font-weight:600;padding:8px 8px 8px 22px;min-height:48px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:transform .15s,background .2s}
+.vdp-btn:hover{background:var(--vdp-primary)}
+.vdp-btn:active{transform:translateY(1px)}
+.vdp-btn:disabled{opacity:.4;cursor:not-allowed}
+.vdp-btn:focus-visible{outline:2px solid var(--vdp-primary);outline-offset:3px}
+.vdp-btn-arrow{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center}
+
+.vdp-notes{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 18px;padding:14px 10px 6px;font-size:.75rem;color:var(--vdp-muted);text-align:center}
+
+.vdp-security{display:flex;align-items:center;gap:14px;max-width:640px;margin:22px auto 0;padding:12px 18px 12px 12px;border-radius:999px;background:#fff;border:1px solid var(--vdp-line)}
+.vdp-security>span:last-child{display:flex;flex-direction:column;font-size:.82rem;color:var(--vdp-muted);line-height:1.4}
+.vdp-security b{color:var(--vdp-ink);font-size:.9rem}
+
+.vdp-help{position:relative;overflow:hidden;margin-top:22px;border-radius:36px;padding:56px 24px;text-align:center;background:linear-gradient(180deg,#F1FBF7 0%,#DCF6EB 25%,#BDEEDB 55%,#9ADCC9 80%,#7CC8B9 100%);isolation:isolate}
+.vdp-blob{position:absolute;border-radius:50%;filter:blur(50px);opacity:.75;z-index:-1}
+.vdp-blob.b1{width:320px;height:220px;left:-60px;top:-40px;background:#fff}
+.vdp-blob.b2{width:300px;height:240px;right:-60px;top:10px;background:#55A9A0;opacity:.55}
+.vdp-blob.b3{width:260px;height:160px;left:30%;bottom:-90px;background:#FDE68A;opacity:.5}
+.vdp-help-inner{position:relative;max-width:520px;margin:0 auto;display:flex;flex-direction:column;align-items:center}
+.vdp-avatars{display:flex;align-items:center;margin-bottom:16px}
+.vdp-avatars>span{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;border:3px solid #fff;background:var(--vdp-ink);color:#fff;font-weight:600;font-size:1.1rem;box-shadow:0 6px 16px rgba(18,49,46,.18)}
+.vdp-avatars .vdp-phone{width:40px;height:40px;margin-left:-10px;background:#fff;color:var(--vdp-ink);border-width:2px}
+.vdp-help h3{font-size:clamp(1.4rem,3vw,1.9rem);font-weight:500;letter-spacing:-.025em;margin:0 0 8px}
+.vdp-help p{margin:0 0 22px;color:var(--vdp-ink-2);font-size:.95rem}
+
+@media (max-width:860px){.vdp-cards{grid-template-columns:1fr}.vdp-extras-grid{grid-template-columns:1fr}.vdp-price-block{min-height:0}}
+@media (max-width:560px){
+.vdp{padding:72px 14px}
+.vdp-shell{border-radius:28px;padding:8px}
+.vdp-card{padding:22px 16px;border-radius:22px}
+.vdp-popular{top:18px;right:16px}
+.vdp-models button{padding:8px 11px;font-size:.72rem}
+.vdp-row{grid-template-columns:20px minmax(0,1fr);row-gap:6px}
+.vdp-row-price{grid-column:2;flex-direction:row;align-items:baseline;gap:8px;flex-wrap:wrap}
+.vdp-extras{padding:18px 8px 4px}
+.vdp-total{flex-direction:column;align-items:stretch;padding:18px;border-radius:20px}
+.vdp-security{border-radius:22px;align-items:flex-start}
+.vdp-help{border-radius:28px;padding:44px 18px}
+}
+@media (prefers-reduced-motion:reduce){.vdp *{transition:none!important}}
+`;

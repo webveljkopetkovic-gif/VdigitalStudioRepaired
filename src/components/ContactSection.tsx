@@ -25,7 +25,11 @@ import {
   trackMessengerClick,
 } from '../utils/analytics';
 
-export const ContactSection: React.FC = () => {
+interface ContactSectionProps {
+  initialMessage?: string;
+}
+
+export const ContactSection: React.FC<ContactSectionProps> = ({ initialMessage }) => {
   const { locale, t, contactPath, privacyPath } = useI18n();
   const navigate = useNavigate();
   const isSSR = typeof window === 'undefined';
@@ -33,11 +37,17 @@ export const ContactSection: React.FC = () => {
   const [fullName, setFullName] = useState('');
   const [contactInfo, setContactInfo] = useState('');
   const [professionIndex, setProfessionIndex] = useState(0);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(initialMessage || '');
   const [botcheck, setBotcheck] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  React.useEffect(() => {
+    if (initialMessage) {
+      setMessage(initialMessage);
+    }
+  }, [initialMessage]);
 
   const profession =
     t.contact.form.professionOptions[professionIndex] ||

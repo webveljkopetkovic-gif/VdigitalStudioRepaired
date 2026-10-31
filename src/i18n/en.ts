@@ -293,11 +293,11 @@ export const en = {
       },
       {
         q: 'How much does it cost?',
-        a: 'It depends on the scope and the model you choose. After a free call and a short analysis, you get a precise offer with no obligation.',
+        a: 'Our transparent prices and packages are calculated directly in the pricing section above. You choose only the services and payment model that suit your goals.',
       },
       {
         q: 'How does revenue share work?',
-        a: 'You can pay a fixed price, a percentage of sales, or a combination. With the percentage model, we only earn when you do, and you see every number, including our share.',
+        a: 'You can choose fixed pricing, revenue share, or a hybrid model. With revenue share, sales services are €0 per month and we earn only when you make sales, with full transparency on every number.',
       },
       {
         q: 'We already have a website. Do we need a new one?',

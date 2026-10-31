@@ -166,6 +166,13 @@ export const Footer: React.FC = () => {
                 {t.navbar.links.process}
               </a>
               <a
+                href={getSectionHref('pricing')}
+                onClick={(e) => handleNavClick(e, 'pricing')}
+                className="text-neutral-300 hover:text-[color:var(--vd-9ce607)] transition-colors cursor-pointer font-normal text-[13.5px] sm:text-[14px]"
+              >
+                {t.navbar.links.pricing}
+              </a>
+              <a
                 href={aboutPath}
                 onClick={(e) => handleNavClick(e, 'about')}
                 className="text-neutral-300 hover:text-[color:var(--vd-9ce607)] transition-colors cursor-pointer font-normal text-[13.5px] sm:text-[14px]"

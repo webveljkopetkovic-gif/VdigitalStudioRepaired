@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { getContactPath, I18nProvider, ServiceSlug, SupportedLocale } from './i18n';
 import { HeaderLogo } from './components/HeaderLogo';
@@ -14,7 +14,7 @@ import { WhoWeWorkWithSection } from './components/WhoWeWorkWithSection';
 import { WorkflowPlan } from './components/WorkflowPlan';
 import { TeamLeadershipSection } from './components/TeamLeadershipSection';
 import { FoundingClientsSection } from './components/FoundingClientsSection';
-import { RevenueCTASection } from './components/RevenueCTASection';
+import PricingSection from './components/PricingSection';
 import { FAQSection } from './components/FAQSection';
 import { ContactSection } from './components/ContactSection';
 import { ContactPage } from './components/ContactPage';
@@ -33,6 +33,7 @@ import { Analytics } from '@vercel/analytics/react';
 const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [inquiryMessage, setInquiryMessage] = useState('');
   const contactPath = getContactPath(locale);
 
   const goToContactPage = () => {
@@ -41,6 +42,11 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
 
   const scrollToProcess = () => {
     document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handlePricingRequest = (summary: string) => {
+    setInquiryMessage(summary);
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -112,14 +118,14 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
           {/* 9. Founding Clients (#founding) */}
           <FoundingClientsSection />
 
-          {/* 10. How We Work (#pricing) */}
-          <RevenueCTASection />
+          {/* 10. Pricing (#pricing) */}
+          <PricingSection lang={locale} onRequest={handlePricingRequest} />
 
           {/* 11. FAQ (#faq) */}
           <FAQSection />
 
           {/* 12. Contact (#contact) */}
-          <ContactSection />
+          <ContactSection initialMessage={inquiryMessage} />
         </main>
 
         {/* 13. Footer */}
