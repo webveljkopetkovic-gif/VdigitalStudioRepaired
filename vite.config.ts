@@ -47,6 +47,13 @@ export default defineConfig(() => {
   return {
     base: '/',
     plugins: [react(), tailwindcss(), devContactApiPlugin(), prerenderPlugin()],
+    define: {
+      'import.meta.env.VITE_WEB3FORMS_ACCESS_KEY': JSON.stringify(
+        process.env.WEB3FORMS_ACCESS_KEY ||
+          process.env.VITE_WEB3FORMS_ACCESS_KEY ||
+          '8cae6776-aeee-436b-a022-349b42efa483'
+      ),
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

@@ -10,11 +10,13 @@ import {
 } from 'lucide-react';
 import {
   CONTACT_EMAIL,
+  FALLBACK_FORM_ENDPOINT,
   FORM_ENDPOINT,
   PHONE_DISPLAY,
   PHONE_URL,
   TELEGRAM_URL,
   VIBER_URL,
+  WEB3FORMS_ACCESS_KEY,
   WHATSAPP_URL,
 } from '../config';
 import { useI18n } from '../i18n';
@@ -40,6 +42,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialMessage }
   const [message, setMessage] = useState(initialMessage || '');
   const [botcheck, setBotcheck] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [showFallbackLink, setShowFallbackLink] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -52,13 +55,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialMessage }
   const profession =
     t.contact.form.professionOptions[professionIndex] ||
     t.contact.form.professionOptions[0] ||
-    'Doctor';
+    'Business';
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMsg('');
+    setShowFallbackLink(false);
 
-    // Honeypot check on client side as well
+    // Honeypot check on client side
     if (botcheck.trim().length > 0) {
       setIsSubmitted(true);
       return;
@@ -75,17 +79,26 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialMessage }
     const form = e.currentTarget;
     setIsSubmitting(true);
 
-    try {
-      const payload = {
-        name: trimmedName,
-        contact: trimmedContact,
-        profession,
-        message: message.trim(),
-        botcheck: botcheck.trim(),
-        locale,
-        formType: 'inquiry',
-      };
+    const isEmail = trimmedContact.includes('@');
+    const payload: Record<string, string> = {
+      access_key: WEB3FORMS_ACCESS_KEY,
+      name: trimmedName,
+      contact: trimmedContact,
+      email: isEmail ? trimmedContact : '',
+      phone: !isEmail ? trimmedContact : '',
+      profession,
+      message: message.trim(),
+      botcheck: botcheck.trim(),
+      from_name: 'VDigital Studio Website',
+      subject: `VDigital Inquiry: ${trimmedName} (${profession})`,
+      locale: locale.toUpperCase(),
+    };
 
+    let succeeded = false;
+    let customError = '';
+
+    // 1. Direct browser-to-Web3Forms submission (clean client IP, no Cloudflare datacenter blocks)
+    try {
       const response = await fetch(FORM_ENDPOINT, {
         method: 'POST',
         headers: {
@@ -97,22 +110,53 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialMessage }
 
       const data = await response.json().catch(() => ({}));
 
-      if (response.ok && data.ok) {
-        trackFormSubmit('contact_inquiry_form');
-        window.ym?.(113158297, "reachGoal", "quote_request");
-        setIsSubmitted(true);
-        setFullName('');
-        setContactInfo('');
-        setProfessionIndex(0);
-        setMessage('');
-        form.reset();
-      } else {
-        setErrorMsg(data.message || t.contact.form.errorGeneric);
+      if (response.ok && (data.success === true || data.ok === true)) {
+        succeeded = true;
+      } else if (data.message) {
+        customError = data.message;
       }
-    } catch {
-      setErrorMsg(t.contact.form.errorGeneric);
-    } finally {
-      setIsSubmitting(false);
+    } catch (err) {
+      console.warn('Direct Web3Forms submission failed, trying fallback endpoint...', err);
+    }
+
+    // 2. Secondary fallback via local/server proxy route if direct call failed (e.g. adblocker)
+    if (!succeeded) {
+      try {
+        const fallbackResp = await fetch(FALLBACK_FORM_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const fallbackData = await fallbackResp.json().catch(() => ({}));
+        if (fallbackResp.ok && (fallbackData.ok === true || fallbackData.success === true)) {
+          succeeded = true;
+        } else if (fallbackData.message) {
+          customError = fallbackData.message;
+        }
+      } catch (err) {
+        console.warn('Fallback endpoint failed:', err);
+      }
+    }
+
+    setIsSubmitting(false);
+
+    if (succeeded) {
+      trackFormSubmit('contact_inquiry_form');
+      window.ym?.(113158297, 'reachGoal', 'quote_request');
+      setIsSubmitted(true);
+      setFullName('');
+      setContactInfo('');
+      setProfessionIndex(0);
+      setMessage('');
+      setShowFallbackLink(false);
+      form.reset();
+    } else {
+      setErrorMsg(customError || t.contact.form.errorGeneric);
+      setShowFallbackLink(true);
     }
   };
 
@@ -359,12 +403,36 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialMessage }
                   </div>
 
                   {errorMsg && (
-                    <p
-                      role="alert"
-                      className="text-[13px] font-geist text-[color:var(--vd-ff6b6b)]"
-                    >
-                      {errorMsg}
-                    </p>
+                    <div className="space-y-2">
+                      <p
+                        role="alert"
+                        className="text-[13px] font-geist text-[color:var(--vd-ff6b6b)]"
+                      >
+                        {errorMsg}
+                      </p>
+                      {showFallbackLink && (
+                        <div className="p-3 rounded-[10px] bg-white/[0.04] border border-white/[0.1] text-[12.5px] font-geist text-neutral-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                          <span>
+                            {locale === 'sr'
+                              ? 'Ili pošaljite poruku direktno na naš email:'
+                              : locale === 'ru'
+                                ? 'Или отправьте сообщение напрямую на email:'
+                                : 'Or send your inquiry directly via email:'}
+                          </span>
+                          <a
+                            href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+                              `VDigital Inquiry: ${fullName || 'New Client'} (${profession})`
+                            )}&body=${encodeURIComponent(
+                              `Name: ${fullName}\nContact: ${contactInfo}\nField: ${profession}\n\nMessage:\n${message}`
+                            )}`}
+                            className="inline-flex items-center gap-1.5 text-[color:var(--vd-9ce607)] hover:underline font-semibold shrink-0"
+                          >
+                            <span>{CONTACT_EMAIL}</span>
+                            <span>→</span>
+                          </a>
+                        </div>
+                      )}
+                    </div>
                   )}
 
                   {/* Submit Button */}

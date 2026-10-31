@@ -199,13 +199,33 @@ export default async function handler(req: any, res: any) {
       body: JSON.stringify(payload),
     });
 
-    const result = await response.json().catch(() => null);
+    const contentType = response.headers.get('content-type') || '';
+    let result: any = null;
+    if (contentType.includes('application/json')) {
+      result = await response.json().catch(() => null);
+    }
+
     if (!response.ok || (result && result.success === false)) {
+      console.warn('[Contact API] Web3Forms proxy error or challenge:', response.status, result?.message);
+      // In dev environment or fallback, log the inquiry so it is never lost
+      console.info('[Contact Inquiry Received]:', { name, contact, profession, message });
+      if (process.env.NODE_ENV !== 'production' || process.env.VITE_DEV_MODE === 'true') {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        return res.end(JSON.stringify({ ok: true, devMode: true }));
+      }
       res.statusCode = 502;
       res.setHeader('Content-Type', 'application/json');
       return res.end(JSON.stringify({ ok: false, message: msg.sendError }));
     }
-  } catch {
+  } catch (err) {
+    console.error('[Contact API] Failed to forward inquiry:', err);
+    console.info('[Contact Inquiry Received]:', { name, contact, profession, message });
+    if (process.env.NODE_ENV !== 'production' || process.env.VITE_DEV_MODE === 'true') {
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      return res.end(JSON.stringify({ ok: true, devMode: true }));
+    }
     res.statusCode = 502;
     res.setHeader('Content-Type', 'application/json');
     return res.end(JSON.stringify({ ok: false, message: msg.sendError }));

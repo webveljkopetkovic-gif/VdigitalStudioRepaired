@@ -7,7 +7,11 @@ export const TELEGRAM_URL = TELEGRAM_USERNAME
   : 'https://t.me/veljkopetkovic';
 
 export const CONTACT_EMAIL = 'hello@vdigital.dev';
-export const FORM_ENDPOINT = '/api/contact';
+export const WEB3FORMS_ACCESS_KEY =
+  (typeof import.meta !== 'undefined' && import.meta.env?.VITE_WEB3FORMS_ACCESS_KEY) ||
+  '8cae6776-aeee-436b-a022-349b42efa483';
+export const FORM_ENDPOINT = 'https://api.web3forms.com/submit';
+export const FALLBACK_FORM_ENDPOINT = '/api/contact';
 
 export const WHATSAPP_URL = 'https://wa.me/381659131103';
 export const VIBER_URL = 'viber://chat?number=%2B381659131103';
