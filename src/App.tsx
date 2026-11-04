@@ -2,26 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { getContactPath, I18nProvider, ServiceSlug, SupportedLocale } from './i18n';
 import { HeaderLogo } from './components/HeaderLogo';
-import { HeroTypography } from './components/HeroTypography';
-import { KineticCarouselText } from './components/KineticCarouselText';
-import { SunburstRays } from './components/SunburstRays';
-import { HeroCTAButtons } from './components/HeroCTAButtons';
-import { TrustBar } from './components/TrustBar';
-import { WordByWordStatement } from './components/WordByWordStatement';
-import { PainPointsSection } from './components/PainPointsSection';
-import { StickyServicesSection } from './components/StickyServicesSection';
-import { WhoWeWorkWithSection } from './components/WhoWeWorkWithSection';
-import { WorkflowPlan } from './components/WorkflowPlan';
-import { TeamLeadershipSection } from './components/TeamLeadershipSection';
-import { FoundingClientsSection } from './components/FoundingClientsSection';
 import PricingSection from './components/PricingSection';
-import { FAQSection } from './components/FAQSection';
 import { ContactSection } from './components/ContactSection';
 import { ContactPage } from './components/ContactPage';
 import { AboutPage } from './components/AboutPage';
 import { ServicePage } from './components/ServicePage';
 import { PrivacyPage } from './components/PrivacyPage';
 import { NotFoundPage } from './components/NotFoundPage';
+import { LandingHero, LandingTrust, LandingServices, LandingProblems, LandingProcess, LandingIndustries, LandingTeam, LandingFAQ } from './components/LandingSections';
 import { Footer } from './components/Footer';
 import { FloatingChatButton } from './components/FloatingChatButton';
 import { LanguageSuggestionBanner } from './components/LanguageSuggestionBanner';
@@ -38,10 +26,6 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
 
   const goToContactPage = () => {
     navigate(contactPath);
-  };
-
-  const scrollToProcess = () => {
-    document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handlePricingRequest = (summary: string) => {
@@ -62,79 +46,26 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
 
   return (
     <I18nProvider locale={locale}>
-      <div className="min-h-screen w-full bg-[color:var(--vd-060709)] text-white selection:bg-[color:var(--vd-a8f300)] selection:text-black relative flex flex-col overflow-x-clip scroll-smooth">
+      <div className="lp min-h-screen w-full relative flex flex-col overflow-x-clip">
         <main id="main-viewport" className="w-full flex flex-col">
-          {/* 1 & 2 & 3. Navbar + Hero (#top) + Trust Bar (#trust) */}
-          <section
-            id="top"
-            aria-label="Hero"
-            className="relative h-screen h-[100vh] h-dvh min-h-screen max-h-screen w-full flex flex-col justify-between overflow-hidden pb-4 sm:pb-6 lg:pb-8"
-          >
-            {/* 1. Navbar */}
+          {/* Hero + navbar */}
+          <section id="top" aria-label="Hero" className="relative">
             <HeaderLogo onBookCall={goToContactPage} />
-
-            {/* 2. Centerpiece Area: Volumetric 'creative/modern/digital', Sunburst, 4-Line Headline & Side Texts */}
-            <div className="relative flex-1 flex flex-col justify-center items-center w-full my-auto py-4 sm:py-6 overflow-visible">
-              <div className="absolute top-[38%] sm:top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] sm:w-[850px] sm:h-[850px] md:w-[1000px] md:h-[1000px] lg:w-[1100px] lg:h-[1100px] pointer-events-none z-0">
-                <SunburstRays className="w-full h-full" />
-              </div>
-
-              <KineticCarouselText />
-
-              <div className="relative z-10 w-full">
-                <HeroTypography pairingMode="curated" />
-              </div>
-            </div>
-
-            {/* 3. Lower Tier: Hero CTAs + Trust Bar (#trust) */}
-            <div className="relative z-20 w-full flex flex-col items-center mt-1 sm:mt-2">
-              <HeroCTAButtons
-                onPrimaryClick={goToContactPage}
-                onSecondaryClick={scrollToProcess}
-              />
-
-              <TrustBar />
-            </div>
+            <LandingHero />
           </section>
-
-          {/* 4. Statement (#statement) */}
-          <WordByWordStatement onExplore={goToContactPage} />
-
-          {/* 5. Pain Points (#problems) */}
-          <PainPointsSection />
-
-          {/* 6. Services (#services) */}
-          <StickyServicesSection onBookCall={goToContactPage} />
-
-          {/* 6b. Who We Work With (#who-we-work-with) */}
-          <WhoWeWorkWithSection />
-
-          {/* 7. Process (#process) */}
-          <WorkflowPlan />
-
-          {/* 8. Team (#team) */}
-          <TeamLeadershipSection />
-
-          {/* 9. Founding Clients (#founding) */}
-          <FoundingClientsSection />
-
-          {/* 10. Pricing (#pricing) */}
+          <LandingTrust />
+          <LandingServices />
+          <LandingProblems />
+          <LandingProcess />
+          <LandingIndustries />
           <PricingSection lang={locale} onRequest={handlePricingRequest} />
-
-          {/* 11. FAQ (#faq) */}
-          <FAQSection />
-
-          {/* 12. Contact (#contact) */}
+          <LandingTeam />
+          <LandingFAQ />
           <ContactSection initialMessage={inquiryMessage} />
         </main>
 
-        {/* 13. Footer */}
         <Footer />
-
-        {/* Floating Chat Button (WhatsApp on / and /sr, Telegram on /ru) */}
         <FloatingChatButton />
-
-        {/* Non-intrusive Language Suggestion Banner (client-side only, after hydration) */}
         <LanguageSuggestionBanner />
         <CookieConsentBanner />
       </div>

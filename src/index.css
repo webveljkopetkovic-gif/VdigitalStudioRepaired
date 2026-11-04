@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./landing.css";
 
 /* Self-Hosted Variable & Display WOFF2 Fonts with font-display: swap */
 @font-face {
