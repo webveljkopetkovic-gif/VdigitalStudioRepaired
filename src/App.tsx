@@ -24,8 +24,8 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
   const [inquiryMessage, setInquiryMessage] = useState('');
   const contactPath = getContactPath(locale);
 
-  const goToContactPage = () => {
-    navigate(contactPath);
+  const scrollToContact = () => {
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handlePricingRequest = (summary: string) => {
@@ -50,7 +50,7 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
         <main id="main-viewport" className="w-full flex flex-col">
           {/* Hero + navbar */}
           <section id="top" aria-label="Hero" className="relative">
-            <HeaderLogo onBookCall={goToContactPage} />
+            <HeaderLogo onBookCall={scrollToContact} />
             <LandingHero />
           </section>
           <LandingStats />
