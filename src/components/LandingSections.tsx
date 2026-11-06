@@ -19,6 +19,7 @@ import {
   UtensilsCrossed,
 } from 'lucide-react';
 import { getServicePath, ServiceSlug, useI18n } from '../i18n';
+import { LANDING_COPY } from '../data/landingCopy';
 import { BRAND_PATHS } from '../data/brandPaths';
 import { trackBookCallClick } from '../utils/analytics';
 
@@ -304,7 +305,7 @@ export const LandingProblems: React.FC = () => {
 export const LandingProcess: React.FC = () => {
   const { t } = useI18n();
   return (
-    <section id="process" className="lp-section">
+    <section id="process" className="lp-section lp-section--dark lp-torn">
       <div className="lp-wrap">
         <header className="lp-head lp-head--center">
           <span className="lp-kicker">{t.process.label}</span>
@@ -398,37 +399,8 @@ export const LandingTeam: React.FC = () => {
   const { t, contactPath } = useI18n();
   const navigate = useNavigate();
   return (
-    <section id="team" className="lp-section">
+    <section className="lp-section lp-section--founding">
       <div className="lp-wrap">
-        <header className="lp-head">
-          <span className="lp-kicker">{t.navbar.links.team}</span>
-          <h2 className="lp-h2">{t.team.heading}</h2>
-          <p className="lp-lead">{t.team.subheading}</p>
-        </header>
-
-        <div className="lp-team">
-          {t.team.members.map((m) => (
-            <article key={m.id} className="lp-card lp-member">
-              <div className="lp-member__photo">
-                <img src={m.photo} alt={m.photoAlt} loading="lazy" width={480} height={500} />
-              </div>
-              <h3>{m.name}</h3>
-              <p className="lp-member__role">{m.role}</p>
-              <p>{m.text}</p>
-              {m.portfolioUrl && (
-                <a
-                  className="lp-member__link"
-                  href={m.portfolioUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {m.portfolioLabel}
-                </a>
-              )}
-            </article>
-          ))}
-        </div>
-
         <div id="founding" className="lp-founding">
           <div style={{ position: 'relative', zIndex: 1 }}>
             <span className="lp-kicker">{t.founding.label}</span>
@@ -482,6 +454,81 @@ export const LandingFAQ: React.FC = () => {
               </summary>
               <div>{item.a}</div>
             </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ----------------------------------------------------------------- Stats */
+
+export const LandingStats: React.FC = () => {
+  const { locale } = useI18n();
+  const c = LANDING_COPY[locale].stats;
+  return (
+    <section id="numbers" className="lp-section lp-section--dark lp-torn">
+      <div className="lp-wrap">
+        <header className="lp-head lp-head--center">
+          <span className="lp-kicker">{c.kicker}</span>
+          <h2 className="lp-h2">{c.heading}</h2>
+        </header>
+        <dl className="lp-stats">
+          {c.items.map((item) => (
+            <div key={item.label} className="lp-stat">
+              <dt>{item.value}</dt>
+              <dd>{item.label}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  );
+};
+
+/* ----------------------------------------------------------------- Story */
+
+export const LandingStory: React.FC = () => {
+  const { t, locale, contactPath } = useI18n();
+  const navigate = useNavigate();
+  const c = LANDING_COPY[locale].story;
+  return (
+    <section id="team" className="lp-section lp-section--mint lp-torn">
+      <div className="lp-wrap lp-story">
+        <div className="lp-story__copy">
+          <span className="lp-kicker">{c.kicker}</span>
+          <h2 className="lp-h2">{c.heading}</h2>
+          <p className="lp-lead">{c.text}</p>
+          <ul className="lp-story__points">
+            {c.points.map((p) => (
+              <li key={p}>
+                <Check aria-hidden="true" />
+                {p}
+              </li>
+            ))}
+          </ul>
+          <a
+            href={contactPath}
+            className="lp-btn lp-btn--primary"
+            onClick={(e) => {
+              e.preventDefault();
+              trackBookCallClick('story');
+              navigate(contactPath);
+            }}
+          >
+            {t.hero.primaryCta}
+            <ArrowRight />
+          </a>
+        </div>
+        <div className="lp-album" role="list">
+          {t.team.members.map((m, i) => (
+            <figure key={m.id} role="listitem" className={`lp-album__card lp-album__card--${i + 1}`}>
+              <img src={m.photo} alt={m.photoAlt} loading="lazy" width={480} height={560} />
+              <figcaption>
+                <strong>{m.name}</strong>
+                <span>{m.role}</span>
+              </figcaption>
+            </figure>
           ))}
         </div>
       </div>

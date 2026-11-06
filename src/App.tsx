@@ -9,7 +9,7 @@ import { AboutPage } from './components/AboutPage';
 import { ServicePage } from './components/ServicePage';
 import { PrivacyPage } from './components/PrivacyPage';
 import { NotFoundPage } from './components/NotFoundPage';
-import { LandingHero, LandingTrust, LandingServices, LandingProblems, LandingProcess, LandingIndustries, LandingTeam, LandingFAQ } from './components/LandingSections';
+import { LandingHero, LandingStats, LandingStory, LandingServices, LandingProblems, LandingProcess, LandingIndustries, LandingTeam, LandingFAQ } from './components/LandingSections';
 import { Footer } from './components/Footer';
 import { FloatingChatButton } from './components/FloatingChatButton';
 import { LanguageSuggestionBanner } from './components/LanguageSuggestionBanner';
@@ -53,7 +53,8 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
             <HeaderLogo onBookCall={goToContactPage} />
             <LandingHero />
           </section>
-          <LandingTrust />
+          <LandingStats />
+          <LandingStory />
           <LandingServices />
           <LandingProblems />
           <LandingProcess />
