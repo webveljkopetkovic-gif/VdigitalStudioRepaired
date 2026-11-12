@@ -93,18 +93,78 @@ const ToolsMarquee: React.FC = () => (
 
 /* ------------------------------------------------------------------ Hero */
 
+/** Splits a string into word + char spans so the hero can animate letter by letter.
+ *  Words stay unbreakable, so line wrapping behaves exactly like plain text. */
+const SplitChars: React.FC<{ text: string; offset?: number }> = ({ text, offset = 0 }) => {
+  let n = offset;
+  const words = text.split(' ');
+  return (
+    <>
+      {words.map((word, wi) => (
+        <React.Fragment key={wi}>
+          <span className="vd-w">
+            {Array.from(word).map((ch, ci) => (
+              <span className="vd-c" key={ci} style={{ '--c': n++ } as React.CSSProperties}>
+                {ch}
+              </span>
+            ))}
+          </span>
+          {wi < words.length - 1 ? ' ' : null}
+        </React.Fragment>
+      ))}
+    </>
+  );
+};
+
+/** Giant kinetic text band, moved by scroll (see useCinematicMotion). */
+export const LandingBand: React.FC = () => {
+  const { t } = useI18n();
+  const words = t.services.cards.map((c) => `${c.titleWhite} ${c.titleGrey}`.trim());
+  const row = [...words, ...words];
+  return (
+    <div className="vd-band" aria-hidden="true">
+      <div className="vd-band__row" data-band="1">
+        {row.map((w, i) => (
+          <span key={i} className={i % 2 ? 'is-outline' : ''}>
+            {w}
+            <b>✦</b>
+          </span>
+        ))}
+      </div>
+      <div className="vd-band__row vd-band__row--alt" data-band="-1">
+        {row.map((w, i) => (
+          <span key={i} className={i % 2 ? '' : 'is-outline'}>
+            {w}
+            <b>✦</b>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export const LandingHero: React.FC = () => {
   const { t, contactPath } = useI18n();
   const navigate = useNavigate();
   return (
     <div className="lp-hero">
+      <div className="vd-hero-fx" aria-hidden="true">
+        <i className="vd-blob vd-blob--1" />
+        <i className="vd-blob vd-blob--2" />
+        <i className="vd-blob vd-blob--3" />
+        <i className="vd-grid" />
+      </div>
       <div className="lp-wrap lp-hero__inner">
         <span className="lp-kicker">{t.trustBar.items[3]}</span>
 
-        <h1 className="lp-h1">
-          <span>{t.hero.line1}</span>
-          <span>
-            <em>{t.hero.line2}</em>
+        <h1 className="lp-h1" aria-label={`${t.hero.line1} ${t.hero.line2}`}>
+          <span className="lp-h1__l1" aria-hidden="true">
+            <SplitChars text={t.hero.line1} />
+          </span>
+          <span className="lp-h1__l2" aria-hidden="true">
+            <em>
+              <SplitChars text={t.hero.line2} offset={t.hero.line1.length} />
+            </em>
           </span>
         </h1>
 

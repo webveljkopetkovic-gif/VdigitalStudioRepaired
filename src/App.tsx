@@ -9,7 +9,7 @@ import { AboutPage } from './components/AboutPage';
 import { ServicePage } from './components/ServicePage';
 import { PrivacyPage } from './components/PrivacyPage';
 import { NotFoundPage } from './components/NotFoundPage';
-import { LandingHero, LandingStats, LandingStory, LandingServices, LandingProblems, LandingProcess, LandingIndustries, LandingTeam, LandingFAQ } from './components/LandingSections';
+import { LandingHero, LandingBand, LandingStats, LandingStory, LandingServices, LandingProblems, LandingProcess, LandingIndustries, LandingTeam, LandingFAQ } from './components/LandingSections';
 import { Footer } from './components/Footer';
 import { FloatingChatButton } from './components/FloatingChatButton';
 import { LanguageSuggestionBanner } from './components/LanguageSuggestionBanner';
@@ -17,6 +17,7 @@ import { CookieConsentBanner } from './components/CookieConsentBanner';
 import { Preloader } from './components/Preloader';
 import { useYandexMetrica } from './hooks/useYandexMetrica';
 import { Analytics } from '@vercel/analytics/react';
+import { useCinematicMotion } from './hooks/useCinematicMotion';
 
 const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) => {
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
             <HeaderLogo onBookCall={scrollToContact} />
             <LandingHero />
           </section>
+          <LandingBand />
           <LandingStats />
           <LandingStory />
           <LandingServices />
@@ -135,6 +137,8 @@ const NotFoundPageRoute: React.FC<{ forcedLocale?: SupportedLocale }> = ({
 
 export default function App() {
   useYandexMetrica();
+  const { pathname } = useLocation();
+  useCinematicMotion(pathname);
 
   return (
     <>
