@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import {
@@ -10,13 +10,12 @@ import {
 } from 'lucide-react';
 import {
   CONTACT_EMAIL,
-  FALLBACK_FORM_ENDPOINT,
   FORM_ENDPOINT,
   PHONE_DISPLAY,
   PHONE_URL,
   TELEGRAM_URL,
+  TURNSTILE_SITE_KEY,
   VIBER_URL,
-  WEB3FORMS_ACCESS_KEY,
   WHATSAPP_URL,
 } from '../config';
 import { useI18n } from '../i18n';
@@ -26,6 +25,37 @@ import {
   trackFormSubmit,
   trackMessengerClick,
 } from '../utils/analytics';
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (el: HTMLElement, options: Record<string, unknown>) => string;
+      reset: (widgetId?: string) => void;
+      remove: (widgetId?: string) => void;
+    };
+  }
+}
+
+const TURNSTILE_SCRIPT_SRC =
+  'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+
+function loadTurnstileScript(): Promise<void> {
+  if (window.turnstile) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    let script = document.querySelector<HTMLScriptElement>(
+      `script[src="${TURNSTILE_SCRIPT_SRC}"]`
+    );
+    if (!script) {
+      script = document.createElement('script');
+      script.src = TURNSTILE_SCRIPT_SRC;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+    script.addEventListener('load', () => resolve());
+    script.addEventListener('error', () => reject(new Error('Turnstile failed to load')));
+  });
+}
 
 interface ContactSectionProps {
   initialMessage?: string;
@@ -45,6 +75,40 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialMessage }
   const [showFallbackLink, setShowFallbackLink] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const formOpenedAt = useRef(0);
+  const turnstileRef = useRef<HTMLDivElement>(null);
+  const turnstileWidgetId = useRef<string | undefined>(undefined);
+
+  useEffect(() => {
+    formOpenedAt.current = Date.now();
+  }, []);
+
+  // Cloudflare Turnstile widget (only when a site key is configured)
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY || isSubmitted) return;
+    let cancelled = false;
+    loadTurnstileScript()
+      .then(() => {
+        if (cancelled || !turnstileRef.current || !window.turnstile) return;
+        turnstileWidgetId.current = window.turnstile.render(turnstileRef.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+          theme: 'dark',
+          language: locale,
+          callback: (token: string) => setTurnstileToken(token),
+          'expired-callback': () => setTurnstileToken(''),
+          'error-callback': () => setTurnstileToken(''),
+        });
+      })
+      .catch((err) => console.warn(err));
+    return () => {
+      cancelled = true;
+      if (turnstileWidgetId.current && window.turnstile) {
+        window.turnstile.remove(turnstileWidgetId.current);
+        turnstileWidgetId.current = undefined;
+      }
+    };
+  }, [locale, isSubmitted]);
 
   React.useEffect(() => {
     if (initialMessage) {
@@ -76,28 +140,34 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialMessage }
       return;
     }
 
+    if (TURNSTILE_SITE_KEY && !turnstileToken) {
+      setErrorMsg(
+        locale === 'sr'
+          ? 'Sačekajte trenutak da se završi bezbednosna provera.'
+          : locale === 'ru'
+            ? 'Подождите секунду, идёт проверка безопасности.'
+            : 'Please wait a moment for the security check to finish.'
+      );
+      return;
+    }
+
     const form = e.currentTarget;
     setIsSubmitting(true);
 
-    const isEmail = trimmedContact.includes('@');
-    const payload: Record<string, string> = {
-      access_key: WEB3FORMS_ACCESS_KEY,
+    const payload = {
       name: trimmedName,
       contact: trimmedContact,
-      email: isEmail ? trimmedContact : '',
-      phone: !isEmail ? trimmedContact : '',
       profession,
       message: message.trim(),
       botcheck: botcheck.trim(),
-      from_name: 'VDigital Studio Website',
-      subject: `VDigital Inquiry: ${trimmedName} (${profession})`,
-      locale: locale.toUpperCase(),
+      locale,
+      elapsedMs: formOpenedAt.current ? Date.now() - formOpenedAt.current : 0,
+      turnstileToken,
     };
 
     let succeeded = false;
     let customError = '';
 
-    // 1. Direct browser-to-Web3Forms submission (clean client IP, no Cloudflare datacenter blocks)
     try {
       const response = await fetch(FORM_ENDPOINT, {
         method: 'POST',
@@ -110,36 +180,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialMessage }
 
       const data = await response.json().catch(() => ({}));
 
-      if (response.ok && (data.success === true || data.ok === true)) {
+      if (response.ok && data.ok === true) {
         succeeded = true;
       } else if (data.message) {
         customError = data.message;
       }
     } catch (err) {
-      console.warn('Direct Web3Forms submission failed, trying fallback endpoint...', err);
-    }
-
-    // 2. Secondary fallback via local/server proxy route if direct call failed (e.g. adblocker)
-    if (!succeeded) {
-      try {
-        const fallbackResp = await fetch(FALLBACK_FORM_ENDPOINT, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify(payload),
-        });
-
-        const fallbackData = await fallbackResp.json().catch(() => ({}));
-        if (fallbackResp.ok && (fallbackData.ok === true || fallbackData.success === true)) {
-          succeeded = true;
-        } else if (fallbackData.message) {
-          customError = fallbackData.message;
-        }
-      } catch (err) {
-        console.warn('Fallback endpoint failed:', err);
-      }
+      console.warn('Contact form submission failed:', err);
     }
 
     setIsSubmitting(false);
@@ -157,6 +204,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialMessage }
     } else {
       setErrorMsg(customError || t.contact.form.errorGeneric);
       setShowFallbackLink(true);
+      // Turnstile tokens are single-use, so get a fresh one for the next try
+      if (turnstileWidgetId.current && window.turnstile) {
+        window.turnstile.reset(turnstileWidgetId.current);
+        setTurnstileToken('');
+      }
     }
   };
 
@@ -401,6 +453,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialMessage }
                       className="w-full p-4 rounded-[12px] bg-[color:var(--vd-090c0a)]/90 border border-white/[0.12] focus:border-[color:var(--vd-9ce607)] text-[14px] font-geist text-white placeholder:text-neutral-500 focus:outline-none transition-colors resize-y"
                     />
                   </div>
+
+                  {TURNSTILE_SITE_KEY && <div ref={turnstileRef} className="min-h-[65px]" />}
 
                   {errorMsg && (
                     <div className="space-y-2">

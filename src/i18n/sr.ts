@@ -459,7 +459,7 @@ export const sr: Translations = {
       },
       {
         heading: '4. Primaoci podataka i međunarodni transfer',
-        body: 'Podatke mogu obrađivati Vercel Inc. (hosting), Web3Forms (prenos forme na naš email), kao i Google, Yandex, Ahrefs i Cal.com uz poštovanje Standardnih ugovornih klauzula.',
+        body: 'Podatke mogu obrađivati Vercel Inc. (hosting), Spaceship (Spacemail, prenos forme na naš email), Cloudflare (Turnstile zaštita forme od spama), kao i Google, Yandex, Ahrefs i Cal.com uz poštovanje Standardnih ugovornih klauzula.',
       },
       {
         heading: '5. Rok čuvanja podataka',

@@ -1,3 +1,5 @@
+import nodemailer from 'nodemailer';
+
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
 const RATE_LIMIT_MAX_REQUESTS = 5;
 
@@ -15,6 +17,7 @@ const MESSAGES: Record<
     tooLong: string;
     serverNotConfigured: string;
     sendError: string;
+    captchaFailed: string;
   }
 > = {
   en: {
@@ -26,6 +29,7 @@ const MESSAGES: Record<
     serverNotConfigured:
       'Contact service is not configured yet. Please reach us directly via email or WhatsApp.',
     sendError: 'Something went wrong while sending. Please try again or message us on WhatsApp.',
+    captchaFailed: 'Security check failed. Please refresh the page and try again.',
   },
   sr: {
     methodNotAllowed: 'Metod nije dozvoljen.',
@@ -36,6 +40,7 @@ const MESSAGES: Record<
     serverNotConfigured:
       'Kontakt forma trenutno nije podešena. Pišite nam direktno putem emaila ili na WhatsApp.',
     sendError: 'Nešto nije u redu pri slanju. Pokušajte ponovo ili nam pišite na WhatsApp.',
+    captchaFailed: 'Bezbednosna provera nije prošla. Osvežite stranicu i pokušajte ponovo.',
   },
   ru: {
     methodNotAllowed: 'Метод не поддерживается.',
@@ -46,6 +51,7 @@ const MESSAGES: Record<
     serverNotConfigured:
       'Форма временно недоступна. Пожалуйста, напишите нам напрямую в Telegram или на email.',
     sendError: 'Что-то пошло не так. Пожалуйста, попробуйте ещё раз или напишите нам в Telegram.',
+    captchaFailed: 'Проверка безопасности не пройдена. Обновите страницу и попробуйте снова.',
   },
 };
 
@@ -94,12 +100,46 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
+// Real people need more than a few seconds to fill in name, contact and field.
+const MIN_FILL_TIME_MS = 3000;
+
+function sendJson(res: any, status: number, data: Record<string, unknown>) {
+  res.statusCode = status;
+  res.setHeader('Content-Type', 'application/json');
+  return res.end(JSON.stringify(data));
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+async function verifyTurnstile(secret: string, token: string, ip: string): Promise<boolean> {
+  try {
+    const params = new URLSearchParams({ secret, response: token });
+    if (ip && ip !== 'unknown') params.set('remoteip', ip);
+    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      body: params,
+    });
+    const data: any = await response.json().catch(() => null);
+    return data?.success === true;
+  } catch (err) {
+    console.error('[Contact API] Turnstile verification error:', err);
+    return false;
+  }
+}
+
 export default async function handler(req: any, res: any) {
-  const web3FormsKey = (
-    process.env.WEB3FORMS_ACCESS_KEY ||
-    process.env.VITE_WEB3FORMS_ACCESS_KEY ||
-    ''
-  ).trim();
+  const smtpUser = (process.env.SMTP_USER || 'hello@vdigital.dev').trim();
+  const smtpPass = (process.env.SMTP_PASS || '').trim();
+  const smtpHost = (process.env.SMTP_HOST || 'mail.spacemail.com').trim();
+  const smtpPort = Number(process.env.SMTP_PORT || 465);
+  const mailTo = (process.env.CONTACT_TO || smtpUser).trim();
+  const turnstileSecret = (process.env.TURNSTILE_SECRET_KEY || '').trim();
 
   let body = req.body || {};
   if (typeof body === 'string') {
@@ -114,29 +154,36 @@ export default async function handler(req: any, res: any) {
   const msg = MESSAGES[locale];
 
   if (req.method !== 'POST') {
-    res.statusCode = 405;
-    res.setHeader('Content-Type', 'application/json');
-    return res.end(JSON.stringify({ ok: false, message: msg.methodNotAllowed }));
+    return sendJson(res, 405, { ok: false, message: msg.methodNotAllowed });
   }
 
-  // Honeypot check: silently accept and ignore bot submissions
+  // Honeypot: silently accept and drop bot submissions
   if (
     body?.botcheck === true ||
-    body?.botcheck === 'true' ||
-    body?.botcheck === 'on' ||
     (typeof body?.botcheck === 'string' && body.botcheck.trim().length > 0) ||
     (typeof body?.website === 'string' && body.website.trim().length > 0)
   ) {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    return res.end(JSON.stringify({ ok: true }));
+    return sendJson(res, 200, { ok: true });
+  }
+
+  // Time trap: the form sends how long it was open. Missing or too fast = bot.
+  const elapsedMs = Number(body?.elapsedMs);
+  if (!Number.isFinite(elapsedMs) || elapsedMs < MIN_FILL_TIME_MS) {
+    console.info('[Contact API] Dropped fast/unsigned submission:', { elapsedMs });
+    return sendJson(res, 200, { ok: true });
   }
 
   const clientIp = getClientIp(req);
   if (isRateLimited(clientIp)) {
-    res.statusCode = 429;
-    res.setHeader('Content-Type', 'application/json');
-    return res.end(JSON.stringify({ ok: false, message: msg.rateLimited }));
+    return sendJson(res, 429, { ok: false, message: msg.rateLimited });
+  }
+
+  // Cloudflare Turnstile (enforced once TURNSTILE_SECRET_KEY is set in Vercel)
+  if (turnstileSecret) {
+    const token = typeof body?.turnstileToken === 'string' ? body.turnstileToken : '';
+    if (!token || !(await verifyTurnstile(turnstileSecret, token, clientIp))) {
+      return sendJson(res, 400, { ok: false, message: msg.captchaFailed });
+    }
   }
 
   const formType = body?.formType === 'callback' ? 'callback' : 'inquiry';
@@ -148,9 +195,7 @@ export default async function handler(req: any, res: any) {
   const message = stripHtml(body?.message);
 
   if (!name || !contact || (formType === 'inquiry' && !profession)) {
-    res.statusCode = 400;
-    res.setHeader('Content-Type', 'application/json');
-    return res.end(JSON.stringify({ ok: false, message: msg.invalidRequired }));
+    return sendJson(res, 400, { ok: false, message: msg.invalidRequired });
   }
 
   if (
@@ -159,79 +204,51 @@ export default async function handler(req: any, res: any) {
     profession.length > 120 ||
     message.length > 2000
   ) {
-    res.statusCode = 400;
-    res.setHeader('Content-Type', 'application/json');
-    return res.end(JSON.stringify({ ok: false, message: msg.tooLong }));
+    return sendJson(res, 400, { ok: false, message: msg.tooLong });
   }
 
   if (!isValidEmailOrPhone(contact)) {
-    res.statusCode = 400;
-    res.setHeader('Content-Type', 'application/json');
-    return res.end(JSON.stringify({ ok: false, message: msg.invalidContact }));
+    return sendJson(res, 400, { ok: false, message: msg.invalidContact });
   }
 
-  if (!web3FormsKey) {
-    res.statusCode = 503;
-    res.setHeader('Content-Type', 'application/json');
-    return res.end(JSON.stringify({ ok: false, message: msg.serverNotConfigured }));
+  if (!smtpPass) {
+    console.error('[Contact API] SMTP_PASS is not set.');
+    console.info('[Contact Inquiry Received]:', { name, contact, profession, message });
+    return sendJson(res, 503, { ok: false, message: msg.serverNotConfigured });
   }
+
+  const isEmail = contact.includes('@');
+  const lines = [
+    `Ime: ${name}`,
+    `Kontakt: ${contact}`,
+    `Delatnost: ${profession}`,
+    `Jezik: ${locale.toUpperCase()}`,
+    '',
+    `Poruka:`,
+    message || '(bez poruke)',
+  ];
 
   try {
-    const payload: Record<string, string> = {
-      access_key: web3FormsKey,
-      from_name: 'VDigital Website',
-      subject: `VDigital Inquiry — ${name} (${profession})`,
-      name,
-      contact,
-      profession,
-      locale: locale.toUpperCase(),
-    };
-    if (message) {
-      payload.message = message;
-    }
-
-    const response = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(payload),
+    const transporter = nodemailer.createTransport({
+      host: smtpHost,
+      port: smtpPort,
+      secure: smtpPort === 465,
+      auth: { user: smtpUser, pass: smtpPass },
     });
 
-    const contentType = response.headers.get('content-type') || '';
-    let result: any = null;
-    if (contentType.includes('application/json')) {
-      result = await response.json().catch(() => null);
-    }
-
-    if (!response.ok || (result && result.success === false)) {
-      console.warn('[Contact API] Web3Forms proxy error or challenge:', response.status, result?.message);
-      // In dev environment or fallback, log the inquiry so it is never lost
-      console.info('[Contact Inquiry Received]:', { name, contact, profession, message });
-      if (process.env.NODE_ENV !== 'production' || process.env.VITE_DEV_MODE === 'true') {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        return res.end(JSON.stringify({ ok: true, devMode: true }));
-      }
-      res.statusCode = 502;
-      res.setHeader('Content-Type', 'application/json');
-      return res.end(JSON.stringify({ ok: false, message: msg.sendError }));
-    }
+    await transporter.sendMail({
+      from: `"VDigital sajt" <${smtpUser}>`,
+      to: mailTo,
+      replyTo: isEmail ? contact : undefined,
+      subject: `VDigital upit: ${name} (${profession})`,
+      text: lines.join('\n'),
+      html: `<pre style="font-family:inherit;font-size:14px">${escapeHtml(lines.join('\n'))}</pre>`,
+    });
   } catch (err) {
-    console.error('[Contact API] Failed to forward inquiry:', err);
+    console.error('[Contact API] Failed to send inquiry email:', err);
     console.info('[Contact Inquiry Received]:', { name, contact, profession, message });
-    if (process.env.NODE_ENV !== 'production' || process.env.VITE_DEV_MODE === 'true') {
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      return res.end(JSON.stringify({ ok: true, devMode: true }));
-    }
-    res.statusCode = 502;
-    res.setHeader('Content-Type', 'application/json');
-    return res.end(JSON.stringify({ ok: false, message: msg.sendError }));
+    return sendJson(res, 502, { ok: false, message: msg.sendError });
   }
 
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'application/json');
-  return res.end(JSON.stringify({ ok: true }));
+  return sendJson(res, 200, { ok: true });
 }
