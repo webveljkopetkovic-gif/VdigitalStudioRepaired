@@ -459,7 +459,7 @@ export const ru: Translations = {
       },
       {
         heading: '4. Получатели данных',
-        body: 'Данные могут обрабатываться платформами Vercel Inc., Web3Forms, Google, Яндекс, Ahrefs и Cal.com в рамках стандартных договорных условий.',
+        body: 'Данные могут обрабатываться платформами Vercel Inc., Spaceship (Spacemail, доставка формы на наш email), Cloudflare (Turnstile, защита формы от спама), Google, Яндекс, Ahrefs и Cal.com в рамках стандартных договорных условий.',
       },
       {
         heading: '5. Сроки хранения данных',
