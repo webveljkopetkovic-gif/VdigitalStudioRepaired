@@ -231,11 +231,11 @@
   text-wrap: balance;
 }
 
-.lp-h1 span {
+.lp-h1 > span {
   display: block;
 }
 
-.lp-h1 span:last-child {
+.lp-h1 > span:last-child {
   color: var(--h-ink-3);
   font-size: 0.62em;
   line-height: 1.2;
@@ -1163,7 +1163,7 @@ a.lp-card:hover .lp-more svg {
   max-width: 1000px;
 }
 
-.lp-hero .lp-h1 span:last-child {
+.lp-hero .lp-h1 > span:last-child {
   color: var(--h-primary);
   font-size: 1em;
   margin-top: 4px;

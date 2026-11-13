@@ -1,109 +1,109 @@
 import React, { useEffect, useState } from 'react';
 
+/**
+ * Cinematic intro: deep teal curtain, "VDigital." letters slam up, counter runs
+ * to 100, then three colour panels lift away and the hero animation starts
+ * (by adding html.vd-go). Shown once per session; add ?intro to the URL to
+ * force it again while testing.
+ */
+const LOGO = ['V', 'D', 'i', 'g', 'i', 't', 'a', 'l', '.'];
+const COUNT_MS = 1050;
+const LIFT_MS = 1100;
+
+const go = () => document.documentElement.classList.add('vd-go');
+
+// Decided once per page load, so React StrictMode's double effect run in dev
+// can't flip the answer (the first run marks the session as seen).
+let introDecision: boolean | null = null;
+const shouldShowIntro = () => {
+  if (introDecision !== null) return introDecision;
+  let allow = false;
+  try {
+    const root = document.documentElement;
+    const forced = new URLSearchParams(window.location.search).has('intro');
+    const seen = sessionStorage.getItem('vd_intro_seen');
+    if (root.classList.contains('vd-motion') && (forced || !seen)) {
+      sessionStorage.setItem('vd_intro_seen', '1');
+      allow = true;
+    }
+  } catch {
+    allow = false;
+  }
+  introDecision = allow;
+  return allow;
+};
+
 export const Preloader: React.FC = () => {
-  const [mounted, setMounted] = useState(false);
   const [show, setShow] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [isExiting, setIsExiting] = useState(false);
-  const [isRemoved, setIsRemoved] = useState(false);
+  const [out, setOut] = useState(false);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    let allowShow = false;
-    try {
-      const ua = (typeof navigator !== 'undefined' ? navigator.userAgent : '') || '';
-      const isBot = /bot|crawler|spider|crawling|googlebot|bingbot|yandex|duckduckbot|slurp|baiduspider/i.test(ua);
-      const reducedMotion =
-        typeof window !== 'undefined' &&
-        window.matchMedia &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const seen = typeof sessionStorage !== 'undefined' && sessionStorage.getItem('vd_preloader_seen');
+    const root = document.documentElement;
+    const allow = shouldShowIntro();
 
-      if (!isBot && !reducedMotion && !seen) {
-        sessionStorage.setItem('vd_preloader_seen', 'true');
-        allowShow = true;
-      }
-    } catch {
-      allowShow = false;
-    }
-
-    setMounted(true);
-
-    if (!allowShow) {
-      setIsRemoved(true);
+    if (!allow) {
+      go();
       return;
     }
 
     setShow(true);
+    root.style.overflow = 'hidden';
 
-    const duration = 380; // duration to 100% in ms
-    const startTime = performance.now();
-    let rafId: number;
-    let exitTimeout: ReturnType<typeof setTimeout>;
-    let removeTimeout: ReturnType<typeof setTimeout>;
-
-    // Hard ceiling guarantee at 600ms total
-    const maxTimeout = setTimeout(() => {
-      setIsRemoved(true);
-    }, 600);
-
-    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
-
+    const start = performance.now();
+    let raf = 0;
     const tick = (now: number) => {
-      const elapsed = now - startTime;
-      const rawProgress = Math.min(elapsed / duration, 1);
-      const easedProgress = Math.round(easeOutCubic(rawProgress) * 100);
-
-      setProgress(easedProgress);
-
-      if (rawProgress < 1) {
-        rafId = requestAnimationFrame(tick);
-      } else {
-        setProgress(100);
-        exitTimeout = setTimeout(() => {
-          setIsExiting(true);
-          removeTimeout = setTimeout(() => {
-            setIsRemoved(true);
-          }, 180);
-        }, 40);
-      }
+      const p = Math.min((now - start) / COUNT_MS, 1);
+      setCount(Math.round((1 - Math.pow(1 - p, 3)) * 100));
+      if (p < 1) raf = requestAnimationFrame(tick);
     };
+    raf = requestAnimationFrame(tick);
 
-    rafId = requestAnimationFrame(tick);
+    const t1 = setTimeout(() => {
+      setOut(true);
+      root.style.overflow = '';
+      // Hero starts while the curtain is still lifting, so it feels continuous.
+      setTimeout(go, 280);
+    }, COUNT_MS + 120);
+    const t2 = setTimeout(() => setShow(false), COUNT_MS + 120 + LIFT_MS);
 
     return () => {
-      cancelAnimationFrame(rafId);
-      clearTimeout(exitTimeout);
-      clearTimeout(removeTimeout);
-      clearTimeout(maxTimeout);
+      cancelAnimationFrame(raf);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      root.style.overflow = '';
+      setShow(false);
+      setOut(false);
+      go();
     };
   }, []);
 
-  if (!mounted || !show || isRemoved) return null;
+  if (!show) return null;
 
   return (
-    <div
-      aria-hidden="true"
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[color:var(--vd-060709)] select-none pointer-events-none transition-opacity duration-200 ease-out ${
-        isExiting ? 'opacity-0' : 'opacity-100'
-      }`}
-    >
+    <div className={`vd-intro${out ? ' is-out' : ''}`} aria-hidden="true">
+      <div className="vd-intro__panel vd-intro__panel--3" />
+      <div className="vd-intro__panel vd-intro__panel--2" />
       <div
-        className={`relative inline-flex items-baseline font-geist text-[46px] sm:text-[64px] md:text-[76px] font-bold tracking-[-0.04em] leading-none transition-transform duration-200 ease-out ${
-          isExiting ? 'scale-[1.04]' : 'scale-100'
-        }`}
-        style={{
-          opacity: Math.max(0.15, progress / 100),
-        }}
+        className="vd-intro__panel vd-intro__panel--1"
+        style={{ '--p': count / 100 } as React.CSSProperties}
       >
-        <span className="inline-flex items-baseline">
-          <span className="text-[color:var(--vd-9ce607)] drop-shadow-[0_0_18px_color-mix(in_srgb,var(--vd-9ce607)_45%,transparent)]">
-            V
-          </span>
-          <span className="text-white">Digital</span>
-          <span className="text-[color:var(--vd-9ce607)] drop-shadow-[0_0_14px_color-mix(in_srgb,var(--vd-9ce607)_60%,transparent)]">
-            .
-          </span>
-        </span>
+        <div className="vd-intro__logo">
+          {LOGO.map((ch, i) => (
+            <span
+              key={i}
+              className={i === 0 || i === LOGO.length - 1 ? 'is-accent' : undefined}
+              style={{ '--c': i } as React.CSSProperties}
+            >
+              {ch}
+            </span>
+          ))}
+        </div>
+        <div className="vd-intro__meta">
+          <span>Web · Video · Marketing</span>
+          <span className="vd-intro__count">{String(count).padStart(3, '0')}</span>
+        </div>
+        <div className="vd-intro__bar" />
       </div>
     </div>
   );
