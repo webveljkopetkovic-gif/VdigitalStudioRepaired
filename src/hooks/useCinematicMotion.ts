@@ -31,6 +31,7 @@ const REVEAL_SELECTORS = [
   '.vdp-shell',
   '.vd-t-featured',
   '.vd-t-row',
+  '.vd-p-track',
 ].join(',');
 
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
