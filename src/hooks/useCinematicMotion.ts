@@ -29,6 +29,8 @@ const REVEAL_SELECTORS = [
   '.lp-founding',
   '.lp-founding li',
   '.vdp-shell',
+  '.vd-t-featured',
+  '.vd-t-row',
 ].join(',');
 
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -74,21 +76,6 @@ export function useCinematicMotion(pathname: string) {
       if (disposed) return;
 
       /* ---------------- Scroll reveals ---------------- */
-      const els = Array.from(document.querySelectorAll<HTMLElement>(REVEAL_SELECTORS)).filter(
-        (el) => !el.closest('.lp-hero')
-      );
-
-      // Stagger index among siblings that share a parent.
-      const groups = new Map<Element, HTMLElement[]>();
-      els.forEach((el) => {
-        const parent = el.parentElement;
-        if (!parent) return;
-        const list = groups.get(parent) ?? [];
-        list.push(el);
-        groups.set(parent, list);
-      });
-      groups.forEach((list) => list.forEach((el, i) => el.style.setProperty('--i', String(i))));
-
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -102,8 +89,33 @@ export function useCinematicMotion(pathname: string) {
         },
         { rootMargin: '0px 0px -10% 0px', threshold: 0.12 }
       );
-      els.forEach((el) => io.observe(el));
       cleanups.push(() => io.disconnect());
+
+      // Scans again later so sections that mount after first paint are animated too.
+      const scan = () => {
+      const els = Array.from(document.querySelectorAll<HTMLElement>(REVEAL_SELECTORS)).filter(
+        (el) => !el.closest('.lp-hero') && !el.dataset.vdSeen
+      );
+      els.forEach((el) => (el.dataset.vdSeen = '1'));
+
+      // Stagger index among siblings that share a parent.
+      const groups = new Map<Element, HTMLElement[]>();
+      els.forEach((el) => {
+        const parent = el.parentElement;
+        if (!parent) return;
+        const list = groups.get(parent) ?? [];
+        list.push(el);
+        groups.set(parent, list);
+      });
+      groups.forEach((list) => list.forEach((el, i) => el.style.setProperty('--i', String(i))));
+      els.forEach((el) => io.observe(el));
+      };
+      scan();
+      const rescan = setTimeout(scan, 700);
+      cleanups.push(() => {
+        clearTimeout(rescan);
+        document.querySelectorAll<HTMLElement>('[data-vd-seen]').forEach((el) => delete el.dataset.vdSeen);
+      });
 
       /* ---------------- Scroll-linked scenes ---------------- */
       const progress = document.createElement('div');

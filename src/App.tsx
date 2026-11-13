@@ -11,6 +11,7 @@ import { PrivacyPage } from './components/PrivacyPage';
 import { NotFoundPage } from './components/NotFoundPage';
 import { LandingHero, LandingBand, LandingStats, LandingStory, LandingServices, LandingProblems, LandingProcess, LandingIndustries, LandingTeam, LandingFAQ } from './components/LandingSections';
 import { Footer } from './components/Footer';
+import { TestimonialsSection } from './components/TestimonialsSection';
 import { FloatingChatButton } from './components/FloatingChatButton';
 import { LanguageSuggestionBanner } from './components/LanguageSuggestionBanner';
 import { CookieConsentBanner } from './components/CookieConsentBanner';
@@ -61,6 +62,7 @@ const LandingPageContent: React.FC<{ locale: SupportedLocale }> = ({ locale }) =
           <LandingProblems />
           <LandingProcess />
           <LandingIndustries />
+          <TestimonialsSection />
           <PricingSection lang={locale} onRequest={handlePricingRequest} />
           <LandingTeam />
           <LandingFAQ />
