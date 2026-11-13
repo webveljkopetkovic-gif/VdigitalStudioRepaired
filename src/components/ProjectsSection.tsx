@@ -5,12 +5,56 @@ import { Project, PROJECTS, PROJECTS_COPY } from '../data/projectsData';
 
 const hostOf = (url?: string) => (url ? url.replace(/^https?:\/\//, '').replace(/\/$/, '') : '');
 
-/** Screenshot if the file exists, otherwise a designed cover in the project's colour. */
-const Screen: React.FC<{ p: Project }> = ({ p }) => {
+const monogram = (name: string) =>
+  name
+    .replace(/^Dr\.?\s+/i, '')
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p[0])
+    .join('');
+
+/** Designed project card, used until a screenshot exists in /public/images/projects. */
+const Poster: React.FC<{ p: Project; locale: keyof Project['field']; wip: string }> = ({ p, locale, wip }) => (
+  <div className="vd-p-poster" style={{ '--accent': p.accent } as React.CSSProperties}>
+    <span className="vd-p-poster__orb vd-p-poster__orb--1" aria-hidden="true" />
+    <span className="vd-p-poster__orb vd-p-poster__orb--2" aria-hidden="true" />
+    <span className="vd-p-poster__mono" aria-hidden="true">
+      {monogram(p.client)}
+    </span>
+    <div className="vd-p-poster__top">
+      <span className="vd-p-poster__badge">{monogram(p.client)}</span>
+      <span>{p.field[locale]}</span>
+      {p.status === 'wip' ? (
+        <span className="vd-p-badge">{wip}</span>
+      ) : (
+        p.url && <span className="vd-p-poster__host">{hostOf(p.url)}</span>
+      )}
+    </div>
+    <strong className="vd-p-poster__name">{p.client}</strong>
+    <ul className="vd-p-poster__pills">
+      {p.tags[locale].map((t, i) => (
+        <li key={t} style={{ '--k': i } as React.CSSProperties}>
+          {t}
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+/** Browser-framed screenshot when the image exists, otherwise the designed card. */
+const Visual: React.FC<{ p: Project; locale: keyof Project['field']; wip: string }> = ({ p, locale, wip }) => {
   const [failed, setFailed] = useState(!p.image);
+  if (failed) return <Poster p={p} locale={locale} wip={wip} />;
   return (
-    <div className="vd-p-screen" style={{ '--accent': p.accent } as React.CSSProperties}>
-      {!failed && (
+    <div className="vd-p-browser">
+      <div className="vd-p-browser__bar" aria-hidden="true">
+        <i />
+        <i />
+        <i />
+        <span>{hostOf(p.url) || p.client}</span>
+      </div>
+      <div className="vd-p-screen">
         <img
           src={p.image}
           alt={p.client}
@@ -20,28 +64,8 @@ const Screen: React.FC<{ p: Project }> = ({ p }) => {
           draggable={false}
           onError={() => setFailed(true)}
         />
-      )}
-      {failed && (
-        <div className="vd-p-cover" aria-hidden="true">
-          <div className="vd-p-cover__nav">
-            <i />
-            <span />
-            <span />
-            <span />
-          </div>
-          <strong>{p.client}</strong>
-          <div className="vd-p-cover__lines">
-            <b />
-            <b />
-          </div>
-          <div className="vd-p-cover__btn" />
-          <div className="vd-p-cover__cards">
-            <em />
-            <em />
-            <em />
-          </div>
-        </div>
-      )}
+      </div>
+      {p.status === 'wip' && <span className="vd-p-badge vd-p-badge--float">{wip}</span>}
     </div>
   );
 };
@@ -170,16 +194,7 @@ export const ProjectsSection: React.FC = () => {
       <div className="vd-p-track" ref={trackRef}>
         {PROJECTS.map((p, i) => (
           <article key={p.id} className={`vd-p-card${i === active ? ' is-active' : ''}`}>
-            <div className="vd-p-browser">
-              <div className="vd-p-browser__bar" aria-hidden="true">
-                <i />
-                <i />
-                <i />
-                <span>{hostOf(p.url) || p.client}</span>
-              </div>
-              <Screen p={p} />
-              {p.status === 'wip' && <span className="vd-p-badge">{c.wip}</span>}
-            </div>
+            <Visual p={p} locale={locale} wip={c.wip} />
 
             <div className="vd-p-info">
               <span className="vd-p-num">{pad(i + 1)}</span>
