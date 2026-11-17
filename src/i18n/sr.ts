@@ -239,10 +239,10 @@ export const sr: Translations = {
       {
         id: 'member4',
         name: 'Mila Đorđević',
-        role: 'Copywriting, društvene mreže i klijenti',
-        text: 'Piše tekstove i objave, vodi društvene mreže i outreach, i brine da svaki klijent uvek zna šta radimo i zašto.',
+        role: 'Copywriting, audit i društvene mreže',
+        text: 'Radi audit sajta i društvenih mreža, piše tekstove i objave, vodi outreach i brine da svaki klijent uvek zna šta radimo i zašto.',
         photo: '/images/team-mila.jpg',
-        photoAlt: 'Mila Đorđević, copywriting, društvene mreže i rad sa klijentima u VDigital-u',
+        photoAlt: 'Mila Đorđević, copywriting, audit i društvene mreže u VDigital-u',
       },
     ] as TeamMemberTranslation[],
   },
