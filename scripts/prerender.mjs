@@ -56,11 +56,6 @@ function buildJsonLdGraph(meta) {
         name: 'Vuk Stefanović',
         jobTitle: 'Sales & Cold Calling',
       },
-      {
-        '@type': 'Person',
-        name: 'Mila Đorđević',
-        jobTitle: 'Copywriting, Social Media & Account Management',
-      },
     ],
     contactPoint: {
       '@type': 'ContactPoint',

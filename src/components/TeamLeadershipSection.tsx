@@ -22,7 +22,7 @@ const TeamPhotoCard: React.FC<TeamPhotoCardProps> = ({ name, role, photo, photoA
   const initials = getInitials(name);
 
   return (
-    <div className="relative w-56 h-56 sm:w-60 sm:h-60 lg:w-64 lg:h-64 xl:w-60 xl:h-60 mb-7 flex items-center justify-center">
+    <div className="relative w-56 h-56 sm:w-60 sm:h-60 lg:w-64 lg:h-64 mb-7 flex items-center justify-center">
       {/* Offset Lime-Green Rounded Backdrop */}
       <div
         className="absolute inset-0 rounded-[32px] sm:rounded-[36px] bg-[color:var(--vd-bef264)] transition-transform duration-300 group-hover:scale-105 group-hover:rotate-1"
@@ -117,8 +117,8 @@ export const TeamLeadershipSection: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* Team Cards Grid: 1 col mobile, 2x2 tablet/laptop, 4 in a row on wide screens */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-12 sm:gap-10 lg:gap-14 xl:gap-8 max-w-5xl xl:max-w-6xl mx-auto">
+        {/* 3 Team Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-10 lg:gap-14 max-w-5xl mx-auto">
           {t.team.members.map((member, index) => (
             <motion.div
               key={member.id}

@@ -29,8 +29,8 @@ export const LANDING_COPY: Record<SupportedLocale, LandingCopy> = {
     },
     story: {
       kicker: 'Our story',
-      heading: 'Four specialists from Niš, built for businesses that want more clients.',
-      text: 'Veljko has been building for the web since 2020. VDigital brings him together with a video specialist, a copywriter and social media manager, and a sales specialist, so one team handles the website, the content and the calls, and you stop juggling freelancers and agencies.',
+      heading: 'Three specialists from Niš, built for businesses that want more clients.',
+      text: 'Veljko has been building for the web since 2020. VDigital brings him together with a video specialist and a sales specialist, so one team handles the website, the content and the calls, and you stop juggling freelancers and agencies.',
       points: [
         'One team, one plan, one point of contact',
         'You own and control every account',
@@ -52,8 +52,8 @@ export const LANDING_COPY: Record<SupportedLocale, LandingCopy> = {
     },
     story: {
       kicker: 'Naša priča',
-      heading: 'Četiri specijalista iz Niša, za firme koje žele više klijenata.',
-      text: 'Veljko gradi za web od 2020. godine. VDigital ga spaja sa video specijalistom, copywriterkom za društvene mreže i stručnjakom za prodaju, pa jedan tim radi sajt, sadržaj i pozive, a vi više ne morate da koordinišete frilensere i agencije.',
+      heading: 'Tri specijaliste iz Niša, za firme koje žele više klijenata.',
+      text: 'Veljko gradi za web od 2020. godine. VDigital ga spaja sa video specijalistom i stručnjakom za prodaju, pa jedan tim radi sajt, sadržaj i pozive, a vi više ne morate da koordinišete frilensere i agencije.',
       points: [
         'Jedan tim, jedan plan, jedna kontakt osoba',
         'Vi posedujete i kontrolišete svaki nalog',
@@ -75,8 +75,8 @@ export const LANDING_COPY: Record<SupportedLocale, LandingCopy> = {
     },
     story: {
       kicker: 'Наша история',
-      heading: 'Четыре специалиста из Ниша для бизнеса, которому нужно больше клиентов.',
-      text: 'Велько создаёт сайты с 2020 года. VDigital объединяет его с видеоспециалистом, копирайтером и специалистом по продажам: одна команда делает сайт, контент и звонки, а вам не нужно координировать фрилансеров и агентства.',
+      heading: 'Три специалиста из Ниша для бизнеса, которому нужно больше клиентов.',
+      text: 'Велько создаёт сайты с 2020 года. VDigital объединяет его с видеоспециалистом и специалистом по продажам: одна команда делает сайт, контент и звонки, а вам не нужно координировать фрилансеров и агентства.',
       points: [
         'Одна команда, один план, один контакт',
         'Все аккаунты принадлежат вам и под вашим контролем',
