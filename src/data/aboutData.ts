@@ -43,7 +43,7 @@ export const ABOUT_DATA: Record<SupportedLocale, AboutPageData> = {
   en: {
     metaTitle: 'About Us | VDigital, digital studio from Niš, Serbia',
     metaDescription:
-      'VDigital is a three-person digital studio from Niš, Serbia, founded by Veljko Petković. We build websites, video and marketing for businesses that want more clients.',
+      'VDigital is a four-person digital studio from Niš, Serbia, founded by Veljko Petković. We build websites, video and marketing for businesses that want more clients.',
     badge: 'About Us · VDigital Studio',
     h1Regular: 'A small studio for businesses',
     h1Italic: 'that want to grow.',
@@ -66,7 +66,7 @@ export const ABOUT_DATA: Record<SupportedLocale, AboutPageData> = {
     },
     teamHeading: 'Meet the team',
     teamSubheading:
-      'A small team where you work directly with the people building your system. No middlemen, no account managers, no outsourcing.',
+      'A small team where you work directly with the people building your system. No middlemen, no outsourcing.',
     members: [
       {
         name: 'Veljko Petković',
@@ -91,6 +91,14 @@ export const ABOUT_DATA: Record<SupportedLocale, AboutPageData> = {
           'Reaches out to potential clients on your behalf, follows up and books meetings on your calendar.',
         photo: '/images/team-vuk.jpg',
         photoAlt: 'Vuk Stefanović, sales and outreach at VDigital',
+      },
+      {
+        name: 'Mila Đorđević',
+        role: 'Copywriting, Social Media & Account Management',
+        bio:
+          'Writes your website copy and posts, runs social media and outreach, and is your day-to-day contact for updates and questions.',
+        photo: '/images/team-mila.jpg',
+        photoAlt: 'Mila Đorđević, copywriting, social media and account management at VDigital',
       },
     ],
     howWeWork: {
@@ -124,7 +132,7 @@ export const ABOUT_DATA: Record<SupportedLocale, AboutPageData> = {
   sr: {
     metaTitle: 'O nama | VDigital, digitalni studio iz Niša',
     metaDescription:
-      'VDigital je tročlani digitalni studio iz Niša koji je osnovao Veljko Petković. Pravimo sajtove, video i marketing za firme koje žele više klijenata.',
+      'VDigital je četvoročlani digitalni studio iz Niša koji je osnovao Veljko Petković. Pravimo sajtove, video i marketing za firme koje žele više klijenata.',
     badge: 'O nama · VDigital studio',
     h1Regular: 'Mali studio za firme',
     h1Italic: 'koje žele da rastu.',
@@ -147,7 +155,7 @@ export const ABOUT_DATA: Record<SupportedLocale, AboutPageData> = {
     },
     teamHeading: 'Upoznajte tim',
     teamSubheading:
-      'Mali tim u kome radite direktno sa ljudima koji prave vaš sistem. Bez posrednika, bez account menadžera, bez outsourcinga.',
+      'Mali tim u kome radite direktno sa ljudima koji prave vaš sistem. Bez posrednika, bez outsourcinga.',
     members: [
       {
         name: 'Veljko Petković',
@@ -172,6 +180,14 @@ export const ABOUT_DATA: Record<SupportedLocale, AboutPageData> = {
           'Zove potencijalne klijente u vaše ime, radi follow-up i zakazuje sastanke u vašem kalendaru.',
         photo: '/images/team-vuk.jpg',
         photoAlt: 'Vuk Stefanović, prodaja i cold calling u VDigital',
+      },
+      {
+        name: 'Mila Đorđević',
+        role: 'Copywriting, društvene mreže i rad sa klijentima',
+        bio:
+          'Piše tekstove za sajt i objave, vodi društvene mreže i outreach, i vaš je kontakt za svakodnevna pitanja i novosti.',
+        photo: '/images/team-mila.jpg',
+        photoAlt: 'Mila Đorđević, copywriting, društvene mreže i rad sa klijentima u VDigital',
       },
     ],
     howWeWork: {
@@ -205,7 +221,7 @@ export const ABOUT_DATA: Record<SupportedLocale, AboutPageData> = {
   ru: {
     metaTitle: 'О нас | VDigital, digital-студия из Сербии',
     metaDescription:
-      'VDigital: студия из трёх человек из Ниша, Сербия, основанная Велько Петковичем. Создаём сайты, видео и маркетинг для бизнеса, которому нужно больше клиентов.',
+      'VDigital: студия из четырёх человек из Ниша, Сербия, основанная Велько Петковичем. Создаём сайты, видео и маркетинг для бизнеса, которому нужно больше клиентов.',
     badge: 'О нас · Студия VDigital',
     h1Regular: 'Небольшая студия для бизнеса,',
     h1Italic: 'который хочет расти.',
@@ -228,7 +244,7 @@ export const ABOUT_DATA: Record<SupportedLocale, AboutPageData> = {
     },
     teamHeading: 'Познакомьтесь с командой',
     teamSubheading:
-      'Небольшая команда, где вы работаете напрямую с теми, кто строит вашу систему. Без посредников, аккаунт-менеджеров и аутсорса.',
+      'Небольшая команда, где вы работаете напрямую с теми, кто строит вашу систему. Без посредников и аутсорса.',
     members: [
       {
         name: 'Велько Петкович',
@@ -253,6 +269,14 @@ export const ABOUT_DATA: Record<SupportedLocale, AboutPageData> = {
           'Звонит потенциальным клиентам от вашего имени, делает follow-up и назначает встречи в вашем календаре.',
         photo: '/images/team-vuk.jpg',
         photoAlt: 'Вук Стефанович, продажи и cold calling в VDigital',
+      },
+      {
+        name: 'Мила Джорджевич',
+        role: 'Копирайтинг, соцсети и работа с клиентами',
+        bio:
+          'Пишет тексты для сайта и посты, ведёт соцсети и outreach и остаётся вашим контактом по текущим вопросам.',
+        photo: '/images/team-mila.jpg',
+        photoAlt: 'Мила Джорджевич, копирайтинг, соцсети и работа с клиентами в VDigital',
       },
     ],
     howWeWork: {
