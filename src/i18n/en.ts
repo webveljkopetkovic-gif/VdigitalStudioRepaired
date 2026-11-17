@@ -231,7 +231,7 @@ export const en = {
     heading: 'The people behind VDigital.',
     headingBefore: 'The people behind',
     subheading:
-      'Three specialists, one direct line. You always talk to the people doing the work.',
+      'Four specialists, one direct line. You always talk to the people doing the work.',
     members: [
       {
         id: 'member1',
@@ -258,6 +258,14 @@ export const en = {
         text: 'Handles cold calling and follow-up, turning interest into booked appointments and sales.',
         photo: '/images/team-vuk.jpg',
         photoAlt: 'Vuk Stefanović, sales & cold calling at VDigital',
+      },
+      {
+        id: 'member4',
+        name: 'Mila Đorđević',
+        role: 'Copywriting, Social Media & Accounts',
+        text: "Writes the copy and posts, runs social media and outreach, and makes sure every client always knows what we're doing and why.",
+        photo: '/images/team-mila.jpg',
+        photoAlt: 'Mila Đorđević, copywriting, social media and account management at VDigital',
       },
     ] as TeamMemberTranslation[],
   },

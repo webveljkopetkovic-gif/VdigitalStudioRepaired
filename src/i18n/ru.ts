@@ -208,7 +208,7 @@ export const ru: Translations = {
     heading: 'Люди, стоящие за VDigital.',
     headingBefore: 'Люди, стоящие за',
     subheading:
-      'Три специалиста, одна прямая линия. Вы всегда общаетесь с теми, кто реально делает работу.',
+      'Четыре специалиста, одна прямая линия. Вы всегда общаетесь с теми, кто реально делает работу.',
     members: [
       {
         id: 'member1',
@@ -235,6 +235,14 @@ export const ru: Translations = {
         text: 'Занимается cold calling и follow-up, превращая интерес в назначенные встречи и продажи.',
         photo: '/images/team-vuk.jpg',
         photoAlt: 'Вук Стефанович, продажи и cold calling в VDigital',
+      },
+      {
+        id: 'member4',
+        name: 'Мила Джорджевич',
+        role: 'Копирайтинг, соцсети и работа с клиентами',
+        text: 'Пишет тексты и посты, ведёт соцсети и outreach и следит, чтобы каждый клиент всегда знал, что мы делаем и зачем.',
+        photo: '/images/team-mila.jpg',
+        photoAlt: 'Мила Джорджевич, копирайтинг, соцсети и работа с клиентами в VDigital',
       },
     ] as TeamMemberTranslation[],
   },
