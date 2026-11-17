@@ -262,10 +262,10 @@ export const en = {
       {
         id: 'member4',
         name: 'Mila Đorđević',
-        role: 'Copywriting, Audits & Social Media',
-        text: "Audits your website and social media, writes the copy and posts, runs outreach and makes sure every client always knows what we're doing and why.",
+        role: 'Copywriting, Social Media & Accounts',
+        text: "Writes the copy and posts, runs social media and outreach, and makes sure every client always knows what we're doing and why.",
         photo: '/images/team-mila.jpg',
-        photoAlt: 'Mila Đorđević, copywriting, audits and social media at VDigital',
+        photoAlt: 'Mila Đorđević, copywriting, social media and account management at VDigital',
       },
     ] as TeamMemberTranslation[],
   },

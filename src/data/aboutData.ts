@@ -94,11 +94,11 @@ export const ABOUT_DATA: Record<SupportedLocale, AboutPageData> = {
       },
       {
         name: 'Mila Đorđević',
-        role: 'Copywriting, Audits, Social Media & Accounts',
+        role: 'Copywriting, Social Media & Account Management',
         bio:
-          'Audits your website and social media, writes your copy and posts, runs outreach and is your day-to-day contact for updates and questions.',
+          'Writes your website copy and posts, runs social media and outreach, and is your day-to-day contact for updates and questions.',
         photo: '/images/team-mila.jpg',
-        photoAlt: 'Mila Đorđević, copywriting, audits and social media at VDigital',
+        photoAlt: 'Mila Đorđević, copywriting, social media and account management at VDigital',
       },
     ],
     howWeWork: {
@@ -183,11 +183,11 @@ export const ABOUT_DATA: Record<SupportedLocale, AboutPageData> = {
       },
       {
         name: 'Mila Đorđević',
-        role: 'Copywriting, audit, društvene mreže i klijenti',
+        role: 'Copywriting, društvene mreže i rad sa klijentima',
         bio:
-          'Radi audit vašeg sajta i društvenih mreža, piše tekstove i objave, vodi outreach i vaš je kontakt za svakodnevna pitanja i novosti.',
+          'Piše tekstove za sajt i objave, vodi društvene mreže i outreach, i vaš je kontakt za svakodnevna pitanja i novosti.',
         photo: '/images/team-mila.jpg',
-        photoAlt: 'Mila Đorđević, copywriting, audit i društvene mreže u VDigital',
+        photoAlt: 'Mila Đorđević, copywriting, društvene mreže i rad sa klijentima u VDigital',
       },
     ],
     howWeWork: {
@@ -272,11 +272,11 @@ export const ABOUT_DATA: Record<SupportedLocale, AboutPageData> = {
       },
       {
         name: 'Мила Джорджевич',
-        role: 'Копирайтинг, аудит, соцсети и работа с клиентами',
+        role: 'Копирайтинг, соцсети и работа с клиентами',
         bio:
-          'Проводит аудит вашего сайта и соцсетей, пишет тексты и посты, ведёт outreach и остаётся вашим контактом по текущим вопросам.',
+          'Пишет тексты для сайта и посты, ведёт соцсети и outreach и остаётся вашим контактом по текущим вопросам.',
         photo: '/images/team-mila.jpg',
-        photoAlt: 'Мила Джорджевич, копирайтинг, аудит и соцсети в VDigital',
+        photoAlt: 'Мила Джорджевич, копирайтинг, соцсети и работа с клиентами в VDigital',
       },
     ],
     howWeWork: {

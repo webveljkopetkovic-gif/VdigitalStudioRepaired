@@ -59,7 +59,7 @@ function buildJsonLdGraph(meta) {
       {
         '@type': 'Person',
         name: 'Mila Đorđević',
-        jobTitle: 'Copywriting, Audits, Social Media & Account Management',
+        jobTitle: 'Copywriting, Social Media & Account Management',
       },
     ],
     contactPoint: {
