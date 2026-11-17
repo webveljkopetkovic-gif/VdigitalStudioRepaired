@@ -208,7 +208,7 @@ export const sr: Translations = {
     heading: 'Ljudi iza VDigital-a.',
     headingBefore: 'Ljudi iza',
     subheading:
-      'Tri stručnjaka, jedna direktna linija. Uvek razgovarate sa ljudima koji zaista rade na vašem projektu.',
+      'Četiri stručnjaka, jedna direktna linija. Uvek razgovarate sa ljudima koji zaista rade na vašem projektu.',
     members: [
       {
         id: 'member1',
@@ -235,6 +235,14 @@ export const sr: Translations = {
         text: 'Vodi cold calling i follow-up, pretvarajući interesovanje u zakazane sastanke i prodaju.',
         photo: '/images/team-vuk.jpg',
         photoAlt: 'Vuk Stefanović, prodaja i cold calling u VDigital-u',
+      },
+      {
+        id: 'member4',
+        name: 'Mila Đorđević',
+        role: 'Copywriting, društvene mreže i klijenti',
+        text: 'Piše tekstove i objave, vodi društvene mreže i outreach, i brine da svaki klijent uvek zna šta radimo i zašto.',
+        photo: '/images/team-mila.jpg',
+        photoAlt: 'Mila Đorđević, copywriting, društvene mreže i rad sa klijentima u VDigital-u',
       },
     ] as TeamMemberTranslation[],
   },
